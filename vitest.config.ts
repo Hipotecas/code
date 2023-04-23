@@ -13,5 +13,6 @@ export default defineConfig({
       { find: 'vs', replacement: resolve('src/vs') },
     ],
     setupFiles: ['test/unit/setup.ts'],
+    exclude: ['out/**/*', 'node_modules/**/*']
   }
 })
