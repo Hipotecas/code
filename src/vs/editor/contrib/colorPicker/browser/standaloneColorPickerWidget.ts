@@ -26,7 +26,7 @@ import { IModelService } from 'vs/editor/common/services/model';
 import { ILanguageConfigurationService } from 'vs/editor/common/languages/languageConfigurationRegistry';
 import { DefaultDocumentColorProvider } from 'vs/editor/contrib/colorPicker/browser/defaultDocumentColorProvider';
 import * as dom from 'vs/base/browser/dom';
-import 'vs/css!./colorPicker';
+// import 'vs/css!./colorPicker';
 
 export class StandaloneColorPickerController extends Disposable implements IEditorContribution {
 

@@ -8,7 +8,7 @@ import { coalesce, findFirstInSorted } from 'vs/base/common/arrays';
 import { CancelablePromise, createCancelablePromise, Delayer } from 'vs/base/common/async';
 import { onUnexpectedError } from 'vs/base/common/errors';
 import { DisposableStore, dispose, IDisposable } from 'vs/base/common/lifecycle';
-import 'vs/css!./media/review';
+// import 'vs/css!./media/review';
 import { ICodeEditor, IEditorMouseEvent } from 'vs/editor/browser/editorBrowser';
 import { ICodeEditorService } from 'vs/editor/browser/services/codeEditorService';
 import { IRange, Range } from 'vs/editor/common/core/range';

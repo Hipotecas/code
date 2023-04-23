@@ -13,7 +13,7 @@ import { IdGenerator } from 'vs/base/common/idGenerator';
 import { KeyCode } from 'vs/base/common/keyCodes';
 import { parseLinkedText } from 'vs/base/common/linkedText';
 import { URI } from 'vs/base/common/uri';
-import 'vs/css!./media/quickInput';
+// import 'vs/css!./media/quickInput';
 import { localize } from 'vs/nls';
 import { DisposableStore } from 'vs/base/common/lifecycle';
 

@@ -8,7 +8,7 @@ import { UILabelProvider } from 'vs/base/common/keybindingLabels';
 import { ResolvedKeybinding, ResolvedChord } from 'vs/base/common/keybindings';
 import { equals } from 'vs/base/common/objects';
 import { OperatingSystem } from 'vs/base/common/platform';
-import 'vs/css!./keybindingLabel';
+// import 'vs/css!./keybindingLabel';
 import { localize } from 'vs/nls';
 
 const $ = dom.$;

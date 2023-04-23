@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import 'vs/css!./media/activityaction';
+// import 'vs/css!./media/activityaction';
 import { localize } from 'vs/nls';
 import { EventType, addDisposableListener, EventHelper, append, $, clearNode, hide, show } from 'vs/base/browser/dom';
 import { StandardKeyboardEvent } from 'vs/base/browser/keyboardEvent';

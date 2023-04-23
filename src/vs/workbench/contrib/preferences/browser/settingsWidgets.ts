@@ -19,7 +19,7 @@ import { KeyCode } from 'vs/base/common/keyCodes';
 import { Disposable, DisposableStore } from 'vs/base/common/lifecycle';
 import { isIOS } from 'vs/base/common/platform';
 import { isDefined, isUndefinedOrNull } from 'vs/base/common/types';
-import 'vs/css!./media/settingsWidgets';
+// import 'vs/css!./media/settingsWidgets';
 import { localize } from 'vs/nls';
 import { IContextViewService } from 'vs/platform/contextview/browser/contextView';
 import { IThemeService } from 'vs/platform/theme/common/themeService';

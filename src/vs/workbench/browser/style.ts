@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import 'vs/css!./media/style';
+// import 'vs/css!./media/style';
 import { registerThemingParticipant } from 'vs/platform/theme/common/themeService';
 import { WORKBENCH_BACKGROUND, TITLE_BAR_ACTIVE_BACKGROUND } from 'vs/workbench/common/theme';
 import { isWeb, isIOS, isMacintosh, isWindows } from 'vs/base/common/platform';

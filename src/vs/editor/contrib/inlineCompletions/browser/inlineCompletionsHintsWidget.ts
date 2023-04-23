@@ -14,7 +14,7 @@ import { Disposable, toDisposable } from 'vs/base/common/lifecycle';
 import { IObservable, autorun, derived, observableFromEvent } from 'vs/base/common/observable';
 import { OS } from 'vs/base/common/platform';
 import { ThemeIcon } from 'vs/base/common/themables';
-import 'vs/css!./inlineCompletionsHintsWidget';
+// import 'vs/css!./inlineCompletionsHintsWidget';
 import { ContentWidgetPositionPreference, ICodeEditor, IContentWidget, IContentWidgetPosition } from 'vs/editor/browser/editorBrowser';
 import { EditorOption } from 'vs/editor/common/config/editorOptions';
 import { Position } from 'vs/editor/common/core/position';

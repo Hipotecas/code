@@ -11,7 +11,7 @@ import { ResolvedKeybinding } from 'vs/base/common/keybindings';
 import { Disposable } from 'vs/base/common/lifecycle';
 import { OS } from 'vs/base/common/platform';
 import { ThemeIcon } from 'vs/base/common/themables';
-import 'vs/css!./actionWidget';
+// import 'vs/css!./actionWidget';
 import { localize } from 'vs/nls';
 import { IContextViewService } from 'vs/platform/contextview/browser/contextView';
 import { IKeybindingService } from 'vs/platform/keybinding/common/keybinding';

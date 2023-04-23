@@ -28,7 +28,7 @@ import { DisposableStore, dispose, IDisposable } from 'vs/base/common/lifecycle'
 import * as platform from 'vs/base/common/platform';
 import { ltrim } from 'vs/base/common/strings';
 import { withNullAsUndefined } from 'vs/base/common/types';
-import 'vs/css!./media/quickInput';
+// import 'vs/css!./media/quickInput';
 import { localize } from 'vs/nls';
 import { IQuickInputOptions } from 'vs/platform/quickinput/browser/quickInput';
 import { getIconClass } from 'vs/platform/quickinput/browser/quickInputUtils';

@@ -13,7 +13,7 @@ import { Color } from 'vs/base/common/color';
 import { Emitter } from 'vs/base/common/event';
 import { IDisposable } from 'vs/base/common/lifecycle';
 import * as objects from 'vs/base/common/objects';
-import 'vs/css!./media/peekViewWidget';
+// import 'vs/css!./media/peekViewWidget';
 import { ICodeEditor } from 'vs/editor/browser/editorBrowser';
 import { EditorContributionInstantiation, registerEditorContribution } from 'vs/editor/browser/editorExtensions';
 import { ICodeEditorService } from 'vs/editor/browser/services/codeEditorService';

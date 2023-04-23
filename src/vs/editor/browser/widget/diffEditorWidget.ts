@@ -17,7 +17,7 @@ import { Emitter, Event } from 'vs/base/common/event';
 import { Disposable } from 'vs/base/common/lifecycle';
 import { Constants } from 'vs/base/common/uint';
 import { URI } from 'vs/base/common/uri';
-import 'vs/css!./media/diffEditor';
+// import 'vs/css!./media/diffEditor';
 import { applyFontInfo } from 'vs/editor/browser/config/domFontInfo';
 import { IEditorConstructionOptions } from 'vs/editor/browser/config/editorConfiguration';
 import { ElementSizeObserver } from 'vs/editor/browser/config/elementSizeObserver';

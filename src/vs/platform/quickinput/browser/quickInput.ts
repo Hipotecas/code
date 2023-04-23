@@ -28,7 +28,7 @@ import { isIOS } from 'vs/base/common/platform';
 import Severity from 'vs/base/common/severity';
 import { ThemeIcon } from 'vs/base/common/themables';
 import { isString, withNullAsUndefined, withUndefinedAsNull } from 'vs/base/common/types';
-import 'vs/css!./media/quickInput';
+// import 'vs/css!./media/quickInput';
 import { localize } from 'vs/nls';
 import { ILayoutService } from 'vs/platform/layout/browser/layoutService';
 import { IInputBox, IInputOptions, IKeyMods, IPickOptions, IQuickInput, IQuickInputButton, IQuickInputHideEvent, IQuickInputToggle, IQuickNavigateConfiguration, IQuickPick, IQuickPickDidAcceptEvent, IQuickPickItem, IQuickPickItemButtonEvent, IQuickPickSeparator, IQuickPickSeparatorButtonEvent, IQuickPickWillAcceptEvent, ItemActivation, NO_KEY_MODS, QuickInputHideReason, QuickPickInput } from 'vs/platform/quickinput/common/quickInput';

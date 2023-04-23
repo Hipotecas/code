@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import 'vs/css!./media/welcomeDialog';
+// import 'vs/css!./media/welcomeDialog';
 import { createDecorator } from 'vs/platform/instantiation/common/instantiation';
 import { InstantiationType, registerSingleton } from 'vs/platform/instantiation/common/extensions';
 import { ILinkDescriptor } from 'vs/platform/opener/browser/link';

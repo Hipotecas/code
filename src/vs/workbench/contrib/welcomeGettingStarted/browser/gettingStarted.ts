@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import 'vs/workbench/contrib/welcomeGettingStarted/browser/gettingStartedColors';
-import 'vs/css!./media/gettingStarted';
+// import 'vs/css!./media/gettingStarted';
 import { localize } from 'vs/nls';
 import { IInstantiationService } from 'vs/platform/instantiation/common/instantiation';
 import { IEditorSerializer, IEditorOpenContext } from 'vs/workbench/common/editor';

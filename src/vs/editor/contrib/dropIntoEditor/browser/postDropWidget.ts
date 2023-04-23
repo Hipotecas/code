@@ -8,7 +8,7 @@ import { Button } from 'vs/base/browser/ui/button/button';
 import { toAction } from 'vs/base/common/actions';
 import { Event } from 'vs/base/common/event';
 import { Disposable, MutableDisposable, toDisposable } from 'vs/base/common/lifecycle';
-import 'vs/css!./postDropWidget';
+// import 'vs/css!./postDropWidget';
 import { ContentWidgetPositionPreference, ICodeEditor, IContentWidget, IContentWidgetPosition } from 'vs/editor/browser/editorBrowser';
 import { Range } from 'vs/editor/common/core/range';
 import { DocumentOnDropEdit } from 'vs/editor/common/languages';

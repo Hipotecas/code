@@ -1366,7 +1366,7 @@ function createDOMPurify() {
 var purify = createDOMPurify();
 
 // ESM-comment-begin
-define(function () { return purify; });
+(function () { return purify; });
 // ESM-comment-end
 
 // ESM-uncomment-begin

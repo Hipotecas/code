@@ -7,7 +7,7 @@ import { hide, show } from 'vs/base/browser/dom';
 import { RunOnceScheduler } from 'vs/base/common/async';
 import { Disposable } from 'vs/base/common/lifecycle';
 import { isNumber } from 'vs/base/common/types';
-import 'vs/css!./progressbar';
+// import 'vs/css!./progressbar';
 
 const CSS_DONE = 'done';
 const CSS_ACTIVE = 'active';

@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import 'vs/css!./symbolIcons';
+// import 'vs/css!./symbolIcons';
 import { localize } from 'vs/nls';
 import { foreground, registerColor } from 'vs/platform/theme/common/colorRegistry';
 

@@ -10,7 +10,7 @@ import { Emitter } from 'vs/base/common/event';
 import { HistoryNavigator } from 'vs/base/common/history';
 import { Disposable, DisposableStore } from 'vs/base/common/lifecycle';
 import { URI } from 'vs/base/common/uri';
-import 'vs/css!./media/interactiveSession';
+// import 'vs/css!./media/interactiveSession';
 import { CodeEditorWidget } from 'vs/editor/browser/widget/codeEditorWidget';
 import { ITextModel } from 'vs/editor/common/model';
 import { IModelService } from 'vs/editor/common/services/model';

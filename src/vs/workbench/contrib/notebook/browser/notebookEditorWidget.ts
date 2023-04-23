@@ -3,15 +3,15 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import 'vs/css!./media/notebook';
-import 'vs/css!./media/notebookCellInsertToolbar';
-import 'vs/css!./media/notebookCellStatusBar';
-import 'vs/css!./media/notebookCellTitleToolbar';
-import 'vs/css!./media/notebookFocusIndicator';
-import 'vs/css!./media/notebookToolbar';
-import 'vs/css!./media/notebookDnd';
-import 'vs/css!./media/notebookFolding';
-import 'vs/css!./media/notebookCellOutput';
+// import 'vs/css!./media/notebook';
+// import 'vs/css!./media/notebookCellInsertToolbar';
+// import 'vs/css!./media/notebookCellStatusBar';
+// import 'vs/css!./media/notebookCellTitleToolbar';
+// import 'vs/css!./media/notebookFocusIndicator';
+// import 'vs/css!./media/notebookToolbar';
+// import 'vs/css!./media/notebookDnd';
+// import 'vs/css!./media/notebookFolding';
+// import 'vs/css!./media/notebookCellOutput';
 import { PixelRatio } from 'vs/base/browser/browser';
 import * as DOM from 'vs/base/browser/dom';
 import { IMouseWheelEvent, StandardMouseEvent } from 'vs/base/browser/mouseEvent';

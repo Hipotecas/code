@@ -21,7 +21,7 @@ import { Disposable, IDisposable, MutableDisposable, dispose } from 'vs/base/com
 import { fuzzyContains } from 'vs/base/common/strings';
 import { isDefined } from 'vs/base/common/types';
 import { URI } from 'vs/base/common/uri';
-import 'vs/css!./media/testing';
+// import 'vs/css!./media/testing';
 import { MarkdownRenderer } from 'vs/editor/contrib/markdownRenderer/browser/markdownRenderer';
 import { localize } from 'vs/nls';
 import { DropdownWithPrimaryActionViewItem } from 'vs/platform/actions/browser/dropdownWithPrimaryActionViewItem';

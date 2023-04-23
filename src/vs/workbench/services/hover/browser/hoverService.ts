@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import 'vs/css!./media/hover';
+// import 'vs/css!./media/hover';
 import { InstantiationType, registerSingleton } from 'vs/platform/instantiation/common/extensions';
 import { registerThemingParticipant } from 'vs/platform/theme/common/themeService';
 import { editorHoverBorder } from 'vs/platform/theme/common/colorRegistry';

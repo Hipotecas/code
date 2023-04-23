@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import 'vs/css!./whitespace';
+// import 'vs/css!./whitespace';
 import { DynamicViewOverlay } from 'vs/editor/browser/view/dynamicViewOverlay';
 import { Selection } from 'vs/editor/common/core/selection';
 import { RenderingContext } from 'vs/editor/browser/view/renderingContext';

@@ -14,7 +14,7 @@ import { RunOnceScheduler } from 'vs/base/common/async';
 import { memoize } from 'vs/base/common/decorators';
 import { IDisposable, dispose } from 'vs/base/common/lifecycle';
 import { Schemas } from 'vs/base/common/network';
-import 'vs/css!./media/runtimeExtensionsEditor';
+// import 'vs/css!./media/runtimeExtensionsEditor';
 import * as nls from 'vs/nls';
 import { Categories } from 'vs/platform/action/common/actionCommonCategories';
 import { Action2, MenuId } from 'vs/platform/actions/common/actions';

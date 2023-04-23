@@ -9,7 +9,7 @@ import { Codicon } from 'vs/base/common/codicons';
 import { Disposable, MutableDisposable } from 'vs/base/common/lifecycle';
 import { noBreakWhitespace } from 'vs/base/common/strings';
 import { ThemeIcon } from 'vs/base/common/themables';
-import 'vs/css!./inlineProgressWidget';
+// import 'vs/css!./inlineProgressWidget';
 import { ContentWidgetPositionPreference, ICodeEditor, IContentWidget, IContentWidgetPosition } from 'vs/editor/browser/editorBrowser';
 import { EditorOption } from 'vs/editor/common/config/editorOptions';
 import { IPosition } from 'vs/editor/common/core/position';

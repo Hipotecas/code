@@ -34,7 +34,7 @@ import { LanguageFeatureRegistry } from 'vs/editor/common/languageFeatureRegistr
 import { ISingleEditOperation } from 'vs/editor/common/core/editOperation';
 import { IFeatureDebounceInformation, ILanguageFeatureDebounceService } from 'vs/editor/common/services/languageFeatureDebounce';
 import { StopWatch } from 'vs/base/common/stopwatch';
-import 'vs/css!./linkedEditing';
+// import 'vs/css!./linkedEditing';
 
 export const CONTEXT_ONTYPE_RENAME_INPUT_VISIBLE = new RawContextKey<boolean>('LinkedEditingInputVisible', false);
 

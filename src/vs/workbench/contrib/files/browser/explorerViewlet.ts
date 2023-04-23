@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import 'vs/css!./media/explorerviewlet';
+// import 'vs/css!./media/explorerviewlet';
 import { localize } from 'vs/nls';
 import { mark } from 'vs/base/common/performance';
 import { VIEWLET_ID, OpenEditorsVisibleContext, VIEW_ID, IFilesConfiguration, ExplorerViewletVisibleContext } from 'vs/workbench/contrib/files/common/files';

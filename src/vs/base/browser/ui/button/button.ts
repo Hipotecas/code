@@ -18,7 +18,7 @@ import { IMarkdownString, isMarkdownString, markdownStringEqual } from 'vs/base/
 import { KeyCode } from 'vs/base/common/keyCodes';
 import { Disposable, IDisposable } from 'vs/base/common/lifecycle';
 import { ThemeIcon } from 'vs/base/common/themables';
-import 'vs/css!./button';
+// import 'vs/css!./button';
 import { localize } from 'vs/nls';
 
 export interface IButtonOptions extends Partial<IButtonStyles> {

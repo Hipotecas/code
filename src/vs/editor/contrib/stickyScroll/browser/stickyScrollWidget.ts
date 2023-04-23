@@ -12,7 +12,7 @@ import { Position } from 'vs/editor/common/core/position';
 import { StandardMouseEvent } from 'vs/base/browser/mouseEvent';
 import { EmbeddedCodeEditorWidget } from 'vs/editor/browser/widget/embeddedCodeEditorWidget';
 import * as dom from 'vs/base/browser/dom';
-import 'vs/css!./stickyScroll';
+// import 'vs/css!./stickyScroll';
 
 export class StickyScrollWidgetState {
 	constructor(

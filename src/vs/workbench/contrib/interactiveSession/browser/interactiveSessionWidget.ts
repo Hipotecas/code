@@ -10,7 +10,7 @@ import { Emitter } from 'vs/base/common/event';
 import { Disposable, DisposableStore, IDisposable, combinedDisposable, toDisposable } from 'vs/base/common/lifecycle';
 import { isEqual } from 'vs/base/common/resources';
 import { URI } from 'vs/base/common/uri';
-import 'vs/css!./media/interactiveSession';
+// import 'vs/css!./media/interactiveSession';
 import { ICodeEditor } from 'vs/editor/browser/editorBrowser';
 import { localize } from 'vs/nls';
 import { MenuId } from 'vs/platform/actions/common/actions';
