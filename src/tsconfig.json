@@ -1,0 +1,20 @@
+{
+	"extends": "./tsconfig.base.json",
+	"compilerOptions": {
+		"removeComments": false,
+		"preserveConstEnums": true,
+		"sourceMap": false,
+		"allowJs": true,
+		"resolveJsonModule": true,
+		"outDir": "../out/vs",
+		"target": "es2021",
+		"types": [
+      "vitest/globals",
+		]
+	},
+	"include": [
+		"./typings",
+		"./vs/**/*.ts",
+    "vs-dts/vscode.d.ts"
+	]
+}
