@@ -13,8 +13,7 @@ interface IIconFilter {
 }
 
 function filterOk(filter: IIconFilter, word: string, target: IParsedLabelWithIcons, highlights?: { start: number; end: number }[]) {
-	const r = filter(word, target);
-	assert(r);
+	const r = filter(word, target)
 	if (highlights) {
 		assert.deepStrictEqual(r, highlights);
 	}

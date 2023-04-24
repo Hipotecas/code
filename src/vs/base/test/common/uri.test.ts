@@ -569,10 +569,7 @@ describe('URI', () => {
 		// assert.throws(() => new URL('bazz', 'foo://bar')); Edge, Chrome => THROW, Firefox, Safari => foo://bar/bazz
 	});
 
-	test('URI#joinPath (posix)', function () {
-		if (isWindows) {
-			this.skip();
-		}
+	test.skipIf(isWindows)('URI#joinPath (posix)', function () {
 		assertJoined(('file:///c:/foo/'), '../../bazz', 'file:///bazz', false);
 		assertJoined(('file://server/share/c:/'), '../../bazz', 'file://server/bazz', false);
 		assertJoined(('file://server/share/c:'), '../../bazz', 'file://server/bazz', false);
@@ -581,10 +578,7 @@ describe('URI', () => {
 		assertJoined(('file://ser/foo'), '../../bazz', 'file://ser/bazz', false); // Firefox -> Different, Edge, Chrome, Safar -> OK
 	});
 
-	test('URI#joinPath (windows)', function () {
-		if (!isWindows) {
-			this.skip();
-		}
+	test.skipIf(!isWindows)('URI#joinPath (windows)', function () {
 		assertJoined(('file:///c:/foo/'), '../../bazz', 'file:///c:/bazz', false);
 		assertJoined(('file://server/share/c:/'), '../../bazz', 'file://server/share/bazz', false);
 		assertJoined(('file://server/share/c:'), '../../bazz', 'file://server/share/bazz', false);

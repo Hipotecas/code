@@ -6,13 +6,13 @@ import * as assert from 'assert';
 import * as objects from 'vs/base/common/objects';
 
 const check = (one: any, other: any, msg: string) => {
-	assert(objects.equals(one, other), msg);
-	assert(objects.equals(other, one), '[reverse] ' + msg);
+	expect(objects.equals(one, other), msg).toBe(true);
+	expect(objects.equals(other, one), '[reverse] ' + msg).toBe(true);
 };
 
 const checkNot = (one: any, other: any, msg: string) => {
-	assert(!objects.equals(one, other), msg);
-	assert(!objects.equals(other, one), '[reverse] ' + msg);
+	expect(!objects.equals(one, other), msg).toBe(true);
+	expect(!objects.equals(other, one), '[reverse] ' + msg).toBe(true);
 };
 
 describe('Objects', () => {
@@ -58,8 +58,7 @@ describe('Objects', () => {
 		const foo: any = {};
 		objects.mixin(foo, { bar: [1, 2, 3] });
 
-		assert(foo.bar);
-		assert(Array.isArray(foo.bar));
+		expect(Array.isArray(foo.bar)).toBe(true);
 		assert.strictEqual(foo.bar.length, 3);
 		assert.strictEqual(foo.bar[0], 1);
 		assert.strictEqual(foo.bar[1], 2);

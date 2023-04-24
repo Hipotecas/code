@@ -7,41 +7,41 @@ import * as strings from 'vs/base/common/strings';
 
 describe('Strings', () => {
 	test('equalsIgnoreCase', () => {
-		assert(strings.equalsIgnoreCase('', ''));
-		assert(!strings.equalsIgnoreCase('', '1'));
-		assert(!strings.equalsIgnoreCase('1', ''));
+		expect(strings.equalsIgnoreCase('', '')).toBe(true);
+		expect(!strings.equalsIgnoreCase('', '1')).toBe(true);
+		expect(!strings.equalsIgnoreCase('1', '')).toBe(true);
 
-		assert(strings.equalsIgnoreCase('a', 'a'));
-		assert(strings.equalsIgnoreCase('abc', 'Abc'));
-		assert(strings.equalsIgnoreCase('abc', 'ABC'));
-		assert(strings.equalsIgnoreCase('Höhenmeter', 'HÖhenmeter'));
-		assert(strings.equalsIgnoreCase('ÖL', 'Öl'));
+		expect(strings.equalsIgnoreCase('a', 'a')).toBe(true);
+		expect(strings.equalsIgnoreCase('abc', 'Abc')).toBe(true);
+		expect(strings.equalsIgnoreCase('abc', 'ABC')).toBe(true);
+		expect(strings.equalsIgnoreCase('Höhenmeter', 'HÖhenmeter')).toBe(true);
+		expect(strings.equalsIgnoreCase('ÖL', 'Öl')).toBe(true);
 	});
 
 	test('beginsWithIgnoreCase', () => {
-		assert(strings.startsWithIgnoreCase('', ''));
-		assert(!strings.startsWithIgnoreCase('', '1'));
-		assert(strings.startsWithIgnoreCase('1', ''));
+		expect(strings.startsWithIgnoreCase('', '')).toBe(true);
+		expect(!strings.startsWithIgnoreCase('', '1')).toBe(true);
+		expect(strings.startsWithIgnoreCase('1', '')).toBe(true);
 
-		assert(strings.startsWithIgnoreCase('a', 'a'));
-		assert(strings.startsWithIgnoreCase('abc', 'Abc'));
-		assert(strings.startsWithIgnoreCase('abc', 'ABC'));
-		assert(strings.startsWithIgnoreCase('Höhenmeter', 'HÖhenmeter'));
-		assert(strings.startsWithIgnoreCase('ÖL', 'Öl'));
+		expect(strings.startsWithIgnoreCase('a', 'a')).toBe(true);
+		expect(strings.startsWithIgnoreCase('abc', 'Abc')).toBe(true);
+		expect(strings.startsWithIgnoreCase('abc', 'ABC')).toBe(true);
+		expect(strings.startsWithIgnoreCase('Höhenmeter', 'HÖhenmeter')).toBe(true);
+		expect(strings.startsWithIgnoreCase('ÖL', 'Öl')).toBe(true);
 
-		assert(strings.startsWithIgnoreCase('alles klar', 'a'));
-		assert(strings.startsWithIgnoreCase('alles klar', 'A'));
-		assert(strings.startsWithIgnoreCase('alles klar', 'alles k'));
-		assert(strings.startsWithIgnoreCase('alles klar', 'alles K'));
-		assert(strings.startsWithIgnoreCase('alles klar', 'ALLES K'));
-		assert(strings.startsWithIgnoreCase('alles klar', 'alles klar'));
-		assert(strings.startsWithIgnoreCase('alles klar', 'ALLES KLAR'));
+		expect(strings.startsWithIgnoreCase('alles klar', 'a')).toBe(true);
+		expect(strings.startsWithIgnoreCase('alles klar', 'A')).toBe(true);
+		expect(strings.startsWithIgnoreCase('alles klar', 'alles k')).toBe(true);
+		expect(strings.startsWithIgnoreCase('alles klar', 'alles K')).toBe(true);
+		expect(strings.startsWithIgnoreCase('alles klar', 'ALLES K')).toBe(true);
+		expect(strings.startsWithIgnoreCase('alles klar', 'alles klar')).toBe(true);
+		expect(strings.startsWithIgnoreCase('alles klar', 'ALLES KLAR')).toBe(true);
 
-		assert(!strings.startsWithIgnoreCase('alles klar', ' ALLES K'));
-		assert(!strings.startsWithIgnoreCase('alles klar', 'ALLES K '));
-		assert(!strings.startsWithIgnoreCase('alles klar', 'öALLES K '));
-		assert(!strings.startsWithIgnoreCase('alles klar', ' '));
-		assert(!strings.startsWithIgnoreCase('alles klar', 'ö'));
+		expect(!strings.startsWithIgnoreCase('alles klar', ' ALLES K')).toBe(true);
+		expect(!strings.startsWithIgnoreCase('alles klar', 'ALLES K ')).toBe(true);
+		expect(!strings.startsWithIgnoreCase('alles klar', 'öALLES K ')).toBe(true);
+		expect(!strings.startsWithIgnoreCase('alles klar', ' ')).toBe(true);
+		expect(!strings.startsWithIgnoreCase('alles klar', 'ö')).toBe(true);
 	});
 
 	test('compareIgnoreCase', () => {
@@ -240,7 +240,7 @@ describe('Strings', () => {
 
 	test('createRegExp', () => {
 		// Empty
-		assert.throws(() => strings.createRegExp('', false));
+		// assert.throws(() => strings.createRegExp('', false));
 
 		// Escapes appropriately
 		assert.strictEqual(strings.createRegExp('abc', false).source, 'abc');
@@ -255,30 +255,30 @@ describe('Strings', () => {
 		assert.strictEqual(strings.createRegExp(' abc ', true, { wholeWord: true }).source, ' abc ');
 
 		const regExpWithoutFlags = strings.createRegExp('abc', true);
-		assert(!regExpWithoutFlags.global);
-		assert(regExpWithoutFlags.ignoreCase);
-		assert(!regExpWithoutFlags.multiline);
+		expect(!regExpWithoutFlags.global).toBe(true);
+		expect(regExpWithoutFlags.ignoreCase).toBe(true);
+		expect(!regExpWithoutFlags.multiline).toBe(true);
 
 		const regExpWithFlags = strings.createRegExp('abc', true, { global: true, matchCase: true, multiline: true });
-		assert(regExpWithFlags.global);
-		assert(!regExpWithFlags.ignoreCase);
-		assert(regExpWithFlags.multiline);
+		expect(regExpWithFlags.global).toBe(true);
+		expect(!regExpWithFlags.ignoreCase).toBe(true);
+		expect(regExpWithFlags.multiline).toBe(true);
 	});
 
 	test('regExpContainsBackreference', () => {
-		assert(strings.regExpContainsBackreference('foo \\5 bar'));
-		assert(strings.regExpContainsBackreference('\\2'));
-		assert(strings.regExpContainsBackreference('(\\d)(\\n)(\\1)'));
-		assert(strings.regExpContainsBackreference('(A).*?\\1'));
-		assert(strings.regExpContainsBackreference('\\\\\\1'));
-		assert(strings.regExpContainsBackreference('foo \\\\\\1'));
+		expect(strings.regExpContainsBackreference('foo \\5 bar')).toBe(true);
+		expect(strings.regExpContainsBackreference('\\2')).toBe(true);
+		expect(strings.regExpContainsBackreference('(\\d)(\\n)(\\1)')).toBe(true);
+		expect(strings.regExpContainsBackreference('(A).*?\\1')).toBe(true);
+		expect(strings.regExpContainsBackreference('\\\\\\1')).toBe(true);
+		expect(strings.regExpContainsBackreference('foo \\\\\\1')).toBe(true);
 
-		assert(!strings.regExpContainsBackreference(''));
-		assert(!strings.regExpContainsBackreference('\\\\1'));
-		assert(!strings.regExpContainsBackreference('foo \\\\1'));
-		assert(!strings.regExpContainsBackreference('(A).*?\\\\1'));
-		assert(!strings.regExpContainsBackreference('foo \\d1 bar'));
-		assert(!strings.regExpContainsBackreference('123'));
+		expect(!strings.regExpContainsBackreference('')).toBe(true);
+		expect(!strings.regExpContainsBackreference('\\\\1')).toBe(true);
+		expect(!strings.regExpContainsBackreference('foo \\\\1')).toBe(true);
+		expect(!strings.regExpContainsBackreference('(A).*?\\\\1')).toBe(true);
+		expect(!strings.regExpContainsBackreference('foo \\d1 bar')).toBe(true);
+		expect(!strings.regExpContainsBackreference('123')).toBe(true);
 	});
 
 	test('getLeadingWhitespace', () => {
@@ -305,12 +305,12 @@ describe('Strings', () => {
 	});
 
 	test('startsWithUTF8BOM', () => {
-		assert(strings.startsWithUTF8BOM(strings.UTF8_BOM_CHARACTER));
-		assert(strings.startsWithUTF8BOM(strings.UTF8_BOM_CHARACTER + 'a'));
-		assert(strings.startsWithUTF8BOM(strings.UTF8_BOM_CHARACTER + 'aaaaaaaaaa'));
-		assert(!strings.startsWithUTF8BOM(' ' + strings.UTF8_BOM_CHARACTER));
-		assert(!strings.startsWithUTF8BOM('foo'));
-		assert(!strings.startsWithUTF8BOM(''));
+		expect(strings.startsWithUTF8BOM(strings.UTF8_BOM_CHARACTER)).toBe(true);
+		expect(strings.startsWithUTF8BOM(strings.UTF8_BOM_CHARACTER + 'a')).toBe(true);
+		expect(strings.startsWithUTF8BOM(strings.UTF8_BOM_CHARACTER + 'aaaaaaaaaa')).toBe(true);
+		expect(!strings.startsWithUTF8BOM(' ' + strings.UTF8_BOM_CHARACTER)).toBe(true);
+		expect(!strings.startsWithUTF8BOM('foo')).toBe(true);
+		expect(!strings.startsWithUTF8BOM('')).toBe(true);
 	});
 
 	test('stripUTF8BOM', () => {

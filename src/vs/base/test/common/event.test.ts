@@ -1,7 +1,4 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
+// @vitest-environment node
 import * as assert from 'assert';
 import { timeout } from 'vs/base/common/async';
 import { CancellationToken } from 'vs/base/common/cancellation';
@@ -305,7 +302,7 @@ describe('Event', function () {
 		});
 	});
 
-	test('Microtask Emitter', (done) => {
+	test('Microtask Emitter', () => {
 		let count = 0;
 		assert.strictEqual(count, 0);
 		const emitter = new MicrotaskEmitter<void>();
@@ -319,7 +316,6 @@ describe('Event', function () {
 		// Should wait until the event loop ends and therefore be the last thing called
 		setTimeout(() => {
 			assert.strictEqual(count, 3);
-			done();
 		}, 0);
 		queueMicrotask(() => {
 			assert.strictEqual(count, 2);

@@ -2,7 +2,7 @@
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-
+// @vitest-environment node
 import * as assert from 'assert';
 import { shuffle } from 'vs/base/common/arrays';
 import { randomPath } from 'vs/base/common/extpath';
@@ -942,7 +942,7 @@ describe.skip('TST, perf', function () {
 	let sampleUris: URI[] = [];
 	let candidates: URI[] = [];
 
-	describeSetup(() => {
+	beforeAll(() => {
 		const len = 50_000;
 		sampleUris = createRandomUris(len);
 		candidates = [...sampleUris.slice(0, len / 2), ...createRandomUris(len / 2)];

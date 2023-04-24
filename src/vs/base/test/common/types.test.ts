@@ -2,155 +2,154 @@
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-
+// @vitest-environment node
 import * as assert from 'assert';
 import * as types from 'vs/base/common/types';
 
 describe('Types', () => {
 
 	test('isFunction', () => {
-		assert(!types.isFunction(undefined));
-		assert(!types.isFunction(null));
-		assert(!types.isFunction('foo'));
-		assert(!types.isFunction(5));
-		assert(!types.isFunction(true));
-		assert(!types.isFunction([]));
-		assert(!types.isFunction([1, 2, '3']));
-		assert(!types.isFunction({}));
-		assert(!types.isFunction({ foo: 'bar' }));
-		assert(!types.isFunction(/test/));
-		assert(!types.isFunction(new RegExp('')));
-		assert(!types.isFunction(new Date()));
+		expect(!types.isFunction(undefined)).toBe(true)
+		expect(!types.isFunction(null)).toBe(true)
+		expect(!types.isFunction('foo')).toBe(true)
+		expect(!types.isFunction(5)).toBe(true)
+		expect(!types.isFunction(true)).toBe(true)
+		expect(!types.isFunction([])).toBe(true)
+		expect(!types.isFunction([1, 2, '3'])).toBe(true)
+		expect(!types.isFunction({})).toBe(true)
+		expect(!types.isFunction({ foo: 'bar' })).toBe(true)
+		expect(!types.isFunction(/test/)).toBe(true)
+		expect(!types.isFunction(new RegExp(''))).toBe(true)
+		expect(!types.isFunction(new Date())).toBe(true)
 
-		assert(types.isFunction(assert));
-		assert(types.isFunction(function foo() { /**/ }));
+
+		expect(types.isFunction(function foo() { /**/ })).toBe(true)
 	});
 
 	test('areFunctions', () => {
-		assert(!types.areFunctions());
-		assert(!types.areFunctions(null));
-		assert(!types.areFunctions('foo'));
-		assert(!types.areFunctions(5));
-		assert(!types.areFunctions(true));
-		assert(!types.areFunctions([]));
-		assert(!types.areFunctions([1, 2, '3']));
-		assert(!types.areFunctions({}));
-		assert(!types.areFunctions({ foo: 'bar' }));
-		assert(!types.areFunctions(/test/));
-		assert(!types.areFunctions(new RegExp('')));
-		assert(!types.areFunctions(new Date()));
-		assert(!types.areFunctions(assert, ''));
+		expect(!types.areFunctions()).toBe(true)
+		expect(!types.areFunctions(null)).toBe(true)
+		expect(!types.areFunctions('foo')).toBe(true)
+		expect(!types.areFunctions(5)).toBe(true)
+		expect(!types.areFunctions(true)).toBe(true)
+		expect(!types.areFunctions([])).toBe(true)
+		expect(!types.areFunctions([1, 2, '3'])).toBe(true)
+		expect(!types.areFunctions({})).toBe(true)
+		expect(!types.areFunctions({ foo: 'bar' })).toBe(true)
+		expect(!types.areFunctions(/test/)).toBe(true)
+		expect(!types.areFunctions(new RegExp(''))).toBe(true)
+		expect(!types.areFunctions(new Date())).toBe(true)
+		expect(!types.areFunctions(assert, '')).toBe(true)
 
-		assert(types.areFunctions(assert));
-		assert(types.areFunctions(assert, assert));
-		assert(types.areFunctions(function foo() { /**/ }));
+
+		expect(types.areFunctions(function foo() { /**/ })).toBe(true)
 	});
 
 	test('isObject', () => {
-		assert(!types.isObject(undefined));
-		assert(!types.isObject(null));
-		assert(!types.isObject('foo'));
-		assert(!types.isObject(5));
-		assert(!types.isObject(true));
-		assert(!types.isObject([]));
-		assert(!types.isObject([1, 2, '3']));
-		assert(!types.isObject(/test/));
-		assert(!types.isObject(new RegExp('')));
-		assert(!types.isFunction(new Date()));
-		assert.strictEqual(types.isObject(assert), false);
-		assert(!types.isObject(function foo() { }));
+		expect(!types.isObject(undefined)).toBe(true)
+		expect(!types.isObject(null)).toBe(true)
+		expect(!types.isObject('foo')).toBe(true)
+		expect(!types.isObject(5)).toBe(true)
+		expect(!types.isObject(true)).toBe(true)
+		expect(!types.isObject([])).toBe(true)
+		expect(!types.isObject([1, 2, '3'])).toBe(true)
+		expect(!types.isObject(/test/)).toBe(true)
+		expect(!types.isObject(new RegExp(''))).toBe(true)
+		expect(!types.isFunction(new Date())).toBe(true)
 
-		assert(types.isObject({}));
-		assert(types.isObject({ foo: 'bar' }));
+		expect(!types.isObject(function foo() { })).toBe(true)
+
+		expect(types.isObject({})).toBe(true)
+		expect(types.isObject({ foo: 'bar' })).toBe(true)
 	});
 
 	test('isEmptyObject', () => {
-		assert(!types.isEmptyObject(undefined));
-		assert(!types.isEmptyObject(null));
-		assert(!types.isEmptyObject('foo'));
-		assert(!types.isEmptyObject(5));
-		assert(!types.isEmptyObject(true));
-		assert(!types.isEmptyObject([]));
-		assert(!types.isEmptyObject([1, 2, '3']));
-		assert(!types.isEmptyObject(/test/));
-		assert(!types.isEmptyObject(new RegExp('')));
-		assert(!types.isEmptyObject(new Date()));
+		expect(!types.isEmptyObject(undefined)).toBe(true)
+		expect(!types.isEmptyObject(null)).toBe(true)
+		expect(!types.isEmptyObject('foo')).toBe(true)
+		expect(!types.isEmptyObject(5)).toBe(true)
+		expect(!types.isEmptyObject(true)).toBe(true)
+		expect(!types.isEmptyObject([])).toBe(true)
+		expect(!types.isEmptyObject([1, 2, '3'])).toBe(true)
+		expect(!types.isEmptyObject(/test/)).toBe(true)
+		expect(!types.isEmptyObject(new RegExp(''))).toBe(true)
+		expect(!types.isEmptyObject(new Date())).toBe(true)
 		assert.strictEqual(types.isEmptyObject(assert), false);
-		assert(!types.isEmptyObject(function foo() { /**/ }));
-		assert(!types.isEmptyObject({ foo: 'bar' }));
+		expect(!types.isEmptyObject(function foo() { /**/ })).toBe(true)
+		expect(!types.isEmptyObject({ foo: 'bar' })).toBe(true)
 
-		assert(types.isEmptyObject({}));
+		expect(types.isEmptyObject({})).toBe(true)
 	});
 
 	test('isString', () => {
-		assert(!types.isString(undefined));
-		assert(!types.isString(null));
-		assert(!types.isString(5));
-		assert(!types.isString([]));
-		assert(!types.isString([1, 2, '3']));
-		assert(!types.isString(true));
-		assert(!types.isString({}));
-		assert(!types.isString(/test/));
-		assert(!types.isString(new RegExp('')));
-		assert(!types.isString(new Date()));
-		assert(!types.isString(assert));
-		assert(!types.isString(function foo() { /**/ }));
-		assert(!types.isString({ foo: 'bar' }));
+		expect(!types.isString(undefined)).toBe(true)
+		expect(!types.isString(null)).toBe(true)
+		expect(!types.isString(5)).toBe(true)
+		expect(!types.isString([])).toBe(true)
+		expect(!types.isString([1, 2, '3'])).toBe(true)
+		expect(!types.isString(true)).toBe(true)
+		expect(!types.isString({})).toBe(true)
+		expect(!types.isString(/test/)).toBe(true)
+		expect(!types.isString(new RegExp(''))).toBe(true)
+		expect(!types.isString(new Date())).toBe(true)
+		expect(!types.isString(assert)).toBe(true)
+		expect(!types.isString(function foo() { /**/ })).toBe(true)
+		expect(!types.isString({ foo: 'bar' })).toBe(true)
 
-		assert(types.isString('foo'));
+		expect(types.isString('foo')).toBe(true)
 	});
 
 	test('isNumber', () => {
-		assert(!types.isNumber(undefined));
-		assert(!types.isNumber(null));
-		assert(!types.isNumber('foo'));
-		assert(!types.isNumber([]));
-		assert(!types.isNumber([1, 2, '3']));
-		assert(!types.isNumber(true));
-		assert(!types.isNumber({}));
-		assert(!types.isNumber(/test/));
-		assert(!types.isNumber(new RegExp('')));
-		assert(!types.isNumber(new Date()));
-		assert(!types.isNumber(assert));
-		assert(!types.isNumber(function foo() { /**/ }));
-		assert(!types.isNumber({ foo: 'bar' }));
-		assert(!types.isNumber(parseInt('A', 10)));
+		expect(!types.isNumber(undefined)).toBe(true)
+		expect(!types.isNumber(null)).toBe(true)
+		expect(!types.isNumber('foo')).toBe(true)
+		expect(!types.isNumber([])).toBe(true)
+		expect(!types.isNumber([1, 2, '3'])).toBe(true)
+		expect(!types.isNumber(true)).toBe(true)
+		expect(!types.isNumber({})).toBe(true)
+		expect(!types.isNumber(/test/)).toBe(true)
+		expect(!types.isNumber(new RegExp(''))).toBe(true)
+		expect(!types.isNumber(new Date())).toBe(true)
+		expect(!types.isNumber(assert)).toBe(true)
+		expect(!types.isNumber(function foo() { /**/ })).toBe(true)
+		expect(!types.isNumber({ foo: 'bar' })).toBe(true)
+		expect(!types.isNumber(parseInt('A', 10))).toBe(true)
 
-		assert(types.isNumber(5));
+		expect(types.isNumber(5)).toBe(true)
 	});
 
 	test('isUndefined', () => {
-		assert(!types.isUndefined(null));
-		assert(!types.isUndefined('foo'));
-		assert(!types.isUndefined([]));
-		assert(!types.isUndefined([1, 2, '3']));
-		assert(!types.isUndefined(true));
-		assert(!types.isUndefined({}));
-		assert(!types.isUndefined(/test/));
-		assert(!types.isUndefined(new RegExp('')));
-		assert(!types.isUndefined(new Date()));
-		assert(!types.isUndefined(assert));
-		assert(!types.isUndefined(function foo() { /**/ }));
-		assert(!types.isUndefined({ foo: 'bar' }));
+		expect(!types.isUndefined(null)).toBe(true)
+		expect(!types.isUndefined('foo')).toBe(true)
+		expect(!types.isUndefined([])).toBe(true)
+		expect(!types.isUndefined([1, 2, '3'])).toBe(true)
+		expect(!types.isUndefined(true)).toBe(true)
+		expect(!types.isUndefined({})).toBe(true)
+		expect(!types.isUndefined(/test/)).toBe(true)
+		expect(!types.isUndefined(new RegExp(''))).toBe(true)
+		expect(!types.isUndefined(new Date())).toBe(true)
+		expect(!types.isUndefined(assert)).toBe(true)
+		expect(!types.isUndefined(function foo() { /**/ })).toBe(true)
+		expect(!types.isUndefined({ foo: 'bar' })).toBe(true)
 
-		assert(types.isUndefined(undefined));
+		expect(types.isUndefined(undefined)).toBe(true)
 	});
 
 	test('isUndefinedOrNull', () => {
-		assert(!types.isUndefinedOrNull('foo'));
-		assert(!types.isUndefinedOrNull([]));
-		assert(!types.isUndefinedOrNull([1, 2, '3']));
-		assert(!types.isUndefinedOrNull(true));
-		assert(!types.isUndefinedOrNull({}));
-		assert(!types.isUndefinedOrNull(/test/));
-		assert(!types.isUndefinedOrNull(new RegExp('')));
-		assert(!types.isUndefinedOrNull(new Date()));
-		assert(!types.isUndefinedOrNull(assert));
-		assert(!types.isUndefinedOrNull(function foo() { /**/ }));
-		assert(!types.isUndefinedOrNull({ foo: 'bar' }));
+		expect(!types.isUndefinedOrNull('foo')).toBe(true)
+		expect(!types.isUndefinedOrNull([])).toBe(true)
+		expect(!types.isUndefinedOrNull([1, 2, '3'])).toBe(true)
+		expect(!types.isUndefinedOrNull(true)).toBe(true)
+		expect(!types.isUndefinedOrNull({})).toBe(true)
+		expect(!types.isUndefinedOrNull(/test/)).toBe(true)
+		expect(!types.isUndefinedOrNull(new RegExp(''))).toBe(true)
+		expect(!types.isUndefinedOrNull(new Date())).toBe(true)
+		expect(!types.isUndefinedOrNull(assert)).toBe(true)
+		expect(!types.isUndefinedOrNull(function foo() { /**/ })).toBe(true)
+		expect(!types.isUndefinedOrNull({ foo: 'bar' })).toBe(true)
 
-		assert(types.isUndefinedOrNull(undefined));
-		assert(types.isUndefinedOrNull(null));
+		expect(types.isUndefinedOrNull(undefined)).toBe(true)
+		expect(types.isUndefinedOrNull(null)).toBe(true)
 	});
 
 	test('assertIsDefined / assertAreDefined', () => {

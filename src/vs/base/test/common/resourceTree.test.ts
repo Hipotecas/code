@@ -20,24 +20,24 @@ describe('ResourceTree', function () {
 		assert.strictEqual(tree.root.childrenCount, 1);
 
 		const foo = tree.root.get('foo')!;
-		assert(foo);
+
 		assert.strictEqual(foo.childrenCount, 1);
 
 		const bar = foo.get('bar.txt')!;
-		assert(bar);
+
 		assert.strictEqual(bar.element, 'bar contents');
 
 		tree.add(URI.file('/hello.txt'), 'hello contents');
 		assert.strictEqual(tree.root.childrenCount, 2);
 
 		let hello = tree.root.get('hello.txt')!;
-		assert(hello);
+
 		assert.strictEqual(hello.element, 'hello contents');
 
 		tree.delete(URI.file('/foo/bar.txt'));
 		assert.strictEqual(tree.root.childrenCount, 1);
 		hello = tree.root.get('hello.txt')!;
-		assert(hello);
+
 		assert.strictEqual(hello.element, 'hello contents');
 	});
 
@@ -62,12 +62,12 @@ describe('ResourceTree', function () {
 
 		tree.delete(URI.file('/foo'));
 		assert.strictEqual(tree.root.childrenCount, 1);
-		assert(!tree.root.get('foo'));
+		expect(!tree.root.get('foo')).toBe(true);
 		assert.strictEqual(tree.root.get('bar')!.element, 'bar');
 
 		tree.delete(URI.file('/bar'));
 		assert.strictEqual(tree.root.childrenCount, 0);
-		assert(!tree.root.get('foo'));
-		assert(!tree.root.get('bar'));
+		expect(!tree.root.get('foo')).toBe(true);
+		expect(!tree.root.get('bar')).toBe(true);
 	});
 });

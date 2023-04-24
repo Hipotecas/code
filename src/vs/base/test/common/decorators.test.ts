@@ -109,7 +109,7 @@ describe('Decorators', () => {
 		const foo = new Foo();
 		assert.strictEqual(foo.answer, 42);
 
-		assert(!Object.keys(foo).some(k => /\$memoize\$/.test(k)));
+		expect(!Object.keys(foo).some(k => /\$memoize\$/.test(k))).toBe(true);
 	});
 
 	test('memoized property should not be writable', () => {

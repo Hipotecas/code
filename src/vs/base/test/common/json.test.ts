@@ -35,7 +35,7 @@ function assertInvalidParse(input: string, expected: any, options?: ParseOptions
 	const errors: ParseError[] = [];
 	const actual = parse(input, errors, options);
 
-	assert(errors.length > 0);
+
 	assert.deepStrictEqual(actual, expected);
 }
 

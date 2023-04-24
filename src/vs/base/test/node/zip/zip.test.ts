@@ -3,7 +3,6 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import * as assert from 'assert';
 import { tmpdir } from 'os';
 import { createCancelablePromise } from 'vs/base/common/async';
 import { FileAccess } from 'vs/base/common/network';
@@ -19,7 +18,7 @@ describe('Zip', () => {
 	beforeEach(() => {
 		testDir = getRandomTestPath(tmpdir(), 'vsctests', 'zip');
 
-		return Promises.mkdir(testDir, { recursive: true });
+		Promises.mkdir(testDir, { recursive: true });
 	});
 
 	afterEach(() => {
@@ -32,6 +31,6 @@ describe('Zip', () => {
 
 		await createCancelablePromise(token => extract(fixture, testDir, {}, token));
 		const doesExist = await Promises.exists(path.join(testDir, 'extension'));
-		assert(doesExist);
+		expect(doesExist).toBe(true);
 	});
 });

@@ -8,11 +8,11 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     // false to fix canvas node error
-    // threads: false,
+    threads: false,
     alias: [
       { find: 'vs', replacement: resolve('src/vs') },
     ],
     setupFiles: ['test/unit/setup.ts'],
-    exclude: ['out/**/*', 'node_modules/**/*']
+    exclude: ['out/**/*.test.js', 'node_modules/**/*']
   }
 })

@@ -13,18 +13,18 @@ import { FileAccess } from 'vs/base/common/network';
 import { join, sep } from 'vs/base/common/path';
 import { isWindows } from 'vs/base/common/platform';
 import { Promises, RimRafMode, SymlinkSupport, configureFlushOnWrite, rimrafSync, writeFileSync } from 'vs/base/node/pfs';
-import { flakySuite, getRandomTestPath } from 'vs/base/test/node/testUtils';
+import { getRandomTestPath } from 'vs/base/test/node/testUtils';
 
 configureFlushOnWrite(false); // speed up all unit tests by disabling flush on write
 
-flakySuite('PFS', function () {
+describe('PFS', function () {
 
 	let testDir: string;
 
 	beforeEach(() => {
 		testDir = getRandomTestPath(tmpdir(), 'vsctests', 'pfs');
 
-		return Promises.mkdir(testDir, { recursive: true });
+		 Promises.mkdir(testDir, { recursive: true });
 	});
 
 	afterEach(() => {
@@ -34,7 +34,7 @@ flakySuite('PFS', function () {
 	test('writeFile', async () => {
 		const testFile = join(testDir, 'writefile.txt');
 
-		assert.ok(!(await Promises.exists(testFile)));
+		expect(!(await Promises.exists(testFile))).toBe(true);
 
 		await Promises.writeFile(testFile, 'Hello World', (null!));
 

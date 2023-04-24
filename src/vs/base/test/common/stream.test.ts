@@ -11,24 +11,24 @@ import { consumeReadable, consumeStream, isReadable, isReadableBufferedStream, i
 describe('Stream', () => {
 
 	test('isReadable', () => {
-		assert.ok(!isReadable(undefined));
-		assert.ok(!isReadable(Object.create(null)));
-		assert.ok(isReadable(bufferToReadable(VSBuffer.fromString(''))));
+		expect(!isReadable(undefined)).toBeTruthy();
+		expect(!isReadable(Object.create(null))).toBeTruthy();
+		expect(isReadable(bufferToReadable(VSBuffer.fromString('')))).toBeTruthy();
 	});
 
 	test('isReadableStream', () => {
-		assert.ok(!isReadableStream(undefined));
-		assert.ok(!isReadableStream(Object.create(null)));
-		assert.ok(isReadableStream(newWriteableStream(d => d)));
+		expect(!isReadableStream(undefined)).toBeTruthy();
+		expect(!isReadableStream(Object.create(null))).toBeTruthy();
+		expect(isReadableStream(newWriteableStream(d => d))).toBeTruthy();
 	});
 
 	test('isReadableBufferedStream', async () => {
-		assert.ok(!isReadableBufferedStream(Object.create(null)));
+		expect(!isReadableBufferedStream(Object.create(null))).toBeTruthy();
 
 		const stream = newWriteableStream(d => d);
 		stream.end();
 		const bufferedStream = await peekStream(stream, 1);
-		assert.ok(isReadableBufferedStream(bufferedStream));
+		expect(isReadableBufferedStream(bufferedStream)).toBeTruthy();
 	});
 
 	test('WriteableStream - basics', () => {
@@ -104,7 +104,7 @@ describe('Stream', () => {
 		stream.end(new Error('error'));
 
 		const result = await consumeStream(stream, reducer);
-		assert.ok(result instanceof Error);
+		expect(result instanceof Error).toBeTruthy();
 	});
 
 	test('WriteableStream - removeListener', () => {
@@ -147,19 +147,19 @@ describe('Stream', () => {
 		const stream = newWriteableStream<string>(strings => strings.join(), { highWaterMark: 3 });
 
 		let res = stream.write('1');
-		assert.ok(!res);
+		expect(!res).toBeTruthy();
 
 		res = stream.write('2');
-		assert.ok(!res);
+		expect(!res).toBeTruthy();
 
 		res = stream.write('3');
-		assert.ok(!res);
+		expect(!res).toBeTruthy();
 
 		const promise1 = stream.write('4');
-		assert.ok(promise1 instanceof Promise);
+		expect(promise1 instanceof Promise).toBeTruthy();
 
 		const promise2 = stream.write('5');
-		assert.ok(promise2 instanceof Promise);
+		expect(promise2 instanceof Promise).toBeTruthy();
 
 		let drained1 = false;
 		(async () => {
@@ -177,7 +177,7 @@ describe('Stream', () => {
 		stream.on('data', chunk => {
 			data = chunk;
 		});
-		assert.ok(data);
+		expect(data).toBeTruthy();
 
 		await timeout(0);
 		assert.strictEqual(drained1, true);
@@ -229,7 +229,7 @@ describe('Stream', () => {
 		stream.error(new Error());
 		await promise;
 
-		assert.ok(error);
+		expect(error).toBeTruthy();
 
 		// 1 Chunk
 		stream = newWriteableStream(data => data);
@@ -247,7 +247,7 @@ describe('Stream', () => {
 		stream.error(new Error());
 		await promise;
 
-		assert.ok(error);
+		expect(error).toBeTruthy();
 
 		// 2 Chunks
 		stream = newWriteableStream(data => data);
@@ -266,11 +266,11 @@ describe('Stream', () => {
 		stream.error(new Error());
 		await promise;
 
-		assert.ok(!error);
+		expect(!error).toBeTruthy();
 
 		stream.on('error', err => error = err);
 		stream.on('data', chunk => { });
-		assert.ok(error);
+		expect(error).toBeTruthy();
 	});
 
 	function arrayToReadable<T>(array: T[]): Readable<T> {
@@ -509,6 +509,6 @@ describe('Stream', () => {
 		} catch (e) {
 			error = e;
 		}
-		assert.ok(error);
+		expect(error).toBeTruthy();
 	});
 });

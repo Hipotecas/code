@@ -2,7 +2,7 @@
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-
+// @vitest-environment node
 import * as assert from 'assert';
 import * as async from 'vs/base/common/async';
 import { CancellationToken, CancellationTokenSource } from 'vs/base/common/cancellation';
@@ -167,19 +167,19 @@ describe('Async', () => {
 			const delayer = new async.Delayer(0);
 			const promises: Promise<any>[] = [];
 
-			assert(!delayer.isTriggered());
+			expect(!delayer.isTriggered()).toBe(true);
 
-			promises.push(delayer.trigger(factory).then((result) => { assert.strictEqual(result, 1); assert(!delayer.isTriggered()); }));
-			assert(delayer.isTriggered());
+			promises.push(delayer.trigger(factory).then((result) => { assert.strictEqual(result, 1); expect(!delayer.isTriggered()).toBe(true); }));
+			expect(delayer.isTriggered()).toBe(true);
 
-			promises.push(delayer.trigger(factory).then((result) => { assert.strictEqual(result, 1); assert(!delayer.isTriggered()); }));
-			assert(delayer.isTriggered());
+			promises.push(delayer.trigger(factory).then((result) => { assert.strictEqual(result, 1); expect(!delayer.isTriggered()).toBe(true); }));
+			expect(delayer.isTriggered()).toBe(true);
 
-			promises.push(delayer.trigger(factory).then((result) => { assert.strictEqual(result, 1); assert(!delayer.isTriggered()); }));
-			assert(delayer.isTriggered());
+			promises.push(delayer.trigger(factory).then((result) => { assert.strictEqual(result, 1); expect(!delayer.isTriggered()).toBe(true); }));
+			expect(delayer.isTriggered()).toBe(true);
 
 			return Promise.all(promises).then(() => {
-				assert(!delayer.isTriggered());
+				expect(!delayer.isTriggered()).toBe(true);
 			});
 		});
 
@@ -192,19 +192,19 @@ describe('Async', () => {
 			const delayer = new async.Delayer(MicrotaskDelay.MicrotaskDelay);
 			const promises: Promise<any>[] = [];
 
-			assert(!delayer.isTriggered());
+			expect(!delayer.isTriggered()).toBe(true);
 
-			promises.push(delayer.trigger(factory).then((result) => { assert.strictEqual(result, 1); assert(!delayer.isTriggered()); }));
-			assert(delayer.isTriggered());
+			promises.push(delayer.trigger(factory).then((result) => { assert.strictEqual(result, 1); expect(!delayer.isTriggered()).toBe(true); }));
+			expect(delayer.isTriggered()).toBe(true);
 
-			promises.push(delayer.trigger(factory).then((result) => { assert.strictEqual(result, 1); assert(!delayer.isTriggered()); }));
-			assert(delayer.isTriggered());
+			promises.push(delayer.trigger(factory).then((result) => { assert.strictEqual(result, 1); expect(!delayer.isTriggered()).toBe(true); }));
+			expect(delayer.isTriggered()).toBe(true);
 
-			promises.push(delayer.trigger(factory).then((result) => { assert.strictEqual(result, 1); assert(!delayer.isTriggered()); }));
-			assert(delayer.isTriggered());
+			promises.push(delayer.trigger(factory).then((result) => { assert.strictEqual(result, 1); expect(!delayer.isTriggered()).toBe(true); }));
+			expect(delayer.isTriggered()).toBe(true);
 
 			return Promise.all(promises).then(() => {
-				assert(!delayer.isTriggered());
+				expect(!delayer.isTriggered()).toBe(true);
 			});
 		});
 
@@ -231,17 +231,17 @@ describe('Async', () => {
 
 			const delayer = new async.Delayer(0);
 
-			assert(!delayer.isTriggered());
+			expect(!delayer.isTriggered()).toBe(true);
 
 			const p = delayer.trigger(factory).then(() => {
-				assert(false);
+				console.log(false);
 			}, () => {
-				assert(true, 'yes, it was cancelled');
+				console.log(true, 'yes, it was cancelled');
 			});
 
-			assert(delayer.isTriggered());
+			expect(delayer.isTriggered()).toBe(true);
 			delayer.cancel();
-			assert(!delayer.isTriggered());
+			expect(!delayer.isTriggered()).toBe(true);
 
 			return p;
 		});
@@ -254,17 +254,17 @@ describe('Async', () => {
 
 			const delayer = new async.Delayer(MicrotaskDelay.MicrotaskDelay);
 
-			assert(!delayer.isTriggered());
+			expect(!delayer.isTriggered()).toBe(true);
 
 			const p = delayer.trigger(factory).then(() => {
-				assert(false);
+				console.log(false);
 			}, () => {
-				assert(true, 'yes, it was cancelled');
+				console.log(true, 'yes, it was cancelled');
 			});
 
-			assert(delayer.isTriggered());
+			expect(delayer.isTriggered()).toBe(true);
 			delayer.cancel();
-			assert(!delayer.isTriggered());
+			expect(!delayer.isTriggered()).toBe(true);
 
 			return p;
 		});
@@ -278,21 +278,21 @@ describe('Async', () => {
 			const delayer = new async.Delayer(0);
 			const promises: Promise<any>[] = [];
 
-			assert(!delayer.isTriggered());
+			expect(!delayer.isTriggered()).toBe(true);
 
-			promises.push(delayer.trigger(factory).then(undefined, () => { assert(true, 'yes, it was cancelled'); }));
-			assert(delayer.isTriggered());
+			promises.push(delayer.trigger(factory).then(undefined, () => { console.log(true, 'yes, it was cancelled'); }));
+			expect(delayer.isTriggered()).toBe(true);
 
-			promises.push(delayer.trigger(factory).then(undefined, () => { assert(true, 'yes, it was cancelled'); }));
-			assert(delayer.isTriggered());
+			promises.push(delayer.trigger(factory).then(undefined, () => { console.log(true, 'yes, it was cancelled'); }));
+			expect(delayer.isTriggered()).toBe(true);
 
-			promises.push(delayer.trigger(factory).then(undefined, () => { assert(true, 'yes, it was cancelled'); }));
-			assert(delayer.isTriggered());
+			promises.push(delayer.trigger(factory).then(undefined, () => { console.log(true, 'yes, it was cancelled'); }));
+			expect(delayer.isTriggered()).toBe(true);
 
 			delayer.cancel();
 
 			return Promise.all(promises).then(() => {
-				assert(!delayer.isTriggered());
+				expect(!delayer.isTriggered()).toBe(true);
 			});
 		});
 
@@ -305,36 +305,36 @@ describe('Async', () => {
 			const delayer = new async.Delayer(0);
 			let promises: Promise<any>[] = [];
 
-			assert(!delayer.isTriggered());
+			expect(!delayer.isTriggered()).toBe(true);
 
 			const p = delayer.trigger(factory).then((result) => {
 				assert.strictEqual(result, 1);
-				assert(!delayer.isTriggered());
+				expect(!delayer.isTriggered()).toBe(true);
 
-				promises.push(delayer.trigger(factory).then(undefined, () => { assert(true, 'yes, it was cancelled'); }));
-				assert(delayer.isTriggered());
+				promises.push(delayer.trigger(factory).then(undefined, () => { console.log(true, 'yes, it was cancelled'); }));
+				expect(delayer.isTriggered()).toBe(true);
 
-				promises.push(delayer.trigger(factory).then(undefined, () => { assert(true, 'yes, it was cancelled'); }));
-				assert(delayer.isTriggered());
+				promises.push(delayer.trigger(factory).then(undefined, () => { console.log(true, 'yes, it was cancelled'); }));
+				expect(delayer.isTriggered()).toBe(true);
 
 				delayer.cancel();
 
 				const p = Promise.all(promises).then(() => {
 					promises = [];
 
-					assert(!delayer.isTriggered());
+					expect(!delayer.isTriggered()).toBe(true);
 
-					promises.push(delayer.trigger(factory).then(() => { assert.strictEqual(result, 1); assert(!delayer.isTriggered()); }));
-					assert(delayer.isTriggered());
+					promises.push(delayer.trigger(factory).then(() => { assert.strictEqual(result, 1); expect(!delayer.isTriggered()).toBe(true); }));
+					expect(delayer.isTriggered()).toBe(true);
 
-					promises.push(delayer.trigger(factory).then(() => { assert.strictEqual(result, 1); assert(!delayer.isTriggered()); }));
-					assert(delayer.isTriggered());
+					promises.push(delayer.trigger(factory).then(() => { assert.strictEqual(result, 1); expect(!delayer.isTriggered()).toBe(true); }));
+					expect(delayer.isTriggered()).toBe(true);
 
 					const p = Promise.all(promises).then(() => {
-						assert(!delayer.isTriggered());
+						expect(!delayer.isTriggered()).toBe(true);
 					});
 
-					assert(delayer.isTriggered());
+					expect(delayer.isTriggered()).toBe(true);
 
 					return p;
 				});
@@ -342,7 +342,7 @@ describe('Async', () => {
 				return p;
 			});
 
-			assert(delayer.isTriggered());
+			expect(delayer.isTriggered()).toBe(true);
 
 			return p;
 		});
@@ -355,17 +355,17 @@ describe('Async', () => {
 			const delayer = new async.Delayer(0);
 			const promises: Promise<any>[] = [];
 
-			assert(!delayer.isTriggered());
+			expect(!delayer.isTriggered()).toBe(true);
 
 			promises.push(delayer.trigger(factoryFactory(1)).then((n) => { assert.strictEqual(n, 3); }));
 			promises.push(delayer.trigger(factoryFactory(2)).then((n) => { assert.strictEqual(n, 3); }));
 			promises.push(delayer.trigger(factoryFactory(3)).then((n) => { assert.strictEqual(n, 3); }));
 
 			const p = Promise.all(promises).then(() => {
-				assert(!delayer.isTriggered());
+				expect(!delayer.isTriggered()).toBe(true);
 			});
 
-			assert(delayer.isTriggered());
+			expect(delayer.isTriggered()).toBe(true);
 
 			return p;
 		});
@@ -399,7 +399,7 @@ describe('Async', () => {
 			let activePromises = 0;
 			const factoryFactory = (n: number) => () => {
 				activePromises++;
-				assert(activePromises < 6);
+				expect(activePromises < 6).toBe(true);
 				return async.timeout(0).then(() => { activePromises--; return n; });
 			};
 

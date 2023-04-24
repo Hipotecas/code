@@ -18,38 +18,38 @@ describe('Lifecycle', () => {
 	test('dispose single disposable', () => {
 		const disposable = new Disposable();
 
-		assert(!disposable.isDisposed);
+		expect(!disposable.isDisposed).toBe(true);
 
 		dispose(disposable);
 
-		assert(disposable.isDisposed);
+		expect(disposable.isDisposed).toBe(true);
 	});
 
 	test('dispose disposable array', () => {
 		const disposable = new Disposable();
 		const disposable2 = new Disposable();
 
-		assert(!disposable.isDisposed);
-		assert(!disposable2.isDisposed);
+		expect(!disposable.isDisposed).toBe(true);
+		expect(!disposable2.isDisposed).toBe(true);
 
 		dispose([disposable, disposable2]);
 
-		assert(disposable.isDisposed);
-		assert(disposable2.isDisposed);
+		expect(disposable.isDisposed).toBe(true);
+		expect(disposable2.isDisposed).toBe(true);
 	});
 
 	test('dispose disposables', () => {
 		const disposable = new Disposable();
 		const disposable2 = new Disposable();
 
-		assert(!disposable.isDisposed);
-		assert(!disposable2.isDisposed);
+		expect(!disposable.isDisposed).toBe(true);
+		expect(!disposable2.isDisposed).toBe(true);
 
 		dispose(disposable);
 		dispose(disposable2);
 
-		assert(disposable.isDisposed);
-		assert(disposable2.isDisposed);
+		expect(disposable.isDisposed).toBe(true);
+		expect(disposable2.isDisposed).toBe(true);
 	});
 
 	test('dispose array should dispose all if a child throws on dispose', () => {
@@ -186,7 +186,6 @@ describe('Reference Collection', () => {
 		const collection = new Collection();
 
 		const ref1 = collection.acquire('test');
-		assert(ref1);
 		assert.strictEqual(ref1.object, 4);
 		assert.strictEqual(collection.count, 1);
 		ref1.dispose();

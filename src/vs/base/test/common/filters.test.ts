@@ -7,14 +7,14 @@ import { anyScore, createMatches, fuzzyScore, fuzzyScoreGraceful, fuzzyScoreGrac
 
 function filterOk(filter: IFilter, word: string, wordToMatchAgainst: string, highlights?: { start: number; end: number }[]) {
 	const r = filter(word, wordToMatchAgainst);
-	assert(r, `${word} didn't match ${wordToMatchAgainst}`);
+	expect(r, `${word} didn't match ${wordToMatchAgainst}`).toBeTruthy();
 	if (highlights) {
 		assert.deepStrictEqual(r, highlights);
 	}
 }
 
 function filterNotOk(filter: IFilter, word: string, wordToMatchAgainst: string) {
-	assert(!filter(word, wordToMatchAgainst), `${word} matched ${wordToMatchAgainst}`);
+	expect(!filter(word, wordToMatchAgainst), `${word} matched ${wordToMatchAgainst}`).toBe(true);
 }
 
 describe('Filters', () => {
@@ -143,9 +143,9 @@ describe('Filters', () => {
 	});
 
 	test('CamelCaseFilter - #19256', function () {
-		assert(matchesCamelCase('Debug Console', 'Open: Debug Console'));
-		assert(matchesCamelCase('Debug console', 'Open: Debug Console'));
-		assert(matchesCamelCase('debug console', 'Open: Debug Console'));
+		expect(matchesCamelCase('Debug Console', 'Open: Debug Console')).toBeTruthy();
+		expect(matchesCamelCase('Debug console', 'Open: Debug Console')).toBeTruthy();
+		expect(matchesCamelCase('debug console', 'Open: Debug Console')).toBeTruthy();
 	});
 
 	test('matchesContiguousSubString', () => {
@@ -182,7 +182,7 @@ describe('Filters', () => {
 		filterNotOk(matchesWords, 'x', 'alpha');
 		filterOk(matchesWords, 'A', 'alpha', [{ start: 0, end: 1 }]);
 		filterOk(matchesWords, 'AlPh', 'alPHA', [{ start: 0, end: 4 }]);
-		assert(matchesWords('Debug Console', 'Open: Debug Console'));
+		expect(matchesWords('Debug Console', 'Open: Debug Console')).toBeTruthy();
 
 		filterOk(matchesWords, 'gp', 'Git: Pull', [{ start: 0, end: 1 }, { start: 5, end: 6 }]);
 		filterOk(matchesWords, 'g p', 'Git: Pull', [{ start: 0, end: 1 }, { start: 5, end: 6 }]);

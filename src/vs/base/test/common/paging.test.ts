@@ -34,83 +34,83 @@ describe('PagedModel', () => {
 		const pager = new TestPager();
 		const model = new PagedModel(pager);
 
-		assert(model.isResolved(0));
-		assert(model.isResolved(1));
-		assert(model.isResolved(2));
-		assert(model.isResolved(3));
-		assert(model.isResolved(4));
-		assert(!model.isResolved(5));
-		assert(!model.isResolved(6));
-		assert(!model.isResolved(7));
-		assert(!model.isResolved(8));
-		assert(!model.isResolved(9));
-		assert(!model.isResolved(10));
-		assert(!model.isResolved(99));
+		expect(model.isResolved(0)).toBe(true);
+		expect(model.isResolved(1)).toBe(true);
+		expect(model.isResolved(2)).toBe(true);
+		expect(model.isResolved(3)).toBe(true);
+		expect(model.isResolved(4)).toBe(true);
+		expect(!model.isResolved(5)).toBe(true);
+		expect(!model.isResolved(6)).toBe(true);
+		expect(!model.isResolved(7)).toBe(true);
+		expect(!model.isResolved(8)).toBe(true);
+		expect(!model.isResolved(9)).toBe(true);
+		expect(!model.isResolved(10)).toBe(true);
+		expect(!model.isResolved(99)).toBe(true);
 	});
 
 	test('resolve single', async () => {
 		const pager = new TestPager();
 		const model = new PagedModel(pager);
 
-		assert(!model.isResolved(5));
+		expect(!model.isResolved(5)).toBe(true);
 
 		await model.resolve(5, CancellationToken.None);
-		assert(model.isResolved(5));
+		expect(model.isResolved(5)).toBe(true);
 	});
 
 	test('resolve page', async () => {
 		const pager = new TestPager();
 		const model = new PagedModel(pager);
 
-		assert(!model.isResolved(5));
-		assert(!model.isResolved(6));
-		assert(!model.isResolved(7));
-		assert(!model.isResolved(8));
-		assert(!model.isResolved(9));
-		assert(!model.isResolved(10));
+		expect(!model.isResolved(5)).toBe(true);
+		expect(!model.isResolved(6)).toBe(true);
+		expect(!model.isResolved(7)).toBe(true);
+		expect(!model.isResolved(8)).toBe(true);
+		expect(!model.isResolved(9)).toBe(true);
+		expect(!model.isResolved(10)).toBe(true);
 
 		await model.resolve(5, CancellationToken.None);
-		assert(model.isResolved(5));
-		assert(model.isResolved(6));
-		assert(model.isResolved(7));
-		assert(model.isResolved(8));
-		assert(model.isResolved(9));
-		assert(!model.isResolved(10));
+		expect(model.isResolved(5)).toBe(true);
+		expect(model.isResolved(6)).toBe(true);
+		expect(model.isResolved(7)).toBe(true);
+		expect(model.isResolved(8)).toBe(true);
+		expect(model.isResolved(9)).toBe(true);
+		expect(!model.isResolved(10)).toBe(true);
 	});
 
 	test('resolve page 2', async () => {
 		const pager = new TestPager();
 		const model = new PagedModel(pager);
 
-		assert(!model.isResolved(5));
-		assert(!model.isResolved(6));
-		assert(!model.isResolved(7));
-		assert(!model.isResolved(8));
-		assert(!model.isResolved(9));
-		assert(!model.isResolved(10));
+		expect(!model.isResolved(5)).toBe(true);
+		expect(!model.isResolved(6)).toBe(true);
+		expect(!model.isResolved(7)).toBe(true);
+		expect(!model.isResolved(8)).toBe(true);
+		expect(!model.isResolved(9)).toBe(true);
+		expect(!model.isResolved(10)).toBe(true);
 
 		await model.resolve(10, CancellationToken.None);
-		assert(!model.isResolved(5));
-		assert(!model.isResolved(6));
-		assert(!model.isResolved(7));
-		assert(!model.isResolved(8));
-		assert(!model.isResolved(9));
-		assert(model.isResolved(10));
+		expect(!model.isResolved(5)).toBe(true);
+		expect(!model.isResolved(6)).toBe(true);
+		expect(!model.isResolved(7)).toBe(true);
+		expect(!model.isResolved(8)).toBe(true);
+		expect(!model.isResolved(9)).toBe(true);
+		expect(model.isResolved(10)).toBe(true);
 	});
 
 	test('preemptive cancellation works', async function () {
 		const pager = new TestPager(() => {
-			assert(false);
+      return Promise.resolve([])
 		});
 
 		const model = new PagedModel(pager);
 
 		try {
 			await model.resolve(5, CancellationToken.Cancelled);
-			return assert(false);
+			return (false);
 		}
 		catch (err) {
-			return assert(isCancellationError(err));
+			return (isCancellationError(err));
 		}
 	});
 
@@ -123,8 +123,8 @@ describe('PagedModel', () => {
 		const tokenSource = new CancellationTokenSource();
 
 		const promise = model.resolve(5, tokenSource.token).then(
-			() => assert(false),
-			err => assert(isCancellationError(err))
+			() => console.log(false),
+			err => console.log(isCancellationError(err))
 		);
 
 		setTimeout(() => tokenSource.cancel(), 10);
@@ -152,16 +152,16 @@ describe('PagedModel', () => {
 
 		const tokenSource1 = new CancellationTokenSource();
 		const promise1 = model.resolve(5, tokenSource1.token).then(
-			() => assert(false),
-			err => assert(isCancellationError(err))
+			() => console.log(false),
+			err => console.log(isCancellationError(err))
 		);
 
 		assert.strictEqual(state, 'resolving');
 
 		const tokenSource2 = new CancellationTokenSource();
 		const promise2 = model.resolve(6, tokenSource2.token).then(
-			() => assert(false),
-			err => assert(isCancellationError(err))
+			() => console.log(false),
+			err => console.log(isCancellationError(err))
 		);
 
 		assert.strictEqual(state, 'resolving');

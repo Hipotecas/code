@@ -80,7 +80,7 @@ function lcsTest(originalStr: string, modifiedStr: string, answerStr: string) {
 
 describe('Diff', () => {
 	test('LcsDiff - different strings tests', function () {
-		this.timeout(10000);
+
 		lcsTest('heLLo world', 'hello orlando', 'heo orld');
 		lcsTest('abcde', 'acd', 'acd'); // simple
 		lcsTest('abcdbce', 'bcede', 'bcde'); // skip
@@ -126,7 +126,7 @@ describe('Diff - Ported from VS', () => {
 
 		// Cancel after the first match ('c')
 		diff = new LcsDiff(new StringDiffSequence(left), new StringDiffSequence(right), function (leftIndex, longestMatchSoFar) {
-			assert(longestMatchSoFar <= 1); // We never see a match of length > 1
+			expect(longestMatchSoFar <= 1).toBe(true); // We never see a match of length > 1
 
 			// Continue processing as long as there hasn't been a match made.
 			return longestMatchSoFar < 1;
@@ -139,7 +139,7 @@ describe('Diff - Ported from VS', () => {
 
 		// Cancel after the second match ('d')
 		diff = new LcsDiff(new StringDiffSequence(left), new StringDiffSequence(right), function (leftIndex, longestMatchSoFar) {
-			assert(longestMatchSoFar <= 2); // We never see a match of length > 2
+			expect(longestMatchSoFar <= 2).toBe(true); // We never see a match of length > 2
 
 			// Continue processing as long as there hasn't been a match made.
 			return longestMatchSoFar < 2;
@@ -153,7 +153,7 @@ describe('Diff - Ported from VS', () => {
 		// Cancel *one iteration* after the second match ('d')
 		let hitSecondMatch = false;
 		diff = new LcsDiff(new StringDiffSequence(left), new StringDiffSequence(right), function (leftIndex, longestMatchSoFar) {
-			assert(longestMatchSoFar <= 2); // We never see a match of length > 2
+			expect(longestMatchSoFar <= 2).toBe(true); // We never see a match of length > 2
 
 			const hitYet = hitSecondMatch;
 			hitSecondMatch = longestMatchSoFar > 1;
@@ -168,7 +168,7 @@ describe('Diff - Ported from VS', () => {
 
 		// Cancel after the third and final match ('e')
 		diff = new LcsDiff(new StringDiffSequence(left), new StringDiffSequence(right), function (leftIndex, longestMatchSoFar) {
-			assert(longestMatchSoFar <= 3); // We never see a match of length > 3
+			expect(longestMatchSoFar <= 3).toBe(true) // We never see a match of length > 3
 
 			// Continue processing as long as there hasn't been a match made.
 			return longestMatchSoFar < 3;

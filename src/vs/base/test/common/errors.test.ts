@@ -19,9 +19,9 @@ describe('Errors', () => {
 		assert.strictEqual(toErrorMessage(error), 'Foo Bar');
 		assert.strictEqual(toErrorMessage(error, true), 'Foo Bar');
 
-		assert(toErrorMessage());
-		assert(toErrorMessage(null));
-		assert(toErrorMessage({}));
+		expect(toErrorMessage()).toBeTruthy();
+		expect(toErrorMessage(null)).toBeTruthy();
+		expect(toErrorMessage({})).toBeTruthy();
 
 		try {
 			throw new Error();

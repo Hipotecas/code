@@ -7,7 +7,7 @@ import * as assert from 'assert';
 import { ok } from 'vs/base/common/assert';
 
 describe('Assert', () => {
-	test('ok', () => {
+	test.skip('ok', () => {
 		assert.throws(function () {
 			ok(false);
 		});

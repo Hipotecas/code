@@ -9,7 +9,7 @@ const patterns = ['cci', 'ida', 'pos', 'CCI', 'enbled', 'callback', 'gGame', 'co
 
 const _enablePerf = false;
 
-function perfSuite(name: string, callback: (this: Mocha.Suite) => void) {
+function perfSuite(name: string, callback: () => void) {
 	if (_enablePerf) {
 		describe(name, callback);
 	}
