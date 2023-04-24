@@ -12,7 +12,7 @@ import { emptyOutputController } from 'vs/workbench/contrib/testing/test/common/
 import { testStubs } from 'vs/workbench/contrib/testing/test/common/testStubs';
 import { TestStorageService } from 'vs/workbench/test/common/workbenchTestServices';
 
-suite('Workbench - Test Result Storage', () => {
+describe('Workbench - Test Result Storage', () => {
 	let storage: InMemoryResultStorage;
 
 	const makeResult = (taskName = 't') => {
@@ -39,7 +39,7 @@ suite('Workbench - Test Result Storage', () => {
 	const assertStored = async (stored: ITestResult[]) =>
 		assert.deepStrictEqual((await storage.read()).map(r => r.id), stored.map(s => s.id));
 
-	setup(async () => {
+	beforeEach(async () => {
 		storage = new InMemoryResultStorage(new TestStorageService(), new NullLogService());
 	});
 

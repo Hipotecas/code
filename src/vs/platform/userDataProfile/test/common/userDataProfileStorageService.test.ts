@@ -7,11 +7,11 @@ import * as assert from 'assert';
 import { Emitter, Event } from 'vs/base/common/event';
 import { DisposableStore } from 'vs/base/common/lifecycle';
 import { URI } from 'vs/base/common/uri';
-import { InMemoryStorageDatabase, IStorageItemsChangeEvent, IUpdateRequest, Storage } from 'vs/base/parts/storage/common/storage';
-import { AbstractUserDataProfileStorageService, IUserDataProfileStorageService } from 'vs/platform/userDataProfile/common/userDataProfileStorageService';
-import { InMemoryStorageService, loadKeyTargets, StorageTarget, TARGET_KEY } from 'vs/platform/storage/common/storage';
-import { IUserDataProfile, toUserDataProfile } from 'vs/platform/userDataProfile/common/userDataProfile';
+import { IStorageItemsChangeEvent, IUpdateRequest, InMemoryStorageDatabase, Storage } from 'vs/base/parts/storage/common/storage';
 import { runWithFakedTimers } from 'vs/base/test/common/timeTravelScheduler';
+import { InMemoryStorageService, StorageTarget, TARGET_KEY, loadKeyTargets } from 'vs/platform/storage/common/storage';
+import { IUserDataProfile, toUserDataProfile } from 'vs/platform/userDataProfile/common/userDataProfile';
+import { AbstractUserDataProfileStorageService, IUserDataProfileStorageService } from 'vs/platform/userDataProfile/common/userDataProfileStorageService';
 
 class TestStorageDatabase extends InMemoryStorageDatabase {
 
@@ -46,20 +46,20 @@ export class TestUserDataProfileStorageService extends AbstractUserDataProfileSt
 	protected override async closeAndDispose(): Promise<void> { }
 }
 
-suite('ProfileStorageService', () => {
+describe('ProfileStorageService', () => {
 
 	const disposables = new DisposableStore();
 	const profile = toUserDataProfile('test', 'test', URI.file('foo'), URI.file('cache'));
 	let testObject: TestUserDataProfileStorageService;
 	let storage: Storage;
 
-	setup(async () => {
+	beforeEach(async () => {
 		testObject = disposables.add(new TestUserDataProfileStorageService(new InMemoryStorageService()));
 		storage = new Storage(await testObject.setupStorageDatabase(profile));
 		await storage.init();
 	});
 
-	teardown(() => disposables.clear());
+	afterEach(() => disposables.clear());
 
 	test('read empty storage', () => runWithFakedTimers<void>({ useFakeTimers: true }, async () => {
 		const actual = await testObject.readStorageData(profile);

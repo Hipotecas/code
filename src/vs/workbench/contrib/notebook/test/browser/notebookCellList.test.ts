@@ -7,18 +7,18 @@ import * as assert from 'assert';
 import { DisposableStore } from 'vs/base/common/lifecycle';
 import { IConfigurationService } from 'vs/platform/configuration/common/configuration';
 import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
+import { NotebookOptions } from 'vs/workbench/contrib/notebook/browser/notebookOptions';
 import { CellKind } from 'vs/workbench/contrib/notebook/common/notebookCommon';
 import { INotebookExecutionStateService } from 'vs/workbench/contrib/notebook/common/notebookExecutionStateService';
-import { NotebookOptions } from 'vs/workbench/contrib/notebook/browser/notebookOptions';
 import { createNotebookCellList, setupInstantiationService, withTestNotebook } from 'vs/workbench/contrib/notebook/test/browser/testNotebookEditor';
 
-suite('NotebookCellList', () => {
+describe('NotebookCellList', () => {
 	let disposables: DisposableStore;
 	let instantiationService: TestInstantiationService;
 	let notebookDefaultOptions: NotebookOptions;
 	let topInsertToolbarHeight: number;
 
-	suiteSetup(() => {
+	describeSetup(() => {
 		disposables = new DisposableStore();
 		instantiationService = setupInstantiationService(disposables);
 		notebookDefaultOptions = new NotebookOptions(instantiationService.get(IConfigurationService), instantiationService.get(INotebookExecutionStateService));
@@ -26,7 +26,7 @@ suite('NotebookCellList', () => {
 
 	});
 
-	suiteTeardown(() => disposables.dispose());
+	describeTeardown(() => disposables.dispose());
 
 	test('revealElementsInView: reveal fully visible cell should not scroll', async function () {
 		await withTestNotebook(

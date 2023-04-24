@@ -14,7 +14,7 @@ interface IGeneratedEdit {
 	text: string;
 }
 
-suite('TextChangeCompressor', () => {
+describe('TextChangeCompressor', () => {
 
 	function getResultingContent(initialContent: string, edits: IGeneratedEdit[]): string {
 		let content = initialContent;
@@ -281,7 +281,7 @@ suite('TextChangeCompressor', () => {
 	}
 });
 
-suite('TextChange', () => {
+describe('TextChange', () => {
 
 	test('issue #118041: unicode character undo bug', () => {
 		const textChange = new TextChange(428, '﻿', 428, '');

@@ -3,13 +3,12 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import * as assert from 'assert';
 import { ensureNoDisposablesAreLeakedInTestSuite } from 'vs/base/test/common/utils';
 import { Range } from 'vs/editor/common/core/range';
 import { UnicodeHighlighterOptions, UnicodeTextModelHighlighter } from 'vs/editor/common/services/unicodeTextModelHighlighter';
 import { createTextModel } from 'vs/editor/test/common/testTextModel';
 
-suite('UnicodeTextModelHighlighter', () => {
+describe('UnicodeTextModelHighlighter', () => {
 	ensureNoDisposablesAreLeakedInTestSuite();
 
 	function t(text: string, options: UnicodeHighlighterOptions): unknown {
@@ -24,7 +23,7 @@ suite('UnicodeTextModelHighlighter', () => {
 	}
 
 	test('computeUnicodeHighlights (#168068)', () => {
-		assert.deepStrictEqual(
+		expect(
 			t(`
 	For å gi et eksempel
 `, {
@@ -36,7 +35,9 @@ suite('UnicodeTextModelHighlighter', () => {
 				includeStrings: false,
 				nonBasicASCII: false
 			}),
-			{
+
+		).toStrictEqual(
+      {
 				ambiguousCharacterCount: 0,
 				hasMore: false,
 				invisibleCharacterCount: 4,
@@ -48,6 +49,6 @@ suite('UnicodeTextModelHighlighter', () => {
 					'[2,13 -> 2,14]'
 				]
 			}
-		);
+    );
 	});
 });

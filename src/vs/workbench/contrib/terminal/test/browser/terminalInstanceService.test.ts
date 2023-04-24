@@ -5,22 +5,22 @@
 
 import { deepStrictEqual } from 'assert';
 import { URI } from 'vs/base/common/uri';
-import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
-import { IContextKeyService } from 'vs/platform/contextkey/common/contextkey';
-import { ContextKeyService } from 'vs/platform/contextkey/browser/contextKeyService';
-import { ITerminalInstanceService } from 'vs/workbench/contrib/terminal/browser/terminal';
-import { TerminalInstanceService } from 'vs/workbench/contrib/terminal/browser/terminalInstanceService';
-import { ITerminalProfile } from 'vs/platform/terminal/common/terminal';
 import { IConfigurationService } from 'vs/platform/configuration/common/configuration';
 import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
+import { ContextKeyService } from 'vs/platform/contextkey/browser/contextKeyService';
+import { IContextKeyService } from 'vs/platform/contextkey/common/contextkey';
+import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
+import { ITerminalProfile } from 'vs/platform/terminal/common/terminal';
+import { ITerminalInstanceService } from 'vs/workbench/contrib/terminal/browser/terminal';
+import { TerminalInstanceService } from 'vs/workbench/contrib/terminal/browser/terminalInstanceService';
 import { IWorkbenchEnvironmentService } from 'vs/workbench/services/environment/common/environmentService';
 import { TestEnvironmentService } from 'vs/workbench/test/browser/workbenchTestServices';
 
-suite('Workbench - TerminalInstanceService', () => {
+describe('Workbench - TerminalInstanceService', () => {
 	let instantiationService: TestInstantiationService;
 	let terminalInstanceService: ITerminalInstanceService;
 
-	setup(async () => {
+	beforeEach(async () => {
 		instantiationService = new TestInstantiationService();
 		// TODO: Should be able to create these services without this config set
 		instantiationService.stub(IConfigurationService, new TestConfigurationService({
@@ -36,7 +36,7 @@ suite('Workbench - TerminalInstanceService', () => {
 		terminalInstanceService = instantiationService.createInstance(TerminalInstanceService);
 	});
 
-	suite('convertProfileToShellLaunchConfig', () => {
+	describe('convertProfileToShellLaunchConfig', () => {
 		test('should return an empty shell launch config when undefined is provided', () => {
 			deepStrictEqual(terminalInstanceService.convertProfileToShellLaunchConfig(), {});
 			deepStrictEqual(terminalInstanceService.convertProfileToShellLaunchConfig(undefined), {});

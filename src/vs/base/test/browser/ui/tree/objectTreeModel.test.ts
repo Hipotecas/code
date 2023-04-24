@@ -23,7 +23,7 @@ function toArray<T>(list: ITreeNode<T>[]): T[] {
 	return list.map(i => i.element);
 }
 
-suite('ObjectTreeModel', function () {
+describe('ObjectTreeModel', function () {
 
 	test('ctor', () => {
 		const list: ITreeNode<number>[] = [];

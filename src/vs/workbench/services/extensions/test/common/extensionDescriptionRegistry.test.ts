@@ -8,7 +8,7 @@ import { URI } from 'vs/base/common/uri';
 import { ExtensionIdentifier, IExtensionDescription, TargetPlatform } from 'vs/platform/extensions/common/extensions';
 import { ExtensionDescriptionRegistry, basicActivationEventsReader } from 'vs/workbench/services/extensions/common/extensionDescriptionRegistry';
 
-suite('ExtensionDescriptionRegistry', () => {
+describe('ExtensionDescriptionRegistry', () => {
 	test('allow removing and adding the same extension at a different version', () => {
 		const idA = new ExtensionIdentifier('a');
 		const extensionA1 = desc(idA, '1.0.0');

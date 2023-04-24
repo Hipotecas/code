@@ -131,17 +131,17 @@ export class DisposableTracker implements IDisposableTracker {
 */
 export function ensureNoDisposablesAreLeakedInTestSuite() {
 	let tracker: DisposableTracker | undefined;
-	setup(() => {
+	beforeEach(() => {
 		tracker = new DisposableTracker();
 		setDisposableTracker(tracker);
 	});
 
-	teardown(function (this: import('mocha').Context) {
+	afterEach(function () {
 		setDisposableTracker(null);
 
-		if (this.currentTest?.state !== 'failed') {
-			tracker!.ensureNoLeakingDisposables();
-		}
+
+		tracker?.ensureNoLeakingDisposables();
+
 	});
 }
 

@@ -4,22 +4,22 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { URI, UriComponents } from 'vs/base/common/uri';
-import { DiagnosticCollection, ExtHostDiagnostics } from 'vs/workbench/api/common/extHostDiagnostics';
-import { Diagnostic, DiagnosticSeverity, Range, DiagnosticRelatedInformation, Location } from 'vs/workbench/api/common/extHostTypes';
-import { MainThreadDiagnosticsShape, IMainContext } from 'vs/workbench/api/common/extHost.protocol';
-import { IMarkerData, MarkerSeverity } from 'vs/platform/markers/common/markers';
-import { mock } from 'vs/base/test/common/mock';
 import { Emitter, Event } from 'vs/base/common/event';
-import { NullLogService } from 'vs/platform/log/common/log';
-import type * as vscode from 'vscode';
-import { nullExtensionDescription } from 'vs/workbench/services/extensions/common/extensions';
 import { ExtUri, extUri } from 'vs/base/common/resources';
-import { IExtHostFileSystemInfo } from 'vs/workbench/api/common/extHostFileSystemInfo';
+import { URI, UriComponents } from 'vs/base/common/uri';
+import { mock } from 'vs/base/test/common/mock';
 import { runWithFakedTimers } from 'vs/base/test/common/timeTravelScheduler';
+import { NullLogService } from 'vs/platform/log/common/log';
+import { IMarkerData, MarkerSeverity } from 'vs/platform/markers/common/markers';
+import { IMainContext, MainThreadDiagnosticsShape } from 'vs/workbench/api/common/extHost.protocol';
+import { DiagnosticCollection, ExtHostDiagnostics } from 'vs/workbench/api/common/extHostDiagnostics';
 import { IExtHostDocumentsAndEditors } from 'vs/workbench/api/common/extHostDocumentsAndEditors';
+import { IExtHostFileSystemInfo } from 'vs/workbench/api/common/extHostFileSystemInfo';
+import { Diagnostic, DiagnosticRelatedInformation, DiagnosticSeverity, Location, Range } from 'vs/workbench/api/common/extHostTypes';
+import { nullExtensionDescription } from 'vs/workbench/services/extensions/common/extensions';
+import type * as vscode from 'vscode';
 
-suite('ExtHostDiagnostics', () => {
+describe('ExtHostDiagnostics', () => {
 
 	class DiagnosticsShape extends mock<MainThreadDiagnosticsShape>() {
 		override $changeMany(owner: string, entries: [UriComponents, IMarkerData[]][]): void {

@@ -2,47 +2,46 @@
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import * as assert from 'assert';
 import { CursorColumns } from 'vs/editor/common/core/cursorColumns';
 
-suite('CursorMove', () => {
+describe('CursorMove', () => {
 
 	test('nextRenderTabStop', () => {
-		assert.strictEqual(CursorColumns.nextRenderTabStop(0, 4), 4);
-		assert.strictEqual(CursorColumns.nextRenderTabStop(1, 4), 4);
-		assert.strictEqual(CursorColumns.nextRenderTabStop(2, 4), 4);
-		assert.strictEqual(CursorColumns.nextRenderTabStop(3, 4), 4);
-		assert.strictEqual(CursorColumns.nextRenderTabStop(4, 4), 8);
-		assert.strictEqual(CursorColumns.nextRenderTabStop(5, 4), 8);
-		assert.strictEqual(CursorColumns.nextRenderTabStop(6, 4), 8);
-		assert.strictEqual(CursorColumns.nextRenderTabStop(7, 4), 8);
-		assert.strictEqual(CursorColumns.nextRenderTabStop(8, 4), 12);
+		expect(CursorColumns.nextRenderTabStop(0, 4)).toStrictEqual(4)
+		expect(CursorColumns.nextRenderTabStop(1, 4)).toStrictEqual(4)
+		expect(CursorColumns.nextRenderTabStop(2, 4)).toStrictEqual(4)
+		expect(CursorColumns.nextRenderTabStop(3, 4)).toStrictEqual(4)
+		expect(CursorColumns.nextRenderTabStop(4, 4)).toStrictEqual(8)
+		expect(CursorColumns.nextRenderTabStop(5, 4)).toStrictEqual(8)
+		expect(CursorColumns.nextRenderTabStop(6, 4)).toStrictEqual(8)
+		expect(CursorColumns.nextRenderTabStop(7, 4)).toStrictEqual(8)
+		expect(CursorColumns.nextRenderTabStop(8, 4)).toStrictEqual(12)
 
-		assert.strictEqual(CursorColumns.nextRenderTabStop(0, 2), 2);
-		assert.strictEqual(CursorColumns.nextRenderTabStop(1, 2), 2);
-		assert.strictEqual(CursorColumns.nextRenderTabStop(2, 2), 4);
-		assert.strictEqual(CursorColumns.nextRenderTabStop(3, 2), 4);
-		assert.strictEqual(CursorColumns.nextRenderTabStop(4, 2), 6);
-		assert.strictEqual(CursorColumns.nextRenderTabStop(5, 2), 6);
-		assert.strictEqual(CursorColumns.nextRenderTabStop(6, 2), 8);
-		assert.strictEqual(CursorColumns.nextRenderTabStop(7, 2), 8);
-		assert.strictEqual(CursorColumns.nextRenderTabStop(8, 2), 10);
+		expect(CursorColumns.nextRenderTabStop(0, 2)).toStrictEqual(2)
+		expect(CursorColumns.nextRenderTabStop(1, 2)).toStrictEqual(2)
+		expect(CursorColumns.nextRenderTabStop(2, 2)).toStrictEqual(4)
+		expect(CursorColumns.nextRenderTabStop(3, 2)).toStrictEqual(4)
+		expect(CursorColumns.nextRenderTabStop(4, 2)).toStrictEqual(6)
+		expect(CursorColumns.nextRenderTabStop(5, 2)).toStrictEqual(6)
+		expect(CursorColumns.nextRenderTabStop(6, 2)).toStrictEqual(8)
+		expect(CursorColumns.nextRenderTabStop(7, 2)).toStrictEqual(8)
+		expect(CursorColumns.nextRenderTabStop(8, 2)).toStrictEqual(10)
 
-		assert.strictEqual(CursorColumns.nextRenderTabStop(0, 1), 1);
-		assert.strictEqual(CursorColumns.nextRenderTabStop(1, 1), 2);
-		assert.strictEqual(CursorColumns.nextRenderTabStop(2, 1), 3);
-		assert.strictEqual(CursorColumns.nextRenderTabStop(3, 1), 4);
-		assert.strictEqual(CursorColumns.nextRenderTabStop(4, 1), 5);
-		assert.strictEqual(CursorColumns.nextRenderTabStop(5, 1), 6);
-		assert.strictEqual(CursorColumns.nextRenderTabStop(6, 1), 7);
-		assert.strictEqual(CursorColumns.nextRenderTabStop(7, 1), 8);
-		assert.strictEqual(CursorColumns.nextRenderTabStop(8, 1), 9);
+		expect(CursorColumns.nextRenderTabStop(0, 1)).toStrictEqual(1)
+		expect(CursorColumns.nextRenderTabStop(1, 1)).toStrictEqual(2)
+		expect(CursorColumns.nextRenderTabStop(2, 1)).toStrictEqual(3)
+		expect(CursorColumns.nextRenderTabStop(3, 1)).toStrictEqual(4)
+		expect(CursorColumns.nextRenderTabStop(4, 1)).toStrictEqual(5)
+		expect(CursorColumns.nextRenderTabStop(5, 1)).toStrictEqual(6)
+		expect(CursorColumns.nextRenderTabStop(6, 1)).toStrictEqual(7)
+		expect(CursorColumns.nextRenderTabStop(7, 1)).toStrictEqual(8)
+		expect(CursorColumns.nextRenderTabStop(8, 1)).toStrictEqual(9)
 	});
 
 	test('visibleColumnFromColumn', () => {
 
 		function testVisibleColumnFromColumn(text: string, tabSize: number, column: number, expected: number): void {
-			assert.strictEqual(CursorColumns.visibleColumnFromColumn(text, column, tabSize), expected);
+			expect(CursorColumns.visibleColumnFromColumn(text, column, tabSize)).toStrictEqual(expected)
 		}
 
 		testVisibleColumnFromColumn('\t\tvar x = 3;', 4, 1, 0);
@@ -101,7 +100,7 @@ suite('CursorMove', () => {
 	test('columnFromVisibleColumn', () => {
 
 		function testColumnFromVisibleColumn(text: string, tabSize: number, visibleColumn: number, expected: number): void {
-			assert.strictEqual(CursorColumns.columnFromVisibleColumn(text, visibleColumn, tabSize), expected);
+			expect(CursorColumns.columnFromVisibleColumn(text, visibleColumn, tabSize)).toStrictEqual(expected)
 		}
 
 		// testColumnFromVisibleColumn('\t\tvar x = 3;', 4, 0, 1);
@@ -177,7 +176,7 @@ suite('CursorMove', () => {
 	test('toStatusbarColumn', () => {
 
 		function t(text: string, tabSize: number, column: number, expected: number): void {
-			assert.strictEqual(CursorColumns.toStatusbarColumn(text, column, tabSize), expected, `<<t('${text}', ${tabSize}, ${column}, ${expected})>>`);
+			expect(CursorColumns.toStatusbarColumn(text, column, tabSize),`<<t('${text}', ${tabSize}, ${column}).toStrictEqual(${expected})>>`).toStrictEqual(expected)
 		}
 
 		t('    spaces', 4, 1, 1);

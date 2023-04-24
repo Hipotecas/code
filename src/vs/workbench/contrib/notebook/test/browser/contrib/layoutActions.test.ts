@@ -6,7 +6,7 @@
 import * as assert from 'assert';
 import { ToggleCellToolbarPositionAction } from 'vs/workbench/contrib/notebook/browser/contrib/layout/layoutActions';
 
-suite('Notebook Layout Actions', () => {
+describe('Notebook Layout Actions', () => {
 	test('Toggle Cell Toolbar Position', async function () {
 		const action = new ToggleCellToolbarPositionAction();
 

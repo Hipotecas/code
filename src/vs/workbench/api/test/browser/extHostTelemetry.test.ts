@@ -21,7 +21,7 @@ interface TelemetryLoggerSpy {
 	flushCalled: boolean;
 }
 
-suite('ExtHostTelemetry', function () {
+describe('ExtHostTelemetry', function () {
 
 	const mockEnvironment: IEnvironment = {
 		isExtensionDevelopmentDebug: false,

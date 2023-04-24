@@ -10,10 +10,10 @@ import { Range } from 'vs/editor/common/core/range';
 import { LengthObj } from 'vs/editor/common/model/bracketPairsTextModelPart/bracketPairsTree/length';
 import { DocumentRangeMap, RangeMapping } from 'vs/workbench/contrib/mergeEditor/browser/model/mapping';
 
-suite('merge editor mapping', () => {
+describe('merge editor mapping', () => {
 	ensureNoDisposablesAreLeakedInTestSuite();
 
-	suite('DocumentRangeMap', () => {
+	describe('DocumentRangeMap', () => {
 		const documentMap = createDocumentRangeMap([
 			'1:3',
 			['0:2', '0:3'],

@@ -20,12 +20,12 @@ import { IS_NEW_KEY, StorageScope } from 'vs/platform/storage/common/storage';
 import { IStorageChangeEvent, IStorageMain, IStorageMainOptions } from 'vs/platform/storage/electron-main/storageMain';
 import { StorageMainService } from 'vs/platform/storage/electron-main/storageMainService';
 import { currentSessionDateStorageKey, firstSessionDateStorageKey } from 'vs/platform/telemetry/common/telemetry';
+import { TestLifecycleMainService } from 'vs/platform/test/electron-main/workbenchTestServices';
 import { UriIdentityService } from 'vs/platform/uriIdentity/common/uriIdentityService';
 import { IUserDataProfile } from 'vs/platform/userDataProfile/common/userDataProfile';
 import { UserDataProfilesMainService } from 'vs/platform/userDataProfile/electron-main/userDataProfile';
-import { TestLifecycleMainService } from 'vs/platform/test/electron-main/workbenchTestServices';
 
-suite('StorageMainService', function () {
+describe('StorageMainService', function () {
 
 	const productService: IProductService = { _serviceBrand: undefined, ...product };
 

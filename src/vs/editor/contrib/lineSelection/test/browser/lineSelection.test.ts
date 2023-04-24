@@ -15,7 +15,7 @@ function executeAction(action: EditorAction, editor: ICodeEditor): void {
 	action.run(null!, editor, undefined);
 }
 
-suite('LineSelection', () => {
+describe('LineSelection', () => {
 	test('', () => {
 		const LINE1 = '    \tMy First Line\t ';
 		const LINE2 = '\tMy Second Line';

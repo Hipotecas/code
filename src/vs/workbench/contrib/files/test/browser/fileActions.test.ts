@@ -6,7 +6,7 @@
 import * as assert from 'assert';
 import { incrementFileName } from 'vs/workbench/contrib/files/browser/fileActions';
 
-suite('Files - Increment file name simple', () => {
+describe('Files - Increment file name simple', () => {
 
 	test('Increment file name without any version', function () {
 		const name = 'test.js';
@@ -136,7 +136,7 @@ suite('Files - Increment file name simple', () => {
 
 });
 
-suite('Files - Increment file name smart', () => {
+describe('Files - Increment file name smart', () => {
 
 	test('Increment file name without any version', function () {
 		const name = 'test.js';

@@ -4,31 +4,31 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { EditorPane, EditorMemento } from 'vs/workbench/browser/parts/editor/editorPane';
-import { WorkspaceTrustRequiredPlaceholderEditor } from 'vs/workbench/browser/parts/editor/editorPlaceholder';
-import { IEditorSerializer, IEditorFactoryRegistry, EditorExtensions, EditorInputCapabilities, IEditorDescriptor, IEditorPane } from 'vs/workbench/common/editor';
+import { CancellationToken } from 'vs/base/common/cancellation';
+import { DisposableStore, dispose } from 'vs/base/common/lifecycle';
+import { extUri } from 'vs/base/common/resources';
+import { URI } from 'vs/base/common/uri';
+import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
+import { IEditorModel } from 'vs/platform/editor/common/editor';
+import { SyncDescriptor } from 'vs/platform/instantiation/common/descriptors';
 import { IInstantiationService } from 'vs/platform/instantiation/common/instantiation';
 import { Registry } from 'vs/platform/registry/common/platform';
-import { SyncDescriptor } from 'vs/platform/instantiation/common/descriptors';
 import { ITelemetryService } from 'vs/platform/telemetry/common/telemetry';
 import { NullTelemetryService } from 'vs/platform/telemetry/common/telemetryUtils';
-import { workbenchInstantiationService, TestEditorGroupView, TestEditorGroupsService, registerTestResourceEditor, TestEditorInput, createEditorPart, TestTextResourceConfigurationService } from 'vs/workbench/test/browser/workbenchTestServices';
-import { TextResourceEditorInput } from 'vs/workbench/common/editor/textResourceEditorInput';
 import { TestThemeService } from 'vs/platform/theme/test/common/testThemeService';
-import { URI } from 'vs/base/common/uri';
-import { EditorPaneDescriptor, EditorPaneRegistry } from 'vs/workbench/browser/editor';
-import { CancellationToken } from 'vs/base/common/cancellation';
-import { IEditorModel } from 'vs/platform/editor/common/editor';
-import { DisposableStore, dispose } from 'vs/base/common/lifecycle';
-import { TestStorageService } from 'vs/workbench/test/common/workbenchTestServices';
-import { extUri } from 'vs/base/common/resources';
-import { EditorService } from 'vs/workbench/services/editor/browser/editorService';
-import { IEditorService } from 'vs/workbench/services/editor/common/editorService';
-import { IEditorGroupsService } from 'vs/workbench/services/editor/common/editorGroupsService';
-import { TestWorkspaceTrustManagementService } from 'vs/workbench/services/workspaces/test/common/testWorkspaceTrustService';
 import { IWorkspaceTrustManagementService } from 'vs/platform/workspace/common/workspaceTrust';
+import { EditorPaneDescriptor, EditorPaneRegistry } from 'vs/workbench/browser/editor';
+import { EditorMemento, EditorPane } from 'vs/workbench/browser/parts/editor/editorPane';
+import { WorkspaceTrustRequiredPlaceholderEditor } from 'vs/workbench/browser/parts/editor/editorPlaceholder';
+import { EditorExtensions, EditorInputCapabilities, IEditorDescriptor, IEditorFactoryRegistry, IEditorPane, IEditorSerializer } from 'vs/workbench/common/editor';
 import { EditorInput } from 'vs/workbench/common/editor/editorInput';
-import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
+import { TextResourceEditorInput } from 'vs/workbench/common/editor/textResourceEditorInput';
+import { EditorService } from 'vs/workbench/services/editor/browser/editorService';
+import { IEditorGroupsService } from 'vs/workbench/services/editor/common/editorGroupsService';
+import { IEditorService } from 'vs/workbench/services/editor/common/editorService';
+import { TestWorkspaceTrustManagementService } from 'vs/workbench/services/workspaces/test/common/testWorkspaceTrustService';
+import { TestEditorGroupView, TestEditorGroupsService, TestEditorInput, TestTextResourceConfigurationService, createEditorPart, registerTestResourceEditor, workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
+import { TestStorageService } from 'vs/workbench/test/common/workbenchTestServices';
 
 const NullThemeService = new TestThemeService();
 
@@ -104,7 +104,7 @@ class OtherTestInput extends EditorInput {
 }
 class TestResourceEditorInput extends TextResourceEditorInput { }
 
-suite('EditorPane', () => {
+describe('EditorPane', () => {
 
 	test('EditorPane API', async () => {
 		const editor = new TestEditor(NullTelemetryService);

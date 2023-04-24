@@ -4,10 +4,10 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { URI } from 'vs/base/common/uri';
-import { IMarker, MarkerSeverity, IRelatedInformation } from 'vs/platform/markers/common/markers';
-import { MarkersModel, Marker, ResourceMarkers, RelatedInformation } from 'vs/workbench/contrib/markers/browser/markersModel';
 import { groupBy } from 'vs/base/common/collections';
+import { URI } from 'vs/base/common/uri';
+import { IMarker, IRelatedInformation, MarkerSeverity } from 'vs/platform/markers/common/markers';
+import { Marker, MarkersModel, RelatedInformation, ResourceMarkers } from 'vs/workbench/contrib/markers/browser/markersModel';
 
 class TestMarkersModel extends MarkersModel {
 
@@ -25,7 +25,7 @@ class TestMarkersModel extends MarkersModel {
 	}
 }
 
-suite('MarkersModel Test', () => {
+describe('MarkersModel Test', () => {
 
 	test('marker ids are unique', function () {
 		const marker1 = anErrorWithRange(3);

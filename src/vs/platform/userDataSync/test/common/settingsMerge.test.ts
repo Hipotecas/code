@@ -9,7 +9,7 @@ import type { IConflictSetting } from 'vs/platform/userDataSync/common/userDataS
 
 const formattingOptions = { eol: '\n', insertSpaces: false, tabSize: 4 };
 
-suite('SettingsMerge - Merge', () => {
+describe('SettingsMerge - Merge', () => {
 
 	test('merge when local and remote are same with one entry', async () => {
 		const localContent = stringify({ 'a': 1 });
@@ -742,7 +742,7 @@ suite('SettingsMerge - Merge', () => {
 	});
 });
 
-suite('SettingsMerge - Compute Remote Content', () => {
+describe('SettingsMerge - Compute Remote Content', () => {
 
 	test('local content is returned when there are no ignored settings', async () => {
 		const localContent = stringify({
@@ -803,7 +803,7 @@ suite('SettingsMerge - Compute Remote Content', () => {
 
 });
 
-suite('SettingsMerge - Add Setting', () => {
+describe('SettingsMerge - Add Setting', () => {
 
 	test('Insert after a setting without comments', () => {
 

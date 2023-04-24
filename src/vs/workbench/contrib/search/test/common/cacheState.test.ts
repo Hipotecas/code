@@ -4,12 +4,12 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import * as errors from 'vs/base/common/errors';
-import { QueryType, IFileQuery } from 'vs/workbench/services/search/common/search';
-import { FileQueryCacheState } from 'vs/workbench/contrib/search/common/cacheState';
 import { DeferredPromise } from 'vs/base/common/async';
+import * as errors from 'vs/base/common/errors';
+import { FileQueryCacheState } from 'vs/workbench/contrib/search/common/cacheState';
+import { IFileQuery, QueryType } from 'vs/workbench/services/search/common/search';
 
-suite('FileQueryCacheState', () => {
+describe('FileQueryCacheState', () => {
 
 	test('reuse old cacheKey until new cache is loaded', async function () {
 

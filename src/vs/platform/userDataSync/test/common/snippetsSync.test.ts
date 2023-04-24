@@ -146,7 +146,7 @@ const globalSnippet = `{
 	// }
 }`;
 
-suite('SnippetsSync', () => {
+describe('SnippetsSync', () => {
 
 	const disposableStore = new DisposableStore();
 	const server = new UserDataSyncTestServer();
@@ -155,7 +155,7 @@ suite('SnippetsSync', () => {
 
 	let testObject: SnippetsSynchroniser;
 
-	setup(async () => {
+	beforeEach(async () => {
 		testClient = disposableStore.add(new UserDataSyncClient(server));
 		await testClient.setUp(true);
 		testObject = testClient.getSynchronizer(SyncResource.Snippets) as SnippetsSynchroniser;
@@ -165,7 +165,7 @@ suite('SnippetsSync', () => {
 		await client2.setUp(true);
 	});
 
-	teardown(() => disposableStore.clear());
+	afterEach(() => disposableStore.clear());
 
 	test('when snippets does not exist', async () => {
 		const fileService = testClient.instantiationService.get(IFileService);

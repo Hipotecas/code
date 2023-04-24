@@ -19,7 +19,7 @@ import { ServiceCollection } from 'vs/platform/instantiation/common/serviceColle
 import { ILabelService } from 'vs/platform/label/common/label';
 import { IWorkspaceContextService } from 'vs/platform/workspace/common/workspace';
 
-suite('SnippetSession', function () {
+describe('SnippetSession', function () {
 
 	let languageConfigurationService: ILanguageConfigurationService;
 	let editor: IActiveCodeEditor;
@@ -33,7 +33,7 @@ suite('SnippetSession', function () {
 		assert.strictEqual(s.length, 0);
 	}
 
-	setup(function () {
+	beforeEach(function () {
 		model = createTextModel('function foo() {\n    console.log(a);\n}');
 		languageConfigurationService = new TestLanguageConfigurationService();
 		const serviceCollection = new ServiceCollection(
@@ -53,7 +53,7 @@ suite('SnippetSession', function () {
 		assert.strictEqual(model.getEOL(), '\n');
 	});
 
-	teardown(function () {
+	afterEach(function () {
 		model.dispose();
 		editor.dispose();
 	});
@@ -752,7 +752,7 @@ suite('SnippetSession', function () {
 	});
 
 
-	suite('createEditsAndSnippetsFromEdits', function () {
+	describe('createEditsAndSnippetsFromEdits', function () {
 
 		test('empty', function () {
 

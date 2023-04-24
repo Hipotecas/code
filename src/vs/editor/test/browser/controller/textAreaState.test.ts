@@ -69,7 +69,7 @@ function equalsTextAreaState(a: TextAreaState, b: TextAreaState): boolean {
 	);
 }
 
-suite('TextAreaState', () => {
+describe('TextAreaState', () => {
 
 	function assertTextAreaState(actual: TextAreaState, value: string, selectionStart: number, selectionEnd: number): void {
 		const desired = new TextAreaState(value, selectionStart, selectionEnd, null, undefined);
@@ -357,7 +357,7 @@ suite('TextAreaState', () => {
 		);
 	});
 
-	suite('PagedScreenReaderStrategy', () => {
+	describe('PagedScreenReaderStrategy', () => {
 
 		function testPagedScreenReaderStrategy(lines: string[], selection: Selection, expected: TextAreaState): void {
 			const model = createTextModel(lines.join('\n'));

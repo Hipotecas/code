@@ -4,15 +4,15 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { unthemedInboxStyles } from 'vs/base/browser/ui/inputbox/inputBox';
 import { unthemedButtonStyles } from 'vs/base/browser/ui/button/button';
+import { unthemedCountStyles } from 'vs/base/browser/ui/countBadge/countBadge';
+import { unthemedInboxStyles } from 'vs/base/browser/ui/inputbox/inputBox';
+import { unthemedKeybindingLabelOptions } from 'vs/base/browser/ui/keybindingLabel/keybindingLabel';
 import { IListRenderer, IListVirtualDelegate } from 'vs/base/browser/ui/list/list';
 import { IListOptions, List, unthemedListStyles } from 'vs/base/browser/ui/list/listWidget';
+import { unthemedProgressBarOptions } from 'vs/base/browser/ui/progressbar/progressbar';
 import { unthemedToggleStyles } from 'vs/base/browser/ui/toggle/toggle';
 import { raceTimeout } from 'vs/base/common/async';
-import { unthemedCountStyles } from 'vs/base/browser/ui/countBadge/countBadge';
-import { unthemedKeybindingLabelOptions } from 'vs/base/browser/ui/keybindingLabel/keybindingLabel';
-import { unthemedProgressBarOptions } from 'vs/base/browser/ui/progressbar/progressbar';
 import { QuickInputController } from 'vs/platform/quickinput/browser/quickInput';
 import { IQuickPick, IQuickPickItem } from 'vs/platform/quickinput/common/quickInput';
 
@@ -31,14 +31,14 @@ async function setupWaitTilShownListener(controller: QuickInputController): Prom
 	}
 }
 
-suite('QuickInput', () => { // https://github.com/microsoft/vscode/issues/147543
+describe('QuickInput', () => { // https://github.com/microsoft/vscode/issues/147543
 	let fixture: HTMLElement, controller: QuickInputController, quickpick: IQuickPick<IQuickPickItem>;
 
 	function getScrollTop(): number {
 		return quickpick.scrollTop;
 	}
 
-	setup(() => {
+	beforeEach(() => {
 		fixture = document.createElement('div');
 		document.body.appendChild(fixture);
 
@@ -89,7 +89,7 @@ suite('QuickInput', () => { // https://github.com/microsoft/vscode/issues/147543
 		controller.layout({ height: 20, width: 40 }, 0);
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		quickpick?.dispose();
 		controller.dispose();
 		document.body.removeChild(fixture);

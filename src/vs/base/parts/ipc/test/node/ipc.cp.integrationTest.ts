@@ -17,21 +17,20 @@ function createClient(): Client {
 	});
 }
 
-suite('IPC, Child Process', function () {
-	this.slow(2000);
-	this.timeout(10000);
+describe('IPC, Child Process', function () {
+
 
 	let client: Client;
 	let channel: IChannel;
 	let service: ITestService;
 
-	setup(() => {
+	beforeEach(() => {
 		client = createClient();
 		channel = client.getChannel('test');
 		service = new TestServiceClient(channel);
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		client.dispose();
 	});
 

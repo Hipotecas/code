@@ -29,7 +29,7 @@ function testMoveLinesUpWithIndentCommand(languageId: string, lines: string[], s
 	testCommand(lines, languageId, selection, (accessor, sel) => new MoveLinesCommand(sel, false, EditorAutoIndentStrategy.Full, languageConfigurationService), expectedLines, expectedSelection);
 }
 
-suite('Editor Contrib - Move Lines Command', () => {
+describe('Editor Contrib - Move Lines Command', () => {
 
 	test('move first up / last down disabled', function () {
 		testMoveLinesUpCommand(
@@ -276,7 +276,7 @@ class IndentRulesMode extends Disposable {
 	}
 }
 
-suite('Editor contrib - Move Lines Command honors Indentation Rules', () => {
+describe('Editor contrib - Move Lines Command honors Indentation Rules', () => {
 	const indentRules = {
 		decreaseIndentPattern: /^\s*((?!\S.*\/[*]).*[*]\/\s*)?[})\]]|^\s*(case\b.*|default):\s*(\/\/.*|\/[*].*[*]\/\s*)?$/,
 		increaseIndentPattern: /(\{[^}"'`]*|\([^)"']*|\[[^\]"']*|^\s*(\{\}|\(\)|\[\]|(case\b.*|default):))\s*(\/\/.*|\/[*].*[*]\/\s*)?$/,
@@ -388,7 +388,7 @@ class EnterRulesMode extends Disposable {
 	}
 }
 
-suite('Editor - contrib - Move Lines Command honors onEnter Rules', () => {
+describe('Editor - contrib - Move Lines Command honors onEnter Rules', () => {
 
 	test('issue #54829. move block across block', () => {
 		const languageService = new LanguageService();

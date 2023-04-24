@@ -32,7 +32,7 @@ import * as path from 'vs/base/common/path';
 import { isWeb, isWindows } from 'vs/base/common/platform';
 import * as process from 'vs/base/common/process';
 
-suite('Paths (Node Implementation)', () => {
+describe('Paths (Node Implementation)', () => {
 	const __filename = 'path.test.js';
 	test('join', () => {
 		const failures = [] as string[];

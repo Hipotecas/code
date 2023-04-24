@@ -12,7 +12,7 @@ import { randomPath } from 'vs/base/common/extpath';
 import { FileAccess } from 'vs/base/common/network';
 import { join, sep } from 'vs/base/common/path';
 import { isWindows } from 'vs/base/common/platform';
-import { configureFlushOnWrite, Promises, RimRafMode, rimrafSync, SymlinkSupport, writeFileSync } from 'vs/base/node/pfs';
+import { Promises, RimRafMode, SymlinkSupport, configureFlushOnWrite, rimrafSync, writeFileSync } from 'vs/base/node/pfs';
 import { flakySuite, getRandomTestPath } from 'vs/base/test/node/testUtils';
 
 configureFlushOnWrite(false); // speed up all unit tests by disabling flush on write
@@ -21,13 +21,13 @@ flakySuite('PFS', function () {
 
 	let testDir: string;
 
-	setup(() => {
+	beforeEach(() => {
 		testDir = getRandomTestPath(tmpdir(), 'vsctests', 'pfs');
 
 		return Promises.mkdir(testDir, { recursive: true });
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		return Promises.rm(testDir);
 	});
 

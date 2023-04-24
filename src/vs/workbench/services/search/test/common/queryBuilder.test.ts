@@ -10,10 +10,10 @@ import { testWorkspace } from 'vs/platform/workspace/test/common/testWorkspace';
 import { resolveResourcesForSearchIncludes } from 'vs/workbench/services/search/common/queryBuilder';
 import { TestContextService } from 'vs/workbench/test/common/workbenchTestServices';
 
-suite('QueryBuilderCommon', () => {
+describe('QueryBuilderCommon', () => {
 	let context: IWorkspaceContextService;
 
-	setup(() => {
+	beforeEach(() => {
 		const workspace = testWorkspace(URI.file(isWindows ? 'C:\\testWorkspace' : '/testWorkspace'));
 		context = new TestContextService(workspace);
 	});

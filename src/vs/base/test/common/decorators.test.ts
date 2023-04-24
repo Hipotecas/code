@@ -7,7 +7,7 @@ import * as assert from 'assert';
 import * as sinon from 'sinon';
 import { memoize, throttle } from 'vs/base/common/decorators';
 
-suite('Decorators', () => {
+describe('Decorators', () => {
 	test('memoize should memoize methods', () => {
 		class Foo {
 			count = 0;

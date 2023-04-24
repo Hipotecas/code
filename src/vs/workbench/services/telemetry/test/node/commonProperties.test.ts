@@ -4,17 +4,17 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { release, hostname } from 'os';
-import { resolveWorkbenchCommonProperties } from 'vs/workbench/services/telemetry/common/workbenchCommonProperties';
-import { IStorageService, StorageScope, InMemoryStorageService, StorageTarget } from 'vs/platform/storage/common/storage';
+import { hostname, release } from 'os';
 import { timeout } from 'vs/base/common/async';
+import { IStorageService, InMemoryStorageService, StorageScope, StorageTarget } from 'vs/platform/storage/common/storage';
+import { resolveWorkbenchCommonProperties } from 'vs/workbench/services/telemetry/common/workbenchCommonProperties';
 
-suite('Telemetry - common properties', function () {
+describe('Telemetry - common properties', function () {
 	const commit: string = (undefined)!;
 	const version: string = (undefined)!;
 	let testStorageService: IStorageService;
 
-	setup(() => {
+	beforeEach(() => {
 		testStorageService = new InMemoryStorageService();
 	});
 

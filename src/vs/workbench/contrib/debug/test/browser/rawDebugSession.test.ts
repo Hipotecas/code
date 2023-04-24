@@ -13,7 +13,7 @@ import { RawDebugSession } from 'vs/workbench/contrib/debug/browser/rawDebugSess
 import { IDebugger } from 'vs/workbench/contrib/debug/common/debug';
 import { MockDebugAdapter } from 'vs/workbench/contrib/debug/test/common/mockDebug';
 
-suite('RawDebugSession', () => {
+describe('RawDebugSession', () => {
 	function createTestObjects() {
 		const debugAdapter = new MockDebugAdapter();
 		const dbgr = mockObject<IDebugger>()({

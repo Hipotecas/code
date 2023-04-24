@@ -15,7 +15,7 @@ import { CellEditType, CellUri, IResolvedNotebookEditorModel } from 'vs/workbenc
 import { INotebookEditorModelResolverService } from 'vs/workbench/contrib/notebook/common/notebookEditorModelResolverService';
 import { TestEditorService } from 'vs/workbench/test/browser/workbenchTestServices';
 
-suite('BulkCellEdits', function () {
+describe('BulkCellEdits', function () {
 	async function runTest(inputUri: URI, resolveUri: URI) {
 		const progress: IProgress<void> = { report: _ => { } };
 		const editorService = new TestEditorService();

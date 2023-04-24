@@ -4,32 +4,32 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { workbenchInstantiationService, registerTestEditor, TestFileEditorInput, TestEditorPart, TestServiceAccessor, createEditorPart } from 'vs/workbench/test/browser/workbenchTestServices';
-import { GroupDirection, GroupsOrder, MergeGroupMode, GroupOrientation, GroupLocation, isEditorGroup, IEditorGroupsService } from 'vs/workbench/services/editor/common/editorGroupsService';
-import { CloseDirection, IEditorPartOptions, EditorsOrder, EditorInputCapabilities, GroupModelChangeKind, SideBySideEditor } from 'vs/workbench/common/editor';
-import { URI } from 'vs/base/common/uri';
-import { SyncDescriptor } from 'vs/platform/instantiation/common/descriptors';
 import { DisposableStore } from 'vs/base/common/lifecycle';
-import { MockScopableContextKeyService } from 'vs/platform/keybinding/test/common/mockKeybindingService';
-import { ConfirmResult } from 'vs/platform/dialogs/common/dialogs';
-import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
+import { URI } from 'vs/base/common/uri';
 import { IConfigurationService } from 'vs/platform/configuration/common/configuration';
-import { SideBySideEditorInput } from 'vs/workbench/common/editor/sideBySideEditorInput';
-import { IGroupModelChangeEvent, IGroupEditorMoveEvent, IGroupEditorOpenEvent } from 'vs/workbench/common/editor/editorGroupModel';
+import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
+import { ConfirmResult } from 'vs/platform/dialogs/common/dialogs';
+import { SyncDescriptor } from 'vs/platform/instantiation/common/descriptors';
 import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
+import { MockScopableContextKeyService } from 'vs/platform/keybinding/test/common/mockKeybindingService';
+import { CloseDirection, EditorInputCapabilities, EditorsOrder, GroupModelChangeKind, IEditorPartOptions, SideBySideEditor } from 'vs/workbench/common/editor';
+import { IGroupEditorMoveEvent, IGroupEditorOpenEvent, IGroupModelChangeEvent } from 'vs/workbench/common/editor/editorGroupModel';
+import { SideBySideEditorInput } from 'vs/workbench/common/editor/sideBySideEditorInput';
+import { GroupDirection, GroupLocation, GroupOrientation, GroupsOrder, IEditorGroupsService, MergeGroupMode, isEditorGroup } from 'vs/workbench/services/editor/common/editorGroupsService';
+import { TestEditorPart, TestFileEditorInput, TestServiceAccessor, createEditorPart, registerTestEditor, workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
 
-suite('EditorGroupsService', () => {
+describe('EditorGroupsService', () => {
 
 	const TEST_EDITOR_ID = 'MyFileEditorForEditorGroupService';
 	const TEST_EDITOR_INPUT_ID = 'testEditorInputForEditorGroupService';
 
 	const disposables = new DisposableStore();
 
-	setup(() => {
+	beforeEach(() => {
 		disposables.add(registerTestEditor(TEST_EDITOR_ID, [new SyncDescriptor(TestFileEditorInput), new SyncDescriptor(SideBySideEditorInput)], TEST_EDITOR_INPUT_ID));
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		disposables.clear();
 	});
 

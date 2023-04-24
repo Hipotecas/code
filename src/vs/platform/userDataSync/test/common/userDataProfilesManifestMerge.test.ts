@@ -9,7 +9,7 @@ import { IUserDataProfile, toUserDataProfile } from 'vs/platform/userDataProfile
 import { merge } from 'vs/platform/userDataSync/common/userDataProfilesManifestMerge';
 import { ISyncUserDataProfile } from 'vs/platform/userDataSync/common/userDataSync';
 
-suite('UserDataProfilesManifestMerge', () => {
+describe('UserDataProfilesManifestMerge', () => {
 
 	test('merge returns local profiles if remote does not exist', () => {
 		const localProfiles: IUserDataProfile[] = [

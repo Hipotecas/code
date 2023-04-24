@@ -2,7 +2,7 @@
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-
+// @vitest-environment jsdom
 import * as assert from 'assert';
 import { DisposableStore } from 'vs/base/common/lifecycle';
 import { assertType } from 'vs/base/common/types';
@@ -29,7 +29,7 @@ const testProvider = {
 	}
 };
 
-suite('CodeActionModel', () => {
+describe('CodeActionModel', () => {
 
 	const languageId = 'foo-lang';
 	const uri = URI.parse('untitled:path');
@@ -39,7 +39,7 @@ suite('CodeActionModel', () => {
 	let registry: LanguageFeatureRegistry<languages.CodeActionProvider>;
 	const disposables = new DisposableStore();
 
-	setup(() => {
+	beforeEach(() => {
 		disposables.clear();
 		markerService = new MarkerService();
 		model = createTextModel('foobar  foo bar\nfarboo far boo', languageId, undefined, uri);
@@ -48,7 +48,7 @@ suite('CodeActionModel', () => {
 		registry = new LanguageFeatureRegistry();
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		disposables.clear();
 		editor.dispose();
 		model.dispose();
@@ -71,7 +71,7 @@ suite('CodeActionModel', () => {
 
 				assert.strictEqual(e.trigger.type, languages.CodeActionTriggerType.Auto);
 				assert.ok(e.actions);
-
+        expect(e.actions).toBe(true)
 				e.actions.then(fixes => {
 					model.dispose();
 					assert.strictEqual(fixes.validActions.length, 1);

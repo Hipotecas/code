@@ -13,13 +13,13 @@ flakySuite('Crypto', () => {
 
 	let testDir: string;
 
-	setup(function () {
+	beforeEach(function () {
 		testDir = getRandomTestPath(tmpdir(), 'vsctests', 'crypto');
 
 		return Promises.mkdir(testDir, { recursive: true });
 	});
 
-	teardown(function () {
+	afterEach(function () {
 		return Promises.rm(testDir);
 	});
 

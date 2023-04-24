@@ -6,7 +6,7 @@
 import * as assert from 'assert';
 import { layout, LayoutAnchorPosition } from 'vs/base/browser/ui/contextview/contextview';
 
-suite('Contextview', function () {
+describe('Contextview', function () {
 
 	test('layout', () => {
 		assert.strictEqual(layout(200, 20, { offset: 0, size: 0, position: LayoutAnchorPosition.Before }), 0);

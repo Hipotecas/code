@@ -5,13 +5,13 @@
 
 import * as assert from 'assert';
 import {
-	compareFileExtensions, compareFileExtensionsDefault, compareFileExtensionsLower, compareFileExtensionsUnicode, compareFileExtensionsUpper, compareFileNames, compareFileNamesDefault, compareFileNamesLower, compareFileNamesUnicode, compareFileNamesUpper
+  compareFileExtensions, compareFileExtensionsDefault, compareFileExtensionsLower, compareFileExtensionsUnicode, compareFileExtensionsUpper, compareFileNames, compareFileNamesDefault, compareFileNamesLower, compareFileNamesUnicode, compareFileNamesUpper
 } from 'vs/base/common/comparers';
 
 const compareLocale = (a: string, b: string) => a.localeCompare(b);
 const compareLocaleNumeric = (a: string, b: string) => a.localeCompare(b, undefined, { numeric: true });
 
-suite('Comparers', () => {
+describe('Comparers', () => {
 
 	test('compareFileNames', () => {
 
@@ -20,39 +20,39 @@ suite('Comparers', () => {
 		//
 
 		// name-only comparisons
-		assert(compareFileNames(null, null) === 0, 'null should be equal');
-		assert(compareFileNames(null, 'abc') < 0, 'null should be come before real values');
-		assert(compareFileNames('', '') === 0, 'empty should be equal');
-		assert(compareFileNames('abc', 'abc') === 0, 'equal names should be equal');
-		assert(compareFileNames('z', 'A') > 0, 'z comes after A');
-		assert(compareFileNames('Z', 'a') > 0, 'Z comes after a');
+		expect(compareFileNames(null, null) === 0, 'null should be equal').toBe(true);
+		expect(compareFileNames(null, 'abc') < 0, 'null should be come before real values').toBe(true);
+		expect(compareFileNames('', '') === 0, 'empty should be equal').toBe(true);
+		expect(compareFileNames('abc', 'abc') === 0, 'equal names should be equal').toBe(true);
+		expect(compareFileNames('z', 'A') > 0, 'z comes after A').toBe(true);
+		expect(compareFileNames('Z', 'a') > 0, 'Z comes after a').toBe(true);
 
 		// name plus extension comparisons
-		assert(compareFileNames('bbb.aaa', 'aaa.bbb') > 0, 'compares the whole name all at once by locale');
-		assert(compareFileNames('aggregate.go', 'aggregate_repo.go') > 0, 'compares the whole name all at once by locale');
+		expect(compareFileNames('bbb.aaa', 'aaa.bbb') > 0, 'compares the whole name all at once by locale').toBe(true);
+		expect(compareFileNames('aggregate.go', 'aggregate_repo.go') > 0, 'compares the whole name all at once by locale').toBe(true);
 
 		// dotfile comparisons
-		assert(compareFileNames('.abc', '.abc') === 0, 'equal dotfile names should be equal');
-		assert(compareFileNames('.env.', '.gitattributes') < 0, 'filenames starting with dots and with extensions should still sort properly');
-		assert(compareFileNames('.env', '.aaa.env') > 0, 'dotfiles sort alphabetically when they contain multiple dots');
-		assert(compareFileNames('.env', '.env.aaa') < 0, 'dotfiles with the same root sort shortest first');
-		assert(compareFileNames('.aaa_env', '.aaa.env') < 0, 'an underscore in a dotfile name will sort before a dot');
+		expect(compareFileNames('.abc', '.abc') === 0, 'equal dotfile names should be equal').toBe(true);
+		expect(compareFileNames('.env.', '.gitattributes') < 0, 'filenames starting with dots and with extensions should still sort properly').toBe(true);
+		expect(compareFileNames('.env', '.aaa.env') > 0, 'dotfiles sort alphabetically when they contain multiple dots').toBe(true);
+		expect(compareFileNames('.env', '.env.aaa') < 0, 'dotfiles with the same root sort shortest first').toBe(true);
+		expect(compareFileNames('.aaa_env', '.aaa.env') < 0, 'an underscore in a dotfile name will sort before a dot').toBe(true);
 
 		// dotfile vs non-dotfile comparisons
-		assert(compareFileNames(null, '.abc') < 0, 'null should come before dotfiles');
-		assert(compareFileNames('.env', 'aaa') < 0, 'dotfiles come before filenames without extensions');
-		assert(compareFileNames('.env', 'aaa.env') < 0, 'dotfiles come before filenames with extensions');
-		assert(compareFileNames('.md', 'A.MD') < 0, 'dotfiles sort before uppercase files');
-		assert(compareFileNames('.MD', 'a.md') < 0, 'dotfiles sort before lowercase files');
+		expect(compareFileNames(null, '.abc') < 0, 'null should come before dotfiles').toBe(true);
+		expect(compareFileNames('.env', 'aaa') < 0, 'dotfiles come before filenames without extensions').toBe(true);
+		expect(compareFileNames('.env', 'aaa.env') < 0, 'dotfiles come before filenames with extensions').toBe(true);
+		expect(compareFileNames('.md', 'A.MD') < 0, 'dotfiles sort before uppercase files').toBe(true);
+		expect(compareFileNames('.MD', 'a.md') < 0, 'dotfiles sort before lowercase files').toBe(true);
 
 		// numeric comparisons
-		assert(compareFileNames('1', '1') === 0, 'numerically equal full names should be equal');
-		assert(compareFileNames('abc1.txt', 'abc1.txt') === 0, 'equal filenames with numbers should be equal');
-		assert(compareFileNames('abc1.txt', 'abc2.txt') < 0, 'filenames with numbers should be in numerical order, not alphabetical order');
-		assert(compareFileNames('abc2.txt', 'abc10.txt') < 0, 'filenames with numbers should be in numerical order even when they are multiple digits long');
-		assert(compareFileNames('abc02.txt', 'abc010.txt') < 0, 'filenames with numbers that have leading zeros sort numerically');
-		assert(compareFileNames('abc1.10.txt', 'abc1.2.txt') > 0, 'numbers with dots between them are treated as two separate numbers, not one decimal number');
-		assert(compareFileNames('a.ext1', 'b.Ext1') < 0, 'if names are different and extensions with numbers are equal except for case, filenames are sorted in name order');
+		expect(compareFileNames('1', '1') === 0, 'numerically equal full names should be equal').toBe(true);
+		expect(compareFileNames('abc1.txt', 'abc1.txt') === 0, 'equal filenames with numbers should be equal').toBe(true);
+		expect(compareFileNames('abc1.txt', 'abc2.txt') < 0, 'filenames with numbers should be in numerical order, not alphabetical order').toBe(true);
+		expect(compareFileNames('abc2.txt', 'abc10.txt') < 0, 'filenames with numbers should be in numerical order even when they are multiple digits long').toBe(true);
+		expect(compareFileNames('abc02.txt', 'abc010.txt') < 0, 'filenames with numbers that have leading zeros sort numerically').toBe(true);
+		expect(compareFileNames('abc1.10.txt', 'abc1.2.txt') > 0, 'numbers with dots between them are treated as two separate numbers, not one decimal number').toBe(true);
+		expect(compareFileNames('a.ext1', 'b.Ext1') < 0, 'if names are different and extensions with numbers are equal except for case, filenames are sorted in name order').toBe(true);
 		assert.deepStrictEqual(['a10.txt', 'A2.txt', 'A100.txt', 'a20.txt'].sort(compareFileNames), ['A2.txt', 'a10.txt', 'a20.txt', 'A100.txt'], 'filenames with number and case differences compare numerically');
 
 		//
@@ -60,17 +60,17 @@ suite('Comparers', () => {
 		//
 
 		// name-only comparisons
-		assert(compareFileNames('a', 'A') !== compareLocale('a', 'A'), 'the same letter sorts in unicode order, not by locale');
-		assert(compareFileNames('â', 'Â') !== compareLocale('â', 'Â'), 'the same accented letter sorts in unicode order, not by locale');
+		expect(compareFileNames('a', 'A') !== compareLocale('a', 'A'), 'the same letter sorts in unicode order, not by locale').toBe(true);
+		expect(compareFileNames('â', 'Â') !== compareLocale('â', 'Â'), 'the same accented letter sorts in unicode order, not by locale').toBe(true);
 		assert.notDeepStrictEqual(['artichoke', 'Artichoke', 'art', 'Art'].sort(compareFileNames), ['artichoke', 'Artichoke', 'art', 'Art'].sort(compareLocale), 'words with the same root and different cases do not sort in locale order');
 		assert.notDeepStrictEqual(['email', 'Email', 'émail', 'Émail'].sort(compareFileNames), ['email', 'Email', 'émail', 'Émail'].sort(compareLocale), 'the same base characters with different case or accents do not sort in locale order');
 
 		// numeric comparisons
-		assert(compareFileNames('abc02.txt', 'abc002.txt') > 0, 'filenames with equivalent numbers and leading zeros sort in unicode order');
-		assert(compareFileNames('abc.txt1', 'abc.txt01') > 0, 'same name plus extensions with equal numbers sort in unicode order');
-		assert(compareFileNames('art01', 'Art01') !== 'art01'.localeCompare('Art01', undefined, { numeric: true }),
-			'a numerically equivalent word of a different case does not compare numerically based on locale');
-		assert(compareFileNames('a.ext1', 'a.Ext1') > 0, 'if names are equal and extensions with numbers are equal except for case, filenames are sorted in full filename unicode order');
+		expect(compareFileNames('abc02.txt', 'abc002.txt') > 0, 'filenames with equivalent numbers and leading zeros sort in unicode order').toBe(true);
+		expect(compareFileNames('abc.txt1', 'abc.txt01') > 0, 'same name plus extensions with equal numbers sort in unicode order').toBe(true);
+		expect(compareFileNames('art01', 'Art01') !== 'art01'.localeCompare('Art01', undefined, { numeric: true }),
+			'a numerically equivalent word of a different case does not compare numerically based on locale').toBe(true);
+		expect(compareFileNames('a.ext1', 'a.Ext1') > 0, 'if names are equal and extensions with numbers are equal except for case, filenames are sorted in full filename unicode order').toBe(true);
 
 	});
 
@@ -81,40 +81,40 @@ suite('Comparers', () => {
 		//
 
 		// name-only comparisons
-		assert(compareFileExtensions(null, null) === 0, 'null should be equal');
-		assert(compareFileExtensions(null, 'abc') < 0, 'null should come before real files without extension');
-		assert(compareFileExtensions('', '') === 0, 'empty should be equal');
-		assert(compareFileExtensions('abc', 'abc') === 0, 'equal names should be equal');
-		assert(compareFileExtensions('z', 'A') > 0, 'z comes after A');
-		assert(compareFileExtensions('Z', 'a') > 0, 'Z comes after a');
+		expect(compareFileExtensions(null, null) === 0, 'null should be equal').toBe(true);
+		expect(compareFileExtensions(null, 'abc') < 0, 'null should come before real files without extension').toBe(true);
+		expect(compareFileExtensions('', '') === 0, 'empty should be equal').toBe(true);
+		expect(compareFileExtensions('abc', 'abc') === 0, 'equal names should be equal').toBe(true);
+		expect(compareFileExtensions('z', 'A') > 0, 'z comes after A').toBe(true);
+		expect(compareFileExtensions('Z', 'a') > 0, 'Z comes after a').toBe(true);
 
 		// name plus extension comparisons
-		assert(compareFileExtensions('file.ext', 'file.ext') === 0, 'equal full names should be equal');
-		assert(compareFileExtensions('a.ext', 'b.ext') < 0, 'if equal extensions, filenames should be compared');
-		assert(compareFileExtensions('file.aaa', 'file.bbb') < 0, 'files with equal names should be compared by extensions');
-		assert(compareFileExtensions('bbb.aaa', 'aaa.bbb') < 0, 'files should be compared by extensions even if filenames compare differently');
+		expect(compareFileExtensions('file.ext', 'file.ext') === 0, 'equal full names should be equal').toBe(true);
+		expect(compareFileExtensions('a.ext', 'b.ext') < 0, 'if equal extensions, filenames should be compared').toBe(true);
+		expect(compareFileExtensions('file.aaa', 'file.bbb') < 0, 'files with equal names should be compared by extensions').toBe(true);
+		expect(compareFileExtensions('bbb.aaa', 'aaa.bbb') < 0, 'files should be compared by extensions even if filenames compare differently').toBe(true);
 
 		// dotfile comparisons
-		assert(compareFileExtensions('.abc', '.abc') === 0, 'equal dotfiles should be equal');
-		assert(compareFileExtensions('.md', '.Gitattributes') > 0, 'dotfiles sort alphabetically regardless of case');
+		expect(compareFileExtensions('.abc', '.abc') === 0, 'equal dotfiles should be equal').toBe(true);
+		expect(compareFileExtensions('.md', '.Gitattributes') > 0, 'dotfiles sort alphabetically regardless of case').toBe(true);
 
 		// dotfile vs non-dotfile comparisons
-		assert(compareFileExtensions(null, '.abc') < 0, 'null should come before dotfiles');
-		assert(compareFileExtensions('.env', 'aaa.env') < 0, 'if equal extensions, filenames should be compared, empty filename should come before others');
-		assert(compareFileExtensions('.MD', 'a.md') < 0, 'if extensions differ in case, files sort by extension in unicode order');
+		expect(compareFileExtensions(null, '.abc') < 0, 'null should come before dotfiles').toBe(true);
+		expect(compareFileExtensions('.env', 'aaa.env') < 0, 'if equal extensions, filenames should be compared, empty filename should come before others').toBe(true);
+		expect(compareFileExtensions('.MD', 'a.md') < 0, 'if extensions differ in case, files sort by extension in unicode order').toBe(true);
 
 		// numeric comparisons
-		assert(compareFileExtensions('1', '1') === 0, 'numerically equal full names should be equal');
-		assert(compareFileExtensions('abc1.txt', 'abc1.txt') === 0, 'equal filenames with numbers should be equal');
-		assert(compareFileExtensions('abc1.txt', 'abc2.txt') < 0, 'filenames with numbers should be in numerical order, not alphabetical order');
-		assert(compareFileExtensions('abc2.txt', 'abc10.txt') < 0, 'filenames with numbers should be in numerical order even when they are multiple digits long');
-		assert(compareFileExtensions('abc02.txt', 'abc010.txt') < 0, 'filenames with numbers that have leading zeros sort numerically');
-		assert(compareFileExtensions('abc1.10.txt', 'abc1.2.txt') > 0, 'numbers with dots between them are treated as two separate numbers, not one decimal number');
-		assert(compareFileExtensions('abc2.txt2', 'abc1.txt10') < 0, 'extensions with numbers should be in numerical order, not alphabetical order');
-		assert(compareFileExtensions('txt.abc1', 'txt.abc1') === 0, 'equal extensions with numbers should be equal');
-		assert(compareFileExtensions('txt.abc1', 'txt.abc2') < 0, 'extensions with numbers should be in numerical order, not alphabetical order');
-		assert(compareFileExtensions('txt.abc2', 'txt.abc10') < 0, 'extensions with numbers should be in numerical order even when they are multiple digits long');
-		assert(compareFileExtensions('a.ext1', 'b.ext1') < 0, 'if equal extensions with numbers, names should be compared');
+		expect(compareFileExtensions('1', '1') === 0, 'numerically equal full names should be equal').toBe(true);
+		expect(compareFileExtensions('abc1.txt', 'abc1.txt') === 0, 'equal filenames with numbers should be equal').toBe(true);
+		expect(compareFileExtensions('abc1.txt', 'abc2.txt') < 0, 'filenames with numbers should be in numerical order, not alphabetical order').toBe(true);
+		expect(compareFileExtensions('abc2.txt', 'abc10.txt') < 0, 'filenames with numbers should be in numerical order even when they are multiple digits long').toBe(true);
+		expect(compareFileExtensions('abc02.txt', 'abc010.txt') < 0, 'filenames with numbers that have leading zeros sort numerically').toBe(true);
+		expect(compareFileExtensions('abc1.10.txt', 'abc1.2.txt') > 0, 'numbers with dots between them are treated as two separate numbers, not one decimal number').toBe(true);
+		expect(compareFileExtensions('abc2.txt2', 'abc1.txt10') < 0, 'extensions with numbers should be in numerical order, not alphabetical order').toBe(true);
+		expect(compareFileExtensions('txt.abc1', 'txt.abc1') === 0, 'equal extensions with numbers should be equal').toBe(true);
+		expect(compareFileExtensions('txt.abc1', 'txt.abc2') < 0, 'extensions with numbers should be in numerical order, not alphabetical order').toBe(true);
+		expect(compareFileExtensions('txt.abc2', 'txt.abc10') < 0, 'extensions with numbers should be in numerical order even when they are multiple digits long').toBe(true);
+		expect(compareFileExtensions('a.ext1', 'b.ext1') < 0, 'if equal extensions with numbers, names should be compared').toBe(true);
 		assert.deepStrictEqual(['a10.txt', 'A2.txt', 'A100.txt', 'a20.txt'].sort(compareFileExtensions), ['A2.txt', 'a10.txt', 'a20.txt', 'A100.txt'], 'filenames with number and case differences compare numerically');
 
 		//
@@ -122,32 +122,32 @@ suite('Comparers', () => {
 		//
 
 		// name-only comparisions
-		assert(compareFileExtensions('a', 'A') !== compareLocale('a', 'A'), 'the same letter of different case does not sort by locale');
-		assert(compareFileExtensions('â', 'Â') !== compareLocale('â', 'Â'), 'the same accented letter of different case does not sort by locale');
+		expect(compareFileExtensions('a', 'A') !== compareLocale('a', 'A'), 'the same letter of different case does not sort by locale').toBe(true);
+		expect(compareFileExtensions('â', 'Â') !== compareLocale('â', 'Â'), 'the same accented letter of different case does not sort by locale').toBe(true);
 		assert.notDeepStrictEqual(['artichoke', 'Artichoke', 'art', 'Art'].sort(compareFileExtensions), ['artichoke', 'Artichoke', 'art', 'Art'].sort(compareLocale), 'words with the same root and different cases do not sort in locale order');
 		assert.notDeepStrictEqual(['email', 'Email', 'émail', 'Émail'].sort(compareFileExtensions), ['email', 'Email', 'émail', 'Émail'].sort((a, b) => a.localeCompare(b)), 'the same base characters with different case or accents do not sort in locale order');
 
 		// name plus extension comparisons
-		assert(compareFileExtensions('a.MD', 'a.md') < 0, 'case differences in extensions sort in unicode order');
-		assert(compareFileExtensions('a.md', 'A.md') > 0, 'case differences in names sort in unicode order');
-		assert(compareFileExtensions('a.md', 'b.MD') > 0, 'when extensions are the same except for case, the files sort by extension');
-		assert(compareFileExtensions('aggregate.go', 'aggregate_repo.go') < 0, 'when extensions are equal, names sort in dictionary order');
+		expect(compareFileExtensions('a.MD', 'a.md') < 0, 'case differences in extensions sort in unicode order').toBe(true);
+		expect(compareFileExtensions('a.md', 'A.md') > 0, 'case differences in names sort in unicode order').toBe(true);
+		expect(compareFileExtensions('a.md', 'b.MD') > 0, 'when extensions are the same except for case, the files sort by extension').toBe(true);
+		expect(compareFileExtensions('aggregate.go', 'aggregate_repo.go') < 0, 'when extensions are equal, names sort in dictionary order').toBe(true);
 
 		// dotfile comparisons
-		assert(compareFileExtensions('.env', '.aaa.env') < 0, 'a dotfile with an extension is treated as a name plus an extension - equal extensions');
-		assert(compareFileExtensions('.env', '.env.aaa') > 0, 'a dotfile with an extension is treated as a name plus an extension - unequal extensions');
+		expect(compareFileExtensions('.env', '.aaa.env') < 0, 'a dotfile with an extension is treated as a name plus an extension - equal extensions').toBe(true);
+		expect(compareFileExtensions('.env', '.env.aaa') > 0, 'a dotfile with an extension is treated as a name plus an extension - unequal extensions').toBe(true);
 
 		// dotfile vs non-dotfile comparisons
-		assert(compareFileExtensions('.env', 'aaa') > 0, 'filenames without extensions come before dotfiles');
-		assert(compareFileExtensions('.md', 'A.MD') > 0, 'a file with an uppercase extension sorts before a dotfile of the same lowercase extension');
+		expect(compareFileExtensions('.env', 'aaa') > 0, 'filenames without extensions come before dotfiles').toBe(true);
+		expect(compareFileExtensions('.md', 'A.MD') > 0, 'a file with an uppercase extension sorts before a dotfile of the same lowercase extension').toBe(true);
 
 		// numeric comparisons
-		assert(compareFileExtensions('abc.txt01', 'abc.txt1') < 0, 'extensions with equal numbers sort in unicode order');
-		assert(compareFileExtensions('art01', 'Art01') !== compareLocaleNumeric('art01', 'Art01'), 'a numerically equivalent word of a different case does not compare by locale');
-		assert(compareFileExtensions('abc02.txt', 'abc002.txt') > 0, 'filenames with equivalent numbers and leading zeros sort in unicode order');
-		assert(compareFileExtensions('txt.abc01', 'txt.abc1') < 0, 'extensions with equivalent numbers sort in unicode order');
-		assert(compareFileExtensions('a.ext1', 'b.Ext1') > 0, 'if names are different and extensions with numbers are equal except for case, filenames are sorted in extension unicode order');
-		assert(compareFileExtensions('a.ext1', 'a.Ext1') > 0, 'if names are equal and extensions with numbers are equal except for case, filenames are sorted in extension unicode order');
+		expect(compareFileExtensions('abc.txt01', 'abc.txt1') < 0, 'extensions with equal numbers sort in unicode order').toBe(true);
+		expect(compareFileExtensions('art01', 'Art01') !== compareLocaleNumeric('art01', 'Art01'), 'a numerically equivalent word of a different case does not compare by locale').toBe(true);
+		expect(compareFileExtensions('abc02.txt', 'abc002.txt') > 0, 'filenames with equivalent numbers and leading zeros sort in unicode order').toBe(true);
+		expect(compareFileExtensions('txt.abc01', 'txt.abc1') < 0, 'extensions with equivalent numbers sort in unicode order').toBe(true);
+		expect(compareFileExtensions('a.ext1', 'b.Ext1') > 0, 'if names are different and extensions with numbers are equal except for case, filenames are sorted in extension unicode order').toBe(true);
+		expect(compareFileExtensions('a.ext1', 'a.Ext1') > 0, 'if names are equal and extensions with numbers are equal except for case, filenames are sorted in extension unicode order').toBe(true);
 
 	});
 
@@ -158,42 +158,42 @@ suite('Comparers', () => {
 		//
 
 		// name-only comparisons
-		assert(compareFileNamesDefault(null, null) === 0, 'null should be equal');
-		assert(compareFileNamesDefault(null, 'abc') < 0, 'null should be come before real values');
-		assert(compareFileNamesDefault('', '') === 0, 'empty should be equal');
-		assert(compareFileNamesDefault('abc', 'abc') === 0, 'equal names should be equal');
-		assert(compareFileNamesDefault('z', 'A') > 0, 'z comes after A');
-		assert(compareFileNamesDefault('Z', 'a') > 0, 'Z comes after a');
+		expect(compareFileNamesDefault(null, null) === 0, 'null should be equal').toBe(true);
+		expect(compareFileNamesDefault(null, 'abc') < 0, 'null should be come before real values').toBe(true);
+		expect(compareFileNamesDefault('', '') === 0, 'empty should be equal').toBe(true);
+		expect(compareFileNamesDefault('abc', 'abc') === 0, 'equal names should be equal').toBe(true);
+		expect(compareFileNamesDefault('z', 'A') > 0, 'z comes after A').toBe(true);
+		expect(compareFileNamesDefault('Z', 'a') > 0, 'Z comes after a').toBe(true);
 
 		// name plus extension comparisons
-		assert(compareFileNamesDefault('file.ext', 'file.ext') === 0, 'equal full names should be equal');
-		assert(compareFileNamesDefault('a.ext', 'b.ext') < 0, 'if equal extensions, filenames should be compared');
-		assert(compareFileNamesDefault('file.aaa', 'file.bbb') < 0, 'files with equal names should be compared by extensions');
-		assert(compareFileNamesDefault('bbb.aaa', 'aaa.bbb') > 0, 'files should be compared by names even if extensions compare differently');
-		assert(compareFileNamesDefault('aggregate.go', 'aggregate_repo.go') > 0, 'compares the whole filename in locale order');
+		expect(compareFileNamesDefault('file.ext', 'file.ext') === 0, 'equal full names should be equal').toBe(true);
+		expect(compareFileNamesDefault('a.ext', 'b.ext') < 0, 'if equal extensions, filenames should be compared').toBe(true);
+		expect(compareFileNamesDefault('file.aaa', 'file.bbb') < 0, 'files with equal names should be compared by extensions').toBe(true);
+		expect(compareFileNamesDefault('bbb.aaa', 'aaa.bbb') > 0, 'files should be compared by names even if extensions compare differently').toBe(true);
+		expect(compareFileNamesDefault('aggregate.go', 'aggregate_repo.go') > 0, 'compares the whole filename in locale order').toBe(true);
 
 		// dotfile comparisons
-		assert(compareFileNamesDefault('.abc', '.abc') === 0, 'equal dotfile names should be equal');
-		assert(compareFileNamesDefault('.env.', '.gitattributes') < 0, 'filenames starting with dots and with extensions should still sort properly');
-		assert(compareFileNamesDefault('.env', '.aaa.env') > 0, 'dotfiles sort alphabetically when they contain multiple dots');
-		assert(compareFileNamesDefault('.env', '.env.aaa') < 0, 'dotfiles with the same root sort shortest first');
-		assert(compareFileNamesDefault('.aaa_env', '.aaa.env') < 0, 'an underscore in a dotfile name will sort before a dot');
+		expect(compareFileNamesDefault('.abc', '.abc') === 0, 'equal dotfile names should be equal').toBe(true);
+		expect(compareFileNamesDefault('.env.', '.gitattributes') < 0, 'filenames starting with dots and with extensions should still sort properly').toBe(true);
+		expect(compareFileNamesDefault('.env', '.aaa.env') > 0, 'dotfiles sort alphabetically when they contain multiple dots').toBe(true);
+		expect(compareFileNamesDefault('.env', '.env.aaa') < 0, 'dotfiles with the same root sort shortest first').toBe(true);
+		expect(compareFileNamesDefault('.aaa_env', '.aaa.env') < 0, 'an underscore in a dotfile name will sort before a dot').toBe(true);
 
 		// dotfile vs non-dotfile comparisons
-		assert(compareFileNamesDefault(null, '.abc') < 0, 'null should come before dotfiles');
-		assert(compareFileNamesDefault('.env', 'aaa') < 0, 'dotfiles come before filenames without extensions');
-		assert(compareFileNamesDefault('.env', 'aaa.env') < 0, 'dotfiles come before filenames with extensions');
-		assert(compareFileNamesDefault('.md', 'A.MD') < 0, 'dotfiles sort before uppercase files');
-		assert(compareFileNamesDefault('.MD', 'a.md') < 0, 'dotfiles sort before lowercase files');
+		expect(compareFileNamesDefault(null, '.abc') < 0, 'null should come before dotfiles').toBe(true);
+		expect(compareFileNamesDefault('.env', 'aaa') < 0, 'dotfiles come before filenames without extensions').toBe(true);
+		expect(compareFileNamesDefault('.env', 'aaa.env') < 0, 'dotfiles come before filenames with extensions').toBe(true);
+		expect(compareFileNamesDefault('.md', 'A.MD') < 0, 'dotfiles sort before uppercase files').toBe(true);
+		expect(compareFileNamesDefault('.MD', 'a.md') < 0, 'dotfiles sort before lowercase files').toBe(true);
 
 		// numeric comparisons
-		assert(compareFileNamesDefault('1', '1') === 0, 'numerically equal full names should be equal');
-		assert(compareFileNamesDefault('abc1.txt', 'abc1.txt') === 0, 'equal filenames with numbers should be equal');
-		assert(compareFileNamesDefault('abc1.txt', 'abc2.txt') < 0, 'filenames with numbers should be in numerical order, not alphabetical order');
-		assert(compareFileNamesDefault('abc2.txt', 'abc10.txt') < 0, 'filenames with numbers should be in numerical order even when they are multiple digits long');
-		assert(compareFileNamesDefault('abc02.txt', 'abc010.txt') < 0, 'filenames with numbers that have leading zeros sort numerically');
-		assert(compareFileNamesDefault('abc1.10.txt', 'abc1.2.txt') > 0, 'numbers with dots between them are treated as two separate numbers, not one decimal number');
-		assert(compareFileNamesDefault('a.ext1', 'b.Ext1') < 0, 'if names are different and extensions with numbers are equal except for case, filenames are compared by full filename');
+		expect(compareFileNamesDefault('1', '1') === 0, 'numerically equal full names should be equal').toBe(true);
+		expect(compareFileNamesDefault('abc1.txt', 'abc1.txt') === 0, 'equal filenames with numbers should be equal').toBe(true);
+		expect(compareFileNamesDefault('abc1.txt', 'abc2.txt') < 0, 'filenames with numbers should be in numerical order, not alphabetical order').toBe(true);
+		expect(compareFileNamesDefault('abc2.txt', 'abc10.txt') < 0, 'filenames with numbers should be in numerical order even when they are multiple digits long').toBe(true);
+		expect(compareFileNamesDefault('abc02.txt', 'abc010.txt') < 0, 'filenames with numbers that have leading zeros sort numerically').toBe(true);
+		expect(compareFileNamesDefault('abc1.10.txt', 'abc1.2.txt') > 0, 'numbers with dots between them are treated as two separate numbers, not one decimal number').toBe(true);
+		expect(compareFileNamesDefault('a.ext1', 'b.Ext1') < 0, 'if names are different and extensions with numbers are equal except for case, filenames are compared by full filename').toBe(true);
 		assert.deepStrictEqual(['a10.txt', 'A2.txt', 'A100.txt', 'a20.txt'].sort(compareFileNamesDefault), ['A2.txt', 'a10.txt', 'a20.txt', 'A100.txt'], 'filenames with number and case differences compare numerically');
 
 		//
@@ -201,15 +201,15 @@ suite('Comparers', () => {
 		//
 
 		// name-only comparisons
-		assert(compareFileNamesDefault('a', 'A') === compareLocale('a', 'A'), 'the same letter sorts by locale');
-		assert(compareFileNamesDefault('â', 'Â') === compareLocale('â', 'Â'), 'the same accented letter sorts by locale');
+		expect(compareFileNamesDefault('a', 'A') === compareLocale('a', 'A'), 'the same letter sorts by locale').toBe(true);
+		expect(compareFileNamesDefault('â', 'Â') === compareLocale('â', 'Â'), 'the same accented letter sorts by locale').toBe(true);
 		assert.deepStrictEqual(['email', 'Email', 'émail', 'Émail'].sort(compareFileNamesDefault), ['email', 'Email', 'émail', 'Émail'].sort(compareLocale), 'the same base characters with different case or accents sort in locale order');
 
 		// numeric comparisons
-		assert(compareFileNamesDefault('abc02.txt', 'abc002.txt') < 0, 'filenames with equivalent numbers and leading zeros sort shortest number first');
-		assert(compareFileNamesDefault('abc.txt1', 'abc.txt01') < 0, 'same name plus extensions with equal numbers sort shortest number first');
-		assert(compareFileNamesDefault('art01', 'Art01') === compareLocaleNumeric('art01', 'Art01'), 'a numerically equivalent word of a different case compares numerically based on locale');
-		assert(compareFileNamesDefault('a.ext1', 'a.Ext1') === compareLocale('ext1', 'Ext1'), 'if names are equal and extensions with numbers are equal except for case, filenames are sorted in extension locale order');
+		expect(compareFileNamesDefault('abc02.txt', 'abc002.txt') < 0, 'filenames with equivalent numbers and leading zeros sort shortest number first').toBe(true);
+		expect(compareFileNamesDefault('abc.txt1', 'abc.txt01') < 0, 'same name plus extensions with equal numbers sort shortest number first').toBe(true);
+		expect(compareFileNamesDefault('art01', 'Art01') === compareLocaleNumeric('art01', 'Art01'), 'a numerically equivalent word of a different case compares numerically based on locale').toBe(true);
+		expect(compareFileNamesDefault('a.ext1', 'a.Ext1') === compareLocale('ext1', 'Ext1'), 'if names are equal and extensions with numbers are equal except for case, filenames are sorted in extension locale order').toBe(true);
 	});
 
 	test('compareFileExtensionsDefault', () => {
@@ -219,40 +219,40 @@ suite('Comparers', () => {
 		//
 
 		// name-only comparisons
-		assert(compareFileExtensionsDefault(null, null) === 0, 'null should be equal');
-		assert(compareFileExtensionsDefault(null, 'abc') < 0, 'null should come before real files without extensions');
-		assert(compareFileExtensionsDefault('', '') === 0, 'empty should be equal');
-		assert(compareFileExtensionsDefault('abc', 'abc') === 0, 'equal names should be equal');
-		assert(compareFileExtensionsDefault('z', 'A') > 0, 'z comes after A');
-		assert(compareFileExtensionsDefault('Z', 'a') > 0, 'Z comes after a');
+		expect(compareFileExtensionsDefault(null, null) === 0, 'null should be equal').toBe(true)
+		expect(compareFileExtensionsDefault(null, 'abc') < 0, 'null should come before real files without extensions').toBe(true)
+		expect(compareFileExtensionsDefault('', '') === 0, 'empty should be equal').toBe(true)
+		expect(compareFileExtensionsDefault('abc', 'abc') === 0, 'equal names should be equal').toBe(true)
+		expect(compareFileExtensionsDefault('z', 'A') > 0, 'z comes after A').toBe(true)
+		expect(compareFileExtensionsDefault('Z', 'a') > 0, 'Z comes after a').toBe(true)
 
 		// name plus extension comparisons
-		assert(compareFileExtensionsDefault('file.ext', 'file.ext') === 0, 'equal full filenames should be equal');
-		assert(compareFileExtensionsDefault('a.ext', 'b.ext') < 0, 'if equal extensions, filenames should be compared');
-		assert(compareFileExtensionsDefault('file.aaa', 'file.bbb') < 0, 'files with equal names should be compared by extensions');
-		assert(compareFileExtensionsDefault('bbb.aaa', 'aaa.bbb') < 0, 'files should be compared by extension first');
+		expect(compareFileExtensionsDefault('file.ext', 'file.ext') === 0, 'equal full filenames should be equal').toBe(true)
+		expect(compareFileExtensionsDefault('a.ext', 'b.ext') < 0, 'if equal extensions, filenames should be compared').toBe(true)
+		expect(compareFileExtensionsDefault('file.aaa', 'file.bbb') < 0, 'files with equal names should be compared by extensions').toBe(true)
+		expect(compareFileExtensionsDefault('bbb.aaa', 'aaa.bbb') < 0, 'files should be compared by extension first').toBe(true)
 
 		// dotfile comparisons
-		assert(compareFileExtensionsDefault('.abc', '.abc') === 0, 'equal dotfiles should be equal');
-		assert(compareFileExtensionsDefault('.md', '.Gitattributes') > 0, 'dotfiles sort alphabetically regardless of case');
+		expect(compareFileExtensionsDefault('.abc', '.abc') === 0, 'equal dotfiles should be equal').toBe(true)
+		expect(compareFileExtensionsDefault('.md', '.Gitattributes') > 0, 'dotfiles sort alphabetically regardless of case').toBe(true)
 
 		// dotfile vs non-dotfile comparisons
-		assert(compareFileExtensionsDefault(null, '.abc') < 0, 'null should come before dotfiles');
-		assert(compareFileExtensionsDefault('.env', 'aaa.env') < 0, 'dotfiles come before filenames with extensions');
-		assert(compareFileExtensionsDefault('.MD', 'a.md') < 0, 'dotfiles sort before lowercase files');
+		expect(compareFileExtensionsDefault(null, '.abc') < 0, 'null should come before dotfiles').toBe(true)
+		expect(compareFileExtensionsDefault('.env', 'aaa.env') < 0, 'dotfiles come before filenames with extensions').toBe(true)
+		expect(compareFileExtensionsDefault('.MD', 'a.md') < 0, 'dotfiles sort before lowercase files').toBe(true)
 
 		// numeric comparisons
-		assert(compareFileExtensionsDefault('1', '1') === 0, 'numerically equal full names should be equal');
-		assert(compareFileExtensionsDefault('abc1.txt', 'abc1.txt') === 0, 'equal filenames with numbers should be equal');
-		assert(compareFileExtensionsDefault('abc1.txt', 'abc2.txt') < 0, 'filenames with numbers should be in numerical order, not alphabetical order');
-		assert(compareFileExtensionsDefault('abc2.txt', 'abc10.txt') < 0, 'filenames with numbers should be in numerical order');
-		assert(compareFileExtensionsDefault('abc02.txt', 'abc010.txt') < 0, 'filenames with numbers that have leading zeros sort numerically');
-		assert(compareFileExtensionsDefault('abc1.10.txt', 'abc1.2.txt') > 0, 'numbers with dots between them are treated as two separate numbers, not one decimal number');
-		assert(compareFileExtensionsDefault('abc2.txt2', 'abc1.txt10') < 0, 'extensions with numbers should be in numerical order, not alphabetical order');
-		assert(compareFileExtensionsDefault('txt.abc1', 'txt.abc1') === 0, 'equal extensions with numbers should be equal');
-		assert(compareFileExtensionsDefault('txt.abc1', 'txt.abc2') < 0, 'extensions with numbers should be in numerical order, not alphabetical order');
-		assert(compareFileExtensionsDefault('txt.abc2', 'txt.abc10') < 0, 'extensions with numbers should be in numerical order even when they are multiple digits long');
-		assert(compareFileExtensionsDefault('a.ext1', 'b.ext1') < 0, 'if equal extensions with numbers, full filenames should be compared');
+		expect(compareFileExtensionsDefault('1', '1') === 0, 'numerically equal full names should be equal').toBe(true)
+		expect(compareFileExtensionsDefault('abc1.txt', 'abc1.txt') === 0, 'equal filenames with numbers should be equal').toBe(true)
+		expect(compareFileExtensionsDefault('abc1.txt', 'abc2.txt') < 0, 'filenames with numbers should be in numerical order, not alphabetical order').toBe(true)
+		expect(compareFileExtensionsDefault('abc2.txt', 'abc10.txt') < 0, 'filenames with numbers should be in numerical order').toBe(true)
+		expect(compareFileExtensionsDefault('abc02.txt', 'abc010.txt') < 0, 'filenames with numbers that have leading zeros sort numerically').toBe(true)
+		expect(compareFileExtensionsDefault('abc1.10.txt', 'abc1.2.txt') > 0, 'numbers with dots between them are treated as two separate numbers, not one decimal number').toBe(true)
+		expect(compareFileExtensionsDefault('abc2.txt2', 'abc1.txt10') < 0, 'extensions with numbers should be in numerical order, not alphabetical order').toBe(true)
+		expect(compareFileExtensionsDefault('txt.abc1', 'txt.abc1') === 0, 'equal extensions with numbers should be equal').toBe(true)
+		expect(compareFileExtensionsDefault('txt.abc1', 'txt.abc2') < 0, 'extensions with numbers should be in numerical order, not alphabetical order').toBe(true)
+		expect(compareFileExtensionsDefault('txt.abc2', 'txt.abc10') < 0, 'extensions with numbers should be in numerical order even when they are multiple digits long').toBe(true)
+		expect(compareFileExtensionsDefault('a.ext1', 'b.ext1') < 0, 'if equal extensions with numbers, full filenames should be compared').toBe(true)
 		assert.deepStrictEqual(['a10.txt', 'A2.txt', 'A100.txt', 'a20.txt'].sort(compareFileExtensionsDefault), ['A2.txt', 'a10.txt', 'a20.txt', 'A100.txt'], 'filenames with number and case differences compare numerically');
 
 		//
@@ -260,31 +260,31 @@ suite('Comparers', () => {
 		//
 
 		// name-only comparisons
-		assert(compareFileExtensionsDefault('a', 'A') === compareLocale('a', 'A'), 'the same letter of different case sorts by locale');
-		assert(compareFileExtensionsDefault('â', 'Â') === compareLocale('â', 'Â'), 'the same accented letter of different case sorts by locale');
+		expect(compareFileExtensionsDefault('a', 'A') === compareLocale('a', 'A'), 'the same letter of different case sorts by locale').toBe(true)
+		expect(compareFileExtensionsDefault('â', 'Â') === compareLocale('â', 'Â'), 'the same accented letter of different case sorts by locale').toBe(true)
 		assert.deepStrictEqual(['email', 'Email', 'émail', 'Émail'].sort(compareFileExtensionsDefault), ['email', 'Email', 'émail', 'Émail'].sort((a, b) => a.localeCompare(b)), 'the same base characters with different case or accents sort in locale order');
 
 		// name plus extension comparisons
-		assert(compareFileExtensionsDefault('a.MD', 'a.md') === compareLocale('MD', 'md'), 'case differences in extensions sort by locale');
-		assert(compareFileExtensionsDefault('a.md', 'A.md') === compareLocale('a', 'A'), 'case differences in names sort by locale');
-		assert(compareFileExtensionsDefault('a.md', 'b.MD') < 0, 'when extensions are the same except for case, the files sort by name');
-		assert(compareFileExtensionsDefault('aggregate.go', 'aggregate_repo.go') > 0, 'names with the same extension sort in full filename locale order');
+		expect(compareFileExtensionsDefault('a.MD', 'a.md') === compareLocale('MD', 'md'), 'case differences in extensions sort by locale').toBe(true)
+		expect(compareFileExtensionsDefault('a.md', 'A.md') === compareLocale('a', 'A'), 'case differences in names sort by locale').toBe(true)
+		expect(compareFileExtensionsDefault('a.md', 'b.MD') < 0, 'when extensions are the same except for case, the files sort by name').toBe(true)
+		expect(compareFileExtensionsDefault('aggregate.go', 'aggregate_repo.go') > 0, 'names with the same extension sort in full filename locale order').toBe(true)
 
 		// dotfile comparisons
-		assert(compareFileExtensionsDefault('.env', '.aaa.env') > 0, 'dotfiles sort alphabetically when they contain multiple dots');
-		assert(compareFileExtensionsDefault('.env', '.env.aaa') < 0, 'dotfiles with the same root sort shortest first');
+		expect(compareFileExtensionsDefault('.env', '.aaa.env') > 0, 'dotfiles sort alphabetically when they contain multiple dots').toBe(true)
+		expect(compareFileExtensionsDefault('.env', '.env.aaa') < 0, 'dotfiles with the same root sort shortest first').toBe(true)
 
 		// dotfile vs non-dotfile comparisons
-		assert(compareFileExtensionsDefault('.env', 'aaa') < 0, 'dotfiles come before filenames without extensions');
-		assert(compareFileExtensionsDefault('.md', 'A.MD') < 0, 'dotfiles sort before uppercase files');
+		expect(compareFileExtensionsDefault('.env', 'aaa') < 0, 'dotfiles come before filenames without extensions').toBe(true)
+		expect(compareFileExtensionsDefault('.md', 'A.MD') < 0, 'dotfiles sort before uppercase files').toBe(true)
 
 		// numeric comparisons
-		assert(compareFileExtensionsDefault('abc.txt01', 'abc.txt1') > 0, 'extensions with equal numbers should be in shortest-first order');
-		assert(compareFileExtensionsDefault('art01', 'Art01') === compareLocaleNumeric('art01', 'Art01'), 'a numerically equivalent word of a different case compares numerically based on locale');
-		assert(compareFileExtensionsDefault('abc02.txt', 'abc002.txt') < 0, 'filenames with equivalent numbers and leading zeros sort shortest string first');
-		assert(compareFileExtensionsDefault('txt.abc01', 'txt.abc1') > 0, 'extensions with equivalent numbers sort shortest extension first');
-		assert(compareFileExtensionsDefault('a.ext1', 'b.Ext1') < 0, 'if extensions with numbers are equal except for case, full filenames should be compared');
-		assert(compareFileExtensionsDefault('a.ext1', 'a.Ext1') === compareLocale('a.ext1', 'a.Ext1'), 'if extensions with numbers are equal except for case, full filenames are compared in locale order');
+		expect(compareFileExtensionsDefault('abc.txt01', 'abc.txt1') > 0, 'extensions with equal numbers should be in shortest-first order').toBe(true)
+		expect(compareFileExtensionsDefault('art01', 'Art01') === compareLocaleNumeric('art01', 'Art01'), 'a numerically equivalent word of a different case compares numerically based on locale').toBe(true)
+		expect(compareFileExtensionsDefault('abc02.txt', 'abc002.txt') < 0, 'filenames with equivalent numbers and leading zeros sort shortest string first').toBe(true)
+		expect(compareFileExtensionsDefault('txt.abc01', 'txt.abc1') > 0, 'extensions with equivalent numbers sort shortest extension first').toBe(true)
+		expect(compareFileExtensionsDefault('a.ext1', 'b.Ext1') < 0, 'if extensions with numbers are equal except for case, full filenames should be compared').toBe(true)
+		expect(compareFileExtensionsDefault('a.ext1', 'a.Ext1') === compareLocale('a.ext1', 'a.Ext1'), 'if extensions with numbers are equal except for case, full filenames are compared in locale order').toBe(true)
 
 	});
 
@@ -295,58 +295,58 @@ suite('Comparers', () => {
 		//
 
 		// name-only comparisons
-		assert(compareFileNamesUpper(null, null) === 0, 'null should be equal');
-		assert(compareFileNamesUpper(null, 'abc') < 0, 'null should be come before real values');
-		assert(compareFileNamesUpper('', '') === 0, 'empty should be equal');
-		assert(compareFileNamesUpper('abc', 'abc') === 0, 'equal names should be equal');
-		assert(compareFileNamesUpper('z', 'A') > 0, 'z comes after A');
+		expect(compareFileNamesUpper(null, null) === 0, 'null should be equal').toBe(true)
+		expect(compareFileNamesUpper(null, 'abc') < 0, 'null should be come before real values').toBe(true)
+		expect(compareFileNamesUpper('', '') === 0, 'empty should be equal').toBe(true)
+		expect(compareFileNamesUpper('abc', 'abc') === 0, 'equal names should be equal').toBe(true)
+		expect(compareFileNamesUpper('z', 'A') > 0, 'z comes after A').toBe(true)
 
 		// name plus extension comparisons
-		assert(compareFileNamesUpper('file.ext', 'file.ext') === 0, 'equal full names should be equal');
-		assert(compareFileNamesUpper('a.ext', 'b.ext') < 0, 'if equal extensions, filenames should be compared');
-		assert(compareFileNamesUpper('file.aaa', 'file.bbb') < 0, 'files with equal names should be compared by extensions');
-		assert(compareFileNamesUpper('bbb.aaa', 'aaa.bbb') > 0, 'files should be compared by names even if extensions compare differently');
-		assert(compareFileNamesUpper('aggregate.go', 'aggregate_repo.go') > 0, 'compares the full filename in locale order');
+		expect(compareFileNamesUpper('file.ext', 'file.ext') === 0, 'equal full names should be equal').toBe(true)
+		expect(compareFileNamesUpper('a.ext', 'b.ext') < 0, 'if equal extensions, filenames should be compared').toBe(true)
+		expect(compareFileNamesUpper('file.aaa', 'file.bbb') < 0, 'files with equal names should be compared by extensions').toBe(true)
+		expect(compareFileNamesUpper('bbb.aaa', 'aaa.bbb') > 0, 'files should be compared by names even if extensions compare differently').toBe(true)
+		expect(compareFileNamesUpper('aggregate.go', 'aggregate_repo.go') > 0, 'compares the full filename in locale order').toBe(true)
 
 		// dotfile comparisons
-		assert(compareFileNamesUpper('.abc', '.abc') === 0, 'equal dotfile names should be equal');
-		assert(compareFileNamesUpper('.env.', '.gitattributes') < 0, 'filenames starting with dots and with extensions should still sort properly');
-		assert(compareFileNamesUpper('.env', '.aaa.env') > 0, 'dotfiles sort alphabetically when they contain multiple dots');
-		assert(compareFileNamesUpper('.env', '.env.aaa') < 0, 'dotfiles with the same root sort shortest first');
-		assert(compareFileNamesUpper('.aaa_env', '.aaa.env') < 0, 'an underscore in a dotfile name will sort before a dot');
+		expect(compareFileNamesUpper('.abc', '.abc') === 0, 'equal dotfile names should be equal').toBe(true)
+		expect(compareFileNamesUpper('.env.', '.gitattributes') < 0, 'filenames starting with dots and with extensions should still sort properly').toBe(true)
+		expect(compareFileNamesUpper('.env', '.aaa.env') > 0, 'dotfiles sort alphabetically when they contain multiple dots').toBe(true)
+		expect(compareFileNamesUpper('.env', '.env.aaa') < 0, 'dotfiles with the same root sort shortest first').toBe(true)
+		expect(compareFileNamesUpper('.aaa_env', '.aaa.env') < 0, 'an underscore in a dotfile name will sort before a dot').toBe(true)
 
 		// dotfile vs non-dotfile comparisons
-		assert(compareFileNamesUpper(null, '.abc') < 0, 'null should come before dotfiles');
-		assert(compareFileNamesUpper('.env', 'aaa') < 0, 'dotfiles come before filenames without extensions');
-		assert(compareFileNamesUpper('.env', 'aaa.env') < 0, 'dotfiles come before filenames with extensions');
-		assert(compareFileNamesUpper('.md', 'A.MD') < 0, 'dotfiles sort before uppercase files');
-		assert(compareFileNamesUpper('.MD', 'a.md') < 0, 'dotfiles sort before lowercase files');
+		expect(compareFileNamesUpper(null, '.abc') < 0, 'null should come before dotfiles').toBe(true)
+		expect(compareFileNamesUpper('.env', 'aaa') < 0, 'dotfiles come before filenames without extensions').toBe(true)
+		expect(compareFileNamesUpper('.env', 'aaa.env') < 0, 'dotfiles come before filenames with extensions').toBe(true)
+		expect(compareFileNamesUpper('.md', 'A.MD') < 0, 'dotfiles sort before uppercase files').toBe(true)
+		expect(compareFileNamesUpper('.MD', 'a.md') < 0, 'dotfiles sort before lowercase files').toBe(true)
 
 		// numeric comparisons
-		assert(compareFileNamesUpper('1', '1') === 0, 'numerically equal full names should be equal');
-		assert(compareFileNamesUpper('abc1.txt', 'abc1.txt') === 0, 'equal filenames with numbers should be equal');
-		assert(compareFileNamesUpper('abc1.txt', 'abc2.txt') < 0, 'filenames with numbers should be in numerical order, not alphabetical order');
-		assert(compareFileNamesUpper('abc2.txt', 'abc10.txt') < 0, 'filenames with numbers should be in numerical order even when they are multiple digits long');
-		assert(compareFileNamesUpper('abc02.txt', 'abc010.txt') < 0, 'filenames with numbers that have leading zeros sort numerically');
-		assert(compareFileNamesUpper('abc1.10.txt', 'abc1.2.txt') > 0, 'numbers with dots between them are treated as two separate numbers, not one decimal number');
-		assert(compareFileNamesUpper('abc02.txt', 'abc002.txt') < 0, 'filenames with equivalent numbers and leading zeros sort shortest number first');
-		assert(compareFileNamesUpper('abc.txt1', 'abc.txt01') < 0, 'same name plus extensions with equal numbers sort shortest number first');
-		assert(compareFileNamesUpper('a.ext1', 'b.Ext1') < 0, 'different names with the equal extensions except for case are sorted by full filename');
-		assert(compareFileNamesUpper('a.ext1', 'a.Ext1') === compareLocale('a.ext1', 'a.Ext1'), 'same names with equal and extensions except for case are sorted in full filename locale order');
+		expect(compareFileNamesUpper('1', '1') === 0, 'numerically equal full names should be equal').toBe(true)
+		expect(compareFileNamesUpper('abc1.txt', 'abc1.txt') === 0, 'equal filenames with numbers should be equal').toBe(true)
+		expect(compareFileNamesUpper('abc1.txt', 'abc2.txt') < 0, 'filenames with numbers should be in numerical order, not alphabetical order').toBe(true)
+		expect(compareFileNamesUpper('abc2.txt', 'abc10.txt') < 0, 'filenames with numbers should be in numerical order even when they are multiple digits long').toBe(true)
+		expect(compareFileNamesUpper('abc02.txt', 'abc010.txt') < 0, 'filenames with numbers that have leading zeros sort numerically').toBe(true)
+		expect(compareFileNamesUpper('abc1.10.txt', 'abc1.2.txt') > 0, 'numbers with dots between them are treated as two separate numbers, not one decimal number').toBe(true)
+		expect(compareFileNamesUpper('abc02.txt', 'abc002.txt') < 0, 'filenames with equivalent numbers and leading zeros sort shortest number first').toBe(true)
+		expect(compareFileNamesUpper('abc.txt1', 'abc.txt01') < 0, 'same name plus extensions with equal numbers sort shortest number first').toBe(true)
+		expect(compareFileNamesUpper('a.ext1', 'b.Ext1') < 0, 'different names with the equal extensions except for case are sorted by full filename').toBe(true)
+		expect(compareFileNamesUpper('a.ext1', 'a.Ext1') === compareLocale('a.ext1', 'a.Ext1'), 'same names with equal and extensions except for case are sorted in full filename locale order').toBe(true)
 
 		//
 		// Comparisons with different results than compareFileNamesDefault
 		//
 
 		// name-only comparisons
-		assert(compareFileNamesUpper('Z', 'a') < 0, 'Z comes before a');
-		assert(compareFileNamesUpper('a', 'A') > 0, 'the same letter sorts uppercase first');
-		assert(compareFileNamesUpper('â', 'Â') > 0, 'the same accented letter sorts uppercase first');
+		expect(compareFileNamesUpper('Z', 'a') < 0, 'Z comes before a').toBe(true)
+		expect(compareFileNamesUpper('a', 'A') > 0, 'the same letter sorts uppercase first').toBe(true)
+		expect(compareFileNamesUpper('â', 'Â') > 0, 'the same accented letter sorts uppercase first').toBe(true)
 		assert.deepStrictEqual(['artichoke', 'Artichoke', 'art', 'Art'].sort(compareFileNamesUpper), ['Art', 'Artichoke', 'art', 'artichoke'], 'names with the same root and different cases sort uppercase first');
 		assert.deepStrictEqual(['email', 'Email', 'émail', 'Émail'].sort(compareFileNamesUpper), ['Email', 'Émail', 'email', 'émail'], 'the same base characters with different case or accents sort uppercase first');
 
 		// numeric comparisons
-		assert(compareFileNamesUpper('art01', 'Art01') > 0, 'a numerically equivalent name of a different case compares uppercase first');
+		expect(compareFileNamesUpper('art01', 'Art01') > 0, 'a numerically equivalent name of a different case compares uppercase first').toBe(true)
 		assert.deepStrictEqual(['a10.txt', 'A2.txt', 'A100.txt', 'a20.txt'].sort(compareFileNamesUpper), ['A2.txt', 'A100.txt', 'a10.txt', 'a20.txt'], 'filenames with number and case differences group by case then compare by number');
 
 	});
@@ -358,66 +358,66 @@ suite('Comparers', () => {
 		//
 
 		// name-only comparisons
-		assert(compareFileExtensionsUpper(null, null) === 0, 'null should be equal');
-		assert(compareFileExtensionsUpper(null, 'abc') < 0, 'null should come before real files without extensions');
-		assert(compareFileExtensionsUpper('', '') === 0, 'empty should be equal');
-		assert(compareFileExtensionsUpper('abc', 'abc') === 0, 'equal names should be equal');
-		assert(compareFileExtensionsUpper('z', 'A') > 0, 'z comes after A');
+		expect(compareFileExtensionsUpper(null, null) === 0, 'null should be equal').toBe(true)
+		expect(compareFileExtensionsUpper(null, 'abc') < 0, 'null should come before real files without extensions').toBe(true)
+		expect(compareFileExtensionsUpper('', '') === 0, 'empty should be equal').toBe(true)
+		expect(compareFileExtensionsUpper('abc', 'abc') === 0, 'equal names should be equal').toBe(true)
+		expect(compareFileExtensionsUpper('z', 'A') > 0, 'z comes after A').toBe(true)
 
 		// name plus extension comparisons
-		assert(compareFileExtensionsUpper('file.ext', 'file.ext') === 0, 'equal full filenames should be equal');
-		assert(compareFileExtensionsUpper('a.ext', 'b.ext') < 0, 'if equal extensions, filenames should be compared');
-		assert(compareFileExtensionsUpper('file.aaa', 'file.bbb') < 0, 'files with equal names should be compared by extensions');
-		assert(compareFileExtensionsUpper('bbb.aaa', 'aaa.bbb') < 0, 'files should be compared by extension first');
-		assert(compareFileExtensionsUpper('a.md', 'b.MD') < 0, 'when extensions are the same except for case, the files sort by name');
-		assert(compareFileExtensionsUpper('a.MD', 'a.md') === compareLocale('MD', 'md'), 'case differences in extensions sort by locale');
-		assert(compareFileExtensionsUpper('aggregate.go', 'aggregate_repo.go') > 0, 'when extensions are equal, compares the full filename');
+		expect(compareFileExtensionsUpper('file.ext', 'file.ext') === 0, 'equal full filenames should be equal').toBe(true)
+		expect(compareFileExtensionsUpper('a.ext', 'b.ext') < 0, 'if equal extensions, filenames should be compared').toBe(true)
+		expect(compareFileExtensionsUpper('file.aaa', 'file.bbb') < 0, 'files with equal names should be compared by extensions').toBe(true)
+		expect(compareFileExtensionsUpper('bbb.aaa', 'aaa.bbb') < 0, 'files should be compared by extension first').toBe(true)
+		expect(compareFileExtensionsUpper('a.md', 'b.MD') < 0, 'when extensions are the same except for case, the files sort by name').toBe(true)
+		expect(compareFileExtensionsUpper('a.MD', 'a.md') === compareLocale('MD', 'md'), 'case differences in extensions sort by locale').toBe(true)
+		expect(compareFileExtensionsUpper('aggregate.go', 'aggregate_repo.go') > 0, 'when extensions are equal, compares the full filename').toBe(true)
 
 		// dotfile comparisons
-		assert(compareFileExtensionsUpper('.abc', '.abc') === 0, 'equal dotfiles should be equal');
-		assert(compareFileExtensionsUpper('.md', '.Gitattributes') > 0, 'dotfiles sort alphabetically regardless of case');
-		assert(compareFileExtensionsUpper('.env', '.aaa.env') > 0, 'dotfiles sort alphabetically when they contain multiple dots');
-		assert(compareFileExtensionsUpper('.env', '.env.aaa') < 0, 'dotfiles with the same root sort shortest first');
+		expect(compareFileExtensionsUpper('.abc', '.abc') === 0, 'equal dotfiles should be equal').toBe(true)
+		expect(compareFileExtensionsUpper('.md', '.Gitattributes') > 0, 'dotfiles sort alphabetically regardless of case').toBe(true)
+		expect(compareFileExtensionsUpper('.env', '.aaa.env') > 0, 'dotfiles sort alphabetically when they contain multiple dots').toBe(true)
+		expect(compareFileExtensionsUpper('.env', '.env.aaa') < 0, 'dotfiles with the same root sort shortest first').toBe(true)
 
 		// dotfile vs non-dotfile comparisons
-		assert(compareFileExtensionsUpper(null, '.abc') < 0, 'null should come before dotfiles');
-		assert(compareFileExtensionsUpper('.env', 'aaa.env') < 0, 'dotfiles come before filenames with extensions');
-		assert(compareFileExtensionsUpper('.MD', 'a.md') < 0, 'dotfiles sort before lowercase files');
-		assert(compareFileExtensionsUpper('.env', 'aaa') < 0, 'dotfiles come before filenames without extensions');
-		assert(compareFileExtensionsUpper('.md', 'A.MD') < 0, 'dotfiles sort before uppercase files');
+		expect(compareFileExtensionsUpper(null, '.abc') < 0, 'null should come before dotfiles').toBe(true)
+		expect(compareFileExtensionsUpper('.env', 'aaa.env') < 0, 'dotfiles come before filenames with extensions').toBe(true)
+		expect(compareFileExtensionsUpper('.MD', 'a.md') < 0, 'dotfiles sort before lowercase files').toBe(true)
+		expect(compareFileExtensionsUpper('.env', 'aaa') < 0, 'dotfiles come before filenames without extensions').toBe(true)
+		expect(compareFileExtensionsUpper('.md', 'A.MD') < 0, 'dotfiles sort before uppercase files').toBe(true)
 
 		// numeric comparisons
-		assert(compareFileExtensionsUpper('1', '1') === 0, 'numerically equal full names should be equal');
-		assert(compareFileExtensionsUpper('abc1.txt', 'abc1.txt') === 0, 'equal filenames with numbers should be equal');
-		assert(compareFileExtensionsUpper('abc1.txt', 'abc2.txt') < 0, 'filenames with numbers should be in numerical order, not alphabetical order');
-		assert(compareFileExtensionsUpper('abc2.txt', 'abc10.txt') < 0, 'filenames with numbers should be in numerical order');
-		assert(compareFileExtensionsUpper('abc02.txt', 'abc010.txt') < 0, 'filenames with numbers that have leading zeros sort numerically');
-		assert(compareFileExtensionsUpper('abc1.10.txt', 'abc1.2.txt') > 0, 'numbers with dots between them are treated as two separate numbers, not one decimal number');
-		assert(compareFileExtensionsUpper('abc2.txt2', 'abc1.txt10') < 0, 'extensions with numbers should be in numerical order, not alphabetical order');
-		assert(compareFileExtensionsUpper('txt.abc1', 'txt.abc1') === 0, 'equal extensions with numbers should be equal');
-		assert(compareFileExtensionsUpper('txt.abc1', 'txt.abc2') < 0, 'extensions with numbers should be in numerical order, not alphabetical order');
-		assert(compareFileExtensionsUpper('txt.abc2', 'txt.abc10') < 0, 'extensions with numbers should be in numerical order even when they are multiple digits long');
-		assert(compareFileExtensionsUpper('a.ext1', 'b.ext1') < 0, 'if equal extensions with numbers, full filenames should be compared');
-		assert(compareFileExtensionsUpper('abc.txt01', 'abc.txt1') > 0, 'extensions with equal numbers should be in shortest-first order');
-		assert(compareFileExtensionsUpper('abc02.txt', 'abc002.txt') < 0, 'filenames with equivalent numbers and leading zeros sort shortest string first');
-		assert(compareFileExtensionsUpper('txt.abc01', 'txt.abc1') > 0, 'extensions with equivalent numbers sort shortest extension first');
-		assert(compareFileExtensionsUpper('a.ext1', 'b.Ext1') < 0, 'different names and extensions that are equal except for case are sorted in full filename order');
-		assert(compareFileExtensionsUpper('a.ext1', 'a.Ext1') === compareLocale('a.ext1', 'b.Ext1'), 'same names and extensions that are equal except for case are sorted in full filename locale order');
+		expect(compareFileExtensionsUpper('1', '1') === 0, 'numerically equal full names should be equal').toBe(true)
+		expect(compareFileExtensionsUpper('abc1.txt', 'abc1.txt') === 0, 'equal filenames with numbers should be equal').toBe(true)
+		expect(compareFileExtensionsUpper('abc1.txt', 'abc2.txt') < 0, 'filenames with numbers should be in numerical order, not alphabetical order').toBe(true)
+		expect(compareFileExtensionsUpper('abc2.txt', 'abc10.txt') < 0, 'filenames with numbers should be in numerical order').toBe(true)
+		expect(compareFileExtensionsUpper('abc02.txt', 'abc010.txt') < 0, 'filenames with numbers that have leading zeros sort numerically').toBe(true)
+		expect(compareFileExtensionsUpper('abc1.10.txt', 'abc1.2.txt') > 0, 'numbers with dots between them are treated as two separate numbers, not one decimal number').toBe(true)
+		expect(compareFileExtensionsUpper('abc2.txt2', 'abc1.txt10') < 0, 'extensions with numbers should be in numerical order, not alphabetical order').toBe(true)
+		expect(compareFileExtensionsUpper('txt.abc1', 'txt.abc1') === 0, 'equal extensions with numbers should be equal').toBe(true)
+		expect(compareFileExtensionsUpper('txt.abc1', 'txt.abc2') < 0, 'extensions with numbers should be in numerical order, not alphabetical order').toBe(true)
+		expect(compareFileExtensionsUpper('txt.abc2', 'txt.abc10') < 0, 'extensions with numbers should be in numerical order even when they are multiple digits long').toBe(true)
+		expect(compareFileExtensionsUpper('a.ext1', 'b.ext1') < 0, 'if equal extensions with numbers, full filenames should be compared').toBe(true)
+		expect(compareFileExtensionsUpper('abc.txt01', 'abc.txt1') > 0, 'extensions with equal numbers should be in shortest-first order').toBe(true)
+		expect(compareFileExtensionsUpper('abc02.txt', 'abc002.txt') < 0, 'filenames with equivalent numbers and leading zeros sort shortest string first').toBe(true)
+		expect(compareFileExtensionsUpper('txt.abc01', 'txt.abc1') > 0, 'extensions with equivalent numbers sort shortest extension first').toBe(true)
+		expect(compareFileExtensionsUpper('a.ext1', 'b.Ext1') < 0, 'different names and extensions that are equal except for case are sorted in full filename order').toBe(true)
+		expect(compareFileExtensionsUpper('a.ext1', 'a.Ext1') === compareLocale('a.ext1', 'b.Ext1'), 'same names and extensions that are equal except for case are sorted in full filename locale order').toBe(true)
 
 		//
 		// Comparisons with different results than compareFileExtensionsDefault
 		//
 
 		// name-only comparisons
-		assert(compareFileExtensionsUpper('Z', 'a') < 0, 'Z comes before a');
-		assert(compareFileExtensionsUpper('a', 'A') > 0, 'the same letter sorts uppercase first');
-		assert(compareFileExtensionsUpper('â', 'Â') > 0, 'the same accented letter sorts uppercase first');
+		expect(compareFileExtensionsUpper('Z', 'a') < 0, 'Z comes before a').toBe(true)
+		expect(compareFileExtensionsUpper('a', 'A') > 0, 'the same letter sorts uppercase first').toBe(true)
+		expect(compareFileExtensionsUpper('â', 'Â') > 0, 'the same accented letter sorts uppercase first').toBe(true)
 		assert.deepStrictEqual(['artichoke', 'Artichoke', 'art', 'Art'].sort(compareFileExtensionsUpper), ['Art', 'Artichoke', 'art', 'artichoke'], 'names with the same root and different cases sort uppercase names first');
 		assert.deepStrictEqual(['email', 'Email', 'émail', 'Émail'].sort(compareFileExtensionsUpper), ['Email', 'Émail', 'email', 'émail'], 'the same base characters with different case or accents sort uppercase names first');
 
 		// name plus extension comparisons
-		assert(compareFileExtensionsUpper('a.md', 'A.md') > 0, 'case differences in names sort uppercase first');
-		assert(compareFileExtensionsUpper('art01', 'Art01') > 0, 'a numerically equivalent word of a different case sorts uppercase first');
+		expect(compareFileExtensionsUpper('a.md', 'A.md') > 0, 'case differences in names sort uppercase first').toBe(true)
+		expect(compareFileExtensionsUpper('art01', 'Art01') > 0, 'a numerically equivalent word of a different case sorts uppercase first').toBe(true)
 		assert.deepStrictEqual(['a10.txt', 'A2.txt', 'A100.txt', 'a20.txt'].sort(compareFileExtensionsUpper), ['A2.txt', 'A100.txt', 'a10.txt', 'a20.txt',], 'filenames with number and case differences group by case then sort by number');
 
 	});
@@ -429,58 +429,58 @@ suite('Comparers', () => {
 		//
 
 		// name-only comparisons
-		assert(compareFileNamesLower(null, null) === 0, 'null should be equal');
-		assert(compareFileNamesLower(null, 'abc') < 0, 'null should be come before real values');
-		assert(compareFileNamesLower('', '') === 0, 'empty should be equal');
-		assert(compareFileNamesLower('abc', 'abc') === 0, 'equal names should be equal');
-		assert(compareFileNamesLower('Z', 'a') > 0, 'Z comes after a');
+		expect(compareFileNamesLower(null, null) === 0, 'null should be equal').toBe(true)
+		expect(compareFileNamesLower(null, 'abc') < 0, 'null should be come before real values').toBe(true)
+		expect(compareFileNamesLower('', '') === 0, 'empty should be equal').toBe(true)
+		expect(compareFileNamesLower('abc', 'abc') === 0, 'equal names should be equal').toBe(true)
+		expect(compareFileNamesLower('Z', 'a') > 0, 'Z comes after a').toBe(true)
 
 		// name plus extension comparisons
-		assert(compareFileNamesLower('file.ext', 'file.ext') === 0, 'equal full names should be equal');
-		assert(compareFileNamesLower('a.ext', 'b.ext') < 0, 'if equal extensions, filenames should be compared');
-		assert(compareFileNamesLower('file.aaa', 'file.bbb') < 0, 'files with equal names should be compared by extensions');
-		assert(compareFileNamesLower('bbb.aaa', 'aaa.bbb') > 0, 'files should be compared by names even if extensions compare differently');
-		assert(compareFileNamesLower('aggregate.go', 'aggregate_repo.go') > 0, 'compares full filenames');
+		expect(compareFileNamesLower('file.ext', 'file.ext') === 0, 'equal full names should be equal').toBe(true)
+		expect(compareFileNamesLower('a.ext', 'b.ext') < 0, 'if equal extensions, filenames should be compared').toBe(true)
+		expect(compareFileNamesLower('file.aaa', 'file.bbb') < 0, 'files with equal names should be compared by extensions').toBe(true)
+		expect(compareFileNamesLower('bbb.aaa', 'aaa.bbb') > 0, 'files should be compared by names even if extensions compare differently').toBe(true)
+		expect(compareFileNamesLower('aggregate.go', 'aggregate_repo.go') > 0, 'compares full filenames').toBe(true)
 
 		// dotfile comparisons
-		assert(compareFileNamesLower('.abc', '.abc') === 0, 'equal dotfile names should be equal');
-		assert(compareFileNamesLower('.env.', '.gitattributes') < 0, 'filenames starting with dots and with extensions should still sort properly');
-		assert(compareFileNamesLower('.env', '.aaa.env') > 0, 'dotfiles sort alphabetically when they contain multiple dots');
-		assert(compareFileNamesLower('.env', '.env.aaa') < 0, 'dotfiles with the same root sort shortest first');
-		assert(compareFileNamesLower('.aaa_env', '.aaa.env') < 0, 'an underscore in a dotfile name will sort before a dot');
+		expect(compareFileNamesLower('.abc', '.abc') === 0, 'equal dotfile names should be equal').toBe(true)
+		expect(compareFileNamesLower('.env.', '.gitattributes') < 0, 'filenames starting with dots and with extensions should still sort properly').toBe(true)
+		expect(compareFileNamesLower('.env', '.aaa.env') > 0, 'dotfiles sort alphabetically when they contain multiple dots').toBe(true)
+		expect(compareFileNamesLower('.env', '.env.aaa') < 0, 'dotfiles with the same root sort shortest first').toBe(true)
+		expect(compareFileNamesLower('.aaa_env', '.aaa.env') < 0, 'an underscore in a dotfile name will sort before a dot').toBe(true)
 
 		// dotfile vs non-dotfile comparisons
-		assert(compareFileNamesLower(null, '.abc') < 0, 'null should come before dotfiles');
-		assert(compareFileNamesLower('.env', 'aaa') < 0, 'dotfiles come before filenames without extensions');
-		assert(compareFileNamesLower('.env', 'aaa.env') < 0, 'dotfiles come before filenames with extensions');
-		assert(compareFileNamesLower('.md', 'A.MD') < 0, 'dotfiles sort before uppercase files');
-		assert(compareFileNamesLower('.MD', 'a.md') < 0, 'dotfiles sort before lowercase files');
+		expect(compareFileNamesLower(null, '.abc') < 0, 'null should come before dotfiles').toBe(true)
+		expect(compareFileNamesLower('.env', 'aaa') < 0, 'dotfiles come before filenames without extensions').toBe(true)
+		expect(compareFileNamesLower('.env', 'aaa.env') < 0, 'dotfiles come before filenames with extensions').toBe(true)
+		expect(compareFileNamesLower('.md', 'A.MD') < 0, 'dotfiles sort before uppercase files').toBe(true)
+		expect(compareFileNamesLower('.MD', 'a.md') < 0, 'dotfiles sort before lowercase files').toBe(true)
 
 		// numeric comparisons
-		assert(compareFileNamesLower('1', '1') === 0, 'numerically equal full names should be equal');
-		assert(compareFileNamesLower('abc1.txt', 'abc1.txt') === 0, 'equal filenames with numbers should be equal');
-		assert(compareFileNamesLower('abc1.txt', 'abc2.txt') < 0, 'filenames with numbers should be in numerical order, not alphabetical order');
-		assert(compareFileNamesLower('abc2.txt', 'abc10.txt') < 0, 'filenames with numbers should be in numerical order even when they are multiple digits long');
-		assert(compareFileNamesLower('abc02.txt', 'abc010.txt') < 0, 'filenames with numbers that have leading zeros sort numerically');
-		assert(compareFileNamesLower('abc1.10.txt', 'abc1.2.txt') > 0, 'numbers with dots between them are treated as two separate numbers, not one decimal number');
-		assert(compareFileNamesLower('abc02.txt', 'abc002.txt') < 0, 'filenames with equivalent numbers and leading zeros sort shortest number first');
-		assert(compareFileNamesLower('abc.txt1', 'abc.txt01') < 0, 'same name plus extensions with equal numbers sort shortest number first');
-		assert(compareFileNamesLower('a.ext1', 'b.Ext1') < 0, 'different names and extensions that are equal except for case are sorted in full filename order');
-		assert(compareFileNamesLower('a.ext1', 'a.Ext1') === compareLocale('a.ext1', 'b.Ext1'), 'same names and extensions that are equal except for case are sorted in full filename locale order');
+		expect(compareFileNamesLower('1', '1') === 0, 'numerically equal full names should be equal').toBe(true)
+		expect(compareFileNamesLower('abc1.txt', 'abc1.txt') === 0, 'equal filenames with numbers should be equal').toBe(true)
+		expect(compareFileNamesLower('abc1.txt', 'abc2.txt') < 0, 'filenames with numbers should be in numerical order, not alphabetical order').toBe(true)
+		expect(compareFileNamesLower('abc2.txt', 'abc10.txt') < 0, 'filenames with numbers should be in numerical order even when they are multiple digits long').toBe(true)
+		expect(compareFileNamesLower('abc02.txt', 'abc010.txt') < 0, 'filenames with numbers that have leading zeros sort numerically').toBe(true)
+		expect(compareFileNamesLower('abc1.10.txt', 'abc1.2.txt') > 0, 'numbers with dots between them are treated as two separate numbers, not one decimal number').toBe(true)
+		expect(compareFileNamesLower('abc02.txt', 'abc002.txt') < 0, 'filenames with equivalent numbers and leading zeros sort shortest number first').toBe(true)
+		expect(compareFileNamesLower('abc.txt1', 'abc.txt01') < 0, 'same name plus extensions with equal numbers sort shortest number first').toBe(true)
+		expect(compareFileNamesLower('a.ext1', 'b.Ext1') < 0, 'different names and extensions that are equal except for case are sorted in full filename order').toBe(true)
+		expect(compareFileNamesLower('a.ext1', 'a.Ext1') === compareLocale('a.ext1', 'b.Ext1'), 'same names and extensions that are equal except for case are sorted in full filename locale order').toBe(true)
 
 		//
 		// Comparisons with different results than compareFileNamesDefault
 		//
 
 		// name-only comparisons
-		assert(compareFileNamesLower('z', 'A') < 0, 'z comes before A');
-		assert(compareFileNamesLower('a', 'A') < 0, 'the same letter sorts lowercase first');
-		assert(compareFileNamesLower('â', 'Â') < 0, 'the same accented letter sorts lowercase first');
+		expect(compareFileNamesLower('z', 'A') < 0, 'z comes before A').toBe(true)
+		expect(compareFileNamesLower('a', 'A') < 0, 'the same letter sorts lowercase first').toBe(true)
+		expect(compareFileNamesLower('â', 'Â') < 0, 'the same accented letter sorts lowercase first').toBe(true)
 		assert.deepStrictEqual(['artichoke', 'Artichoke', 'art', 'Art'].sort(compareFileNamesLower), ['art', 'artichoke', 'Art', 'Artichoke'], 'names with the same root and different cases sort lowercase first');
 		assert.deepStrictEqual(['email', 'Email', 'émail', 'Émail'].sort(compareFileNamesLower), ['email', 'émail', 'Email', 'Émail'], 'the same base characters with different case or accents sort lowercase first');
 
 		// numeric comparisons
-		assert(compareFileNamesLower('art01', 'Art01') < 0, 'a numerically equivalent name of a different case compares lowercase first');
+		expect(compareFileNamesLower('art01', 'Art01') < 0, 'a numerically equivalent name of a different case compares lowercase first').toBe(true)
 		assert.deepStrictEqual(['a10.txt', 'A2.txt', 'A100.txt', 'a20.txt'].sort(compareFileNamesLower), ['a10.txt', 'a20.txt', 'A2.txt', 'A100.txt'], 'filenames with number and case differences group by case then compare by number');
 
 	});
@@ -492,67 +492,67 @@ suite('Comparers', () => {
 		//
 
 		// name-only comparisons
-		assert(compareFileExtensionsLower(null, null) === 0, 'null should be equal');
-		assert(compareFileExtensionsLower(null, 'abc') < 0, 'null should come before real files without extensions');
-		assert(compareFileExtensionsLower('', '') === 0, 'empty should be equal');
-		assert(compareFileExtensionsLower('abc', 'abc') === 0, 'equal names should be equal');
-		assert(compareFileExtensionsLower('Z', 'a') > 0, 'Z comes after a');
+		expect(compareFileExtensionsLower(null, null) === 0, 'null should be equal').toBe(true)
+		expect(compareFileExtensionsLower(null, 'abc') < 0, 'null should come before real files without extensions').toBe(true)
+		expect(compareFileExtensionsLower('', '') === 0, 'empty should be equal').toBe(true)
+		expect(compareFileExtensionsLower('abc', 'abc') === 0, 'equal names should be equal').toBe(true)
+		expect(compareFileExtensionsLower('Z', 'a') > 0, 'Z comes after a').toBe(true)
 
 		// name plus extension comparisons
-		assert(compareFileExtensionsLower('file.ext', 'file.ext') === 0, 'equal full filenames should be equal');
-		assert(compareFileExtensionsLower('a.ext', 'b.ext') < 0, 'if equal extensions, filenames should be compared');
-		assert(compareFileExtensionsLower('file.aaa', 'file.bbb') < 0, 'files with equal names should be compared by extensions');
-		assert(compareFileExtensionsLower('bbb.aaa', 'aaa.bbb') < 0, 'files should be compared by extension first');
-		assert(compareFileExtensionsLower('a.md', 'b.MD') < 0, 'when extensions are the same except for case, the files sort by name');
-		assert(compareFileExtensionsLower('a.MD', 'a.md') === compareLocale('MD', 'md'), 'case differences in extensions sort by locale');
+		expect(compareFileExtensionsLower('file.ext', 'file.ext') === 0, 'equal full filenames should be equal').toBe(true)
+		expect(compareFileExtensionsLower('a.ext', 'b.ext') < 0, 'if equal extensions, filenames should be compared').toBe(true)
+		expect(compareFileExtensionsLower('file.aaa', 'file.bbb') < 0, 'files with equal names should be compared by extensions').toBe(true)
+		expect(compareFileExtensionsLower('bbb.aaa', 'aaa.bbb') < 0, 'files should be compared by extension first').toBe(true)
+		expect(compareFileExtensionsLower('a.md', 'b.MD') < 0, 'when extensions are the same except for case, the files sort by name').toBe(true)
+		expect(compareFileExtensionsLower('a.MD', 'a.md') === compareLocale('MD', 'md'), 'case differences in extensions sort by locale').toBe(true)
 
 		// dotfile comparisons
-		assert(compareFileExtensionsLower('.abc', '.abc') === 0, 'equal dotfiles should be equal');
-		assert(compareFileExtensionsLower('.md', '.Gitattributes') > 0, 'dotfiles sort alphabetically regardless of case');
-		assert(compareFileExtensionsLower('.env', '.aaa.env') > 0, 'dotfiles sort alphabetically when they contain multiple dots');
-		assert(compareFileExtensionsLower('.env', '.env.aaa') < 0, 'dotfiles with the same root sort shortest first');
+		expect(compareFileExtensionsLower('.abc', '.abc') === 0, 'equal dotfiles should be equal').toBe(true)
+		expect(compareFileExtensionsLower('.md', '.Gitattributes') > 0, 'dotfiles sort alphabetically regardless of case').toBe(true)
+		expect(compareFileExtensionsLower('.env', '.aaa.env') > 0, 'dotfiles sort alphabetically when they contain multiple dots').toBe(true)
+		expect(compareFileExtensionsLower('.env', '.env.aaa') < 0, 'dotfiles with the same root sort shortest first').toBe(true)
 
 		// dotfile vs non-dotfile comparisons
-		assert(compareFileExtensionsLower(null, '.abc') < 0, 'null should come before dotfiles');
-		assert(compareFileExtensionsLower('.env', 'aaa.env') < 0, 'dotfiles come before filenames with extensions');
-		assert(compareFileExtensionsLower('.MD', 'a.md') < 0, 'dotfiles sort before lowercase files');
-		assert(compareFileExtensionsLower('.env', 'aaa') < 0, 'dotfiles come before filenames without extensions');
-		assert(compareFileExtensionsLower('.md', 'A.MD') < 0, 'dotfiles sort before uppercase files');
+		expect(compareFileExtensionsLower(null, '.abc') < 0, 'null should come before dotfiles').toBe(true)
+		expect(compareFileExtensionsLower('.env', 'aaa.env') < 0, 'dotfiles come before filenames with extensions').toBe(true)
+		expect(compareFileExtensionsLower('.MD', 'a.md') < 0, 'dotfiles sort before lowercase files').toBe(true)
+		expect(compareFileExtensionsLower('.env', 'aaa') < 0, 'dotfiles come before filenames without extensions').toBe(true)
+		expect(compareFileExtensionsLower('.md', 'A.MD') < 0, 'dotfiles sort before uppercase files').toBe(true)
 
 		// numeric comparisons
-		assert(compareFileExtensionsLower('1', '1') === 0, 'numerically equal full names should be equal');
-		assert(compareFileExtensionsLower('abc1.txt', 'abc1.txt') === 0, 'equal filenames with numbers should be equal');
-		assert(compareFileExtensionsLower('abc1.txt', 'abc2.txt') < 0, 'filenames with numbers should be in numerical order, not alphabetical order');
-		assert(compareFileExtensionsLower('abc2.txt', 'abc10.txt') < 0, 'filenames with numbers should be in numerical order');
-		assert(compareFileExtensionsLower('abc02.txt', 'abc010.txt') < 0, 'filenames with numbers that have leading zeros sort numerically');
-		assert(compareFileExtensionsLower('abc1.10.txt', 'abc1.2.txt') > 0, 'numbers with dots between them are treated as two separate numbers, not one decimal number');
-		assert(compareFileExtensionsLower('abc2.txt2', 'abc1.txt10') < 0, 'extensions with numbers should be in numerical order, not alphabetical order');
-		assert(compareFileExtensionsLower('txt.abc1', 'txt.abc1') === 0, 'equal extensions with numbers should be equal');
-		assert(compareFileExtensionsLower('txt.abc1', 'txt.abc2') < 0, 'extensions with numbers should be in numerical order, not alphabetical order');
-		assert(compareFileExtensionsLower('txt.abc2', 'txt.abc10') < 0, 'extensions with numbers should be in numerical order even when they are multiple digits long');
-		assert(compareFileExtensionsLower('a.ext1', 'b.ext1') < 0, 'if equal extensions with numbers, full filenames should be compared');
-		assert(compareFileExtensionsLower('abc.txt01', 'abc.txt1') > 0, 'extensions with equal numbers should be in shortest-first order');
-		assert(compareFileExtensionsLower('abc02.txt', 'abc002.txt') < 0, 'filenames with equivalent numbers and leading zeros sort shortest string first');
-		assert(compareFileExtensionsLower('txt.abc01', 'txt.abc1') > 0, 'extensions with equivalent numbers sort shortest extension first');
-		assert(compareFileExtensionsLower('a.ext1', 'b.Ext1') < 0, 'if extensions with numbers are equal except for case, full filenames should be compared');
-		assert(compareFileExtensionsLower('a.ext1', 'a.Ext1') === compareLocale('a.ext1', 'a.Ext1'), 'if extensions with numbers are equal except for case, filenames are sorted in locale order');
+		expect(compareFileExtensionsLower('1', '1') === 0, 'numerically equal full names should be equal').toBe(true)
+		expect(compareFileExtensionsLower('abc1.txt', 'abc1.txt') === 0, 'equal filenames with numbers should be equal').toBe(true)
+		expect(compareFileExtensionsLower('abc1.txt', 'abc2.txt') < 0, 'filenames with numbers should be in numerical order, not alphabetical order').toBe(true)
+		expect(compareFileExtensionsLower('abc2.txt', 'abc10.txt') < 0, 'filenames with numbers should be in numerical order').toBe(true)
+		expect(compareFileExtensionsLower('abc02.txt', 'abc010.txt') < 0, 'filenames with numbers that have leading zeros sort numerically').toBe(true)
+		expect(compareFileExtensionsLower('abc1.10.txt', 'abc1.2.txt') > 0, 'numbers with dots between them are treated as two separate numbers, not one decimal number').toBe(true)
+		expect(compareFileExtensionsLower('abc2.txt2', 'abc1.txt10') < 0, 'extensions with numbers should be in numerical order, not alphabetical order').toBe(true)
+		expect(compareFileExtensionsLower('txt.abc1', 'txt.abc1') === 0, 'equal extensions with numbers should be equal').toBe(true)
+		expect(compareFileExtensionsLower('txt.abc1', 'txt.abc2') < 0, 'extensions with numbers should be in numerical order, not alphabetical order').toBe(true)
+		expect(compareFileExtensionsLower('txt.abc2', 'txt.abc10') < 0, 'extensions with numbers should be in numerical order even when they are multiple digits long').toBe(true)
+		expect(compareFileExtensionsLower('a.ext1', 'b.ext1') < 0, 'if equal extensions with numbers, full filenames should be compared').toBe(true)
+		expect(compareFileExtensionsLower('abc.txt01', 'abc.txt1') > 0, 'extensions with equal numbers should be in shortest-first order').toBe(true)
+		expect(compareFileExtensionsLower('abc02.txt', 'abc002.txt') < 0, 'filenames with equivalent numbers and leading zeros sort shortest string first').toBe(true)
+		expect(compareFileExtensionsLower('txt.abc01', 'txt.abc1') > 0, 'extensions with equivalent numbers sort shortest extension first').toBe(true)
+		expect(compareFileExtensionsLower('a.ext1', 'b.Ext1') < 0, 'if extensions with numbers are equal except for case, full filenames should be compared').toBe(true)
+		expect(compareFileExtensionsLower('a.ext1', 'a.Ext1') === compareLocale('a.ext1', 'a.Ext1'), 'if extensions with numbers are equal except for case, filenames are sorted in locale order').toBe(true)
 
 		//
 		// Comparisons with different results than compareFileExtensionsDefault
 		//
 
 		// name-only comparisons
-		assert(compareFileExtensionsLower('z', 'A') < 0, 'z comes before A');
-		assert(compareFileExtensionsLower('a', 'A') < 0, 'the same letter sorts lowercase first');
-		assert(compareFileExtensionsLower('â', 'Â') < 0, 'the same accented letter sorts lowercase first');
+		expect(compareFileExtensionsLower('z', 'A') < 0, 'z comes before A').toBe(true)
+		expect(compareFileExtensionsLower('a', 'A') < 0, 'the same letter sorts lowercase first').toBe(true)
+		expect(compareFileExtensionsLower('â', 'Â') < 0, 'the same accented letter sorts lowercase first').toBe(true)
 		assert.deepStrictEqual(['artichoke', 'Artichoke', 'art', 'Art'].sort(compareFileExtensionsLower), ['art', 'artichoke', 'Art', 'Artichoke'], 'names with the same root and different cases sort lowercase names first');
 		assert.deepStrictEqual(['email', 'Email', 'émail', 'Émail'].sort(compareFileExtensionsLower), ['email', 'émail', 'Email', 'Émail'], 'the same base characters with different case or accents sort lowercase names first');
 
 		// name plus extension comparisons
-		assert(compareFileExtensionsLower('a.md', 'A.md') < 0, 'case differences in names sort lowercase first');
-		assert(compareFileExtensionsLower('art01', 'Art01') < 0, 'a numerically equivalent word of a different case sorts lowercase first');
+		expect(compareFileExtensionsLower('a.md', 'A.md') < 0, 'case differences in names sort lowercase first').toBe(true)
+		expect(compareFileExtensionsLower('art01', 'Art01') < 0, 'a numerically equivalent word of a different case sorts lowercase first').toBe(true)
 		assert.deepStrictEqual(['a10.txt', 'A2.txt', 'A100.txt', 'a20.txt'].sort(compareFileExtensionsLower), ['a10.txt', 'a20.txt', 'A2.txt', 'A100.txt'], 'filenames with number and case differences group by case then sort by number');
-		assert(compareFileExtensionsLower('aggregate.go', 'aggregate_repo.go') > 0, 'when extensions are equal, compares full filenames');
+		expect(compareFileExtensionsLower('aggregate.go', 'aggregate_repo.go') > 0, 'when extensions are equal, compares full filenames').toBe(true)
 
 	});
 
@@ -563,62 +563,62 @@ suite('Comparers', () => {
 		//
 
 		// name-only comparisons
-		assert(compareFileNamesUnicode(null, null) === 0, 'null should be equal');
-		assert(compareFileNamesUnicode(null, 'abc') < 0, 'null should be come before real values');
-		assert(compareFileNamesUnicode('', '') === 0, 'empty should be equal');
-		assert(compareFileNamesUnicode('abc', 'abc') === 0, 'equal names should be equal');
-		assert(compareFileNamesUnicode('z', 'A') > 0, 'z comes after A');
+		expect(compareFileNamesUnicode(null, null) === 0, 'null should be equal').toBe(true)
+		expect(compareFileNamesUnicode(null, 'abc') < 0, 'null should be come before real values').toBe(true)
+		expect(compareFileNamesUnicode('', '') === 0, 'empty should be equal').toBe(true)
+		expect(compareFileNamesUnicode('abc', 'abc') === 0, 'equal names should be equal').toBe(true)
+		expect(compareFileNamesUnicode('z', 'A') > 0, 'z comes after A').toBe(true)
 
 		// name plus extension comparisons
-		assert(compareFileNamesUnicode('file.ext', 'file.ext') === 0, 'equal full names should be equal');
-		assert(compareFileNamesUnicode('a.ext', 'b.ext') < 0, 'if equal extensions, filenames should be compared');
-		assert(compareFileNamesUnicode('file.aaa', 'file.bbb') < 0, 'files with equal names should be compared by extensions');
-		assert(compareFileNamesUnicode('bbb.aaa', 'aaa.bbb') > 0, 'files should be compared by names even if extensions compare differently');
+		expect(compareFileNamesUnicode('file.ext', 'file.ext') === 0, 'equal full names should be equal').toBe(true)
+		expect(compareFileNamesUnicode('a.ext', 'b.ext') < 0, 'if equal extensions, filenames should be compared').toBe(true)
+		expect(compareFileNamesUnicode('file.aaa', 'file.bbb') < 0, 'files with equal names should be compared by extensions').toBe(true)
+		expect(compareFileNamesUnicode('bbb.aaa', 'aaa.bbb') > 0, 'files should be compared by names even if extensions compare differently').toBe(true)
 
 		// dotfile comparisons
-		assert(compareFileNamesUnicode('.abc', '.abc') === 0, 'equal dotfile names should be equal');
-		assert(compareFileNamesUnicode('.env.', '.gitattributes') < 0, 'filenames starting with dots and with extensions should still sort properly');
-		assert(compareFileNamesUnicode('.env', '.aaa.env') > 0, 'dotfiles sort alphabetically when they contain multiple dots');
-		assert(compareFileNamesUnicode('.env', '.env.aaa') < 0, 'dotfiles with the same root sort shortest first');
+		expect(compareFileNamesUnicode('.abc', '.abc') === 0, 'equal dotfile names should be equal').toBe(true)
+		expect(compareFileNamesUnicode('.env.', '.gitattributes') < 0, 'filenames starting with dots and with extensions should still sort properly').toBe(true)
+		expect(compareFileNamesUnicode('.env', '.aaa.env') > 0, 'dotfiles sort alphabetically when they contain multiple dots').toBe(true)
+		expect(compareFileNamesUnicode('.env', '.env.aaa') < 0, 'dotfiles with the same root sort shortest first').toBe(true)
 
 		// dotfile vs non-dotfile comparisons
-		assert(compareFileNamesUnicode(null, '.abc') < 0, 'null should come before dotfiles');
-		assert(compareFileNamesUnicode('.env', 'aaa') < 0, 'dotfiles come before filenames without extensions');
-		assert(compareFileNamesUnicode('.env', 'aaa.env') < 0, 'dotfiles come before filenames with extensions');
-		assert(compareFileNamesUnicode('.md', 'A.MD') < 0, 'dotfiles sort before uppercase files');
-		assert(compareFileNamesUnicode('.MD', 'a.md') < 0, 'dotfiles sort before lowercase files');
+		expect(compareFileNamesUnicode(null, '.abc') < 0, 'null should come before dotfiles').toBe(true)
+		expect(compareFileNamesUnicode('.env', 'aaa') < 0, 'dotfiles come before filenames without extensions').toBe(true)
+		expect(compareFileNamesUnicode('.env', 'aaa.env') < 0, 'dotfiles come before filenames with extensions').toBe(true)
+		expect(compareFileNamesUnicode('.md', 'A.MD') < 0, 'dotfiles sort before uppercase files').toBe(true)
+		expect(compareFileNamesUnicode('.MD', 'a.md') < 0, 'dotfiles sort before lowercase files').toBe(true)
 
 		// numeric comparisons
-		assert(compareFileNamesUnicode('1', '1') === 0, 'numerically equal full names should be equal');
-		assert(compareFileNamesUnicode('abc1.txt', 'abc1.txt') === 0, 'equal filenames with numbers should be equal');
-		assert(compareFileNamesUnicode('abc1.txt', 'abc2.txt') < 0, 'filenames with numbers should be in numerical order, not alphabetical order');
-		assert(compareFileNamesUnicode('a.ext1', 'b.Ext1') < 0, 'if names are different and extensions with numbers are equal except for case, filenames are sorted by unicode full filename');
-		assert(compareFileNamesUnicode('a.ext1', 'a.Ext1') > 0, 'if names are equal and extensions with numbers are equal except for case, filenames are sorted by unicode full filename');
+		expect(compareFileNamesUnicode('1', '1') === 0, 'numerically equal full names should be equal').toBe(true)
+		expect(compareFileNamesUnicode('abc1.txt', 'abc1.txt') === 0, 'equal filenames with numbers should be equal').toBe(true)
+		expect(compareFileNamesUnicode('abc1.txt', 'abc2.txt') < 0, 'filenames with numbers should be in numerical order, not alphabetical order').toBe(true)
+		expect(compareFileNamesUnicode('a.ext1', 'b.Ext1') < 0, 'if names are different and extensions with numbers are equal except for case, filenames are sorted by unicode full filename').toBe(true)
+		expect(compareFileNamesUnicode('a.ext1', 'a.Ext1') > 0, 'if names are equal and extensions with numbers are equal except for case, filenames are sorted by unicode full filename').toBe(true)
 
 		//
 		// Comparisons with different results than compareFileNamesDefault
 		//
 
 		// name-only comparisons
-		assert(compareFileNamesUnicode('Z', 'a') < 0, 'Z comes before a');
-		assert(compareFileNamesUnicode('a', 'A') > 0, 'the same letter sorts uppercase first');
-		assert(compareFileNamesUnicode('â', 'Â') > 0, 'the same accented letter sorts uppercase first');
+		expect(compareFileNamesUnicode('Z', 'a') < 0, 'Z comes before a').toBe(true)
+		expect(compareFileNamesUnicode('a', 'A') > 0, 'the same letter sorts uppercase first').toBe(true)
+		expect(compareFileNamesUnicode('â', 'Â') > 0, 'the same accented letter sorts uppercase first').toBe(true)
 		assert.deepStrictEqual(['artichoke', 'Artichoke', 'art', 'Art'].sort(compareFileNamesUnicode), ['Art', 'Artichoke', 'art', 'artichoke'], 'names with the same root and different cases sort uppercase first');
 		assert.deepStrictEqual(['email', 'Email', 'émail', 'Émail'].sort(compareFileNamesUnicode), ['Email', 'email', 'Émail', 'émail'], 'the same base characters with different case or accents sort in unicode order');
 
 		// name plus extension comparisons
-		assert(compareFileNamesUnicode('aggregate.go', 'aggregate_repo.go') < 0, 'compares the whole name in unicode order, but dot comes before underscore');
+		expect(compareFileNamesUnicode('aggregate.go', 'aggregate_repo.go') < 0, 'compares the whole name in unicode order, but dot comes before underscore').toBe(true)
 
 		// dotfile comparisons
-		assert(compareFileNamesUnicode('.aaa_env', '.aaa.env') > 0, 'an underscore in a dotfile name will sort after a dot');
+		expect(compareFileNamesUnicode('.aaa_env', '.aaa.env') > 0, 'an underscore in a dotfile name will sort after a dot').toBe(true)
 
 		// numeric comparisons
-		assert(compareFileNamesUnicode('abc2.txt', 'abc10.txt') > 0, 'filenames with numbers should be in unicode order even when they are multiple digits long');
-		assert(compareFileNamesUnicode('abc02.txt', 'abc010.txt') > 0, 'filenames with numbers that have leading zeros sort in unicode order');
-		assert(compareFileNamesUnicode('abc1.10.txt', 'abc1.2.txt') < 0, 'numbers with dots between them are sorted in unicode order');
-		assert(compareFileNamesUnicode('abc02.txt', 'abc002.txt') > 0, 'filenames with equivalent numbers and leading zeros sort in unicode order');
-		assert(compareFileNamesUnicode('abc.txt1', 'abc.txt01') > 0, 'same name plus extensions with equal numbers sort in unicode order');
-		assert(compareFileNamesUnicode('art01', 'Art01') > 0, 'a numerically equivalent name of a different case compares uppercase first');
+		expect(compareFileNamesUnicode('abc2.txt', 'abc10.txt') > 0, 'filenames with numbers should be in unicode order even when they are multiple digits long').toBe(true)
+		expect(compareFileNamesUnicode('abc02.txt', 'abc010.txt') > 0, 'filenames with numbers that have leading zeros sort in unicode order').toBe(true)
+		expect(compareFileNamesUnicode('abc1.10.txt', 'abc1.2.txt') < 0, 'numbers with dots between them are sorted in unicode order').toBe(true)
+		expect(compareFileNamesUnicode('abc02.txt', 'abc002.txt') > 0, 'filenames with equivalent numbers and leading zeros sort in unicode order').toBe(true)
+		expect(compareFileNamesUnicode('abc.txt1', 'abc.txt01') > 0, 'same name plus extensions with equal numbers sort in unicode order').toBe(true)
+		expect(compareFileNamesUnicode('art01', 'Art01') > 0, 'a numerically equivalent name of a different case compares uppercase first').toBe(true)
 		assert.deepStrictEqual(['a10.txt', 'A2.txt', 'A100.txt', 'a20.txt'].sort(compareFileNamesUnicode), ['A100.txt', 'A2.txt', 'a10.txt', 'a20.txt'], 'filenames with number and case differences sort in unicode order');
 
 	});
@@ -630,70 +630,70 @@ suite('Comparers', () => {
 		//
 
 		// name-only comparisons
-		assert(compareFileExtensionsUnicode(null, null) === 0, 'null should be equal');
-		assert(compareFileExtensionsUnicode(null, 'abc') < 0, 'null should come before real files without extensions');
-		assert(compareFileExtensionsUnicode('', '') === 0, 'empty should be equal');
-		assert(compareFileExtensionsUnicode('abc', 'abc') === 0, 'equal names should be equal');
-		assert(compareFileExtensionsUnicode('z', 'A') > 0, 'z comes after A');
+		expect(compareFileExtensionsUnicode(null, null) === 0, 'null should be equal').toBe(true)
+		expect(compareFileExtensionsUnicode(null, 'abc') < 0, 'null should come before real files without extensions').toBe(true)
+		expect(compareFileExtensionsUnicode('', '') === 0, 'empty should be equal').toBe(true)
+		expect(compareFileExtensionsUnicode('abc', 'abc') === 0, 'equal names should be equal').toBe(true)
+		expect(compareFileExtensionsUnicode('z', 'A') > 0, 'z comes after A').toBe(true)
 
 		// name plus extension comparisons
-		assert(compareFileExtensionsUnicode('file.ext', 'file.ext') === 0, 'equal full filenames should be equal');
-		assert(compareFileExtensionsUnicode('a.ext', 'b.ext') < 0, 'if equal extensions, filenames should be compared');
-		assert(compareFileExtensionsUnicode('file.aaa', 'file.bbb') < 0, 'files with equal names should be compared by extensions');
-		assert(compareFileExtensionsUnicode('bbb.aaa', 'aaa.bbb') < 0, 'files should be compared by extension first');
-		assert(compareFileExtensionsUnicode('a.md', 'b.MD') < 0, 'when extensions are the same except for case, the files sort by name');
-		assert(compareFileExtensionsUnicode('a.MD', 'a.md') < 0, 'case differences in extensions sort in unicode order');
+		expect(compareFileExtensionsUnicode('file.ext', 'file.ext') === 0, 'equal full filenames should be equal').toBe(true)
+		expect(compareFileExtensionsUnicode('a.ext', 'b.ext') < 0, 'if equal extensions, filenames should be compared').toBe(true)
+		expect(compareFileExtensionsUnicode('file.aaa', 'file.bbb') < 0, 'files with equal names should be compared by extensions').toBe(true)
+		expect(compareFileExtensionsUnicode('bbb.aaa', 'aaa.bbb') < 0, 'files should be compared by extension first').toBe(true)
+		expect(compareFileExtensionsUnicode('a.md', 'b.MD') < 0, 'when extensions are the same except for case, the files sort by name').toBe(true)
+		expect(compareFileExtensionsUnicode('a.MD', 'a.md') < 0, 'case differences in extensions sort in unicode order').toBe(true)
 
 		// dotfile comparisons
-		assert(compareFileExtensionsUnicode('.abc', '.abc') === 0, 'equal dotfiles should be equal');
-		assert(compareFileExtensionsUnicode('.md', '.Gitattributes') > 0, 'dotfiles sort alphabetically regardless of case');
-		assert(compareFileExtensionsUnicode('.env', '.aaa.env') > 0, 'dotfiles sort alphabetically when they contain multiple dots');
-		assert(compareFileExtensionsUnicode('.env', '.env.aaa') < 0, 'dotfiles with the same root sort shortest first');
+		expect(compareFileExtensionsUnicode('.abc', '.abc') === 0, 'equal dotfiles should be equal').toBe(true)
+		expect(compareFileExtensionsUnicode('.md', '.Gitattributes') > 0, 'dotfiles sort alphabetically regardless of case').toBe(true)
+		expect(compareFileExtensionsUnicode('.env', '.aaa.env') > 0, 'dotfiles sort alphabetically when they contain multiple dots').toBe(true)
+		expect(compareFileExtensionsUnicode('.env', '.env.aaa') < 0, 'dotfiles with the same root sort shortest first').toBe(true)
 
 		// dotfile vs non-dotfile comparisons
-		assert(compareFileExtensionsUnicode(null, '.abc') < 0, 'null should come before dotfiles');
-		assert(compareFileExtensionsUnicode('.env', 'aaa.env') < 0, 'dotfiles come before filenames with extensions');
-		assert(compareFileExtensionsUnicode('.MD', 'a.md') < 0, 'dotfiles sort before lowercase files');
-		assert(compareFileExtensionsUnicode('.env', 'aaa') < 0, 'dotfiles come before filenames without extensions');
-		assert(compareFileExtensionsUnicode('.md', 'A.MD') < 0, 'dotfiles sort before uppercase files');
+		expect(compareFileExtensionsUnicode(null, '.abc') < 0, 'null should come before dotfiles').toBe(true)
+		expect(compareFileExtensionsUnicode('.env', 'aaa.env') < 0, 'dotfiles come before filenames with extensions').toBe(true)
+		expect(compareFileExtensionsUnicode('.MD', 'a.md') < 0, 'dotfiles sort before lowercase files').toBe(true)
+		expect(compareFileExtensionsUnicode('.env', 'aaa') < 0, 'dotfiles come before filenames without extensions').toBe(true)
+		expect(compareFileExtensionsUnicode('.md', 'A.MD') < 0, 'dotfiles sort before uppercase files').toBe(true)
 
 		// numeric comparisons
-		assert(compareFileExtensionsUnicode('1', '1') === 0, 'numerically equal full names should be equal');
-		assert(compareFileExtensionsUnicode('abc1.txt', 'abc1.txt') === 0, 'equal filenames with numbers should be equal');
-		assert(compareFileExtensionsUnicode('abc1.txt', 'abc2.txt') < 0, 'filenames with numbers should be in numerical order, not alphabetical order');
-		assert(compareFileExtensionsUnicode('txt.abc1', 'txt.abc1') === 0, 'equal extensions with numbers should be equal');
-		assert(compareFileExtensionsUnicode('txt.abc1', 'txt.abc2') < 0, 'extensions with numbers should be in numerical order, not alphabetical order');
-		assert(compareFileExtensionsUnicode('a.ext1', 'b.ext1') < 0, 'if equal extensions with numbers, full filenames should be compared');
+		expect(compareFileExtensionsUnicode('1', '1') === 0, 'numerically equal full names should be equal').toBe(true)
+		expect(compareFileExtensionsUnicode('abc1.txt', 'abc1.txt') === 0, 'equal filenames with numbers should be equal').toBe(true)
+		expect(compareFileExtensionsUnicode('abc1.txt', 'abc2.txt') < 0, 'filenames with numbers should be in numerical order, not alphabetical order').toBe(true)
+		expect(compareFileExtensionsUnicode('txt.abc1', 'txt.abc1') === 0, 'equal extensions with numbers should be equal').toBe(true)
+		expect(compareFileExtensionsUnicode('txt.abc1', 'txt.abc2') < 0, 'extensions with numbers should be in numerical order, not alphabetical order').toBe(true)
+		expect(compareFileExtensionsUnicode('a.ext1', 'b.ext1') < 0, 'if equal extensions with numbers, full filenames should be compared').toBe(true)
 
 		//
 		// Comparisons with different results than compareFileExtensionsDefault
 		//
 
 		// name-only comparisons
-		assert(compareFileExtensionsUnicode('Z', 'a') < 0, 'Z comes before a');
-		assert(compareFileExtensionsUnicode('a', 'A') > 0, 'the same letter sorts uppercase first');
-		assert(compareFileExtensionsUnicode('â', 'Â') > 0, 'the same accented letter sorts uppercase first');
+		expect(compareFileExtensionsUnicode('Z', 'a') < 0, 'Z comes before a').toBe(true)
+		expect(compareFileExtensionsUnicode('a', 'A') > 0, 'the same letter sorts uppercase first').toBe(true)
+		expect(compareFileExtensionsUnicode('â', 'Â') > 0, 'the same accented letter sorts uppercase first').toBe(true)
 		assert.deepStrictEqual(['artichoke', 'Artichoke', 'art', 'Art'].sort(compareFileExtensionsUnicode), ['Art', 'Artichoke', 'art', 'artichoke'], 'names with the same root and different cases sort uppercase names first');
 		assert.deepStrictEqual(['email', 'Email', 'émail', 'Émail'].sort(compareFileExtensionsUnicode), ['Email', 'email', 'Émail', 'émail'], 'the same base characters with different case or accents sort in unicode order');
 
 		// name plus extension comparisons
-		assert(compareFileExtensionsUnicode('a.MD', 'a.md') < 0, 'case differences in extensions sort by uppercase extension first');
-		assert(compareFileExtensionsUnicode('a.md', 'A.md') > 0, 'case differences in names sort uppercase first');
-		assert(compareFileExtensionsUnicode('art01', 'Art01') > 0, 'a numerically equivalent name of a different case sorts uppercase first');
+		expect(compareFileExtensionsUnicode('a.MD', 'a.md') < 0, 'case differences in extensions sort by uppercase extension first').toBe(true)
+		expect(compareFileExtensionsUnicode('a.md', 'A.md') > 0, 'case differences in names sort uppercase first').toBe(true)
+		expect(compareFileExtensionsUnicode('art01', 'Art01') > 0, 'a numerically equivalent name of a different case sorts uppercase first').toBe(true)
 		assert.deepStrictEqual(['a10.txt', 'A2.txt', 'A100.txt', 'a20.txt'].sort(compareFileExtensionsUnicode), ['A100.txt', 'A2.txt', 'a10.txt', 'a20.txt'], 'filenames with number and case differences sort in unicode order');
-		assert(compareFileExtensionsUnicode('aggregate.go', 'aggregate_repo.go') < 0, 'when extensions are equal, compares full filenames in unicode order');
+		expect(compareFileExtensionsUnicode('aggregate.go', 'aggregate_repo.go') < 0, 'when extensions are equal, compares full filenames in unicode order').toBe(true)
 
 		// numeric comparisons
-		assert(compareFileExtensionsUnicode('abc2.txt', 'abc10.txt') > 0, 'filenames with numbers should be in unicode order');
-		assert(compareFileExtensionsUnicode('abc02.txt', 'abc010.txt') > 0, 'filenames with numbers that have leading zeros sort in unicode order');
-		assert(compareFileExtensionsUnicode('abc1.10.txt', 'abc1.2.txt') < 0, 'numbers with dots between them sort in unicode order');
-		assert(compareFileExtensionsUnicode('abc2.txt2', 'abc1.txt10') > 0, 'extensions with numbers should be in unicode order');
-		assert(compareFileExtensionsUnicode('txt.abc2', 'txt.abc10') > 0, 'extensions with numbers should be in unicode order even when they are multiple digits long');
-		assert(compareFileExtensionsUnicode('abc.txt01', 'abc.txt1') < 0, 'extensions with equal numbers should be in unicode order');
-		assert(compareFileExtensionsUnicode('abc02.txt', 'abc002.txt') > 0, 'filenames with equivalent numbers and leading zeros sort in unicode order');
-		assert(compareFileExtensionsUnicode('txt.abc01', 'txt.abc1') < 0, 'extensions with equivalent numbers sort in unicode order');
-		assert(compareFileExtensionsUnicode('a.ext1', 'b.Ext1') < 0, 'if extensions with numbers are equal except for case, unicode full filenames should be compared');
-		assert(compareFileExtensionsUnicode('a.ext1', 'a.Ext1') > 0, 'if extensions with numbers are equal except for case, unicode full filenames should be compared');
+		expect(compareFileExtensionsUnicode('abc2.txt', 'abc10.txt') > 0, 'filenames with numbers should be in unicode order').toBe(true)
+		expect(compareFileExtensionsUnicode('abc02.txt', 'abc010.txt') > 0, 'filenames with numbers that have leading zeros sort in unicode order').toBe(true)
+		expect(compareFileExtensionsUnicode('abc1.10.txt', 'abc1.2.txt') < 0, 'numbers with dots between them sort in unicode order').toBe(true)
+		expect(compareFileExtensionsUnicode('abc2.txt2', 'abc1.txt10') > 0, 'extensions with numbers should be in unicode order').toBe(true)
+		expect(compareFileExtensionsUnicode('txt.abc2', 'txt.abc10') > 0, 'extensions with numbers should be in unicode order even when they are multiple digits long').toBe(true)
+		expect(compareFileExtensionsUnicode('abc.txt01', 'abc.txt1') < 0, 'extensions with equal numbers should be in unicode order').toBe(true)
+		expect(compareFileExtensionsUnicode('abc02.txt', 'abc002.txt') > 0, 'filenames with equivalent numbers and leading zeros sort in unicode order').toBe(true)
+		expect(compareFileExtensionsUnicode('txt.abc01', 'txt.abc1') < 0, 'extensions with equivalent numbers sort in unicode order').toBe(true)
+		expect(compareFileExtensionsUnicode('a.ext1', 'b.Ext1') < 0, 'if extensions with numbers are equal except for case, unicode full filenames should be compared').toBe(true)
+		expect(compareFileExtensionsUnicode('a.ext1', 'a.Ext1') > 0, 'if extensions with numbers are equal except for case, unicode full filenames should be compared').toBe(true)
 
 	});
 

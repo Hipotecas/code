@@ -17,7 +17,7 @@ function filterNotOk(filter: IFilter, word: string, wordToMatchAgainst: string) 
 	assert(!filter(word, wordToMatchAgainst), `${word} matched ${wordToMatchAgainst}`);
 }
 
-suite('Filters', () => {
+describe('Filters', () => {
 	test('or', () => {
 		let filter: IFilter;
 		let counters: number[];

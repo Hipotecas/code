@@ -45,7 +45,7 @@ import { WorkspaceTrustEnablementService } from 'vs/workbench/services/workspace
 import { TestEnvironmentService, TestFileService, TestLifecycleService, TestRemoteAgentService, TestRemoteExtensionsScannerService, TestUserDataProfileService, TestWebExtensionsScannerService, TestWorkbenchExtensionEnablementService, TestWorkbenchExtensionManagementService } from 'vs/workbench/test/browser/workbenchTestServices';
 import { TestContextService } from 'vs/workbench/test/common/workbenchTestServices';
 
-suite('BrowserExtensionService', () => {
+describe('BrowserExtensionService', () => {
 	test('pickRunningLocation', () => {
 		assert.deepStrictEqual(BrowserExtensionHostKindPicker.pickRunningLocation([], false, false, ExtensionRunningPreference.None), null);
 		assert.deepStrictEqual(BrowserExtensionHostKindPicker.pickRunningLocation([], false, true, ExtensionRunningPreference.None), null);
@@ -125,7 +125,7 @@ suite('BrowserExtensionService', () => {
 	});
 });
 
-suite('ExtensionService', () => {
+describe('ExtensionService', () => {
 
 	class MyTestExtensionService extends AbstractExtensionService {
 
@@ -211,7 +211,7 @@ suite('ExtensionService', () => {
 	let instantiationService: TestInstantiationService;
 	let extService: MyTestExtensionService;
 
-	setup(() => {
+	beforeEach(() => {
 		disposables = new DisposableStore();
 		instantiationService = createServices(disposables, [
 			// custom
@@ -240,7 +240,7 @@ suite('ExtensionService', () => {
 		extService = <MyTestExtensionService>instantiationService.get(IExtensionService);
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		disposables.dispose();
 	});
 

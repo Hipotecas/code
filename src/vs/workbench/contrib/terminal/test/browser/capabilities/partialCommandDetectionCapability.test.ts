@@ -5,15 +5,15 @@
 
 import { deepStrictEqual } from 'assert';
 import { PartialCommandDetectionCapability } from 'vs/platform/terminal/common/capabilities/partialCommandDetectionCapability';
-import { IMarker, Terminal } from 'xterm';
-import { IXtermCore } from 'vs/workbench/contrib/terminal/browser/xterm-private';
 import { writeP } from 'vs/workbench/contrib/terminal/browser/terminalTestHelpers';
+import { IXtermCore } from 'vs/workbench/contrib/terminal/browser/xterm-private';
+import { IMarker, Terminal } from 'xterm';
 
 interface TestTerminal extends Terminal {
 	_core: IXtermCore;
 }
 
-suite('PartialCommandDetectionCapability', () => {
+describe('PartialCommandDetectionCapability', () => {
 	let xterm: TestTerminal;
 	let capability: PartialCommandDetectionCapability;
 	let addEvents: IMarker[];
@@ -23,7 +23,7 @@ suite('PartialCommandDetectionCapability', () => {
 		deepStrictEqual(addEvents.map(e => e.line), expectedLines);
 	}
 
-	setup(() => {
+	beforeEach(() => {
 		xterm = new Terminal({ allowProposedApi: true, cols: 80 }) as TestTerminal;
 		capability = new PartialCommandDetectionCapability(xterm);
 		addEvents = [];

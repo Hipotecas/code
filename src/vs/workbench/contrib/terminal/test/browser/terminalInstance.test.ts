@@ -4,22 +4,22 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { deepStrictEqual, strictEqual } from 'assert';
+import { Schemas } from 'vs/base/common/network';
 import { isWindows } from 'vs/base/common/platform';
-import { TerminalLabelComputer, parseExitResult } from 'vs/workbench/contrib/terminal/browser/terminalInstance';
+import { URI } from 'vs/base/common/uri';
+import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
+import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
+import { TerminalCapability } from 'vs/platform/terminal/common/capabilities/capabilities';
+import { TerminalCapabilityStore } from 'vs/platform/terminal/common/capabilities/terminalCapabilityStore';
 import { IWorkspaceContextService, IWorkspaceFolder, toWorkspaceFolder } from 'vs/platform/workspace/common/workspace';
 import { Workspace } from 'vs/platform/workspace/test/common/testWorkspace';
-import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
-import { TestContextService } from 'vs/workbench/test/common/workbenchTestServices';
-import { fixPath, getUri } from 'vs/workbench/services/search/test/browser/queryBuilder.test';
-import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
-import { TerminalConfigHelper } from 'vs/workbench/contrib/terminal/browser/terminalConfigHelper';
 import { ITerminalInstance } from 'vs/workbench/contrib/terminal/browser/terminal';
+import { TerminalConfigHelper } from 'vs/workbench/contrib/terminal/browser/terminalConfigHelper';
+import { TerminalLabelComputer, parseExitResult } from 'vs/workbench/contrib/terminal/browser/terminalInstance';
 import { ProcessState } from 'vs/workbench/contrib/terminal/common/terminal';
-import { URI } from 'vs/base/common/uri';
-import { TerminalCapabilityStore } from 'vs/platform/terminal/common/capabilities/terminalCapabilityStore';
-import { TerminalCapability } from 'vs/platform/terminal/common/capabilities/capabilities';
-import { Schemas } from 'vs/base/common/network';
+import { fixPath, getUri } from 'vs/workbench/services/search/test/browser/queryBuilder.test';
 import { TestFileService } from 'vs/workbench/test/browser/workbenchTestServices';
+import { TestContextService } from 'vs/workbench/test/common/workbenchTestServices';
 
 export function createInstance(partial?: Partial<ITerminalInstance>): Pick<ITerminalInstance, 'shellLaunchConfig' | 'userHome' | 'cwd' | 'initialCwd' | 'processName' | 'sequence' | 'workspaceFolder' | 'staticTitle' | 'capabilities' | 'title' | 'description'> {
 	const capabilities = new TerminalCapabilityStore();
@@ -47,8 +47,8 @@ const root2 = '/foo/root2';
 const ROOT_2 = fixPath(root2);
 const emptyRoot = '/foo';
 const ROOT_EMPTY = fixPath(emptyRoot);
-suite('Workbench - TerminalInstance', () => {
-	suite('parseExitResult', () => {
+describe('Workbench - TerminalInstance', () => {
+	describe('parseExitResult', () => {
 		test('should return no message for exit code = undefined', () => {
 			deepStrictEqual(
 				parseExitResult(undefined, {}, ProcessState.KilledDuringLaunch, undefined),
@@ -154,7 +154,7 @@ suite('Workbench - TerminalInstance', () => {
 			);
 		});
 	});
-	suite('TerminalLabelComputer', () => {
+	describe('TerminalLabelComputer', () => {
 		let configurationService: TestConfigurationService;
 		let terminalLabelComputer: TerminalLabelComputer;
 		let instantiationService: TestInstantiationService;
@@ -166,7 +166,7 @@ suite('Workbench - TerminalInstance', () => {
 		let emptyWorkspace: Workspace;
 		let capabilities: TerminalCapabilityStore;
 		let configHelper: TerminalConfigHelper;
-		setup(async () => {
+		beforeEach(async () => {
 			instantiationService = new TestInstantiationService();
 			instantiationService.stub(IWorkspaceContextService, new TestContextService());
 			capabilities = new TerminalCapabilityStore();

@@ -60,7 +60,7 @@ function validateMenuBarItem(menubar: MenuBar, menubarContainer: HTMLElement, la
 	assert.strictEqual(mnem, mnemonic, 'Mnemonic not correct');
 }
 
-suite('Menubar', () => {
+describe('Menubar', () => {
 	const container = $('.container');
 
 	const menubar = new MenuBar(container, {

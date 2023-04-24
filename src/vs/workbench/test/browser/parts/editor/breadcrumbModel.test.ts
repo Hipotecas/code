@@ -5,16 +5,16 @@
 
 import * as assert from 'assert';
 import { URI } from 'vs/base/common/uri';
-import { WorkspaceFolder } from 'vs/platform/workspace/common/workspace';
-import { BreadcrumbsModel, FileElement } from 'vs/workbench/browser/parts/editor/breadcrumbsModel';
+import { mock } from 'vs/base/test/common/mock';
 import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
 import { FileKind } from 'vs/platform/files/common/files';
-import { TestContextService } from 'vs/workbench/test/common/workbenchTestServices';
+import { WorkspaceFolder } from 'vs/platform/workspace/common/workspace';
 import { Workspace } from 'vs/platform/workspace/test/common/testWorkspace';
-import { mock } from 'vs/base/test/common/mock';
+import { BreadcrumbsModel, FileElement } from 'vs/workbench/browser/parts/editor/breadcrumbsModel';
 import { IOutlineService } from 'vs/workbench/services/outline/browser/outline';
+import { TestContextService } from 'vs/workbench/test/common/workbenchTestServices';
 
-suite('Breadcrumb Model', function () {
+describe('Breadcrumb Model', function () {
 
 	const workspaceService = new TestContextService(new Workspace('ffff', [new WorkspaceFolder({ uri: URI.parse('foo:/bar/baz/ws'), name: 'ws', index: 0 })]));
 	const configService = new class extends TestConfigurationService {

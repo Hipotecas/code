@@ -9,12 +9,12 @@ import { TerminalDataBufferer } from 'vs/platform/terminal/common/terminalDataBu
 
 const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-suite('Workbench - TerminalDataBufferer', () => {
+describe('Workbench - TerminalDataBufferer', () => {
 	let bufferer: TerminalDataBufferer;
 	let counter: { [id: number]: number };
 	let data: { [id: number]: string };
 
-	setup(async () => {
+	beforeEach(async () => {
 		counter = {};
 		data = {};
 		bufferer = new TerminalDataBufferer((id, e) => {

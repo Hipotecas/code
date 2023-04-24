@@ -15,7 +15,7 @@ function testSortLinesDescendingCommand(lines: string[], selection: Selection, e
 	testCommand(lines, null, selection, (accessor, sel) => new SortLinesCommand(sel, true), expectedLines, expectedSelection);
 }
 
-suite('Editor Contrib - Sort Lines Command', () => {
+describe('Editor Contrib - Sort Lines Command', () => {
 
 	test('no op unless at least two lines selected 1', function () {
 		testSortLinesAscendingCommand(

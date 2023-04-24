@@ -4,10 +4,10 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { formatPII, getExactExpressionStartAndEnd, getVisibleAndSorted } from 'vs/workbench/contrib/debug/common/debugUtils';
 import { IConfig } from 'vs/workbench/contrib/debug/common/debug';
+import { formatPII, getExactExpressionStartAndEnd, getVisibleAndSorted } from 'vs/workbench/contrib/debug/common/debugUtils';
 
-suite('Debug - Utils', () => {
+describe('Debug - Utils', () => {
 	test('formatPII', () => {
 		assert.strictEqual(formatPII('Foo Bar', false, {}), 'Foo Bar');
 		assert.strictEqual(formatPII('Foo {key} Bar', false, {}), 'Foo {key} Bar');

@@ -7,7 +7,7 @@ import * as assert from 'assert';
 import { URI } from 'vs/base/common/uri';
 import { LanguageSelector, score } from 'vs/editor/common/languageSelector';
 
-suite('LanguageSelector', function () {
+describe('LanguageSelector', function () {
 
 	const model = {
 		language: 'farboo',

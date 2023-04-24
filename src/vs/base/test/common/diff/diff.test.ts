@@ -78,7 +78,7 @@ function lcsTest(originalStr: string, modifiedStr: string, answerStr: string) {
 	}
 }
 
-suite('Diff', () => {
+describe('Diff', () => {
 	test('LcsDiff - different strings tests', function () {
 		this.timeout(10000);
 		lcsTest('heLLo world', 'hello orlando', 'heo orld');
@@ -96,7 +96,7 @@ suite('Diff', () => {
 	});
 });
 
-suite('Diff - Ported from VS', () => {
+describe('Diff - Ported from VS', () => {
 	test('using continue processing predicate to quit early', function () {
 		const left = 'abcdef';
 		const right = 'abxxcyyydzzzzezzzzzzzzzzzzzzzzzzzzf';

@@ -79,14 +79,14 @@ flakySuite('StorageService (browser specific)', () => {
 	const disposables = new DisposableStore();
 	let storageService: BrowserStorageService;
 
-	setup(async () => {
+	beforeEach(async () => {
 		const res = await createStorageService();
 		disposables.add(res[0]);
 
 		storageService = res[1];
 	});
 
-	teardown(async () => {
+	afterEach(async () => {
 		await storageService.clear();
 		disposables.clear();
 	});
@@ -117,7 +117,7 @@ flakySuite('IndexDBStorageDatabase (browser)', () => {
 	const id = 'workspace-storage-db-test';
 	const logService = new NullLogService();
 
-	teardown(async () => {
+	afterEach(async () => {
 		const storage = await IndexedDBStorageDatabase.create({ id }, logService);
 		await storage.clear();
 	});

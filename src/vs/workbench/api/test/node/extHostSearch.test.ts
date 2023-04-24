@@ -19,10 +19,10 @@ import { IExtHostInitDataService } from 'vs/workbench/api/common/extHostInitData
 import { Range } from 'vs/workbench/api/common/extHostTypes';
 import { URITransformerService } from 'vs/workbench/api/common/extHostUriTransformerService';
 import { NativeExtHostSearch } from 'vs/workbench/api/node/extHostSearch';
+import { TestRPCProtocol } from 'vs/workbench/api/test/common/testRPCProtocol';
 import { IFileMatch, IFileQuery, IPatternInfo, IRawFileMatch2, ISearchCompleteStats, ISearchQuery, ITextQuery, QueryType, resultIsMatch } from 'vs/workbench/services/search/common/search';
 import { TextSearchManager } from 'vs/workbench/services/search/common/textSearchManager';
 import { NativeTextSearchManager } from 'vs/workbench/services/search/node/textSearchManager';
-import { TestRPCProtocol } from 'vs/workbench/api/test/common/testRPCProtocol';
 import type * as vscode from 'vscode';
 
 let rpcProtocol: TestRPCProtocol;
@@ -67,7 +67,7 @@ function extensionResultIsMatch(data: vscode.TextSearchResult): data is vscode.T
 	return !!(<vscode.TextSearchMatch>data).preview;
 }
 
-suite('ExtHostSearch', () => {
+describe('ExtHostSearch', () => {
 	async function registerTestTextSearchProvider(provider: vscode.TextSearchProvider, scheme = 'file'): Promise<void> {
 		disposables.add(extHostSearch.registerTextSearchProvider(scheme, provider));
 		await rpcProtocol.sync();
@@ -128,7 +128,7 @@ suite('ExtHostSearch', () => {
 		return { results, stats: stats! };
 	}
 
-	setup(() => {
+	beforeEach(() => {
 		rpcProtocol = new TestRPCProtocol();
 
 		mockMainThreadSearch = new MockMainThreadSearch();
@@ -154,7 +154,7 @@ suite('ExtHostSearch', () => {
 		};
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		disposables.clear();
 		return rpcProtocol.sync();
 	});
@@ -164,7 +164,7 @@ suite('ExtHostSearch', () => {
 	const fancyScheme = 'fancy';
 	const fancySchemeFolderA = URI.from({ scheme: fancyScheme, path: '/project/folder1' });
 
-	suite('File:', () => {
+	describe('File:', () => {
 
 		function getSimpleQuery(filePattern = ''): IFileQuery {
 			return {
@@ -675,7 +675,7 @@ suite('ExtHostSearch', () => {
 		});
 	});
 
-	suite('Text:', () => {
+	describe('Text:', () => {
 
 		function makePreview(text: string): vscode.TextSearchMatch['preview'] {
 			return {

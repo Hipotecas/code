@@ -63,7 +63,7 @@ const assertTreesEqual = (a: TestItemImpl | undefined, b: TestItemImpl | undefin
 // 	}
 // }
 
-suite('ExtHost Testing', () => {
+describe('ExtHost Testing', () => {
 	class TestExtHostTestItemCollection extends ExtHostTestItemCollection {
 		public setDiff(diff: TestsDiff) {
 			this.diff = diff;
@@ -71,7 +71,7 @@ suite('ExtHost Testing', () => {
 	}
 
 	let single: TestExtHostTestItemCollection;
-	setup(() => {
+	beforeEach(() => {
 		single = new TestExtHostTestItemCollection('ctrlId', 'root', {
 			getDocument: () => undefined,
 		} as Partial<ExtHostDocumentsAndEditors> as ExtHostDocumentsAndEditors);
@@ -91,11 +91,11 @@ suite('ExtHost Testing', () => {
 		single.onDidGenerateDiff(d => single.setDiff(d /* don't clear during testing */));
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		single.dispose();
 	});
 
-	suite('OwnedTestCollection', () => {
+	describe('OwnedTestCollection', () => {
 		test('adds a root recursively', async () => {
 			await single.expand(single.root.id, Infinity);
 			const a = single.root.children.get('id-a') as TestItemImpl;
@@ -448,10 +448,10 @@ suite('ExtHost Testing', () => {
 	});
 
 
-	suite('MirroredTestCollection', () => {
+	describe('MirroredTestCollection', () => {
 		// todo@connor4312: re-renable when we figure out what observing looks like we async children
 		// 	let m: TestMirroredCollection;
-		// 	setup(() => m = new TestMirroredCollection());
+		// 	beforeEach(() => m = new TestMirroredCollection());
 
 		// 	test('mirrors creation of the root', () => {
 		// 		const tests = testStubs.nested();
@@ -499,9 +499,9 @@ suite('ExtHost Testing', () => {
 		// 		assertTreesEqual(m.rootTestItems[0], owned.getTestById(single.root.id)![1].actual);
 		// 	});
 
-		// 	suite('MirroredChangeCollector', () => {
+		// 	describe('MirroredChangeCollector', () => {
 		// 		let tests = testStubs.nested();
-		// 		setup(() => {
+		// 		beforeEach(() => {
 		// 			tests = testStubs.nested();
 		// 			single.addRoot(tests, 'pid');
 		// 			m.apply(single.collectDiff());
@@ -584,7 +584,7 @@ suite('ExtHost Testing', () => {
 		// 	});
 	});
 
-	suite('TestRunTracker', () => {
+	describe('TestRunTracker', () => {
 		let proxy: MockObject<MainThreadTestingShape>;
 		let c: TestRunCoordinator;
 		let cts: CancellationTokenSource;
@@ -594,7 +594,7 @@ suite('ExtHost Testing', () => {
 
 		let dto: TestRunDto;
 
-		setup(async () => {
+		beforeEach(async () => {
 			proxy = mockObject<MainThreadTestingShape>()();
 			cts = new CancellationTokenSource();
 			c = new TestRunCoordinator(proxy);

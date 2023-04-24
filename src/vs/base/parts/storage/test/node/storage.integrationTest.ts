@@ -11,22 +11,22 @@ import { join } from 'vs/base/common/path';
 import { isWindows } from 'vs/base/common/platform';
 import { generateUuid } from 'vs/base/common/uuid';
 import { Promises } from 'vs/base/node/pfs';
-import { isStorageItemsChangeEvent, IStorageDatabase, IStorageItemsChangeEvent, Storage } from 'vs/base/parts/storage/common/storage';
+import { IStorageDatabase, IStorageItemsChangeEvent, Storage, isStorageItemsChangeEvent } from 'vs/base/parts/storage/common/storage';
 import { ISQLiteStorageDatabaseOptions, SQLiteStorageDatabase } from 'vs/base/parts/storage/node/storage';
 import { runWithFakedTimers } from 'vs/base/test/common/timeTravelScheduler';
-import { flakySuite, getRandomTestPath } from 'vs/base/test/node/testUtils';
+import { getRandomTestPath } from 'vs/base/test/node/testUtils';
 
-flakySuite('Storage Library', function () {
+describe('Storage Library', function () {
 
 	let testDir: string;
 
-	setup(function () {
+	beforeEach(function () {
 		testDir = getRandomTestPath(tmpdir(), 'vsctests', 'storagelibrary');
 
-		return Promises.mkdir(testDir, { recursive: true });
+		 Promises.mkdir(testDir, { recursive: true });
 	});
 
-	teardown(function () {
+	afterEach(function () {
 		return Promises.rm(testDir);
 	});
 
@@ -314,7 +314,7 @@ flakySuite('Storage Library', function () {
 	});
 });
 
-flakySuite('SQLite Storage Library', function () {
+describe('SQLite Storage Library', function () {
 
 	function toSet(elements: string[]): Set<string> {
 		const set = new Set<string>();
@@ -325,13 +325,13 @@ flakySuite('SQLite Storage Library', function () {
 
 	let testdir: string;
 
-	setup(function () {
+	beforeEach(function () {
 		testdir = getRandomTestPath(tmpdir(), 'vsctests', 'storagelibrary');
 
-		return Promises.mkdir(testdir, { recursive: true });
+		Promises.mkdir(testdir, { recursive: true });
 	});
 
-	teardown(function () {
+	afterEach(function () {
 		return Promises.rm(testdir);
 	});
 

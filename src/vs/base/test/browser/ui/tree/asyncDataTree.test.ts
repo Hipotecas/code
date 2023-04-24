@@ -84,7 +84,7 @@ class Model {
 	}
 }
 
-suite('AsyncDataTree', function () {
+describe('AsyncDataTree', function () {
 
 	test('Collapse state should be preserved across refresh calls', async () => {
 		const container = document.createElement('div');

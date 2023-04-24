@@ -14,7 +14,7 @@ function createContext(ctx: any) {
 	};
 }
 
-suite('ContextKeyExpr', () => {
+describe('ContextKeyExpr', () => {
 	test('ContextKeyExpr.equals', () => {
 		const a = ContextKeyExpr.and(
 			ContextKeyExpr.has('a1'),

@@ -5,26 +5,26 @@
 
 import * as assert from 'assert';
 import { DisposableStore } from 'vs/base/common/lifecycle';
-import { SparseMultilineTokens } from 'vs/editor/common/tokens/sparseMultilineTokens';
 import { MetadataConsts } from 'vs/editor/common/encodedTokenAttributes';
+import { ILanguageService } from 'vs/editor/common/languages/language';
 import { SemanticTokensProviderStyling, toMultilineTokens2 } from 'vs/editor/common/services/semanticTokensProviderStyling';
+import { SparseMultilineTokens } from 'vs/editor/common/tokens/sparseMultilineTokens';
 import { createModelServices } from 'vs/editor/test/common/testTextModel';
 import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
 import { IThemeService, ITokenStyle } from 'vs/platform/theme/common/themeService';
-import { ILanguageService } from 'vs/editor/common/languages/language';
 
-suite('ModelService', () => {
+describe('ModelService', () => {
 	let disposables: DisposableStore;
 	let instantiationService: TestInstantiationService;
 	let languageService: ILanguageService;
 
-	setup(() => {
+	beforeEach(() => {
 		disposables = new DisposableStore();
 		instantiationService = createModelServices(disposables);
 		languageService = instantiationService.get(ILanguageService);
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		disposables.dispose();
 	});
 

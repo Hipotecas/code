@@ -30,9 +30,9 @@ function resolve<T>(treeElement: ICompressedTreeElement<T>): IResolvedCompressed
 	return result;
 }
 
-suite('CompressedObjectTree', function () {
+describe('CompressedObjectTree', function () {
 
-	suite('compress & decompress', function () {
+	describe('compress & decompress', function () {
 
 		test('small', function () {
 			const decompressed: ICompressedTreeElement<number> = { element: 1 };
@@ -303,7 +303,7 @@ suite('CompressedObjectTree', function () {
 		return list.map(i => i.element.elements);
 	}
 
-	suite('CompressedObjectTreeModel', function () {
+	describe('CompressedObjectTreeModel', function () {
 
 		/**
 		 * Calls that test function twice, once with an empty options and

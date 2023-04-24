@@ -21,7 +21,7 @@ import { ViewDescriptorService } from 'vs/workbench/services/views/browser/viewD
 import { TestViewsService, workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
 import { TestExtensionService } from 'vs/workbench/test/common/workbenchTestServices';
 
-suite('MainThreadHostTreeView', function () {
+describe('MainThreadHostTreeView', function () {
 	const testTreeViewId = 'testTreeView';
 	const customValue = 'customValue';
 	const ViewsRegistry = Registry.as<IViewsRegistry>(Extensions.ViewsRegistry);
@@ -47,7 +47,7 @@ suite('MainThreadHostTreeView', function () {
 	let extHostTreeViewsShape: MockExtHostTreeViewsShape;
 	let disposables: DisposableStore;
 
-	setup(async () => {
+	beforeEach(async () => {
 		disposables = new DisposableStore();
 		const instantiationService: TestInstantiationService = <TestInstantiationService>workbenchInstantiationService(undefined, disposables);
 		const viewDescriptorService = instantiationService.createInstance(ViewDescriptorService);
@@ -79,7 +79,7 @@ suite('MainThreadHostTreeView', function () {
 		await testExtensionService.whenInstalledExtensionsRegistered();
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		ViewsRegistry.deregisterViews(ViewsRegistry.getViews(container), container);
 		disposables.dispose();
 	});

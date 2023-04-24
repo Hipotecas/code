@@ -18,16 +18,16 @@ import { ExtHostNotebookController } from 'vs/workbench/api/common/extHostNotebo
 import { ExtHostNotebookDocument } from 'vs/workbench/api/common/extHostNotebookDocument';
 import { ExtHostNotebookDocuments } from 'vs/workbench/api/common/extHostNotebookDocuments';
 import { ExtHostNotebookKernels } from 'vs/workbench/api/common/extHostNotebookKernels';
+import { IExtHostTelemetry } from 'vs/workbench/api/common/extHostTelemetry';
 import { NotebookCellOutput, NotebookCellOutputItem } from 'vs/workbench/api/common/extHostTypes';
+import { TestRPCProtocol } from 'vs/workbench/api/test/common/testRPCProtocol';
 import { CellKind, CellUri, NotebookCellsChangeType } from 'vs/workbench/contrib/notebook/common/notebookCommon';
 import { CellExecutionUpdateType } from 'vs/workbench/contrib/notebook/common/notebookExecutionService';
 import { nullExtensionDescription } from 'vs/workbench/services/extensions/common/extensions';
 import { SerializableObjectWithBuffers } from 'vs/workbench/services/extensions/common/proxyIdentifier';
-import { TestRPCProtocol } from 'vs/workbench/api/test/common/testRPCProtocol';
 import { mock } from 'vs/workbench/test/common/workbenchTestServices';
-import { IExtHostTelemetry } from 'vs/workbench/api/common/extHostTelemetry';
 
-suite('NotebookKernel', function () {
+describe('NotebookKernel', function () {
 
 	let rpcProtocol: TestRPCProtocol;
 	let extHostNotebookKernels: ExtHostNotebookKernels;
@@ -46,10 +46,10 @@ suite('NotebookKernel', function () {
 	const cellExecuteUpdates: ICellExecuteUpdateDto[] = [];
 	const cellExecuteComplete: ICellExecutionCompleteDto[] = [];
 
-	teardown(function () {
+	afterEach(function () {
 		disposables.clear();
 	});
-	setup(async function () {
+	beforeEach(async function () {
 		cellExecuteCreate.length = 0;
 		cellExecuteUpdates.length = 0;
 		cellExecuteComplete.length = 0;

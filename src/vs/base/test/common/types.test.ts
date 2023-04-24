@@ -6,7 +6,7 @@
 import * as assert from 'assert';
 import * as types from 'vs/base/common/types';
 
-suite('Types', () => {
+describe('Types', () => {
 
 	test('isFunction', () => {
 		assert(!types.isFunction(undefined));

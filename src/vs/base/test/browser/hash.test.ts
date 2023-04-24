@@ -7,7 +7,7 @@ import * as assert from 'assert';
 import { sha1Hex } from 'vs/base/browser/hash';
 import { hash, StringSHA1 } from 'vs/base/common/hash';
 
-suite('Hash', () => {
+describe('Hash', () => {
 	test('string', () => {
 		assert.strictEqual(hash('hello'), hash('hello'));
 		assert.notStrictEqual(hash('hello'), hash('world'));

@@ -224,7 +224,7 @@ const psStdOut =
 0 S node      1056   329  0  80   0 -   596 do_wai   764  10 14:43 ?        00:00:00 /bin/sh -c ps -F -A -l | grep root
 0 S node      1058  1056  0  80   0 -   770 pipe_w   888   9 14:43 ?        00:00:00 grep root`;
 
-suite('ExtHostTunnelService', () => {
+describe('ExtHostTunnelService', () => {
 	test('getSockets', function () {
 		const result = getSockets(procSockets);
 		assert.strictEqual(Object.keys(result).length, 75);

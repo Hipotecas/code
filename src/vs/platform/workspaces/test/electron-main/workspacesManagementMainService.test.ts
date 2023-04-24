@@ -14,7 +14,7 @@ import { extUriBiasedIgnorePathCase } from 'vs/base/common/resources';
 import { URI } from 'vs/base/common/uri';
 import * as pfs from 'vs/base/node/pfs';
 import { flakySuite, getRandomTestPath } from 'vs/base/test/node/testUtils';
-import { IWorkspaceBackupInfo, IFolderBackupInfo } from 'vs/platform/backup/common/backup';
+import { IFolderBackupInfo, IWorkspaceBackupInfo } from 'vs/platform/backup/common/backup';
 import { IBackupMainService } from 'vs/platform/backup/electron-main/backup';
 import { IEmptyWindowBackupInfo } from 'vs/platform/backup/node/backup';
 import { INativeOpenDialogOptions } from 'vs/platform/dialogs/common/dialogs';
@@ -90,7 +90,7 @@ flakySuite('WorkspacesManagementMainService', () => {
 	const cwd = process.cwd();
 	const tmpDir = os.tmpdir();
 
-	setup(async () => {
+	beforeEach(async () => {
 		testDir = getRandomTestPath(tmpDir, 'vsctests', 'workspacesmanagementmainservice');
 		untitledWorkspacesHomePath = path.join(testDir, 'Workspaces');
 
@@ -114,7 +114,7 @@ flakySuite('WorkspacesManagementMainService', () => {
 		return pfs.Promises.mkdir(untitledWorkspacesHomePath, { recursive: true });
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		service.dispose();
 
 		return pfs.Promises.rm(testDir);

@@ -4,13 +4,13 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { URI } from 'vs/base/common/uri';
-import * as types from 'vs/workbench/api/common/extHostTypes';
+import { CancellationError } from 'vs/base/common/errors';
+import { MarshalledId } from 'vs/base/common/marshallingIds';
+import { Mimes } from 'vs/base/common/mime';
 import { isWindows } from 'vs/base/common/platform';
 import { assertType } from 'vs/base/common/types';
-import { Mimes } from 'vs/base/common/mime';
-import { MarshalledId } from 'vs/base/common/marshallingIds';
-import { CancellationError } from 'vs/base/common/errors';
+import { URI } from 'vs/base/common/uri';
+import * as types from 'vs/workbench/api/common/extHostTypes';
 
 function assertToJSON(a: any, expected: any) {
 	const raw = JSON.stringify(a);
@@ -18,7 +18,7 @@ function assertToJSON(a: any, expected: any) {
 	assert.deepStrictEqual(actual, expected);
 }
 
-suite('ExtHostTypes', function () {
+describe('ExtHostTypes', function () {
 
 	test('URI, toJSON', function () {
 

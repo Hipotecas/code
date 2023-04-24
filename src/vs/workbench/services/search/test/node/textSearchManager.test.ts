@@ -11,7 +11,7 @@ import { ITextQuery, QueryType } from 'vs/workbench/services/search/common/searc
 import { ProviderResult, TextSearchComplete, TextSearchOptions, TextSearchProvider, TextSearchQuery, TextSearchResult } from 'vs/workbench/services/search/common/searchExtTypes';
 import { NativeTextSearchManager } from 'vs/workbench/services/search/node/textSearchManager';
 
-suite('NativeTextSearchManager', () => {
+describe('NativeTextSearchManager', () => {
 	test('fixes encoding', async () => {
 		let correctEncoding = false;
 		const provider: TextSearchProvider = {

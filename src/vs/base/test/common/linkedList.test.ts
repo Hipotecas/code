@@ -6,7 +6,7 @@
 import * as assert from 'assert';
 import { LinkedList } from 'vs/base/common/linkedList';
 
-suite('LinkedList', function () {
+describe('LinkedList', function () {
 
 	function assertElements<E>(list: LinkedList<E>, ...elements: E[]) {
 

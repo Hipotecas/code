@@ -8,7 +8,7 @@ import { Range } from 'vs/editor/common/core/range';
 import { TextModel } from 'vs/editor/common/model/textModel';
 import { createTextModel } from 'vs/editor/test/common/testTextModel';
 
-suite('Editor Model - Model Edit Operation', () => {
+describe('Editor Model - Model Edit Operation', () => {
 	const LINE1 = 'My First Line';
 	const LINE2 = '\t\tMy Second Line';
 	const LINE3 = '    Third Line';
@@ -17,7 +17,7 @@ suite('Editor Model - Model Edit Operation', () => {
 
 	let model: TextModel;
 
-	setup(() => {
+	beforeEach(() => {
 		const text =
 			LINE1 + '\r\n' +
 			LINE2 + '\n' +
@@ -27,7 +27,7 @@ suite('Editor Model - Model Edit Operation', () => {
 		model = createTextModel(text);
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		model.dispose();
 	});
 

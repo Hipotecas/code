@@ -12,12 +12,12 @@ import { TestDiffOpType, TestItemExpandState } from 'vs/workbench/contrib/testin
 import { TestTreeTestHarness } from 'vs/workbench/contrib/testing/test/browser/testObjectTree';
 import { TestTestItem } from 'vs/workbench/contrib/testing/test/common/testStubs';
 
-suite('Workbench - Testing Explorer Hierarchal by Name Projection', () => {
+describe('Workbench - Testing Explorer Hierarchal by Name Projection', () => {
 	let harness: TestTreeTestHarness<HierarchicalByNameProjection>;
 	let onTestChanged: Emitter<TestResultItemChange>;
 	let resultsService: any;
 
-	setup(() => {
+	beforeEach(() => {
 		onTestChanged = new Emitter();
 		resultsService = {
 			onResultsChanged: () => undefined,
@@ -28,7 +28,7 @@ suite('Workbench - Testing Explorer Hierarchal by Name Projection', () => {
 		harness = new TestTreeTestHarness(l => new HierarchicalByNameProjection({}, l, resultsService as any));
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		harness.dispose();
 	});
 

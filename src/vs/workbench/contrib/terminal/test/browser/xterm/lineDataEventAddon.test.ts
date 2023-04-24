@@ -3,20 +3,20 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { Terminal } from 'xterm';
-import { LineDataEventAddon } from 'vs/workbench/contrib/terminal/browser/xterm/lineDataEventAddon';
-import { OperatingSystem } from 'vs/base/common/platform';
 import { deepStrictEqual } from 'assert';
+import { OperatingSystem } from 'vs/base/common/platform';
 import { writeP } from 'vs/workbench/contrib/terminal/browser/terminalTestHelpers';
+import { LineDataEventAddon } from 'vs/workbench/contrib/terminal/browser/xterm/lineDataEventAddon';
+import { Terminal } from 'xterm';
 
-suite('LineDataEventAddon', () => {
+describe('LineDataEventAddon', () => {
 	let xterm: Terminal;
 	let lineDataEventAddon: LineDataEventAddon;
 
-	suite('onLineData', () => {
+	describe('onLineData', () => {
 		let events: string[];
 
-		setup(() => {
+		beforeEach(() => {
 			xterm = new Terminal({ allowProposedApi: true, cols: 4 });
 			lineDataEventAddon = new LineDataEventAddon();
 			xterm.loadAddon(lineDataEventAddon);

@@ -4,14 +4,14 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { StorageScope, IStorageService, StorageTarget } from 'vs/platform/storage/common/storage';
+import { IStorageService, StorageScope, StorageTarget } from 'vs/platform/storage/common/storage';
 import { Memento } from 'vs/workbench/common/memento';
 import { TestStorageService } from 'vs/workbench/test/common/workbenchTestServices';
 
-suite('Memento', () => {
+describe('Memento', () => {
 	let storage: IStorageService;
 
-	setup(() => {
+	beforeEach(() => {
 		storage = new TestStorageService();
 		Memento.clear(StorageScope.APPLICATION);
 		Memento.clear(StorageScope.PROFILE);

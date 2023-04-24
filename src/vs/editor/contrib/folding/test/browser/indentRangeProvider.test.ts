@@ -30,7 +30,7 @@ function r(startLineNumber: number, endLineNumber: number, parentIndex: number, 
 	return { startLineNumber, endLineNumber, parentIndex };
 }
 
-suite('Indentation Folding', () => {
+describe('Indentation Folding', () => {
 	test('Fold one level', () => {
 		const range = [
 			'A',
@@ -150,7 +150,7 @@ const markers: FoldingMarkers = {
 	end: /^\s*#endregion\b/
 };
 
-suite('Folding with regions', () => {
+describe('Folding with regions', () => {
 	test('Inside region, indented', () => {
 		assertRanges([
 		/* 1*/	'class A {',

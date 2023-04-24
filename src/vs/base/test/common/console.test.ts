@@ -7,7 +7,7 @@ import * as assert from 'assert';
 import { getFirstFrame } from 'vs/base/common/console';
 import { normalize } from 'vs/base/common/path';
 
-suite('Console', () => {
+describe('Console', () => {
 
 	test('getFirstFrame', () => {
 		let stack = 'at vscode.commands.registerCommand (/Users/someone/Desktop/test-ts/out/src/extension.js:18:17)';

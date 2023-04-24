@@ -9,7 +9,7 @@ import { sep } from 'vs/base/common/path';
 import { isLinux, isMacintosh, isWindows } from 'vs/base/common/platform';
 import { URI } from 'vs/base/common/uri';
 
-suite('Glob', () => {
+describe('Glob', () => {
 
 	// test('perf', () => {
 
@@ -64,13 +64,13 @@ suite('Glob', () => {
 	// });
 
 	function assertGlobMatch(pattern: string | glob.IRelativePattern, input: string) {
-		assert(glob.match(pattern, input), `${JSON.stringify(pattern)} should match ${input}`);
-		assert(glob.match(pattern, nativeSep(input)), `${pattern} should match ${nativeSep(input)}`);
+		expect(glob.match(pattern, input), `${JSON.stringify(pattern)} should match ${input}`).toBe(true);
+		expect(glob.match(pattern, nativeSep(input)), `${pattern} should match ${nativeSep(input)}`).toBe(true);
 	}
 
 	function assertNoGlobMatch(pattern: string | glob.IRelativePattern, input: string) {
-		assert(!glob.match(pattern, input), `${pattern} should not match ${input}`);
-		assert(!glob.match(pattern, nativeSep(input)), `${pattern} should not match ${nativeSep(input)}`);
+		expect(!glob.match(pattern, input), `${pattern} should not match ${input}`).toBe(true);
+		expect(!glob.match(pattern, nativeSep(input)), `${pattern} should not match ${nativeSep(input)}`).toBe(true);
 	}
 
 	test('simple', () => {

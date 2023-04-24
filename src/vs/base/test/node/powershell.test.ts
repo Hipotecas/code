@@ -27,7 +27,7 @@ function checkPath(exePath: string) {
 }
 
 if (platform.isWindows) {
-	suite('PowerShell finder', () => {
+	describe('PowerShell finder', () => {
 
 		test('Can find first available PowerShell', async () => {
 			const pwshExe = await getFirstAvailablePowerShellInstallation();

@@ -4,18 +4,17 @@
  *--------------------------------------------------------------------------------------------*/
 import * as assert from 'assert';
 import { IndexedDB } from 'vs/base/browser/indexedDB';
-import { flakySuite } from 'vs/base/test/common/testUtils';
 
-flakySuite('IndexedDB', () => {
+describe('IndexedDB', () => {
 
 	let indexedDB: IndexedDB;
 
-	setup(async () => {
+	beforeEach(async () => {
 		indexedDB = await IndexedDB.create('vscode-indexeddb-test', 1, ['test-store']);
 		await indexedDB.runInTransaction('test-store', 'readwrite', store => store.clear());
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		indexedDB?.close();
 	});
 

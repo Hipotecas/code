@@ -17,7 +17,7 @@ const MAX_INSERTS = 30;
 const MIN_CHANGE_CNT = 10;
 const MAX_CHANGE_CNT = 20;
 
-suite('IntervalTree', () => {
+describe('IntervalTree', () => {
 
 	class Interval {
 		_intervalBrand: void = undefined;
@@ -267,7 +267,7 @@ suite('IntervalTree', () => {
 
 	}
 
-	suite('generated', () => {
+	describe('generated', () => {
 		test('gen01', () => {
 			testIntervalTree([
 				{ type: 'insert', begin: 28, end: 35 },
@@ -472,7 +472,7 @@ suite('IntervalTree', () => {
 		}
 	}
 
-	suite('searching', () => {
+	describe('searching', () => {
 
 		function createCormenTree(): IntervalTree {
 			const r = new IntervalTree();
@@ -554,7 +554,7 @@ suite('IntervalTree', () => {
 	});
 });
 
-suite('IntervalTree', () => {
+describe('IntervalTree', () => {
 	function assertNodeAcceptEdit(msg: string, nodeStart: number, nodeEnd: number, nodeStickiness: TrackedRangeStickiness, start: number, end: number, textLength: number, forceMoveMarkers: boolean, expectedNodeStart: number, expectedNodeEnd: number): void {
 		const node = new IntervalNode('', nodeStart, nodeEnd);
 		setNodeStickiness(node, nodeStickiness);
@@ -848,14 +848,18 @@ function _printTree(T: IntervalTree, n: IntervalNode, indent: string, delta: num
 //#region Assertion
 
 function assertTreeInvariants(T: IntervalTree): void {
-	assert(getNodeColor(SENTINEL) === NodeColor.Black);
-	assert(SENTINEL.parent === SENTINEL);
-	assert(SENTINEL.left === SENTINEL);
-	assert(SENTINEL.right === SENTINEL);
-	assert(SENTINEL.start === 0);
-	assert(SENTINEL.end === 0);
-	assert(SENTINEL.delta === 0);
-	assert(T.root.parent === SENTINEL);
+  expect(getNodeColor(SENTINEL) === NodeColor.Black).toBe(true)
+
+  expect(SENTINEL.parent).toBe(SENTINEL)
+  expect(SENTINEL.left).toBe(SENTINEL)
+  expect(SENTINEL.right).toBe(SENTINEL)
+
+  expect(SENTINEL.start).toBe(0)
+
+  expect(SENTINEL.end).toBe(0)
+
+  expect(SENTINEL.delta).toBe(0)
+  expect(T.root.parent).toBe(SENTINEL)
 	assertValidTree(T);
 }
 
@@ -864,7 +868,8 @@ function depth(n: IntervalNode): number {
 		// The leafs are black
 		return 1;
 	}
-	assert(depth(n.left) === depth(n.right));
+
+  expect(depth(n.left)).toBe(depth(n.right))
 	return (getNodeColor(n) === NodeColor.Black ? 1 : 0) + depth(n.left);
 }
 
@@ -877,21 +882,20 @@ function assertValidNode(n: IntervalNode, delta: number): void {
 	const r = n.right;
 
 	if (getNodeColor(n) === NodeColor.Red) {
-		assert(getNodeColor(l) === NodeColor.Black);
-		assert(getNodeColor(r) === NodeColor.Black);
+		expect(getNodeColor(l) === NodeColor.Black).toBe(true);
+		expect(getNodeColor(r) === NodeColor.Black).toBe(true);
 	}
 
 	let expectedMaxEnd = n.end;
 	if (l !== SENTINEL) {
-		assert(intervalCompare(l.start + delta, l.end + delta, n.start + delta, n.end + delta) <= 0);
+		expect(intervalCompare(l.start + delta, l.end + delta, n.start + delta, n.end + delta) <= 0).toBe(true);
 		expectedMaxEnd = Math.max(expectedMaxEnd, l.maxEnd);
 	}
 	if (r !== SENTINEL) {
-		assert(intervalCompare(n.start + delta, n.end + delta, r.start + delta + n.delta, r.end + delta + n.delta) <= 0);
+		expect(intervalCompare(n.start + delta, n.end + delta, r.start + delta + n.delta, r.end + delta + n.delta) <= 0).toBe(true);
 		expectedMaxEnd = Math.max(expectedMaxEnd, r.maxEnd + n.delta);
 	}
-	assert(n.maxEnd === expectedMaxEnd);
-
+  expect(n.maxEnd).toBe(expectedMaxEnd)
 	assertValidNode(l, delta);
 	assertValidNode(r, delta + n.delta);
 }
@@ -900,8 +904,8 @@ function assertValidTree(T: IntervalTree): void {
 	if (T.root === SENTINEL) {
 		return;
 	}
-	assert(getNodeColor(T.root) === NodeColor.Black);
-	assert(depth(T.root.left) === depth(T.root.right));
+  expect(getNodeColor(T.root)).toBe(NodeColor.Black)
+  expect(depth(T.root.left)).toBe(depth(T.root.right))
 	assertValidNode(T.root, 0);
 }
 

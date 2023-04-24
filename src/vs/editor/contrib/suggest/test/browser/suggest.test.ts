@@ -7,20 +7,20 @@ import { IDisposable } from 'vs/base/common/lifecycle';
 import { URI } from 'vs/base/common/uri';
 import { Position } from 'vs/editor/common/core/position';
 import { Range } from 'vs/editor/common/core/range';
-import { TextModel } from 'vs/editor/common/model/textModel';
-import { CompletionItemKind, CompletionItemProvider } from 'vs/editor/common/languages';
-import { CompletionOptions, provideSuggestionItems, SnippetSortOrder } from 'vs/editor/contrib/suggest/browser/suggest';
-import { createTextModel } from 'vs/editor/test/common/testTextModel';
 import { LanguageFeatureRegistry } from 'vs/editor/common/languageFeatureRegistry';
+import { CompletionItemKind, CompletionItemProvider } from 'vs/editor/common/languages';
+import { TextModel } from 'vs/editor/common/model/textModel';
+import { CompletionOptions, SnippetSortOrder, provideSuggestionItems } from 'vs/editor/contrib/suggest/browser/suggest';
+import { createTextModel } from 'vs/editor/test/common/testTextModel';
 
 
-suite('Suggest', function () {
+describe('Suggest', function () {
 
 	let model: TextModel;
 	let registration: IDisposable;
 	let registry: LanguageFeatureRegistry<CompletionItemProvider>;
 
-	setup(function () {
+	beforeEach(function () {
 		registry = new LanguageFeatureRegistry();
 		model = createTextModel('FOO\nbar\BAR\nfoo', undefined, undefined, URI.parse('foo:bar/path'));
 		registration = registry.register({ pattern: 'bar/path', scheme: 'foo' }, {
@@ -48,7 +48,7 @@ suite('Suggest', function () {
 		});
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		registration.dispose();
 		model.dispose();
 	});

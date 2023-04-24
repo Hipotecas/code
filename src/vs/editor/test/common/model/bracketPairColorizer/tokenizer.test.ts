@@ -5,18 +5,18 @@
 
 import * as assert from 'assert';
 import { DisposableStore } from 'vs/base/common/lifecycle';
-import { LanguageAgnosticBracketTokens } from 'vs/editor/common/model/bracketPairsTextModelPart/bracketPairsTree/brackets';
-import { Length, lengthAdd, lengthsToRange, lengthZero } from 'vs/editor/common/model/bracketPairsTextModelPart/bracketPairsTree/length';
-import { DenseKeyProvider } from 'vs/editor/common/model/bracketPairsTextModelPart/bracketPairsTree/smallImmutableSet';
-import { TextBufferTokenizer, Token, Tokenizer, TokenKind } from 'vs/editor/common/model/bracketPairsTextModelPart/bracketPairsTree/tokenizer';
-import { TextModel } from 'vs/editor/common/model/textModel';
+import { LanguageId, MetadataConsts, StandardTokenType } from 'vs/editor/common/encodedTokenAttributes';
 import { EncodedTokenizationResult, IState, ITokenizationSupport, TokenizationRegistry } from 'vs/editor/common/languages';
-import { LanguageId, StandardTokenType, MetadataConsts } from 'vs/editor/common/encodedTokenAttributes';
-import { ILanguageConfigurationService } from 'vs/editor/common/languages/languageConfigurationRegistry';
 import { ILanguageService } from 'vs/editor/common/languages/language';
+import { ILanguageConfigurationService } from 'vs/editor/common/languages/languageConfigurationRegistry';
+import { LanguageAgnosticBracketTokens } from 'vs/editor/common/model/bracketPairsTextModelPart/bracketPairsTree/brackets';
+import { Length, lengthAdd, lengthZero, lengthsToRange } from 'vs/editor/common/model/bracketPairsTextModelPart/bracketPairsTree/length';
+import { DenseKeyProvider } from 'vs/editor/common/model/bracketPairsTextModelPart/bracketPairsTree/smallImmutableSet';
+import { TextBufferTokenizer, Token, TokenKind, Tokenizer } from 'vs/editor/common/model/bracketPairsTextModelPart/bracketPairsTree/tokenizer';
+import { TextModel } from 'vs/editor/common/model/textModel';
 import { createModelServices, instantiateTextModel } from 'vs/editor/test/common/testTextModel';
 
-suite('Bracket Pair Colorizer - Tokenizer', () => {
+describe('Bracket Pair Colorizer - Tokenizer', () => {
 	test('Basic', () => {
 		const mode1 = 'testMode1';
 		const disposableStore = new DisposableStore();

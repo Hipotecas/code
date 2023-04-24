@@ -4,11 +4,11 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { IBufferLine, IBufferCell } from 'xterm';
 import { convertLinkRangeToBuffer } from 'vs/workbench/contrib/terminalContrib/links/browser/terminalLinkHelpers';
+import { IBufferCell, IBufferLine } from 'xterm';
 
-suite('Workbench - Terminal Link Helpers', () => {
-	suite('convertLinkRangeToBuffer', () => {
+describe('Workbench - Terminal Link Helpers', () => {
+	describe('convertLinkRangeToBuffer', () => {
 		test('should convert ranges for ascii characters', () => {
 			const lines = createBufferLineArray([
 				{ text: 'AA http://t', width: 11 },

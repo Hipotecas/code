@@ -12,12 +12,12 @@ import { FileService } from 'vs/platform/files/common/fileService';
 import { DiskFileSystemProvider } from 'vs/platform/files/node/diskFileSystemProvider';
 import { NullLogService } from 'vs/platform/log/common/log';
 
-suite('Checksum Service', () => {
+describe('Checksum Service', () => {
 
 	let diskFileSystemProvider: DiskFileSystemProvider;
 	let fileService: IFileService;
 
-	setup(() => {
+	beforeEach(() => {
 		const logService = new NullLogService();
 		fileService = new FileService(logService);
 
@@ -25,7 +25,7 @@ suite('Checksum Service', () => {
 		fileService.registerProvider(Schemas.file, diskFileSystemProvider);
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		diskFileSystemProvider.dispose();
 		fileService.dispose();
 	});

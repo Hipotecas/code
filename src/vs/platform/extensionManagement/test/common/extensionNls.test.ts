@@ -7,7 +7,7 @@ import * as assert from 'assert';
 import { deepClone } from 'vs/base/common/objects';
 import { ILocalizedString } from 'vs/platform/action/common/action';
 import { localizeManifest } from 'vs/platform/extensionManagement/common/extensionNls';
-import { IExtensionManifest, IConfiguration } from 'vs/platform/extensions/common/extensions';
+import { IConfiguration, IExtensionManifest } from 'vs/platform/extensions/common/extensions';
 
 const manifest: IExtensionManifest = {
 	name: 'test',
@@ -43,7 +43,7 @@ const manifest: IExtensionManifest = {
 	}
 };
 
-suite('Localize Manifest', () => {
+describe('Localize Manifest', () => {
 	test('replaces template strings', function () {
 		const localizedManifest = localizeManifest(
 			deepClone(manifest),

@@ -10,14 +10,14 @@ import { TextModel } from 'vs/editor/common/model/textModel';
 import { InternalModelContentChangeEvent, LineInjectedText, ModelRawChange, RawContentChangedType } from 'vs/editor/common/textModelEvents';
 import { createTextModel } from 'vs/editor/test/common/testTextModel';
 
-suite('Editor Model - Injected Text Events', () => {
+describe('Editor Model - Injected Text Events', () => {
 	let thisModel: TextModel;
 
-	setup(() => {
+	beforeEach(() => {
 		thisModel = createTextModel('First Line\nSecond Line');
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		thisModel.dispose();
 	});
 

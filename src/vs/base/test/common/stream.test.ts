@@ -8,7 +8,7 @@ import { timeout } from 'vs/base/common/async';
 import { bufferToReadable, VSBuffer } from 'vs/base/common/buffer';
 import { consumeReadable, consumeStream, isReadable, isReadableBufferedStream, isReadableStream, listenStream, newWriteableStream, peekReadable, peekStream, prefixedReadable, prefixedStream, Readable, ReadableStream, toReadable, toStream, transform } from 'vs/base/common/stream';
 
-suite('Stream', () => {
+describe('Stream', () => {
 
 	test('isReadable', () => {
 		assert.ok(!isReadable(undefined));

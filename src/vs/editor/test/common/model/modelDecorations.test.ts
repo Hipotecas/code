@@ -76,7 +76,7 @@ function lineHasDecoration(model: TextModel, lineNumber: number, start: number, 
 	}]);
 }
 
-suite('Editor Model - Model Decorations', () => {
+describe('Editor Model - Model Decorations', () => {
 	const LINE1 = 'My First Line';
 	const LINE2 = '\t\tMy Second Line';
 	const LINE3 = '    Third Line';
@@ -87,7 +87,7 @@ suite('Editor Model - Model Decorations', () => {
 
 	let thisModel: TextModel;
 
-	setup(() => {
+	beforeEach(() => {
 		const text =
 			LINE1 + '\r\n' +
 			LINE2 + '\n' +
@@ -97,7 +97,7 @@ suite('Editor Model - Model Decorations', () => {
 		thisModel = createTextModel(text);
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		thisModel.dispose();
 	});
 
@@ -414,7 +414,7 @@ suite('Editor Model - Model Decorations', () => {
 	});
 });
 
-suite('Decorations and editing', () => {
+describe('Decorations and editing', () => {
 
 	function _runTest(decRange: Range, stickiness: TrackedRangeStickiness, editRange: Range, editText: string, editForceMoveMarkers: boolean, expectedDecRange: Range, msg: string): void {
 		const model = createTextModel([
@@ -447,8 +447,8 @@ suite('Decorations and editing', () => {
 		_runTest(decRange, 3, editRange, editText, true, expectedDecRange[1][3], 'force-3-GrowsOnlyWhenTypingAfter');
 	}
 
-	suite('insert', () => {
-		suite('collapsed dec', () => {
+	describe('insert', () => {
+		describe('collapsed dec', () => {
 			test('before', () => {
 				runTest(
 					new Range(1, 4, 1, 4),
@@ -480,7 +480,7 @@ suite('Decorations and editing', () => {
 				);
 			});
 		});
-		suite('non-collapsed dec', () => {
+		describe('non-collapsed dec', () => {
 			test('before', () => {
 				runTest(
 					new Range(1, 4, 1, 9),
@@ -534,8 +534,8 @@ suite('Decorations and editing', () => {
 		});
 	});
 
-	suite('delete', () => {
-		suite('collapsed dec', () => {
+	describe('delete', () => {
+		describe('collapsed dec', () => {
 			test('edit.end < range.start', () => {
 				runTest(
 					new Range(1, 4, 1, 4),
@@ -587,7 +587,7 @@ suite('Decorations and editing', () => {
 				);
 			});
 		});
-		suite('non-collapsed dec', () => {
+		describe('non-collapsed dec', () => {
 			test('edit.end < range.start', () => {
 				runTest(
 					new Range(1, 4, 1, 9),
@@ -731,8 +731,8 @@ suite('Decorations and editing', () => {
 		});
 	});
 
-	suite('replace short', () => {
-		suite('collapsed dec', () => {
+	describe('replace short', () => {
+		describe('collapsed dec', () => {
 			test('edit.end < range.start', () => {
 				runTest(
 					new Range(1, 4, 1, 4),
@@ -784,7 +784,7 @@ suite('Decorations and editing', () => {
 				);
 			});
 		});
-		suite('non-collapsed dec', () => {
+		describe('non-collapsed dec', () => {
 			test('edit.end < range.start', () => {
 				runTest(
 					new Range(1, 4, 1, 9),
@@ -918,8 +918,8 @@ suite('Decorations and editing', () => {
 		});
 	});
 
-	suite('replace long', () => {
-		suite('collapsed dec', () => {
+	describe('replace long', () => {
+		describe('collapsed dec', () => {
 			test('edit.end < range.start', () => {
 				runTest(
 					new Range(1, 4, 1, 4),
@@ -971,7 +971,7 @@ suite('Decorations and editing', () => {
 				);
 			});
 		});
-		suite('non-collapsed dec', () => {
+		describe('non-collapsed dec', () => {
 			test('edit.end < range.start', () => {
 				runTest(
 					new Range(1, 4, 1, 9),
@@ -1111,7 +1111,7 @@ interface ILightWeightDecoration {
 	range: Range;
 }
 
-suite('deltaDecorations', () => {
+describe('deltaDecorations', () => {
 
 	function decoration(id: string, startLineNumber: number, startColumn: number, endLineNumber: number, endColum: number): ILightWeightDecoration {
 		return {

@@ -4,19 +4,19 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { IViewsRegistry, IViewDescriptor, IViewContainersRegistry, Extensions as ViewContainerExtensions, ViewContainerLocation, ViewContainer, ViewContainerLocationToString } from 'vs/workbench/common/views';
-import { Registry } from 'vs/platform/registry/common/platform';
-import { workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
-import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
-import { SyncDescriptor } from 'vs/platform/instantiation/common/descriptors';
-import { ViewDescriptorService } from 'vs/workbench/services/views/browser/viewDescriptorService';
+import { DisposableStore } from 'vs/base/common/lifecycle';
+import { compare } from 'vs/base/common/strings';
 import { assertIsDefined } from 'vs/base/common/types';
+import { generateUuid } from 'vs/base/common/uuid';
 import { ContextKeyService } from 'vs/platform/contextkey/browser/contextKeyService';
 import { IContextKeyService } from 'vs/platform/contextkey/common/contextkey';
-import { DisposableStore } from 'vs/base/common/lifecycle';
+import { SyncDescriptor } from 'vs/platform/instantiation/common/descriptors';
+import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
+import { Registry } from 'vs/platform/registry/common/platform';
 import { IStorageService, StorageScope, StorageTarget } from 'vs/platform/storage/common/storage';
-import { generateUuid } from 'vs/base/common/uuid';
-import { compare } from 'vs/base/common/strings';
+import { IViewContainersRegistry, IViewDescriptor, IViewsRegistry, ViewContainer, Extensions as ViewContainerExtensions, ViewContainerLocation, ViewContainerLocationToString } from 'vs/workbench/common/views';
+import { ViewDescriptorService } from 'vs/workbench/services/views/browser/viewDescriptorService';
+import { workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
 
 const ViewsRegistry = Registry.as<IViewsRegistry>(ViewContainerExtensions.ViewsRegistry);
 const ViewContainersRegistry = Registry.as<IViewContainersRegistry>(ViewContainerExtensions.ViewContainersRegistry);
@@ -24,17 +24,17 @@ const viewContainerIdPrefix = 'testViewContainer';
 const sidebarContainer = ViewContainersRegistry.registerViewContainer({ id: `${viewContainerIdPrefix}-${generateUuid()}`, title: 'test', ctorDescriptor: new SyncDescriptor(<any>{}) }, ViewContainerLocation.Sidebar);
 const panelContainer = ViewContainersRegistry.registerViewContainer({ id: `${viewContainerIdPrefix}-${generateUuid()}`, title: 'test', ctorDescriptor: new SyncDescriptor(<any>{}) }, ViewContainerLocation.Panel);
 
-suite('ViewDescriptorService', () => {
+describe('ViewDescriptorService', () => {
 
 	const disposables = new DisposableStore();
 	let instantiationService: TestInstantiationService;
 
-	setup(() => {
+	beforeEach(() => {
 		instantiationService = <TestInstantiationService>workbenchInstantiationService(undefined, disposables);
 		instantiationService.stub(IContextKeyService, instantiationService.createInstance(ContextKeyService));
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		for (const viewContainer of ViewContainersRegistry.all) {
 			if (viewContainer.id.startsWith(viewContainerIdPrefix)) {
 				ViewsRegistry.deregisterViews(ViewsRegistry.getViews(viewContainer), viewContainer);

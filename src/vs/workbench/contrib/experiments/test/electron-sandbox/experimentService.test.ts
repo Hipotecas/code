@@ -24,7 +24,7 @@ import { UriIdentityService } from 'vs/platform/uriIdentity/common/uriIdentitySe
 import { IURLService } from 'vs/platform/url/common/url';
 import { NativeURLService } from 'vs/platform/url/common/urlService';
 import { IWorkspaceTrustManagementService } from 'vs/platform/workspace/common/workspaceTrust';
-import { currentSchemaVersion, ExperimentActionType, ExperimentService, ExperimentState, getCurrentActivationRecord, IExperiment } from 'vs/workbench/contrib/experiments/common/experimentService';
+import { ExperimentActionType, ExperimentService, ExperimentState, IExperiment, currentSchemaVersion, getCurrentActivationRecord } from 'vs/workbench/contrib/experiments/common/experimentService';
 import { IWorkbenchExtensionEnablementService, IWorkbenchExtensionManagementService } from 'vs/workbench/services/extensionManagement/common/extensionManagement';
 import { ExtensionManagementService } from 'vs/workbench/services/extensionManagement/common/extensionManagementService';
 import { TestExtensionEnablementService } from 'vs/workbench/services/extensionManagement/test/browser/extensionEnablementService.test';
@@ -63,7 +63,7 @@ export class TestExperimentService extends ExperimentService {
 	}
 }
 
-suite('Experiment Service', () => {
+describe('Experiment Service', () => {
 	let instantiationService: TestInstantiationService;
 	let testConfigurationService: TestConfigurationService;
 	let testObject: ExperimentService;
@@ -73,7 +73,7 @@ suite('Experiment Service', () => {
 		uninstallEvent: Emitter<IExtensionIdentifier>,
 		didUninstallEvent: Emitter<DidUninstallExtensionEvent>;
 
-	suiteSetup(() => {
+	describeSetup(() => {
 		instantiationService = new TestInstantiationService();
 		installEvent = new Emitter<InstallExtensionEvent>();
 		didInstallEvent = new Emitter<readonly InstallExtensionResult[]>();
@@ -100,12 +100,12 @@ suite('Experiment Service', () => {
 		instantiationService.stub(IStorageService, <Partial<IStorageService>>{ get: (a: string, b: StorageScope, c?: string) => c, getBoolean: (a: string, b: StorageScope, c?: boolean) => c, store: () => { }, remove: () => { } });
 		instantiationService.stub(IWorkspaceTrustManagementService, new TestWorkspaceTrustManagementService());
 
-		setup(() => {
+		beforeEach(() => {
 			instantiationService.stub(IProductService, {});
 			instantiationService.stub(IStorageService, <Partial<IStorageService>>{ get: (a: string, b: StorageScope, c?: string) => c, getBoolean: (a: string, b: StorageScope, c?: boolean) => c, store: () => { }, remove: () => { } });
 		});
 
-		teardown(() => {
+		afterEach(() => {
 			testObject?.dispose();
 		});
 	});
@@ -468,7 +468,7 @@ suite('Experiment Service', () => {
 	test('Parses activation records correctly', () => {
 		const timers = sinon.useFakeTimers(); // so Date.now() is stable
 		const oneDay = 1000 * 60 * 60 * 24;
-		teardown(() => timers.restore());
+		afterEach(() => timers.restore());
 
 		let rec = getCurrentActivationRecord();
 

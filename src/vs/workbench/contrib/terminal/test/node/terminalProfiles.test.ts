@@ -5,10 +5,10 @@
 
 import { deepStrictEqual, fail, ok, strictEqual } from 'assert';
 import { isWindows } from 'vs/base/common/platform';
-import { ITerminalProfile, ProfileSource } from 'vs/platform/terminal/common/terminal';
-import { ITerminalConfiguration, ITerminalProfiles } from 'vs/workbench/contrib/terminal/common/terminal';
-import { detectAvailableProfiles, IFsProvider } from 'vs/platform/terminal/node/terminalProfiles';
 import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
+import { ITerminalProfile, ProfileSource } from 'vs/platform/terminal/common/terminal';
+import { IFsProvider, detectAvailableProfiles } from 'vs/platform/terminal/node/terminalProfiles';
+import { ITerminalConfiguration, ITerminalProfiles } from 'vs/workbench/contrib/terminal/common/terminal';
 
 /**
  * Assets that two profiles objects are equal, this will treat explicit undefined and unset
@@ -27,8 +27,8 @@ function profilesEqual(actualProfiles: ITerminalProfile[], expectedProfiles: ITe
 	}
 }
 
-suite('Workbench - TerminalProfiles', () => {
-	suite('detectAvailableProfiles', () => {
+describe('Workbench - TerminalProfiles', () => {
+	describe('detectAvailableProfiles', () => {
 		if (isWindows) {
 			test('should detect Git Bash and provide login args', async () => {
 				const fsProvider = createFsProvider([
@@ -92,7 +92,7 @@ suite('Workbench - TerminalProfiles', () => {
 				const expected = [{ profileName: 'Git Bash', path: 'C:\\Program Files\\Git\\bin\\bash.exe', args: [], isAutoDetected: undefined, overrideName: undefined, isDefault: true }];
 				profilesEqual(profiles, expected);
 			});
-			suite('pwsh source detection/fallback', async () => {
+			describe('pwsh source detection/fallback', async () => {
 				const pwshSourceConfig = ({
 					profiles: {
 						windows: {

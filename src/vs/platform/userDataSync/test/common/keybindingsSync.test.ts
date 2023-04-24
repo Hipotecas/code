@@ -9,11 +9,11 @@ import { DisposableStore, toDisposable } from 'vs/base/common/lifecycle';
 import { IFileService } from 'vs/platform/files/common/files';
 import { ILogService } from 'vs/platform/log/common/log';
 import { IUserDataProfilesService } from 'vs/platform/userDataProfile/common/userDataProfile';
-import { getKeybindingsContentFromSyncContent, KeybindingsSynchroniser } from 'vs/platform/userDataSync/common/keybindingsSync';
+import { KeybindingsSynchroniser, getKeybindingsContentFromSyncContent } from 'vs/platform/userDataSync/common/keybindingsSync';
 import { IUserDataSyncStoreService, SyncResource, UserDataSyncError, UserDataSyncErrorCode } from 'vs/platform/userDataSync/common/userDataSync';
 import { UserDataSyncClient, UserDataSyncTestServer } from 'vs/platform/userDataSync/test/common/userDataSyncClient';
 
-suite('KeybindingsSync', () => {
+describe('KeybindingsSync', () => {
 
 	const disposableStore = new DisposableStore();
 	const server = new UserDataSyncTestServer();
@@ -21,14 +21,14 @@ suite('KeybindingsSync', () => {
 
 	let testObject: KeybindingsSynchroniser;
 
-	setup(async () => {
+	beforeEach(async () => {
 		client = disposableStore.add(new UserDataSyncClient(server));
 		await client.setUp(true);
 		testObject = client.getSynchronizer(SyncResource.Keybindings) as KeybindingsSynchroniser;
 		disposableStore.add(toDisposable(() => client.instantiationService.get(IUserDataSyncStoreService).clear()));
 	});
 
-	teardown(() => disposableStore.clear());
+	afterEach(() => disposableStore.clear());
 
 	test('when keybindings file does not exist', async () => {
 		const fileService = client.instantiationService.get(IFileService);

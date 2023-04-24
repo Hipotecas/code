@@ -4,23 +4,23 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { IEditorFactoryRegistry, EditorExtensions } from 'vs/workbench/common/editor';
-import { URI } from 'vs/base/common/uri';
-import { workbenchInstantiationService, TestFileEditorInput, registerTestEditor, TestEditorPart, createEditorPart, registerTestSideBySideEditor } from 'vs/workbench/test/browser/workbenchTestServices';
-import { Registry } from 'vs/platform/registry/common/platform';
-import { EditorPart } from 'vs/workbench/browser/parts/editor/editorPart';
-import { SyncDescriptor } from 'vs/platform/instantiation/common/descriptors';
-import { GroupDirection, IEditorGroupsService } from 'vs/workbench/services/editor/common/editorGroupsService';
-import { EditorActivation } from 'vs/platform/editor/common/editor';
-import { WillSaveStateReason } from 'vs/platform/storage/common/storage';
-import { DisposableStore, toDisposable } from 'vs/base/common/lifecycle';
-import { EditorsObserver } from 'vs/workbench/browser/parts/editor/editorsObserver';
 import { timeout } from 'vs/base/common/async';
-import { TestStorageService } from 'vs/workbench/test/common/workbenchTestServices';
-import { SideBySideEditorInput } from 'vs/workbench/common/editor/sideBySideEditorInput';
+import { DisposableStore, toDisposable } from 'vs/base/common/lifecycle';
+import { URI } from 'vs/base/common/uri';
+import { EditorActivation } from 'vs/platform/editor/common/editor';
+import { SyncDescriptor } from 'vs/platform/instantiation/common/descriptors';
 import { IInstantiationService } from 'vs/platform/instantiation/common/instantiation';
+import { Registry } from 'vs/platform/registry/common/platform';
+import { WillSaveStateReason } from 'vs/platform/storage/common/storage';
+import { EditorPart } from 'vs/workbench/browser/parts/editor/editorPart';
+import { EditorsObserver } from 'vs/workbench/browser/parts/editor/editorsObserver';
+import { EditorExtensions, IEditorFactoryRegistry } from 'vs/workbench/common/editor';
+import { SideBySideEditorInput } from 'vs/workbench/common/editor/sideBySideEditorInput';
+import { GroupDirection, IEditorGroupsService } from 'vs/workbench/services/editor/common/editorGroupsService';
+import { TestEditorPart, TestFileEditorInput, createEditorPart, registerTestEditor, registerTestSideBySideEditor, workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
+import { TestStorageService } from 'vs/workbench/test/common/workbenchTestServices';
 
-suite('EditorsObserver', function () {
+describe('EditorsObserver', function () {
 
 	const TEST_EDITOR_ID = 'MyTestEditorForEditorsObserver';
 	const TEST_EDITOR_INPUT_ID = 'testEditorInputForEditorsObserver';
@@ -28,12 +28,12 @@ suite('EditorsObserver', function () {
 
 	const disposables = new DisposableStore();
 
-	setup(() => {
+	beforeEach(() => {
 		disposables.add(registerTestEditor(TEST_EDITOR_ID, [new SyncDescriptor(TestFileEditorInput)], TEST_SERIALIZABLE_EDITOR_INPUT_ID));
 		disposables.add(registerTestSideBySideEditor());
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		disposables.clear();
 	});
 

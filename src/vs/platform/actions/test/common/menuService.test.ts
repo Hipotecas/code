@@ -22,19 +22,19 @@ const contextKeyService = new class extends MockContextKeyService {
 
 // --- tests
 
-suite('MenuService', function () {
+describe('MenuService', function () {
 
 	let menuService: MenuService;
 	const disposables = new DisposableStore();
 	let testMenuId: MenuId;
 
-	setup(function () {
+	beforeEach(function () {
 		menuService = new MenuService(NullCommandService, new InMemoryStorageService());
 		testMenuId = new MenuId(`testo/${generateUuid()}`);
 		disposables.clear();
 	});
 
-	teardown(function () {
+	afterEach(function () {
 		disposables.clear();
 	});
 

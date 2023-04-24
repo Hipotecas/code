@@ -15,12 +15,12 @@ import { TestTestItem } from 'vs/workbench/contrib/testing/test/common/testStubs
 class TestHierarchicalByLocationProjection extends HierarchicalByLocationProjection {
 }
 
-suite('Workbench - Testing Explorer Hierarchal by Location Projection', () => {
+describe('Workbench - Testing Explorer Hierarchal by Location Projection', () => {
 	let harness: TestTreeTestHarness<TestHierarchicalByLocationProjection>;
 	let onTestChanged: Emitter<TestResultItemChange>;
 	let resultsService: any;
 
-	setup(() => {
+	beforeEach(() => {
 		onTestChanged = new Emitter();
 		resultsService = {
 			onResultsChanged: () => undefined,
@@ -31,7 +31,7 @@ suite('Workbench - Testing Explorer Hierarchal by Location Projection', () => {
 		harness = new TestTreeTestHarness(l => new TestHierarchicalByLocationProjection({}, l, resultsService as any));
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		harness.dispose();
 	});
 

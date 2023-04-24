@@ -5,7 +5,7 @@
 import * as assert from 'assert';
 import { ReplacePattern } from 'vs/workbench/services/search/common/replace';
 
-suite('Replace Pattern test', () => {
+describe('Replace Pattern test', () => {
 
 	test('parse replace string', () => {
 		const testParse = (input: string, expected: string, expectedHasParameters: boolean) => {

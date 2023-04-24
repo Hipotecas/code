@@ -6,8 +6,8 @@
 import { strictEqual } from 'assert';
 import { fromNow } from 'vs/base/common/date';
 
-suite('Date', () => {
-	suite('fromNow', () => {
+describe('Date', () => {
+	describe('fromNow', () => {
 		test('appendAgoLabel', () => {
 			strictEqual(fromNow(Date.now() - 35000), '35 secs');
 			strictEqual(fromNow(Date.now() - 35000, false), '35 secs');

@@ -5,9 +5,9 @@
 
 import * as assert from 'assert';
 import { URI } from 'vs/base/common/uri';
-import { getMimeTypes, registerPlatformLanguageAssociation, registerConfiguredLanguageAssociation } from 'vs/editor/common/services/languagesAssociations';
+import { getMimeTypes, registerConfiguredLanguageAssociation, registerPlatformLanguageAssociation } from 'vs/editor/common/services/languagesAssociations';
 
-suite('LanguagesAssociations', () => {
+describe('LanguagesAssociations', () => {
 
 	test('Dynamically Register Text Mime', () => {
 		let guess = getMimeTypes(URI.file('foo.monaco'));

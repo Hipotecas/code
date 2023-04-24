@@ -3,11 +3,11 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import * as assert from 'assert';
-import { ExtHostFileSystemEventService } from 'vs/workbench/api/common/extHostFileSystemEventService';
-import { IMainContext } from 'vs/workbench/api/common/extHost.protocol';
 import { NullLogService } from 'vs/platform/log/common/log';
+import { IMainContext } from 'vs/workbench/api/common/extHost.protocol';
+import { ExtHostFileSystemEventService } from 'vs/workbench/api/common/extHostFileSystemEventService';
 
-suite('ExtHostFileSystemEventService', () => {
+describe('ExtHostFileSystemEventService', () => {
 
 	test('FileSystemWatcher ignore events properties are reversed #26851', function () {
 

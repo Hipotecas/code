@@ -3,22 +3,22 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
+import { strictEqual } from 'assert';
+import { timeout } from 'vs/base/common/async';
 import { isWindows, OperatingSystem } from 'vs/base/common/platform';
 import { format } from 'vs/base/common/strings';
+import { URI } from 'vs/base/common/uri';
 import { IConfigurationService } from 'vs/platform/configuration/common/configuration';
 import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
-import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
-import { TerminalBuiltinLinkType } from 'vs/workbench/contrib/terminalContrib/links/browser/links';
-import { TerminalLocalLinkDetector } from 'vs/workbench/contrib/terminalContrib/links/browser/terminalLocalLinkDetector';
-import { TerminalCapabilityStore } from 'vs/platform/terminal/common/capabilities/terminalCapabilityStore';
-import { assertLinkHelper } from 'vs/workbench/contrib/terminalContrib/links/test/browser/linkTestUtils';
-import { Terminal } from 'xterm';
-import { timeout } from 'vs/base/common/async';
-import { strictEqual } from 'assert';
-import { TerminalLinkResolver } from 'vs/workbench/contrib/terminalContrib/links/browser/terminalLinkResolver';
 import { IFileService } from 'vs/platform/files/common/files';
+import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
+import { TerminalCapabilityStore } from 'vs/platform/terminal/common/capabilities/terminalCapabilityStore';
+import { TerminalBuiltinLinkType } from 'vs/workbench/contrib/terminalContrib/links/browser/links';
+import { TerminalLinkResolver } from 'vs/workbench/contrib/terminalContrib/links/browser/terminalLinkResolver';
+import { TerminalLocalLinkDetector } from 'vs/workbench/contrib/terminalContrib/links/browser/terminalLocalLinkDetector';
+import { assertLinkHelper } from 'vs/workbench/contrib/terminalContrib/links/test/browser/linkTestUtils';
 import { createFileStat } from 'vs/workbench/test/common/workbenchTestServices';
-import { URI } from 'vs/base/common/uri';
+import { Terminal } from 'xterm';
 
 const unixLinks: (string | { link: string; resource: URI })[] = [
 	// Absolute
@@ -139,7 +139,7 @@ const supportedFallbackLinkFormats: LinkFormatInfo[] = [
 	{ urlFormat: '{0}' },
 ];
 
-suite('Workbench - TerminalLocalLinkDetector', () => {
+describe('Workbench - TerminalLocalLinkDetector', () => {
 	let instantiationService: TestInstantiationService;
 	let configurationService: TestConfigurationService;
 	let detector: TerminalLocalLinkDetector;
@@ -167,7 +167,7 @@ suite('Workbench - TerminalLocalLinkDetector', () => {
 		await assertLinks(TerminalBuiltinLinkType.LocalFile, `[${link}]`, [{ uri, range: [[2, 1], [link.length + 1, 1]] }]);
 	}
 
-	setup(() => {
+	beforeEach(() => {
 		instantiationService = new TestInstantiationService();
 		configurationService = new TestConfigurationService();
 		instantiationService.stub(IConfigurationService, configurationService);
@@ -185,8 +185,8 @@ suite('Workbench - TerminalLocalLinkDetector', () => {
 		xterm = new Terminal({ allowProposedApi: true, cols: 80, rows: 30 });
 	});
 
-	suite('platform independent', () => {
-		setup(() => {
+	describe('platform independent', () => {
+		beforeEach(() => {
 			detector = instantiationService.createInstance(TerminalLocalLinkDetector, xterm, new TerminalCapabilityStore(), {
 				initialCwd: '/parent/cwd',
 				os: OperatingSystem.Linux,
@@ -222,8 +222,8 @@ suite('Workbench - TerminalLocalLinkDetector', () => {
 		});
 	});
 
-	suite('macOS/Linux', () => {
-		setup(() => {
+	describe('macOS/Linux', () => {
+		beforeEach(() => {
 			detector = instantiationService.createInstance(TerminalLocalLinkDetector, xterm, new TerminalCapabilityStore(), {
 				initialCwd: '/parent/cwd',
 				os: OperatingSystem.Linux,
@@ -236,7 +236,7 @@ suite('Workbench - TerminalLocalLinkDetector', () => {
 		for (const l of unixLinks) {
 			const baseLink = typeof l === 'string' ? l : l.link;
 			const resource = typeof l === 'string' ? URI.file(l) : l.resource;
-			suite(`Link: ${baseLink}`, () => {
+			describe(`Link: ${baseLink}`, () => {
 				for (let i = 0; i < supportedLinkFormats.length; i++) {
 					const linkFormat = supportedLinkFormats[i];
 					const formattedLink = format(linkFormat.urlFormat, baseLink, linkFormat.line, linkFormat.column);
@@ -262,10 +262,10 @@ suite('Workbench - TerminalLocalLinkDetector', () => {
 	// Only test these when on Windows because there is special behavior around replacing separators
 	// in URI that cannot be changed
 	if (isWindows) {
-		suite('Windows', () => {
+		describe('Windows', () => {
 			const wslUnixToWindowsPathMap: Map<string, string> = new Map();
 
-			setup(() => {
+			beforeEach(() => {
 				detector = instantiationService.createInstance(TerminalLocalLinkDetector, xterm, new TerminalCapabilityStore(), {
 					initialCwd: 'C:\\Parent\\Cwd',
 					os: OperatingSystem.Windows,
@@ -286,7 +286,7 @@ suite('Workbench - TerminalLocalLinkDetector', () => {
 			for (const l of windowsLinks) {
 				const baseLink = typeof l === 'string' ? l : l.link;
 				const resource = typeof l === 'string' ? URI.file(l) : l.resource;
-				suite(`Link "${baseLink}"`, () => {
+				describe(`Link "${baseLink}"`, () => {
 					for (let i = 0; i < supportedLinkFormats.length; i++) {
 						const linkFormat = supportedLinkFormats[i];
 						const formattedLink = format(linkFormat.urlFormat, baseLink, linkFormat.line, linkFormat.column);
@@ -301,7 +301,7 @@ suite('Workbench - TerminalLocalLinkDetector', () => {
 			for (const l of windowsFallbackLinks) {
 				const baseLink = typeof l === 'string' ? l : l.link;
 				const resource = typeof l === 'string' ? URI.file(l) : l.resource;
-				suite(`Fallback link "${baseLink}"`, () => {
+				describe(`Fallback link "${baseLink}"`, () => {
 					for (let i = 0; i < supportedFallbackLinkFormats.length; i++) {
 						const linkFormat = supportedFallbackLinkFormats[i];
 						const formattedLink = format(linkFormat.urlFormat, baseLink, linkFormat.line, linkFormat.column);
@@ -326,7 +326,7 @@ suite('Workbench - TerminalLocalLinkDetector', () => {
 				await assertLinks(TerminalBuiltinLinkType.LocalFile, `+++ b/foo/bar`, [{ uri: resource, range: [[7, 1], [13, 1]] }]);
 			});
 
-			suite('WSL', () => {
+			describe('WSL', () => {
 				test('Unix -> Windows /mnt/ style links', async () => {
 					wslUnixToWindowsPathMap.set('/mnt/c/foo/bar', 'C:\\foo\\bar');
 					validResources = [URI.file('C:\\foo\\bar')];

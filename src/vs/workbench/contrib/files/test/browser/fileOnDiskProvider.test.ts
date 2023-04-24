@@ -4,26 +4,26 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
+import { DisposableStore } from 'vs/base/common/lifecycle';
 import { URI } from 'vs/base/common/uri';
-import { workbenchInstantiationService, TestServiceAccessor } from 'vs/workbench/test/browser/workbenchTestServices';
 import { IInstantiationService } from 'vs/platform/instantiation/common/instantiation';
 import { TextFileContentProvider } from 'vs/workbench/contrib/files/common/files';
 import { snapshotToString } from 'vs/workbench/services/textfile/common/textfiles';
-import { DisposableStore } from 'vs/base/common/lifecycle';
+import { TestServiceAccessor, workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
 
-suite('Files - FileOnDiskContentProvider', () => {
+describe('Files - FileOnDiskContentProvider', () => {
 
 	let disposables: DisposableStore;
 	let instantiationService: IInstantiationService;
 	let accessor: TestServiceAccessor;
 
-	setup(() => {
+	beforeEach(() => {
 		disposables = new DisposableStore();
 		instantiationService = workbenchInstantiationService(undefined, disposables);
 		accessor = instantiationService.createInstance(TestServiceAccessor);
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		disposables.dispose();
 	});
 

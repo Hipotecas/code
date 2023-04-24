@@ -7,9 +7,9 @@ import * as assert from 'assert';
 import { DisposableStore } from 'vs/base/common/lifecycle';
 import { URI } from 'vs/base/common/uri';
 import { IBulkEditService } from 'vs/editor/browser/services/bulkEditService';
+import { ILanguageService } from 'vs/editor/common/languages/language';
 import { TrackedRangeStickiness } from 'vs/editor/common/model';
 import { IModelService } from 'vs/editor/common/services/model';
-import { ILanguageService } from 'vs/editor/common/languages/language';
 import { ITextModelService } from 'vs/editor/common/services/resolverService';
 import { IConfigurationService } from 'vs/platform/configuration/common/configuration';
 import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
@@ -18,18 +18,18 @@ import { IThemeService } from 'vs/platform/theme/common/themeService';
 import { TestThemeService } from 'vs/platform/theme/test/common/testThemeService';
 import { IUndoRedoService } from 'vs/platform/undoRedo/common/undoRedo';
 import { insertCellAtIndex, runDeleteAction } from 'vs/workbench/contrib/notebook/browser/controller/cellOperations';
+import { IBaseCellEditorOptions } from 'vs/workbench/contrib/notebook/browser/notebookBrowser';
+import { NotebookOptions } from 'vs/workbench/contrib/notebook/browser/notebookOptions';
 import { NotebookEventDispatcher } from 'vs/workbench/contrib/notebook/browser/viewModel/eventDispatcher';
 import { NotebookViewModel } from 'vs/workbench/contrib/notebook/browser/viewModel/notebookViewModelImpl';
 import { ViewContext } from 'vs/workbench/contrib/notebook/browser/viewModel/viewContext';
 import { NotebookTextModel } from 'vs/workbench/contrib/notebook/common/model/notebookTextModel';
 import { CellKind, diff } from 'vs/workbench/contrib/notebook/common/notebookCommon';
-import { NotebookOptions } from 'vs/workbench/contrib/notebook/browser/notebookOptions';
+import { INotebookExecutionStateService } from 'vs/workbench/contrib/notebook/common/notebookExecutionStateService';
 import { ICellRange } from 'vs/workbench/contrib/notebook/common/notebookRange';
 import { NotebookEditorTestModel, setupInstantiationService, withTestNotebook } from 'vs/workbench/contrib/notebook/test/browser/testNotebookEditor';
-import { INotebookExecutionStateService } from 'vs/workbench/contrib/notebook/common/notebookExecutionStateService';
-import { IBaseCellEditorOptions } from 'vs/workbench/contrib/notebook/browser/notebookBrowser';
 
-suite('NotebookViewModel', () => {
+describe('NotebookViewModel', () => {
 	let disposables: DisposableStore;
 	let instantiationService: TestInstantiationService;
 	let textModelService: ITextModelService;
@@ -39,7 +39,7 @@ suite('NotebookViewModel', () => {
 	let languageService: ILanguageService;
 	let notebookExecutionStateService: INotebookExecutionStateService;
 
-	suiteSetup(() => {
+	describeSetup(() => {
 		disposables = new DisposableStore();
 		instantiationService = setupInstantiationService(disposables);
 		textModelService = instantiationService.get(ITextModelService);
@@ -53,7 +53,7 @@ suite('NotebookViewModel', () => {
 		instantiationService.stub(IThemeService, new TestThemeService());
 	});
 
-	suiteTeardown(() => disposables.dispose());
+	describeTeardown(() => disposables.dispose());
 
 	test('ctor', function () {
 		const notebook = new NotebookTextModel('notebook', URI.parse('test'), [], {}, { transientCellMetadata: {}, transientDocumentMetadata: {}, transientOutputs: false, cellContentMetadata: {} }, undoRedoService, modelService, languageService);
@@ -135,7 +135,7 @@ function getVisibleCells<T>(cells: T[], hiddenRanges: ICellRange[]) {
 	return result;
 }
 
-suite('NotebookViewModel Decorations', () => {
+describe('NotebookViewModel Decorations', () => {
 	test('tracking range', async function () {
 		await withTestNotebook(
 			[
@@ -274,7 +274,7 @@ suite('NotebookViewModel Decorations', () => {
 	});
 });
 
-suite('NotebookViewModel API', () => {
+describe('NotebookViewModel API', () => {
 	test('#115432, get nearest code cell', async function () {
 		await withTestNotebook(
 			[

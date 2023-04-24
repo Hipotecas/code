@@ -4,16 +4,16 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { URI } from 'vs/base/common/uri';
-import { IInstantiationService } from 'vs/platform/instantiation/common/instantiation';
-import { workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
-import { AbstractResourceEditorInput } from 'vs/workbench/common/editor/resourceEditorInput';
-import { ILabelService } from 'vs/platform/label/common/label';
-import { IFileService } from 'vs/platform/files/common/files';
-import { EditorInputCapabilities, Verbosity } from 'vs/workbench/common/editor';
 import { DisposableStore } from 'vs/base/common/lifecycle';
+import { URI } from 'vs/base/common/uri';
+import { IFileService } from 'vs/platform/files/common/files';
+import { IInstantiationService } from 'vs/platform/instantiation/common/instantiation';
+import { ILabelService } from 'vs/platform/label/common/label';
+import { EditorInputCapabilities, Verbosity } from 'vs/workbench/common/editor';
+import { AbstractResourceEditorInput } from 'vs/workbench/common/editor/resourceEditorInput';
+import { workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
 
-suite('ResourceEditorInput', () => {
+describe('ResourceEditorInput', () => {
 
 	let disposables: DisposableStore;
 	let instantiationService: IInstantiationService;
@@ -31,12 +31,12 @@ suite('ResourceEditorInput', () => {
 		}
 	}
 
-	setup(() => {
+	beforeEach(() => {
 		disposables = new DisposableStore();
 		instantiationService = workbenchInstantiationService(undefined, disposables);
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		disposables.dispose();
 	});
 

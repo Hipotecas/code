@@ -4,15 +4,15 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { NotificationsModel, NotificationViewItem, INotificationChangeEvent, NotificationChangeType, NotificationViewItemContentChangeKind, IStatusMessageChangeEvent, StatusMessageChangeType } from 'vs/workbench/common/notifications';
 import { Action } from 'vs/base/common/actions';
-import { INotification, Severity, NotificationsFilter, NotificationPriority } from 'vs/platform/notification/common/notification';
+import { timeout } from 'vs/base/common/async';
 import { createErrorWithActions } from 'vs/base/common/errorMessage';
+import { INotification, NotificationPriority, NotificationsFilter, Severity } from 'vs/platform/notification/common/notification';
+import { INotificationChangeEvent, IStatusMessageChangeEvent, NotificationChangeType, NotificationViewItem, NotificationViewItemContentChangeKind, NotificationsModel, StatusMessageChangeType } from 'vs/workbench/common/notifications';
 import { NotificationService } from 'vs/workbench/services/notification/common/notificationService';
 import { TestStorageService } from 'vs/workbench/test/common/workbenchTestServices';
-import { timeout } from 'vs/base/common/async';
 
-suite('Notifications', () => {
+describe('Notifications', () => {
 
 	test('Items', () => {
 

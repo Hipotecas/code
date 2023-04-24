@@ -5,13 +5,13 @@
 
 import * as assert from 'assert';
 import { KeyChord, KeyCode, KeyMod, ScanCode, ScanCodeUtils } from 'vs/base/common/keyCodes';
-import { KeyCodeChord, decodeKeybinding, createSimpleKeybinding, ScanCodeChord, Keybinding } from 'vs/base/common/keybindings';
 import { UserSettingsLabelProvider } from 'vs/base/common/keybindingLabels';
+import { KeyCodeChord, Keybinding, ScanCodeChord, createSimpleKeybinding, decodeKeybinding } from 'vs/base/common/keybindings';
 import { OperatingSystem } from 'vs/base/common/platform';
 import { USLayoutResolvedKeybinding } from 'vs/platform/keybinding/common/usLayoutResolvedKeybinding';
-import { MacLinuxKeyboardMapper } from 'vs/workbench/services/keybinding/common/macLinuxKeyboardMapper';
-import { IResolvedKeybinding, assertMapping, assertResolveKeyboardEvent, assertResolveKeybinding, readRawMapping } from 'vs/workbench/services/keybinding/test/node/keyboardMapperTestUtils';
 import { IMacLinuxKeyboardMapping } from 'vs/platform/keyboardLayout/common/keyboardLayout';
+import { MacLinuxKeyboardMapper } from 'vs/workbench/services/keybinding/common/macLinuxKeyboardMapper';
+import { IResolvedKeybinding, assertMapping, assertResolveKeybinding, assertResolveKeyboardEvent, readRawMapping } from 'vs/workbench/services/keybinding/test/node/keyboardMapperTestUtils';
 
 const WRITE_FILE_IF_DIFFERENT = false;
 
@@ -20,11 +20,11 @@ async function createKeyboardMapper(isUSStandard: boolean, file: string, mapAltG
 	return new MacLinuxKeyboardMapper(isUSStandard, rawMappings, mapAltGrToCtrlAlt, OS);
 }
 
-suite('keyboardMapper - MAC de_ch', () => {
+describe('keyboardMapper - MAC de_ch', () => {
 
 	let mapper: MacLinuxKeyboardMapper;
 
-	suiteSetup(async () => {
+	describeSetup(async () => {
 		const _mapper = await createKeyboardMapper(false, 'mac_de_ch', false, OperatingSystem.Macintosh);
 		mapper = _mapper;
 	});
@@ -399,11 +399,11 @@ suite('keyboardMapper - MAC de_ch', () => {
 	});
 });
 
-suite('keyboardMapper - MAC en_us', () => {
+describe('keyboardMapper - MAC en_us', () => {
 
 	let mapper: MacLinuxKeyboardMapper;
 
-	suiteSetup(async () => {
+	describeSetup(async () => {
 		const _mapper = await createKeyboardMapper(true, 'mac_en_us', false, OperatingSystem.Macintosh);
 		mapper = _mapper;
 	});
@@ -513,11 +513,11 @@ suite('keyboardMapper - MAC en_us', () => {
 	});
 });
 
-suite('keyboardMapper - LINUX de_ch', () => {
+describe('keyboardMapper - LINUX de_ch', () => {
 
 	let mapper: MacLinuxKeyboardMapper;
 
-	suiteSetup(async () => {
+	describeSetup(async () => {
 		const _mapper = await createKeyboardMapper(false, 'linux_de_ch', false, OperatingSystem.Linux);
 		mapper = _mapper;
 	});
@@ -892,11 +892,11 @@ suite('keyboardMapper - LINUX de_ch', () => {
 	});
 });
 
-suite('keyboardMapper - LINUX en_us', () => {
+describe('keyboardMapper - LINUX en_us', () => {
 
 	let mapper: MacLinuxKeyboardMapper;
 
-	suiteSetup(async () => {
+	describeSetup(async () => {
 		const _mapper = await createKeyboardMapper(true, 'linux_en_us', false, OperatingSystem.Linux);
 		mapper = _mapper;
 	});
@@ -1530,7 +1530,7 @@ suite('keyboardMapper - LINUX en_us', () => {
 	});
 });
 
-suite('keyboardMapper', () => {
+describe('keyboardMapper', () => {
 
 	test('issue #23706: Linux UK layout: Ctrl + Apostrophe also toggles terminal', () => {
 		const mapper = new MacLinuxKeyboardMapper(false, {
@@ -1664,11 +1664,11 @@ suite('keyboardMapper', () => {
 	});
 });
 
-suite('keyboardMapper - LINUX ru', () => {
+describe('keyboardMapper - LINUX ru', () => {
 
 	let mapper: MacLinuxKeyboardMapper;
 
-	suiteSetup(async () => {
+	describeSetup(async () => {
 		const _mapper = await createKeyboardMapper(false, 'linux_ru', false, OperatingSystem.Linux);
 		mapper = _mapper;
 	});
@@ -1698,11 +1698,11 @@ suite('keyboardMapper - LINUX ru', () => {
 	});
 });
 
-suite('keyboardMapper - LINUX en_uk', () => {
+describe('keyboardMapper - LINUX en_uk', () => {
 
 	let mapper: MacLinuxKeyboardMapper;
 
-	suiteSetup(async () => {
+	describeSetup(async () => {
 		const _mapper = await createKeyboardMapper(false, 'linux_en_uk', false, OperatingSystem.Linux);
 		mapper = _mapper;
 	});
@@ -1738,11 +1738,11 @@ suite('keyboardMapper - LINUX en_uk', () => {
 	});
 });
 
-suite('keyboardMapper - MAC zh_hant', () => {
+describe('keyboardMapper - MAC zh_hant', () => {
 
 	let mapper: MacLinuxKeyboardMapper;
 
-	suiteSetup(async () => {
+	describeSetup(async () => {
 		const _mapper = await createKeyboardMapper(false, 'mac_zh_hant', false, OperatingSystem.Macintosh);
 		mapper = _mapper;
 	});
@@ -1772,11 +1772,11 @@ suite('keyboardMapper - MAC zh_hant', () => {
 	});
 });
 
-suite('keyboardMapper - MAC zh_hant2', () => {
+describe('keyboardMapper - MAC zh_hant2', () => {
 
 	let mapper: MacLinuxKeyboardMapper;
 
-	suiteSetup(async () => {
+	describeSetup(async () => {
 		const _mapper = await createKeyboardMapper(false, 'mac_zh_hant2', false, OperatingSystem.Macintosh);
 		mapper = _mapper;
 	});

@@ -4,20 +4,20 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { BoundModelReferenceCollection } from 'vs/workbench/api/browser/mainThreadDocuments';
 import { timeout } from 'vs/base/common/async';
-import { URI } from 'vs/base/common/uri';
 import { extUri } from 'vs/base/common/resources';
+import { URI } from 'vs/base/common/uri';
+import { BoundModelReferenceCollection } from 'vs/workbench/api/browser/mainThreadDocuments';
 
-suite('BoundModelReferenceCollection', function () {
+describe('BoundModelReferenceCollection', function () {
 
 	let col: BoundModelReferenceCollection;
 
-	setup(function () {
+	beforeEach(function () {
 		col = new BoundModelReferenceCollection(extUri, 15, 75);
 	});
 
-	teardown(function () {
+	afterEach(function () {
 		col.dispose();
 	});
 

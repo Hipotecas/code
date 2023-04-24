@@ -4,18 +4,18 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
-import { IRange, Range } from 'vs/editor/common/core/range';
-import { CommentsPanel } from 'vs/workbench/contrib/comments/browser/commentsView';
-import { CommentService, ICommentService } from 'vs/workbench/contrib/comments/browser/commentService';
-import { Comment, CommentInput, CommentThread, CommentThreadCollapsibleState, CommentThreadState } from 'vs/editor/common/languages';
 import { Emitter, Event } from 'vs/base/common/event';
-import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
-import { IViewContainerModel, IViewDescriptor, IViewDescriptorService, ViewContainer, ViewContainerLocation } from 'vs/workbench/common/views';
+import { DisposableStore } from 'vs/base/common/lifecycle';
+import { IRange, Range } from 'vs/editor/common/core/range';
+import { Comment, CommentInput, CommentThread, CommentThreadCollapsibleState, CommentThreadState } from 'vs/editor/common/languages';
 import { IConfigurationService } from 'vs/platform/configuration/common/configuration';
 import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
 import { IContextViewService } from 'vs/platform/contextview/browser/contextView';
-import { DisposableStore } from 'vs/base/common/lifecycle';
+import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
+import { IViewContainerModel, IViewDescriptor, IViewDescriptorService, ViewContainer, ViewContainerLocation } from 'vs/workbench/common/views';
+import { CommentService, ICommentService } from 'vs/workbench/contrib/comments/browser/commentService';
+import { CommentsPanel } from 'vs/workbench/contrib/comments/browser/commentsView';
+import { workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
 
 class TestCommentThread implements CommentThread<IRange> {
 	isDocumentCommentThread(): this is CommentThread<IRange> {
@@ -69,13 +69,13 @@ export class TestViewDescriptorService implements Partial<IViewDescriptorService
 	}
 }
 
-suite('Comments View', function () {
+describe('Comments View', function () {
 
 	let disposables: DisposableStore;
 	let instantiationService: TestInstantiationService;
 	let commentService: CommentService;
 
-	setup(() => {
+	beforeEach(() => {
 		disposables = new DisposableStore();
 		instantiationService = workbenchInstantiationService({}, disposables);
 		instantiationService.stub(IConfigurationService, new TestConfigurationService());
@@ -85,7 +85,7 @@ suite('Comments View', function () {
 		instantiationService.stub(ICommentService, commentService);
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		commentService.dispose();
 		disposables.dispose();
 	});

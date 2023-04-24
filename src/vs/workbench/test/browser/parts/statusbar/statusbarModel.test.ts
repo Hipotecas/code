@@ -5,10 +5,10 @@
 
 import * as assert from 'assert';
 import { StatusbarViewModel } from 'vs/workbench/browser/parts/statusbar/statusbarModel';
-import { TestStorageService } from 'vs/workbench/test/common/workbenchTestServices';
 import { StatusbarAlignment } from 'vs/workbench/services/statusbar/browser/statusbar';
+import { TestStorageService } from 'vs/workbench/test/common/workbenchTestServices';
 
-suite('Workbench status bar model', () => {
+describe('Workbench status bar model', () => {
 
 	test('basics', () => {
 		const container = document.createElement('div');

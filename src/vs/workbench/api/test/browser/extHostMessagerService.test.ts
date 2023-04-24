@@ -4,14 +4,14 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { MainThreadMessageService } from 'vs/workbench/api/browser/mainThreadMessageService';
-import { IDialogService, IPrompt, IPromptButton } from 'vs/platform/dialogs/common/dialogs';
-import { INotificationService, INotification, NoOpNotification, INotificationHandle, Severity, IPromptChoice, IPromptOptions, IStatusMessageOptions } from 'vs/platform/notification/common/notification';
-import { ICommandService } from 'vs/platform/commands/common/commands';
-import { mock } from 'vs/base/test/common/mock';
-import { IDisposable, Disposable } from 'vs/base/common/lifecycle';
 import { Event } from 'vs/base/common/event';
+import { Disposable, IDisposable } from 'vs/base/common/lifecycle';
+import { mock } from 'vs/base/test/common/mock';
+import { ICommandService } from 'vs/platform/commands/common/commands';
+import { IDialogService, IPrompt, IPromptButton } from 'vs/platform/dialogs/common/dialogs';
 import { TestDialogService } from 'vs/platform/dialogs/test/common/testDialogService';
+import { INotification, INotificationHandle, INotificationService, IPromptChoice, IPromptOptions, IStatusMessageOptions, NoOpNotification, Severity } from 'vs/platform/notification/common/notification';
+import { MainThreadMessageService } from 'vs/workbench/api/browser/mainThreadMessageService';
 
 const emptyCommandService: ICommandService = {
 	_serviceBrand: undefined,
@@ -79,7 +79,7 @@ class EmptyNotificationService implements INotificationService {
 	}
 }
 
-suite('ExtHostMessageService', function () {
+describe('ExtHostMessageService', function () {
 
 	test('propagte handle on select', async function () {
 
@@ -92,7 +92,7 @@ suite('ExtHostMessageService', function () {
 		assert.strictEqual(handle, 42);
 	});
 
-	suite('modal', () => {
+	describe('modal', () => {
 		test('calls dialog service', async () => {
 			const service = new MainThreadMessageService(null!, emptyNotificationService, emptyCommandService, new class extends mock<IDialogService>() {
 				override prompt({ type, message, buttons, cancelButton }: IPrompt<any>) {

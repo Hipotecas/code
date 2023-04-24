@@ -4,27 +4,27 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
+import { VSBuffer } from 'vs/base/common/buffer';
 import { DisposableStore } from 'vs/base/common/lifecycle';
+import { joinPath } from 'vs/base/common/resources';
+import { URI } from 'vs/base/common/uri';
 import { IEnvironmentService } from 'vs/platform/environment/common/environment';
-import { IFileService } from 'vs/platform/files/common/files';
+import { ExtensionStorageService, IExtensionStorageService } from 'vs/platform/extensionManagement/common/extensionStorage';
 import { FileService } from 'vs/platform/files/common/fileService';
+import { IFileService } from 'vs/platform/files/common/files';
 import { InMemoryFileSystemProvider } from 'vs/platform/files/common/inMemoryFilesystemProvider';
 import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
 import { NullLogService } from 'vs/platform/log/common/log';
-import { workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
-import { IExtensionStorageService, ExtensionStorageService } from 'vs/platform/extensionManagement/common/extensionStorage';
-import { URI } from 'vs/base/common/uri';
-import { joinPath } from 'vs/base/common/resources';
-import { VSBuffer } from 'vs/base/common/buffer';
+import { IStorageService, StorageScope } from 'vs/platform/storage/common/storage';
+import { UriIdentityService } from 'vs/platform/uriIdentity/common/uriIdentityService';
+import { IUserDataProfilesService, UserDataProfilesService } from 'vs/platform/userDataProfile/common/userDataProfile';
 import { TestWorkspace } from 'vs/platform/workspace/test/common/testWorkspace';
 import { migrateExtensionStorage } from 'vs/workbench/services/extensions/common/extensionStorageMigration';
-import { IStorageService, StorageScope } from 'vs/platform/storage/common/storage';
-import { IUserDataProfilesService, UserDataProfilesService } from 'vs/platform/userDataProfile/common/userDataProfile';
-import { UserDataProfileService } from 'vs/workbench/services/userDataProfile/common/userDataProfileService';
 import { IUserDataProfileService } from 'vs/workbench/services/userDataProfile/common/userDataProfile';
-import { UriIdentityService } from 'vs/platform/uriIdentity/common/uriIdentityService';
+import { UserDataProfileService } from 'vs/workbench/services/userDataProfile/common/userDataProfileService';
+import { workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
 
-suite('ExtensionStorageMigration', () => {
+describe('ExtensionStorageMigration', () => {
 
 	const disposables = new DisposableStore();
 	const ROOT = URI.file('tests').with({ scheme: 'vscode-tests' });
@@ -32,7 +32,7 @@ suite('ExtensionStorageMigration', () => {
 
 	let instantiationService: TestInstantiationService;
 
-	setup(() => {
+	beforeEach(() => {
 		instantiationService = <TestInstantiationService>workbenchInstantiationService(undefined, disposables);
 
 		const fileService = disposables.add(new FileService(new NullLogService()));
@@ -45,7 +45,7 @@ suite('ExtensionStorageMigration', () => {
 		instantiationService.stub(IExtensionStorageService, instantiationService.createInstance(ExtensionStorageService));
 	});
 
-	teardown(() => disposables.clear());
+	afterEach(() => disposables.clear());
 
 	test('migrate extension storage', async () => {
 		const fromExtensionId = 'pub.from', toExtensionId = 'pub.to', storageMigratedKey = `extensionStorage.migrate.${fromExtensionId}-${toExtensionId}`;

@@ -13,11 +13,11 @@ import { IUserDataProfilesService } from 'vs/platform/userDataProfile/common/use
 import { IUserDataSyncEnablementService, IUserDataSyncService, SyncResource, SyncStatus } from 'vs/platform/userDataSync/common/userDataSync';
 import { UserDataSyncClient, UserDataSyncTestServer } from 'vs/platform/userDataSync/test/common/userDataSyncClient';
 
-suite('UserDataSyncService', () => {
+describe('UserDataSyncService', () => {
 
 	const disposableStore = new DisposableStore();
 
-	teardown(() => disposableStore.clear());
+	afterEach(() => disposableStore.clear());
 
 	test('test first time sync ever', async () => {
 		// Setup the client

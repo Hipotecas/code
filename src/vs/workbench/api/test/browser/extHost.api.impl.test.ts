@@ -4,11 +4,11 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { URI } from 'vs/base/common/uri';
-import { originalFSPath } from 'vs/base/common/resources';
 import { isWindows } from 'vs/base/common/platform';
+import { originalFSPath } from 'vs/base/common/resources';
+import { URI } from 'vs/base/common/uri';
 
-suite('ExtHost API', function () {
+describe('ExtHost API', function () {
 	test('issue #51387: originalFSPath', function () {
 		if (isWindows) {
 			assert.strictEqual(originalFSPath(URI.file('C:\\test')).charAt(0), 'C');

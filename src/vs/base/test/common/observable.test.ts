@@ -5,14 +5,14 @@
 
 import * as assert from 'assert';
 import { Emitter } from 'vs/base/common/event';
-import { ISettableObservable, autorun, derived, ITransaction, observableFromEvent, observableValue, transaction, keepAlive } from 'vs/base/common/observable';
+import { ISettableObservable, ITransaction, autorun, derived, keepAlive, observableFromEvent, observableValue, transaction } from 'vs/base/common/observable';
 import { BaseObservable, IObservable, IObserver } from 'vs/base/common/observableImpl/base';
 
-suite('observables', () => {
+describe('observables', () => {
 	/**
 	 * Reads these tests to understand how to use observables.
 	 */
-	suite('tutorial', () => {
+	describe('tutorial', () => {
 		test('observable + autorun', () => {
 			const log = new Log();
 			const myObservable = observableValue('myObservable', 0);
@@ -321,7 +321,7 @@ suite('observables', () => {
 		]);
 	});
 
-	suite('from event', () => {
+	describe('from event', () => {
 
 		function init(): { log: Log; setValue: (value: number | undefined) => void; observable: IObservable<number | undefined> } {
 			const log = new Log();
@@ -563,7 +563,7 @@ suite('observables', () => {
 		]);
 	});
 
-	suite('autorun rerun on neutral change', () => {
+	describe('autorun rerun on neutral change', () => {
 		test('autorun reruns on neutral observable double change', () => {
 			const log = new Log();
 			const myObservable = observableValue('myObservable', 0);

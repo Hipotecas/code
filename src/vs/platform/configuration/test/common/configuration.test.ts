@@ -6,7 +6,7 @@ import * as assert from 'assert';
 import { merge, removeFromValueTree } from 'vs/platform/configuration/common/configuration';
 import { mergeChanges } from 'vs/platform/configuration/common/configurationModels';
 
-suite('Configuration', () => {
+describe('Configuration', () => {
 
 	test('simple merge', () => {
 		let base = { 'a': 1, 'b': 2 };
@@ -119,7 +119,7 @@ suite('Configuration', () => {
 
 });
 
-suite('Configuration Changes: Merge', () => {
+describe('Configuration Changes: Merge', () => {
 
 	test('merge only keys', () => {
 		const actual = mergeChanges({ keys: ['a', 'b'], overrides: [] }, { keys: ['c', 'd'], overrides: [] });

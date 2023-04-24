@@ -10,7 +10,7 @@ import { addTrailingPathSeparator, basename, dirname, distinctParents, extUri, e
 import { URI } from 'vs/base/common/uri';
 
 
-suite('Resources', () => {
+describe('Resources', () => {
 
 	test('distinctParents', () => {
 

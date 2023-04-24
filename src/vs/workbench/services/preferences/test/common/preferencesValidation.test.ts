@@ -8,7 +8,7 @@ import { IConfigurationPropertySchema } from 'vs/platform/configuration/common/c
 import { createValidator, getInvalidTypeError } from 'vs/workbench/services/preferences/common/preferencesValidation';
 
 
-suite('Preferences Validation', () => {
+describe('Preferences Validation', () => {
 	class Tester {
 		private validator: (value: any) => string | null;
 

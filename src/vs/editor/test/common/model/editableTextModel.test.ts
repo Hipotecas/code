@@ -12,7 +12,7 @@ import { IModelContentChangedEvent } from 'vs/editor/common/textModelEvents';
 import { assertSyncedModels, testApplyEditsWithSyncedModels } from 'vs/editor/test/common/model/editableTextModelTestUtils';
 import { createTextModel } from 'vs/editor/test/common/testTextModel';
 
-suite('EditorModel - EditableTextModel.applyEdits updates mightContainRTL', () => {
+describe('EditorModel - EditableTextModel.applyEdits updates mightContainRTL', () => {
 
 	function testApplyEdits(original: string[], edits: ISingleEditOperation[], before: boolean, after: boolean): void {
 		const model = createTextModel(original.join('\n'));
@@ -58,7 +58,7 @@ suite('EditorModel - EditableTextModel.applyEdits updates mightContainRTL', () =
 });
 
 
-suite('EditorModel - EditableTextModel.applyEdits updates mightContainNonBasicASCII', () => {
+describe('EditorModel - EditableTextModel.applyEdits updates mightContainNonBasicASCII', () => {
 
 	function testApplyEdits(original: string[], edits: ISingleEditOperation[], before: boolean, after: boolean): void {
 		const model = createTextModel(original.join('\n'));
@@ -100,7 +100,7 @@ suite('EditorModel - EditableTextModel.applyEdits updates mightContainNonBasicAS
 
 });
 
-suite('EditorModel - EditableTextModel.applyEdits', () => {
+describe('EditorModel - EditableTextModel.applyEdits', () => {
 
 	function editOp(startLineNumber: number, startColumn: number, endLineNumber: number, endColumn: number, text: string[]): ISingleEditOperation {
 		return {

@@ -58,7 +58,7 @@ function assertTree(input: string, expected: any, expectedErrors: number[] = [],
 	assert.deepStrictEqual(actual, expected);
 }
 
-suite('JSON', () => {
+describe('JSON', () => {
 	test('tokens', () => {
 		assertKinds('{', SyntaxKind.OpenBraceToken);
 		assertKinds('}', SyntaxKind.CloseBraceToken);

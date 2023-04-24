@@ -8,7 +8,7 @@ import { LinkedMap, LRUCache, ResourceMap, Touch } from 'vs/base/common/map';
 import { extUriIgnorePathCase } from 'vs/base/common/resources';
 import { URI } from 'vs/base/common/uri';
 
-suite('Map', () => {
+describe('Map', () => {
 
 	test('LinkedMap - Simple', () => {
 		const map = new LinkedMap<string, string>();

@@ -6,16 +6,16 @@
 import * as assert from 'assert';
 import { join, normalize } from 'vs/base/common/path';
 import * as platform from 'vs/base/common/platform';
-import { IDebugAdapterExecutable, IConfig, IDebugSession, IAdapterManager } from 'vs/workbench/contrib/debug/common/debug';
-import { Debugger } from 'vs/workbench/contrib/debug/common/debugger';
-import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
 import { URI } from 'vs/base/common/uri';
-import { ExecutableDebugAdapter } from 'vs/workbench/contrib/debug/node/debugAdapter';
 import { TestTextResourcePropertiesService } from 'vs/editor/test/common/services/testTextResourcePropertiesService';
+import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
 import { ExtensionIdentifier, IExtensionDescription, TargetPlatform } from 'vs/platform/extensions/common/extensions';
+import { IAdapterManager, IConfig, IDebugAdapterExecutable, IDebugSession } from 'vs/workbench/contrib/debug/common/debug';
+import { Debugger } from 'vs/workbench/contrib/debug/common/debugger';
+import { ExecutableDebugAdapter } from 'vs/workbench/contrib/debug/node/debugAdapter';
 
 
-suite('Debug - Debugger', () => {
+describe('Debug - Debugger', () => {
 	let _debugger: Debugger;
 
 	const extensionFolderPath = '/a/b/c/';
@@ -134,11 +134,11 @@ suite('Debug - Debugger', () => {
 	const configurationService = new TestConfigurationService();
 	const testResourcePropertiesService = new TestTextResourcePropertiesService(configurationService);
 
-	setup(() => {
+	beforeEach(() => {
 		_debugger = new Debugger(adapterManager, debuggerContribution, extensionDescriptor0, configurationService, testResourcePropertiesService, undefined!, undefined!, undefined!, undefined!);
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		_debugger = null!;
 	});
 

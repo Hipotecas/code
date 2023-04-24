@@ -10,7 +10,7 @@ import { StopWatch } from 'vs/base/common/stopwatch';
 import { ConfigKeysIterator, PathIterator, StringIterator, TernarySearchTree, UriIterator } from 'vs/base/common/ternarySearchTree';
 import { URI } from 'vs/base/common/uri';
 
-suite('Ternary Search Tree', () => {
+describe('Ternary Search Tree', () => {
 
 	test('PathIterator', () => {
 		const iter = new PathIterator();
@@ -904,7 +904,7 @@ suite('Ternary Search Tree', () => {
 });
 
 
-suite.skip('TST, perf', function () {
+describe.skip('TST, perf', function () {
 
 	function createRandomUris(n: number): URI[] {
 		const uris: URI[] = [];
@@ -942,14 +942,14 @@ suite.skip('TST, perf', function () {
 	let sampleUris: URI[] = [];
 	let candidates: URI[] = [];
 
-	suiteSetup(() => {
+	describeSetup(() => {
 		const len = 50_000;
 		sampleUris = createRandomUris(len);
 		candidates = [...sampleUris.slice(0, len / 2), ...createRandomUris(len / 2)];
 		shuffle(candidates);
 	});
 
-	setup(() => {
+	beforeEach(() => {
 		tree = TernarySearchTree.forUris();
 		for (const uri of sampleUris) {
 			tree.set(uri, true);

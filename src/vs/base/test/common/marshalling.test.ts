@@ -6,7 +6,7 @@ import * as assert from 'assert';
 import { parse, stringify } from 'vs/base/common/marshalling';
 import { URI } from 'vs/base/common/uri';
 
-suite('Marshalling', () => {
+describe('Marshalling', () => {
 
 	test('RegExp', () => {
 		const value = /foo/img;

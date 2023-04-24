@@ -6,9 +6,10 @@ import * as assert from 'assert';
 import { mock } from 'vs/base/test/common/mock';
 import { CoreEditingCommands } from 'vs/editor/browser/coreCommands';
 import { ICodeEditor } from 'vs/editor/browser/editorBrowser';
-import { Selection } from 'vs/editor/common/core/selection';
 import { Range } from 'vs/editor/common/core/range';
+import { Selection } from 'vs/editor/common/core/selection';
 import { Handler } from 'vs/editor/common/editorCommon';
+import { EndOfLineSequence } from 'vs/editor/common/model';
 import { TextModel } from 'vs/editor/common/model/textModel';
 import { SnippetController2 } from 'vs/editor/contrib/snippet/browser/snippetController2';
 import { createTestCodeEditor } from 'vs/editor/test/browser/testCodeEditor';
@@ -21,9 +22,8 @@ import { MockContextKeyService } from 'vs/platform/keybinding/test/common/mockKe
 import { ILabelService } from 'vs/platform/label/common/label';
 import { ILogService, NullLogService } from 'vs/platform/log/common/log';
 import { IWorkspaceContextService } from 'vs/platform/workspace/common/workspace';
-import { EndOfLineSequence } from 'vs/editor/common/model';
 
-suite('SnippetController2', function () {
+describe('SnippetController2', function () {
 
 	/** @deprecated */
 	function assertSelections(editor: ICodeEditor, ...s: Selection[]) {
@@ -55,7 +55,7 @@ suite('SnippetController2', function () {
 	let contextKeys: MockContextKeyService;
 	let instaService: IInstantiationService;
 
-	setup(function () {
+	beforeEach(function () {
 		contextKeys = new MockContextKeyService();
 		model = createTextModel('if\n    $state\nfi');
 		const serviceCollection = new ServiceCollection(
@@ -74,7 +74,7 @@ suite('SnippetController2', function () {
 		assert.strictEqual(model.getEOL(), '\n');
 	});
 
-	teardown(function () {
+	afterEach(function () {
 		model.dispose();
 	});
 
@@ -549,7 +549,7 @@ suite('SnippetController2', function () {
 		// editor.trigger('test', 'type', { text: ';' });
 	});
 
-	suite('createEditsAndSnippetsFromEdits', function () {
+	describe('createEditsAndSnippetsFromEdits', function () {
 
 		test('apply, tab, done', function () {
 

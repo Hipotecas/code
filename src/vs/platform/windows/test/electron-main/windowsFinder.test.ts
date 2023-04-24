@@ -6,6 +6,7 @@
 import * as assert from 'assert';
 import { CancellationToken } from 'vs/base/common/cancellation';
 import { Event } from 'vs/base/common/event';
+import { FileAccess } from 'vs/base/common/network';
 import { join } from 'vs/base/common/path';
 import { extUriBiasedIgnorePathCase } from 'vs/base/common/resources';
 import { URI, UriDto } from 'vs/base/common/uri';
@@ -14,11 +15,10 @@ import { NativeParsedArgs } from 'vs/platform/environment/common/argv';
 import { INativeWindowConfiguration } from 'vs/platform/window/common/window';
 import { ICodeWindow, ILoadEvent, IWindowState } from 'vs/platform/window/electron-main/window';
 import { findWindowOnFile } from 'vs/platform/windows/electron-main/windowsFinder';
-import { toWorkspaceFolders } from 'vs/platform/workspaces/common/workspaces';
 import { IWorkspaceIdentifier } from 'vs/platform/workspace/common/workspace';
-import { FileAccess } from 'vs/base/common/network';
+import { toWorkspaceFolders } from 'vs/platform/workspaces/common/workspaces';
 
-suite('WindowsFinder', () => {
+describe('WindowsFinder', () => {
 
 	const fixturesFolder = FileAccess.asFileUri('vs/platform/windows/test/electron-main/fixtures').fsPath;
 

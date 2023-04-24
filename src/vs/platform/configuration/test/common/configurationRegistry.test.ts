@@ -7,7 +7,7 @@ import * as assert from 'assert';
 import { Extensions as ConfigurationExtensions, IConfigurationRegistry } from 'vs/platform/configuration/common/configurationRegistry';
 import { Registry } from 'vs/platform/registry/common/platform';
 
-suite('ConfigurationRegistry', () => {
+describe('ConfigurationRegistry', () => {
 
 	const configurationRegistry = Registry.as<IConfigurationRegistry>(ConfigurationExtensions.Configuration);
 

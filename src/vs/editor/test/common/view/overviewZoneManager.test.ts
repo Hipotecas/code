@@ -6,7 +6,7 @@
 import * as assert from 'assert';
 import { ColorZone, OverviewRulerZone, OverviewZoneManager } from 'vs/editor/common/viewModel/overviewZoneManager';
 
-suite('Editor View - OverviewZoneManager', () => {
+describe('Editor View - OverviewZoneManager', () => {
 
 	test('pixel ratio 1, dom height 600', () => {
 		const LINE_COUNT = 50;

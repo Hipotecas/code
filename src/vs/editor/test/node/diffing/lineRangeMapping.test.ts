@@ -8,7 +8,7 @@ import { Range } from 'vs/editor/common/core/range';
 import { RangeMapping } from 'vs/editor/common/diff/linesDiffComputer';
 import { getLineRangeMapping } from 'vs/editor/common/diff/standardLinesDiffComputer';
 
-suite('lineRangeMapping', () => {
+describe('lineRangeMapping', () => {
 	test('lineRangeMapping', () => {
 		// {[2,1 -> 3,1]->[2,1 -> 2,1]}
 		assert.deepStrictEqual(

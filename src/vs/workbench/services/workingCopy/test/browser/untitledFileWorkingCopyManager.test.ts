@@ -15,7 +15,7 @@ import { TestStoredFileWorkingCopyModel, TestStoredFileWorkingCopyModelFactory }
 import { TestUntitledFileWorkingCopyModel, TestUntitledFileWorkingCopyModelFactory } from 'vs/workbench/services/workingCopy/test/browser/untitledFileWorkingCopy.test';
 import { TestInMemoryFileSystemProvider, TestServiceAccessor, workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
 
-suite('UntitledFileWorkingCopyManager', () => {
+describe('UntitledFileWorkingCopyManager', () => {
 
 	let disposables: DisposableStore;
 	let instantiationService: IInstantiationService;
@@ -23,7 +23,7 @@ suite('UntitledFileWorkingCopyManager', () => {
 
 	let manager: IFileWorkingCopyManager<TestStoredFileWorkingCopyModel, TestUntitledFileWorkingCopyModel>;
 
-	setup(() => {
+	beforeEach(() => {
 		disposables = new DisposableStore();
 		instantiationService = workbenchInstantiationService(undefined, disposables);
 		accessor = instantiationService.createInstance(TestServiceAccessor);
@@ -43,7 +43,7 @@ suite('UntitledFileWorkingCopyManager', () => {
 		);
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		manager.dispose();
 		disposables.dispose();
 	});

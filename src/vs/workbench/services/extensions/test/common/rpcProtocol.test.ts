@@ -4,14 +4,14 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
+import { VSBuffer } from 'vs/base/common/buffer';
 import { CancellationToken, CancellationTokenSource } from 'vs/base/common/cancellation';
 import { Emitter, Event } from 'vs/base/common/event';
 import { IMessagePassingProtocol } from 'vs/base/parts/ipc/common/ipc';
 import { ProxyIdentifier, SerializableObjectWithBuffers } from 'vs/workbench/services/extensions/common/proxyIdentifier';
 import { RPCProtocol } from 'vs/workbench/services/extensions/common/rpcProtocol';
-import { VSBuffer } from 'vs/base/common/buffer';
 
-suite('RPCProtocol', () => {
+describe('RPCProtocol', () => {
 
 	class MessagePassingProtocol implements IMessagePassingProtocol {
 		private _pair?: MessagePassingProtocol;
@@ -38,7 +38,7 @@ suite('RPCProtocol', () => {
 		}
 	}
 
-	setup(() => {
+	beforeEach(() => {
 		const a_protocol = new MessagePassingProtocol();
 		const b_protocol = new MessagePassingProtocol();
 		a_protocol.setPair(b_protocol);

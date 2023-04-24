@@ -33,7 +33,7 @@ function createTestCommandHelper(commentsConfig: CommentRule, commandFactory: (a
 	};
 }
 
-suite('Editor Contrib - Line Comment Command', () => {
+describe('Editor Contrib - Line Comment Command', () => {
 
 	const testLineCommentCommand = createTestCommandHelper(
 		{ lineComment: '!@#', blockComment: ['<!@#', '#@!>'] },
@@ -679,7 +679,7 @@ suite('Editor Contrib - Line Comment Command', () => {
 		);
 	});
 
-	suite('ignoreEmptyLines false', () => {
+	describe('ignoreEmptyLines false', () => {
 
 		const testLineCommentCommand = createTestCommandHelper(
 			{ lineComment: '!@#', blockComment: ['<!@#', '#@!>'] },
@@ -771,7 +771,7 @@ suite('Editor Contrib - Line Comment Command', () => {
 	});
 });
 
-suite('Editor Contrib - Line Comment As Block Comment', () => {
+describe('Editor Contrib - Line Comment As Block Comment', () => {
 
 	const testLineCommentCommand = createTestCommandHelper(
 		{ lineComment: '', blockComment: ['(', ')'] },
@@ -882,7 +882,7 @@ suite('Editor Contrib - Line Comment As Block Comment', () => {
 	});
 });
 
-suite('Editor Contrib - Line Comment As Block Comment 2', () => {
+describe('Editor Contrib - Line Comment As Block Comment 2', () => {
 
 	const testLineCommentCommand = createTestCommandHelper(
 		{ lineComment: null, blockComment: ['<!@#', '#@!>'] },
@@ -1078,7 +1078,7 @@ suite('Editor Contrib - Line Comment As Block Comment 2', () => {
 	});
 });
 
-suite('Editor Contrib - Line Comment in mixed modes', () => {
+describe('Editor Contrib - Line Comment in mixed modes', () => {
 
 	const OUTER_LANGUAGE_ID = 'outerMode';
 	const INNER_LANGUAGE_ID = 'innerMode';

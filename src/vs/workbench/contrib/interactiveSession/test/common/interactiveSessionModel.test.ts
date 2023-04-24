@@ -13,19 +13,19 @@ import { InteractiveSessionModel } from 'vs/workbench/contrib/interactiveSession
 import { IExtensionService } from 'vs/workbench/services/extensions/common/extensions';
 import { TestExtensionService, TestStorageService } from 'vs/workbench/test/common/workbenchTestServices';
 
-suite('InteractiveSessionModel', () => {
+describe('InteractiveSessionModel', () => {
 	const testDisposables = new DisposableStore();
 
 	let instantiationService: TestInstantiationService;
 
-	suiteSetup(async () => {
+	describeSetup(async () => {
 		instantiationService = new TestInstantiationService();
 		instantiationService.stub(IStorageService, new TestStorageService());
 		instantiationService.stub(ILogService, new NullLogService());
 		instantiationService.stub(IExtensionService, new TestExtensionService());
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		testDisposables.clear();
 	});
 

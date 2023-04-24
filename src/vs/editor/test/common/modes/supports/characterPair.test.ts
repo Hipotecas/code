@@ -5,11 +5,11 @@
 
 import * as assert from 'assert';
 import { StandardTokenType } from 'vs/editor/common/encodedTokenAttributes';
+import { StandardAutoClosingPairConditional } from 'vs/editor/common/languages/languageConfiguration';
 import { CharacterPairSupport } from 'vs/editor/common/languages/supports/characterPair';
 import { TokenText, createFakeScopedLineTokens } from 'vs/editor/test/common/modesTestUtils';
-import { StandardAutoClosingPairConditional } from 'vs/editor/common/languages/languageConfiguration';
 
-suite('CharacterPairSupport', () => {
+describe('CharacterPairSupport', () => {
 
 	test('only autoClosingPairs', () => {
 		const characaterPairSupport = new CharacterPairSupport({ autoClosingPairs: [{ open: 'a', close: 'b' }] });

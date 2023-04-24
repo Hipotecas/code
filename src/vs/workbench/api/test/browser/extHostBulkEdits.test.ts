@@ -3,23 +3,23 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import * as assert from 'assert';
-import * as extHostTypes from 'vs/workbench/api/common/extHostTypes';
-import { MainContext, IWorkspaceEditDto, MainThreadBulkEditsShape, IWorkspaceTextEditDto } from 'vs/workbench/api/common/extHost.protocol';
 import { URI } from 'vs/base/common/uri';
 import { mock } from 'vs/base/test/common/mock';
-import { ExtHostDocumentsAndEditors } from 'vs/workbench/api/common/extHostDocumentsAndEditors';
-import { SingleProxyRPCProtocol, TestRPCProtocol } from 'vs/workbench/api/test/common/testRPCProtocol';
 import { NullLogService } from 'vs/platform/log/common/log';
+import { IWorkspaceEditDto, IWorkspaceTextEditDto, MainContext, MainThreadBulkEditsShape } from 'vs/workbench/api/common/extHost.protocol';
 import { ExtHostBulkEdits } from 'vs/workbench/api/common/extHostBulkEdits';
+import { ExtHostDocumentsAndEditors } from 'vs/workbench/api/common/extHostDocumentsAndEditors';
+import * as extHostTypes from 'vs/workbench/api/common/extHostTypes';
+import { SingleProxyRPCProtocol, TestRPCProtocol } from 'vs/workbench/api/test/common/testRPCProtocol';
 import { nullExtensionDescription } from 'vs/workbench/services/extensions/common/extensions';
 
-suite('ExtHostBulkEdits.applyWorkspaceEdit', () => {
+describe('ExtHostBulkEdits.applyWorkspaceEdit', () => {
 
 	const resource = URI.parse('foo:bar');
 	let bulkEdits: ExtHostBulkEdits;
 	let workspaceResourceEdits: IWorkspaceEditDto;
 
-	setup(() => {
+	beforeEach(() => {
 		workspaceResourceEdits = null!;
 
 		const rpcProtocol = new TestRPCProtocol();

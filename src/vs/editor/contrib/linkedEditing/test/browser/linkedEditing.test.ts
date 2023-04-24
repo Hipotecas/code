@@ -36,13 +36,13 @@ interface TestEditor {
 
 const languageId = 'linkedEditingTestLangage';
 
-suite('linked editing', () => {
+describe('linked editing', () => {
 	let disposables: DisposableStore;
 	let instantiationService: TestInstantiationService;
 	let languageFeaturesService: ILanguageFeaturesService;
 	let languageConfigurationService: ILanguageConfigurationService;
 
-	setup(() => {
+	beforeEach(() => {
 		disposables = new DisposableStore();
 		instantiationService = createCodeEditorServices(disposables);
 		languageFeaturesService = instantiationService.get(ILanguageFeaturesService);
@@ -53,7 +53,7 @@ suite('linked editing', () => {
 		}));
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		disposables.dispose();
 	});
 

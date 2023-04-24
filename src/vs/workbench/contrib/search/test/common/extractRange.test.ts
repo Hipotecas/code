@@ -6,7 +6,7 @@
 import * as assert from 'assert';
 import { extractRangeFromFilter } from 'vs/workbench/contrib/search/common/search';
 
-suite('extractRangeFromFilter', () => {
+describe('extractRangeFromFilter', () => {
 
 	test('basics', async function () {
 		assert.ok(!extractRangeFromFilter(''));

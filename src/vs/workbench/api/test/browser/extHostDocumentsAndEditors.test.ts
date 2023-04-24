@@ -5,15 +5,15 @@
 
 import * as assert from 'assert';
 import { URI } from 'vs/base/common/uri';
+import { NullLogService } from 'vs/platform/log/common/log';
 import { ExtHostDocumentsAndEditors } from 'vs/workbench/api/common/extHostDocumentsAndEditors';
 import { TestRPCProtocol } from 'vs/workbench/api/test/common/testRPCProtocol';
-import { NullLogService } from 'vs/platform/log/common/log';
 
-suite('ExtHostDocumentsAndEditors', () => {
+describe('ExtHostDocumentsAndEditors', () => {
 
 	let editors: ExtHostDocumentsAndEditors;
 
-	setup(function () {
+	beforeEach(function () {
 		editors = new ExtHostDocumentsAndEditors(new TestRPCProtocol(), new NullLogService());
 	});
 

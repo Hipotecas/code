@@ -6,7 +6,7 @@
 import * as assert from 'assert';
 import { buildTestUri, ParsedTestUri, parseTestUri, TestUriType } from 'vs/workbench/contrib/testing/common/testingUri';
 
-suite('Workbench - Testing URIs', () => {
+describe('Workbench - Testing URIs', () => {
 	test('round trip', () => {
 		const uris: ParsedTestUri[] = [
 			{ type: TestUriType.ResultActualOutput, taskIndex: 1, messageIndex: 42, resultId: 'r', testExtId: 't' },

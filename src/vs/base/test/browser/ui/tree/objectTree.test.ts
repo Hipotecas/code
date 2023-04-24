@@ -9,12 +9,12 @@ import { ICompressedTreeNode } from 'vs/base/browser/ui/tree/compressedObjectTre
 import { CompressibleObjectTree, ICompressibleTreeRenderer, ObjectTree } from 'vs/base/browser/ui/tree/objectTree';
 import { ITreeNode, ITreeRenderer } from 'vs/base/browser/ui/tree/tree';
 
-suite('ObjectTree', function () {
-	suite('TreeNavigator', function () {
+describe('ObjectTree', function () {
+	describe('TreeNavigator', function () {
 		let tree: ObjectTree<number>;
 		let filter = (_: number) => true;
 
-		setup(() => {
+		beforeEach(() => {
 			const container = document.createElement('div');
 			container.style.width = '200px';
 			container.style.height = '200px';
@@ -39,7 +39,7 @@ suite('ObjectTree', function () {
 			tree.layout(200);
 		});
 
-		teardown(() => {
+		afterEach(() => {
 			tree.dispose();
 			filter = (_: number) => true;
 		});
@@ -225,7 +225,7 @@ function getRowsTextContent(container: HTMLElement): string[] {
 	return rows.map(row => row.querySelector('.monaco-tl-contents')!.textContent!);
 }
 
-suite('CompressibleObjectTree', function () {
+describe('CompressibleObjectTree', function () {
 
 	class Delegate implements IListVirtualDelegate<number> {
 		getHeight() { return 20; }

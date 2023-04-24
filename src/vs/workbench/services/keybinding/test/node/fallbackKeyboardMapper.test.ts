@@ -4,12 +4,12 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { KeyChord, KeyCode, KeyMod, ScanCode } from 'vs/base/common/keyCodes';
-import { KeyCodeChord, decodeKeybinding, ScanCodeChord, Keybinding } from 'vs/base/common/keybindings';
+import { KeyCodeChord, Keybinding, ScanCodeChord, decodeKeybinding } from 'vs/base/common/keybindings';
 import { OperatingSystem } from 'vs/base/common/platform';
 import { FallbackKeyboardMapper } from 'vs/workbench/services/keybinding/common/fallbackKeyboardMapper';
-import { IResolvedKeybinding, assertResolveKeyboardEvent, assertResolveKeybinding } from 'vs/workbench/services/keybinding/test/node/keyboardMapperTestUtils';
+import { IResolvedKeybinding, assertResolveKeybinding, assertResolveKeyboardEvent } from 'vs/workbench/services/keybinding/test/node/keyboardMapperTestUtils';
 
-suite('keyboardMapper - MAC fallback', () => {
+describe('keyboardMapper - MAC fallback', () => {
 
 	const mapper = new FallbackKeyboardMapper(false, OperatingSystem.Macintosh);
 
@@ -227,7 +227,7 @@ suite('keyboardMapper - MAC fallback', () => {
 	});
 });
 
-suite('keyboardMapper - LINUX fallback', () => {
+describe('keyboardMapper - LINUX fallback', () => {
 
 	const mapper = new FallbackKeyboardMapper(false, OperatingSystem.Linux);
 

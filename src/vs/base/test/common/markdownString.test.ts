@@ -6,7 +6,7 @@
 import * as assert from 'assert';
 import { MarkdownString } from 'vs/base/common/htmlContent';
 
-suite('MarkdownString', () => {
+describe('MarkdownString', () => {
 
 	test('Escape leading whitespace', function () {
 		const mds = new MarkdownString();
@@ -62,9 +62,9 @@ suite('MarkdownString', () => {
 		);
 	});
 
-	suite('ThemeIcons', () => {
+	describe('ThemeIcons', () => {
 
-		suite('Support On', () => {
+		describe('Support On', () => {
 
 			test('appendText', () => {
 				const mds = new MarkdownString(undefined, { supportThemeIcons: true });
@@ -89,7 +89,7 @@ suite('MarkdownString', () => {
 
 		});
 
-		suite('Support Off', () => {
+		describe('Support Off', () => {
 
 			test('appendText', () => {
 				const mds = new MarkdownString(undefined, { supportThemeIcons: false });

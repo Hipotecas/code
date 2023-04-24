@@ -4,15 +4,15 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { Part } from 'vs/workbench/browser/part';
+import { $, append, hide } from 'vs/base/browser/dom';
 import { isEmptyObject } from 'vs/base/common/types';
-import { TestThemeService } from 'vs/platform/theme/test/common/testThemeService';
-import { append, $, hide } from 'vs/base/browser/dom';
-import { TestLayoutService } from 'vs/workbench/test/browser/workbenchTestServices';
 import { StorageScope, StorageTarget } from 'vs/platform/storage/common/storage';
+import { TestThemeService } from 'vs/platform/theme/test/common/testThemeService';
+import { Part } from 'vs/workbench/browser/part';
+import { TestLayoutService } from 'vs/workbench/test/browser/workbenchTestServices';
 import { TestStorageService } from 'vs/workbench/test/common/workbenchTestServices';
 
-suite('Workbench parts', () => {
+describe('Workbench parts', () => {
 
 	class SimplePart extends Part {
 
@@ -103,13 +103,13 @@ suite('Workbench parts', () => {
 	let fixture: HTMLElement;
 	const fixtureId = 'workbench-part-fixture';
 
-	setup(() => {
+	beforeEach(() => {
 		fixture = document.createElement('div');
 		fixture.id = fixtureId;
 		document.body.appendChild(fixture);
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		document.body.removeChild(fixture);
 	});
 

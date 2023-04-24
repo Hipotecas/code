@@ -8,7 +8,7 @@ import { stripComments } from 'vs/base/common/stripComments';
 
 // We use this regular expression quite often to strip comments in JSON files.
 
-suite('Strip Comments', () => {
+describe('Strip Comments', () => {
 	test('Line comment', () => {
 		const content: string = [
 			"{",

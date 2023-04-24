@@ -13,23 +13,23 @@ import { TestInstantiationService } from 'vs/platform/instantiation/test/common/
 import { NullLogService } from 'vs/platform/log/common/log';
 import { IRemoteAuthorityResolverService } from 'vs/platform/remote/common/remoteAuthorityResolver';
 import { IStorageService, StorageScope, StorageTarget } from 'vs/platform/storage/common/storage';
+import { IUriIdentityService } from 'vs/platform/uriIdentity/common/uriIdentity';
+import { UriIdentityService } from 'vs/platform/uriIdentity/common/uriIdentityService';
 import { IWorkspaceContextService } from 'vs/platform/workspace/common/workspace';
 import { IWorkspaceTrustEnablementService, IWorkspaceTrustInfo } from 'vs/platform/workspace/common/workspaceTrust';
 import { Workspace } from 'vs/platform/workspace/test/common/testWorkspace';
 import { Memento } from 'vs/workbench/common/memento';
 import { IWorkbenchEnvironmentService } from 'vs/workbench/services/environment/common/environmentService';
-import { IUriIdentityService } from 'vs/platform/uriIdentity/common/uriIdentity';
-import { UriIdentityService } from 'vs/platform/uriIdentity/common/uriIdentityService';
-import { WorkspaceTrustEnablementService, WorkspaceTrustManagementService, WORKSPACE_TRUST_STORAGE_KEY } from 'vs/workbench/services/workspaces/common/workspaceTrust';
+import { WORKSPACE_TRUST_STORAGE_KEY, WorkspaceTrustEnablementService, WorkspaceTrustManagementService } from 'vs/workbench/services/workspaces/common/workspaceTrust';
 import { TestWorkspaceTrustEnablementService } from 'vs/workbench/services/workspaces/test/common/testWorkspaceTrustService';
 import { TestContextService, TestStorageService } from 'vs/workbench/test/common/workbenchTestServices';
 
-suite('Workspace Trust', () => {
+describe('Workspace Trust', () => {
 	let instantiationService: TestInstantiationService;
 	let configurationService: TestConfigurationService;
 	let environmentService: IWorkbenchEnvironmentService;
 
-	setup(async () => {
+	beforeEach(async () => {
 		instantiationService = new TestInstantiationService();
 
 		configurationService = new TestConfigurationService();
@@ -42,10 +42,10 @@ suite('Workspace Trust', () => {
 		instantiationService.stub(IRemoteAuthorityResolverService, new class extends mock<IRemoteAuthorityResolverService>() { });
 	});
 
-	suite('Enablement', () => {
+	describe('Enablement', () => {
 		let testObject: WorkspaceTrustEnablementService;
 
-		teardown(() => testObject.dispose());
+		afterEach(() => testObject.dispose());
 
 		test('workspace trust enabled', async () => {
 			await configurationService.setUserConfiguration('security', getUserSettings(true, true));
@@ -69,13 +69,13 @@ suite('Workspace Trust', () => {
 		});
 	});
 
-	suite('Management', () => {
+	describe('Management', () => {
 		let testObject: WorkspaceTrustManagementService;
 
 		let storageService: TestStorageService;
 		let workspaceService: TestContextService;
 
-		setup(() => {
+		beforeEach(() => {
 			storageService = new TestStorageService();
 			instantiationService.stub(IStorageService, storageService);
 
@@ -85,7 +85,7 @@ suite('Workspace Trust', () => {
 			instantiationService.stub(IWorkspaceTrustEnablementService, new TestWorkspaceTrustEnablementService());
 		});
 
-		teardown(() => {
+		afterEach(() => {
 			testObject.dispose();
 			Memento.clear(StorageScope.WORKSPACE);
 		});

@@ -7,7 +7,7 @@ import * as assert from 'assert';
 import * as platform from 'vs/base/common/platform';
 import { fixDriveC, getAbsoluteGlob } from 'vs/workbench/services/search/node/ripgrepFileSearch';
 
-suite('RipgrepFileSearch - etc', () => {
+describe('RipgrepFileSearch - etc', () => {
 	function testGetAbsGlob(params: string[]): void {
 		const [folder, glob, expectedResult] = params;
 		assert.strictEqual(fixDriveC(getAbsoluteGlob(folder, glob)), expectedResult, JSON.stringify(params));

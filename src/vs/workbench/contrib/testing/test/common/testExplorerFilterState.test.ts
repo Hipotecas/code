@@ -8,9 +8,9 @@ import { InMemoryStorageService } from 'vs/platform/storage/common/storage';
 import { TestExplorerFilterState, TestFilterTerm } from 'vs/workbench/contrib/testing/common/testExplorerFilterState';
 
 
-suite('TestExplorerFilterState', () => {
+describe('TestExplorerFilterState', () => {
 	let t: TestExplorerFilterState;
-	setup(() => {
+	beforeEach(() => {
 		t = new TestExplorerFilterState(new InMemoryStorageService());
 	});
 

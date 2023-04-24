@@ -4,30 +4,30 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { ITextFileService } from 'vs/workbench/services/textfile/common/textfiles';
-import { IFileService } from 'vs/platform/files/common/files';
-import { TextFileEditorModelManager } from 'vs/workbench/services/textfile/common/textFileEditorModelManager';
-import { Schemas } from 'vs/base/common/network';
-import { ServiceCollection } from 'vs/platform/instantiation/common/serviceCollection';
 import { DisposableStore } from 'vs/base/common/lifecycle';
+import { Schemas } from 'vs/base/common/network';
+import { toResource } from 'vs/base/test/common/utils';
 import { FileService } from 'vs/platform/files/common/fileService';
-import { NullLogService } from 'vs/platform/log/common/log';
-import { TestNativeTextFileServiceWithEncodingOverrides, TestServiceAccessor, workbenchInstantiationService } from 'vs/workbench/test/electron-sandbox/workbenchTestServices';
-import { IWorkingCopyFileService, WorkingCopyFileService } from 'vs/workbench/services/workingCopy/common/workingCopyFileService';
-import { WorkingCopyService } from 'vs/workbench/services/workingCopy/common/workingCopyService';
-import { UriIdentityService } from 'vs/platform/uriIdentity/common/uriIdentityService';
+import { IFileService } from 'vs/platform/files/common/files';
 import { InMemoryFileSystemProvider } from 'vs/platform/files/common/inMemoryFilesystemProvider';
 import { IInstantiationService } from 'vs/platform/instantiation/common/instantiation';
+import { ServiceCollection } from 'vs/platform/instantiation/common/serviceCollection';
+import { NullLogService } from 'vs/platform/log/common/log';
+import { UriIdentityService } from 'vs/platform/uriIdentity/common/uriIdentityService';
 import { TextFileEditorModel } from 'vs/workbench/services/textfile/common/textFileEditorModel';
-import { toResource } from 'vs/base/test/common/utils';
+import { TextFileEditorModelManager } from 'vs/workbench/services/textfile/common/textFileEditorModelManager';
+import { ITextFileService } from 'vs/workbench/services/textfile/common/textfiles';
+import { IWorkingCopyFileService, WorkingCopyFileService } from 'vs/workbench/services/workingCopy/common/workingCopyFileService';
+import { WorkingCopyService } from 'vs/workbench/services/workingCopy/common/workingCopyService';
+import { TestNativeTextFileServiceWithEncodingOverrides, TestServiceAccessor, workbenchInstantiationService } from 'vs/workbench/test/electron-sandbox/workbenchTestServices';
 
-suite('Files - NativeTextFileService', function () {
+describe('Files - NativeTextFileService', function () {
 	const disposables = new DisposableStore();
 
 	let service: ITextFileService;
 	let instantiationService: IInstantiationService;
 
-	setup(() => {
+	beforeEach(() => {
 		instantiationService = workbenchInstantiationService(undefined, disposables);
 
 		const logService = new NullLogService();
@@ -45,7 +45,7 @@ suite('Files - NativeTextFileService', function () {
 		service = instantiationService.createChild(collection).createInstance(TestNativeTextFileServiceWithEncodingOverrides);
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		(<TextFileEditorModelManager>service.files).dispose();
 
 		disposables.clear();

@@ -7,7 +7,7 @@ import * as assert from 'assert';
 import { KeyCode, ScanCode } from 'vs/base/common/keyCodes';
 import { KeyCodeChord, ScanCodeChord } from 'vs/base/common/keybindings';
 
-suite('keyCodes', () => {
+describe('keyCodes', () => {
 
 	test('issue #173325: wrong interpretations of special keys (e.g. [Equal] is mistaken for V)', () => {
 		const a = new KeyCodeChord(true, false, false, false, KeyCode.KeyV);

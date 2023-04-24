@@ -11,7 +11,7 @@ import { MemoryRangeType } from 'vs/workbench/contrib/debug/common/debug';
 import { MemoryRegion } from 'vs/workbench/contrib/debug/common/debugModel';
 import { MockSession } from 'vs/workbench/contrib/debug/test/common/mockDebug';
 
-suite('Debug - Memory', () => {
+describe('Debug - Memory', () => {
 	const dapResponseCommon = {
 		command: 'someCommand',
 		type: 'response',
@@ -20,14 +20,14 @@ suite('Debug - Memory', () => {
 		success: true,
 	};
 
-	suite('MemoryRegion', () => {
+	describe('MemoryRegion', () => {
 		let memory: VSBuffer;
 		let unreadable: number;
 		let invalidateMemoryEmitter: Emitter<DebugProtocol.MemoryEvent>;
 		let session: MockObject<MockSession, 'onDidInvalidateMemory'>;
 		let region: MemoryRegion;
 
-		setup(() => {
+		beforeEach(() => {
 			const memoryBuf = new Uint8Array(1024);
 			for (let i = 0; i < memoryBuf.length; i++) {
 				memoryBuf[i] = i; // will be 0-255
@@ -73,7 +73,7 @@ suite('Debug - Memory', () => {
 			region = new MemoryRegion('ref', session as any);
 		});
 
-		teardown(() => {
+		afterEach(() => {
 			region.dispose();
 		});
 

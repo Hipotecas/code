@@ -4,32 +4,32 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { isWindows } from 'vs/base/common/platform';
 import { insert } from 'vs/base/common/arrays';
+import { VSBuffer, VSBufferReadable, VSBufferReadableStream, bufferToReadable, bufferToStream, streamToBuffer } from 'vs/base/common/buffer';
+import { CancellationToken, CancellationTokenSource } from 'vs/base/common/cancellation';
 import { hash } from 'vs/base/common/hash';
-import { isEqual, joinPath, dirname } from 'vs/base/common/resources';
-import { join } from 'vs/base/common/path';
-import { URI } from 'vs/base/common/uri';
-import { WorkingCopyBackupsModel, hashIdentifier } from 'vs/workbench/services/workingCopy/common/workingCopyBackupService';
-import { createTextModel } from 'vs/editor/test/common/testTextModel';
 import { Schemas } from 'vs/base/common/network';
+import { join } from 'vs/base/common/path';
+import { isWindows } from 'vs/base/common/platform';
+import { dirname, isEqual, joinPath } from 'vs/base/common/resources';
+import { consumeStream } from 'vs/base/common/stream';
+import { URI } from 'vs/base/common/uri';
+import { generateUuid } from 'vs/base/common/uuid';
+import { createTextModel } from 'vs/editor/test/common/testTextModel';
 import { FileService } from 'vs/platform/files/common/fileService';
+import { IFileService } from 'vs/platform/files/common/files';
+import { InMemoryFileSystemProvider } from 'vs/platform/files/common/inMemoryFilesystemProvider';
 import { LogLevel, NullLogService } from 'vs/platform/log/common/log';
+import product from 'vs/platform/product/common/product';
+import { FileUserDataProvider } from 'vs/platform/userData/common/fileUserDataProvider';
+import { INativeWindowConfiguration } from 'vs/platform/window/common/window';
 import { NativeWorkbenchEnvironmentService } from 'vs/workbench/services/environment/electron-sandbox/environmentService';
 import { toBufferOrReadable } from 'vs/workbench/services/textfile/common/textfiles';
-import { IFileService } from 'vs/platform/files/common/files';
-import { NativeWorkingCopyBackupService } from 'vs/workbench/services/workingCopy/electron-sandbox/workingCopyBackupService';
-import { FileUserDataProvider } from 'vs/platform/userData/common/fileUserDataProvider';
-import { bufferToReadable, bufferToStream, streamToBuffer, VSBuffer, VSBufferReadable, VSBufferReadableStream } from 'vs/base/common/buffer';
-import { TestLifecycleService, toTypedWorkingCopyId, toUntypedWorkingCopyId } from 'vs/workbench/test/browser/workbenchTestServices';
-import { CancellationToken, CancellationTokenSource } from 'vs/base/common/cancellation';
 import { IWorkingCopyBackupMeta, IWorkingCopyIdentifier } from 'vs/workbench/services/workingCopy/common/workingCopy';
-import { consumeStream } from 'vs/base/common/stream';
+import { WorkingCopyBackupsModel, hashIdentifier } from 'vs/workbench/services/workingCopy/common/workingCopyBackupService';
+import { NativeWorkingCopyBackupService } from 'vs/workbench/services/workingCopy/electron-sandbox/workingCopyBackupService';
+import { TestLifecycleService, toTypedWorkingCopyId, toUntypedWorkingCopyId } from 'vs/workbench/test/browser/workbenchTestServices';
 import { TestProductService } from 'vs/workbench/test/common/workbenchTestServices';
-import { InMemoryFileSystemProvider } from 'vs/platform/files/common/inMemoryFilesystemProvider';
-import { generateUuid } from 'vs/base/common/uuid';
-import { INativeWindowConfiguration } from 'vs/platform/window/common/window';
-import product from 'vs/platform/product/common/product';
 
 const homeDir = URI.file('home').with({ scheme: Schemas.inMemory });
 const tmpDir = URI.file('tmp').with({ scheme: Schemas.inMemory });
@@ -160,7 +160,7 @@ export class NodeTestWorkingCopyBackupService extends NativeWorkingCopyBackupSer
 	}
 }
 
-suite('WorkingCopyBackupService', () => {
+describe('WorkingCopyBackupService', () => {
 
 	let testDir: URI;
 	let backupHome: URI;
@@ -178,7 +178,7 @@ suite('WorkingCopyBackupService', () => {
 	const fooBarFile = URI.file(isWindows ? 'c:\\Foo Bar' : '/Foo Bar');
 	const untitledFile = URI.from({ scheme: Schemas.untitled, path: 'Untitled-1' });
 
-	setup(async () => {
+	beforeEach(async () => {
 		testDir = URI.file(join(generateUuid(), 'vsctests', 'workingcopybackupservice')).with({ scheme: Schemas.inMemory });
 		backupHome = joinPath(testDir, 'Backups');
 		workspacesJsonPath = joinPath(backupHome, 'workspaces.json');
@@ -192,7 +192,7 @@ suite('WorkingCopyBackupService', () => {
 		return fileService.writeFile(workspacesJsonPath, VSBuffer.fromString(''));
 	});
 
-	suite('hashIdentifier', () => {
+	describe('hashIdentifier', () => {
 		test('should correctly hash the identifier for untitled scheme URIs', () => {
 			const uri = URI.from({ scheme: Schemas.untitled, path: 'Untitled-1' });
 
@@ -296,7 +296,7 @@ suite('WorkingCopyBackupService', () => {
 		});
 	});
 
-	suite('getBackupResource', () => {
+	describe('getBackupResource', () => {
 		test('should get the correct backup path for text files', () => {
 
 			// Format should be: <backupHome>/<workspaceHash>/<scheme>/<filePathHash>
@@ -355,7 +355,7 @@ suite('WorkingCopyBackupService', () => {
 		});
 	});
 
-	suite('backup', () => {
+	describe('backup', () => {
 
 		function toExpectedPreamble(identifier: IWorkingCopyIdentifier, content = '', meta?: object): string {
 			return `${identifier.resource.toString()} ${JSON.stringify({ ...meta, typeId: identifier.typeId })}\n${content}`;
@@ -588,7 +588,7 @@ suite('WorkingCopyBackupService', () => {
 		});
 	});
 
-	suite('discardBackup', () => {
+	describe('discardBackup', () => {
 
 		test('joining', async () => {
 			const identifier = toUntypedWorkingCopyId(fooFile);
@@ -659,7 +659,7 @@ suite('WorkingCopyBackupService', () => {
 		});
 	});
 
-	suite('discardBackups (all)', () => {
+	describe('discardBackups (all)', () => {
 		test('text file', async () => {
 			const backupId1 = toUntypedWorkingCopyId(fooFile);
 			const backupId2 = toUntypedWorkingCopyId(barFile);
@@ -702,7 +702,7 @@ suite('WorkingCopyBackupService', () => {
 		});
 	});
 
-	suite('discardBackups (except some)', () => {
+	describe('discardBackups (except some)', () => {
 		test('text file', async () => {
 			const backupId1 = toUntypedWorkingCopyId(fooFile);
 			const backupId2 = toUntypedWorkingCopyId(barFile);
@@ -749,7 +749,7 @@ suite('WorkingCopyBackupService', () => {
 		});
 	});
 
-	suite('getBackups', () => {
+	describe('getBackups', () => {
 		test('text file', async () => {
 			await Promise.all([
 				service.backup(toUntypedWorkingCopyId(fooFile), bufferToReadable(VSBuffer.fromString('test'))),
@@ -802,7 +802,7 @@ suite('WorkingCopyBackupService', () => {
 		});
 	});
 
-	suite('resolve', () => {
+	describe('resolve', () => {
 
 		interface IBackupTestMetaData extends IWorkingCopyBackupMeta {
 			mtime?: number;
@@ -1153,7 +1153,7 @@ suite('WorkingCopyBackupService', () => {
 		});
 	});
 
-	suite('WorkingCopyBackupsModel', () => {
+	describe('WorkingCopyBackupsModel', () => {
 
 		test('simple', async () => {
 			const model = await WorkingCopyBackupsModel.create(workspaceBackupPath, service.testGetFileService());
@@ -1245,7 +1245,7 @@ suite('WorkingCopyBackupService', () => {
 		});
 	});
 
-	suite('Hash migration', () => {
+	describe('Hash migration', () => {
 
 		test('works', async () => {
 			const fooBackupId = toUntypedWorkingCopyId(fooFile);
@@ -1289,7 +1289,7 @@ suite('WorkingCopyBackupService', () => {
 		});
 	});
 
-	suite('typeId migration', () => {
+	describe('typeId migration', () => {
 
 		test('works (when meta is missing)', async () => {
 			const fooBackupId = toUntypedWorkingCopyId(fooFile);

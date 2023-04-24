@@ -8,7 +8,7 @@ import * as labels from 'vs/base/common/labels';
 import { isMacintosh, isWindows, OperatingSystem } from 'vs/base/common/platform';
 import { URI } from 'vs/base/common/uri';
 
-suite('Labels', () => {
+describe('Labels', () => {
 	(!isWindows ? test.skip : test)('shorten - windows', () => {
 
 		// nothing to shorten

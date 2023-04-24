@@ -3,51 +3,51 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
+import * as assert from 'assert';
+import * as sinon from 'sinon';
+import { CancellationTokenSource } from 'vs/base/common/cancellation';
+import { Event } from 'vs/base/common/event';
 import { DisposableStore } from 'vs/base/common/lifecycle';
-import { IFileService } from 'vs/platform/files/common/files';
-import { FileService } from 'vs/platform/files/common/fileService';
 import { Schemas } from 'vs/base/common/network';
+import { joinPath } from 'vs/base/common/resources';
+import { URI } from 'vs/base/common/uri';
+import { mock } from 'vs/base/test/common/mock';
+import { ITextModelService } from 'vs/editor/common/services/resolverService';
+import { IConfigurationService } from 'vs/platform/configuration/common/configuration';
+import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
+import { IContextKeyService } from 'vs/platform/contextkey/common/contextkey';
+import { IDialogService, IPrompt } from 'vs/platform/dialogs/common/dialogs';
+import { IEnvironmentService } from 'vs/platform/environment/common/environment';
+import { FileService } from 'vs/platform/files/common/fileService';
+import { IFileService } from 'vs/platform/files/common/files';
 import { InMemoryFileSystemProvider } from 'vs/platform/files/common/inMemoryFilesystemProvider';
 import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
+import { MockContextKeyService } from 'vs/platform/keybinding/test/common/mockKeybindingService';
 import { NullLogService } from 'vs/platform/log/common/log';
-import { EditSessionsContribution } from 'vs/workbench/contrib/editSessions/browser/editSessions.contribution';
-import { ProgressService } from 'vs/workbench/services/progress/browser/progressService';
-import { IProgressService } from 'vs/platform/progress/common/progress';
-import { ISCMService } from 'vs/workbench/contrib/scm/common/scm';
-import { SCMService } from 'vs/workbench/contrib/scm/common/scmService';
-import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
-import { IConfigurationService } from 'vs/platform/configuration/common/configuration';
-import { IWorkspaceContextService, WorkbenchState } from 'vs/platform/workspace/common/workspace';
-import { mock } from 'vs/base/test/common/mock';
-import * as sinon from 'sinon';
-import * as assert from 'assert';
-import { ChangeType, FileType, IEditSessionsLogService, IEditSessionsStorageService } from 'vs/workbench/contrib/editSessions/common/editSessions';
-import { URI } from 'vs/base/common/uri';
-import { joinPath } from 'vs/base/common/resources';
 import { INotificationService } from 'vs/platform/notification/common/notification';
 import { TestNotificationService } from 'vs/platform/notification/test/common/testNotificationService';
-import { TestEnvironmentService } from 'vs/workbench/test/browser/workbenchTestServices';
-import { IEnvironmentService } from 'vs/platform/environment/common/environment';
-import { MockContextKeyService } from 'vs/platform/keybinding/test/common/mockKeybindingService';
-import { IContextKeyService } from 'vs/platform/contextkey/common/contextkey';
-import { IThemeService } from 'vs/platform/theme/common/themeService';
-import { Event } from 'vs/base/common/event';
-import { IViewDescriptorService } from 'vs/workbench/common/views';
-import { ITextModelService } from 'vs/editor/common/services/resolverService';
-import { ILifecycleService } from 'vs/workbench/services/lifecycle/common/lifecycle';
-import { IDialogService, IPrompt } from 'vs/platform/dialogs/common/dialogs';
-import { IEditorService, ISaveAllEditorsOptions } from 'vs/workbench/services/editor/common/editorService';
-import { CancellationTokenSource } from 'vs/base/common/cancellation';
+import { IProgressService } from 'vs/platform/progress/common/progress';
 import { ITelemetryService } from 'vs/platform/telemetry/common/telemetry';
 import { NullTelemetryService } from 'vs/platform/telemetry/common/telemetryUtils';
-import { IRemoteAgentService } from 'vs/workbench/services/remote/common/remoteAgentService';
-import { IExtensionService } from 'vs/workbench/services/extensions/common/extensions';
+import { IThemeService } from 'vs/platform/theme/common/themeService';
 import { IEditSessionIdentityService } from 'vs/platform/workspace/common/editSessions';
+import { IWorkspaceContextService, WorkbenchState } from 'vs/platform/workspace/common/workspace';
+import { IViewDescriptorService } from 'vs/workbench/common/views';
+import { EditSessionsContribution } from 'vs/workbench/contrib/editSessions/browser/editSessions.contribution';
+import { ChangeType, FileType, IEditSessionsLogService, IEditSessionsStorageService } from 'vs/workbench/contrib/editSessions/common/editSessions';
+import { ISCMService } from 'vs/workbench/contrib/scm/common/scm';
+import { SCMService } from 'vs/workbench/contrib/scm/common/scmService';
+import { IEditorService, ISaveAllEditorsOptions } from 'vs/workbench/services/editor/common/editorService';
+import { IExtensionService } from 'vs/workbench/services/extensions/common/extensions';
+import { ILifecycleService } from 'vs/workbench/services/lifecycle/common/lifecycle';
+import { ProgressService } from 'vs/workbench/services/progress/browser/progressService';
+import { IRemoteAgentService } from 'vs/workbench/services/remote/common/remoteAgentService';
+import { TestEnvironmentService } from 'vs/workbench/test/browser/workbenchTestServices';
 
 const folderName = 'test-folder';
 const folderUri = URI.file(`/${folderName}`);
 
-suite('Edit session sync', () => {
+describe('Edit session sync', () => {
 	let instantiationService: TestInstantiationService;
 	let editSessionsContribution: EditSessionsContribution;
 	let fileService: FileService;
@@ -55,7 +55,7 @@ suite('Edit session sync', () => {
 
 	const disposables = new DisposableStore();
 
-	suiteSetup(() => {
+	describeSetup(() => {
 		sandbox = sinon.createSandbox();
 
 		instantiationService = new TestInstantiationService();
@@ -141,7 +141,7 @@ suite('Edit session sync', () => {
 		editSessionsContribution = instantiationService.createInstance(EditSessionsContribution);
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		sinon.restore();
 		disposables.clear();
 	});

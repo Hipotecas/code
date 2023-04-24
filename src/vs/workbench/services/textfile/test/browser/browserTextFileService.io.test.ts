@@ -3,31 +3,31 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { workbenchInstantiationService, TestInMemoryFileSystemProvider, TestBrowserTextFileServiceWithEncodingOverrides } from 'vs/workbench/test/browser/workbenchTestServices';
-import { NullLogService } from 'vs/platform/log/common/log';
-import { FileService } from 'vs/platform/files/common/fileService';
-import { Schemas } from 'vs/base/common/network';
-import { ITextFileService } from 'vs/workbench/services/textfile/common/textfiles';
-import { TextFileEditorModelManager } from 'vs/workbench/services/textfile/common/textFileEditorModelManager';
-import { DisposableStore } from 'vs/base/common/lifecycle';
-import { ServiceCollection } from 'vs/platform/instantiation/common/serviceCollection';
-import { IFileService, IStat } from 'vs/platform/files/common/files';
-import { URI } from 'vs/base/common/uri';
-import { join } from 'vs/base/common/path';
-import { UTF16le, detectEncodingByBOMFromBuffer, UTF8_with_bom, UTF16be, toCanonicalName } from 'vs/workbench/services/textfile/common/encoding';
 import { VSBuffer } from 'vs/base/common/buffer';
+import { DisposableStore } from 'vs/base/common/lifecycle';
+import { Schemas } from 'vs/base/common/network';
+import { join } from 'vs/base/common/path';
+import { isWeb } from 'vs/base/common/platform';
+import { URI } from 'vs/base/common/uri';
+import { FileService } from 'vs/platform/files/common/fileService';
+import { IFileService, IStat } from 'vs/platform/files/common/files';
+import { ServiceCollection } from 'vs/platform/instantiation/common/serviceCollection';
+import { NullLogService } from 'vs/platform/log/common/log';
+import { UriIdentityService } from 'vs/platform/uriIdentity/common/uriIdentityService';
+import { UTF16be, UTF16le, UTF8_with_bom, detectEncodingByBOMFromBuffer, toCanonicalName } from 'vs/workbench/services/textfile/common/encoding';
+import { TextFileEditorModelManager } from 'vs/workbench/services/textfile/common/textFileEditorModelManager';
+import { ITextFileService } from 'vs/workbench/services/textfile/common/textfiles';
 import files from 'vs/workbench/services/textfile/test/common/fixtures/files';
 import createSuite from 'vs/workbench/services/textfile/test/common/textFileService.io.test';
-import { isWeb } from 'vs/base/common/platform';
 import { IWorkingCopyFileService, WorkingCopyFileService } from 'vs/workbench/services/workingCopy/common/workingCopyFileService';
 import { WorkingCopyService } from 'vs/workbench/services/workingCopy/common/workingCopyService';
-import { UriIdentityService } from 'vs/platform/uriIdentity/common/uriIdentityService';
+import { TestBrowserTextFileServiceWithEncodingOverrides, TestInMemoryFileSystemProvider, workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
 
-// optimization: we don't need to run this suite in native environment,
+// optimization: we don't need to run this describe in native environment,
 // because we have nativeTextFileService.io.test.ts for it,
 // so our tests run faster
 if (isWeb) {
-	suite('Files - BrowserTextFileService i/o', function () {
+	describe('Files - BrowserTextFileService i/o', function () {
 		const disposables = new DisposableStore();
 
 		let service: ITextFileService;

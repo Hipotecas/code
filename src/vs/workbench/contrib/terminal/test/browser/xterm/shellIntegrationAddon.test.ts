@@ -3,14 +3,14 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { Terminal } from 'xterm';
-import { strictEqual, deepStrictEqual, deepEqual } from 'assert';
+import { deepEqual, deepStrictEqual, strictEqual } from 'assert';
 import * as sinon from 'sinon';
-import { parseKeyValueAssignment, parseMarkSequence, deserializeMessage, ShellIntegrationAddon } from 'vs/platform/terminal/common/xterm/shellIntegrationAddon';
-import { ITerminalCapabilityStore, TerminalCapability } from 'vs/platform/terminal/common/capabilities/capabilities';
 import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
 import { ILogService, NullLogService } from 'vs/platform/log/common/log';
+import { ITerminalCapabilityStore, TerminalCapability } from 'vs/platform/terminal/common/capabilities/capabilities';
+import { ShellIntegrationAddon, deserializeMessage, parseKeyValueAssignment, parseMarkSequence } from 'vs/platform/terminal/common/xterm/shellIntegrationAddon';
 import { writeP } from 'vs/workbench/contrib/terminal/browser/terminalTestHelpers';
+import { Terminal } from 'xterm';
 
 class TestShellIntegrationAddon extends ShellIntegrationAddon {
 	getCommandDetectionMock(terminal: Terminal): sinon.SinonMock {
@@ -25,12 +25,12 @@ class TestShellIntegrationAddon extends ShellIntegrationAddon {
 	}
 }
 
-suite('ShellIntegrationAddon', () => {
+describe('ShellIntegrationAddon', () => {
 	let xterm: Terminal;
 	let shellIntegrationAddon: TestShellIntegrationAddon;
 	let capabilities: ITerminalCapabilityStore;
 
-	setup(() => {
+	beforeEach(() => {
 		xterm = new Terminal({ allowProposedApi: true, cols: 80, rows: 30 });
 		const instantiationService = new TestInstantiationService();
 		instantiationService.stub(ILogService, NullLogService);
@@ -39,7 +39,7 @@ suite('ShellIntegrationAddon', () => {
 		capabilities = shellIntegrationAddon.capabilities;
 	});
 
-	suite('cwd detection', async () => {
+	describe('cwd detection', async () => {
 		test('should activate capability on the cwd sequence (OSC 633 ; P ; Cwd=<cwd> ST)', async () => {
 			strictEqual(capabilities.has(TerminalCapability.CwdDetection), false);
 			await writeP(xterm, 'foo');
@@ -70,7 +70,7 @@ suite('ShellIntegrationAddon', () => {
 			}
 		});
 
-		suite('detect `SetCwd` sequence: `OSC 7; scheme://cwd ST`', async () => {
+		describe('detect `SetCwd` sequence: `OSC 7; scheme://cwd ST`', async () => {
 			test('should accept well-formatted URLs', async () => {
 				type TestCase = [title: string, input: string, expected: string];
 				const cases: TestCase[] = [
@@ -133,7 +133,7 @@ suite('ShellIntegrationAddon', () => {
 		});
 	});
 
-	suite('command tracking', async () => {
+	describe('command tracking', async () => {
 		test('should activate capability on the prompt start sequence (OSC 633 ; A ST)', async () => {
 			strictEqual(capabilities.has(TerminalCapability.CommandDetection), false);
 			await writeP(xterm, 'foo');
@@ -200,7 +200,7 @@ suite('ShellIntegrationAddon', () => {
 			mock.verify();
 		});
 	});
-	suite('BufferMarkCapability', async () => {
+	describe('BufferMarkCapability', async () => {
 		test('SetMark', async () => {
 			strictEqual(capabilities.has(TerminalCapability.BufferMarkDetection), false);
 			await writeP(xterm, 'foo');
@@ -229,7 +229,7 @@ suite('ShellIntegrationAddon', () => {
 			await writeP(xterm, '\x1b]633;SetMark;1;Hidden\x07');
 			strictEqual(capabilities.has(TerminalCapability.BufferMarkDetection), true);
 		});
-		suite('parseMarkSequence', () => {
+		describe('parseMarkSequence', () => {
 			test('basic', async () => {
 				deepEqual(parseMarkSequence(['', '']), { id: undefined, hidden: false });
 			});
@@ -246,7 +246,7 @@ suite('ShellIntegrationAddon', () => {
 	});
 });
 
-suite('deserializeMessage', () => {
+describe('deserializeMessage', () => {
 	// A single literal backslash, in order to avoid confusion about whether we are escaping test data or testing escapes.
 	const Backslash = '\\' as const;
 	const Newline = '\n' as const;

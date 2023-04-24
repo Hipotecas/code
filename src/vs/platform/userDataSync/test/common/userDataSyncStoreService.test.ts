@@ -24,10 +24,10 @@ import { IUserDataSyncStore, IUserDataSyncStoreManagementService, IUserDataSyncS
 import { RequestsSession, UserDataSyncStoreManagementService, UserDataSyncStoreService } from 'vs/platform/userDataSync/common/userDataSyncStoreService';
 import { UserDataSyncClient, UserDataSyncTestServer } from 'vs/platform/userDataSync/test/common/userDataSyncClient';
 
-suite('UserDataSyncStoreManagementService', () => {
+describe('UserDataSyncStoreManagementService', () => {
 	const disposableStore = new DisposableStore();
 
-	teardown(() => disposableStore.clear());
+	afterEach(() => disposableStore.clear());
 
 	test('test sync store is read from settings', async () => {
 		const client = disposableStore.add(new UserDataSyncClient(new UserDataSyncTestServer()));
@@ -70,11 +70,11 @@ suite('UserDataSyncStoreManagementService', () => {
 
 });
 
-suite('UserDataSyncStoreService', () => {
+describe('UserDataSyncStoreService', () => {
 
 	const disposableStore = new DisposableStore();
 
-	teardown(() => disposableStore.clear());
+	afterEach(() => disposableStore.clear());
 
 	test('test read manifest for the first time', async () => {
 		// Setup the client
@@ -462,7 +462,7 @@ suite('UserDataSyncStoreService', () => {
 
 });
 
-suite('UserDataSyncRequestsSession', () => {
+describe('UserDataSyncRequestsSession', () => {
 
 	const requestService: IRequestService = {
 		_serviceBrand: undefined,

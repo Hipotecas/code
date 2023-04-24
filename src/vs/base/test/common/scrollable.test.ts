@@ -26,7 +26,7 @@ class TestSmoothScrollingOperation extends SmoothScrollingOperation {
 
 }
 
-suite('SmoothScrollingOperation', () => {
+describe('SmoothScrollingOperation', () => {
 
 	const VIEWPORT_HEIGHT = 800;
 	const ANIMATION_DURATION = 125;

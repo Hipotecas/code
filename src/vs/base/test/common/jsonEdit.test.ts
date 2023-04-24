@@ -6,7 +6,7 @@ import * as assert from 'assert';
 import { removeProperty, setProperty } from 'vs/base/common/jsonEdit';
 import { Edit, FormattingOptions } from 'vs/base/common/jsonFormatter';
 
-suite('JSON - edits', () => {
+describe('JSON - edits', () => {
 
 	function assertEdit(content: string, edits: Edit[], expected: string) {
 		assert(edits);

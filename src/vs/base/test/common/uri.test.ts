@@ -7,7 +7,7 @@ import { isWindows } from 'vs/base/common/platform';
 import { URI, UriComponents } from 'vs/base/common/uri';
 
 
-suite('URI', () => {
+describe('URI', () => {
 	test('file#toString', () => {
 		assert.strictEqual(URI.file('c:/win/path').toString(), 'file:///c%3A/win/path');
 		assert.strictEqual(URI.file('C:/win/path').toString(), 'file:///c%3A/win/path');

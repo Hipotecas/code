@@ -11,13 +11,13 @@ import { LRUMemory, Memory, NoMemory, PrefixMemory } from 'vs/editor/contrib/sug
 import { createSuggestItem } from 'vs/editor/contrib/suggest/test/browser/completionModel.test';
 import { createTextModel } from 'vs/editor/test/common/testTextModel';
 
-suite('SuggestMemories', function () {
+describe('SuggestMemories', function () {
 
 	let pos: IPosition;
 	let buffer: ITextModel;
 	let items: CompletionItem[];
 
-	setup(function () {
+	beforeEach(function () {
 		pos = { lineNumber: 1, column: 1 };
 		buffer = createTextModel('This is some text.\nthis.\nfoo: ,');
 		items = [
@@ -26,7 +26,7 @@ suite('SuggestMemories', function () {
 		];
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		buffer.dispose();
 	});
 

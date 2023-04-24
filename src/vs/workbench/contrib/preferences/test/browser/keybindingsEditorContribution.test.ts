@@ -6,7 +6,7 @@
 import * as assert from 'assert';
 import { KeybindingEditorDecorationsRenderer } from 'vs/workbench/contrib/preferences/browser/keybindingsEditorContribution';
 
-suite('KeybindingsEditorContribution', () => {
+describe('KeybindingsEditorContribution', () => {
 
 	function assertUserSettingsFuzzyEquals(a: string, b: string, expected: boolean): void {
 		const actual = KeybindingEditorDecorationsRenderer._userSettingsFuzzyEquals(a, b);

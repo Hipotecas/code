@@ -6,18 +6,18 @@
 import * as assert from 'assert';
 import { $, asCssValueWithDefault, h, multibyteAwareBtoa } from 'vs/base/browser/dom';
 
-suite('dom', () => {
+describe('dom', () => {
 	test('hasClass', () => {
 
 		const element = document.createElement('div');
 		element.className = 'foobar boo far';
 
-		assert(element.classList.contains('foobar'));
-		assert(element.classList.contains('boo'));
-		assert(element.classList.contains('far'));
-		assert(!element.classList.contains('bar'));
-		assert(!element.classList.contains('foo'));
-		assert(!element.classList.contains(''));
+		expect(element.classList.contains('foobar')).toBe(true)
+		expect(element.classList.contains('boo')).toBe(true)
+		expect(element.classList.contains('far')).toBe(true)
+		expect(!element.classList.contains('bar')).toBe(true)
+		expect(!element.classList.contains('foo')).toBe(true)
+		expect(!element.classList.contains('')).toBe(true)
 	});
 
 	test('removeClass', () => {
@@ -26,30 +26,30 @@ suite('dom', () => {
 		element.className = 'foobar boo far';
 
 		element.classList.remove('boo');
-		assert(element.classList.contains('far'));
-		assert(!element.classList.contains('boo'));
-		assert(element.classList.contains('foobar'));
+		expect(element.classList.contains('far')).toBe(true)
+		expect(!element.classList.contains('boo')).toBe(true)
+		expect(element.classList.contains('foobar')).toBe(true)
 		assert.strictEqual(element.className, 'foobar far');
 
 		element = document.createElement('div');
 		element.className = 'foobar boo far';
 
 		element.classList.remove('far');
-		assert(!element.classList.contains('far'));
-		assert(element.classList.contains('boo'));
-		assert(element.classList.contains('foobar'));
+		expect(!element.classList.contains('far')).toBe(true)
+		expect(element.classList.contains('boo')).toBe(true)
+		expect(element.classList.contains('foobar')).toBe(true)
 		assert.strictEqual(element.className, 'foobar boo');
 
 		element.classList.remove('boo');
-		assert(!element.classList.contains('far'));
-		assert(!element.classList.contains('boo'));
-		assert(element.classList.contains('foobar'));
+		expect(!element.classList.contains('far')).toBe(true)
+		expect(!element.classList.contains('boo')).toBe(true)
+		expect(element.classList.contains('foobar')).toBe(true)
 		assert.strictEqual(element.className, 'foobar');
 
 		element.classList.remove('foobar');
-		assert(!element.classList.contains('far'));
-		assert(!element.classList.contains('boo'));
-		assert(!element.classList.contains('foobar'));
+		expect(!element.classList.contains('far')).toBe(true)
+		expect(!element.classList.contains('boo')).toBe(true)
+		expect(!element.classList.contains('foobar')).toBe(true)
 		assert.strictEqual(element.className, '');
 	});
 
@@ -59,16 +59,16 @@ suite('dom', () => {
 		element.classList.add('foo-bar');
 		element.classList.add('bar');
 
-		assert(element.classList.contains('foo-bar'));
-		assert(element.classList.contains('bar'));
+		expect(element.classList.contains('foo-bar')).toBe(true)
+		expect(element.classList.contains('bar')).toBe(true)
 
 		element.classList.remove('bar');
-		assert(element.classList.contains('foo-bar'));
-		assert(!element.classList.contains('bar'));
+		expect(element.classList.contains('foo-bar')).toBe(true)
+		expect(!element.classList.contains('bar')).toBe(true)
 
 		element.classList.remove('foo-bar');
-		assert(!element.classList.contains('foo-bar'));
-		assert(!element.classList.contains('bar'));
+		expect(!element.classList.contains('foo-bar')).toBe(true)
+		expect(!element.classList.contains('bar')).toBe(true)
 	});
 
 	test('multibyteAwareBtoa', () => {
@@ -77,27 +77,27 @@ suite('dom', () => {
 		assert.ok(multibyteAwareBtoa(new Array(100000).fill('vs').join('')).length > 0); // https://github.com/microsoft/vscode/issues/112013
 	});
 
-	suite('$', () => {
+	describe('$', () => {
 		test('should build simple nodes', () => {
 			const div = $('div');
-			assert(div);
-			assert(div instanceof HTMLElement);
+			expect(div).toBeTruthy()
+			expect(div instanceof HTMLElement).toBe(true)
 			assert.strictEqual(div.tagName, 'DIV');
-			assert(!div.firstChild);
+			expect(!div.firstChild).toBe(true)
 		});
 
 		test('should buld nodes with id', () => {
 			const div = $('div#foo');
-			assert(div);
-			assert(div instanceof HTMLElement);
+			expect(div).toBeTruthy()
+			expect(div instanceof HTMLElement).toBe(true)
 			assert.strictEqual(div.tagName, 'DIV');
 			assert.strictEqual(div.id, 'foo');
 		});
 
 		test('should buld nodes with class-name', () => {
 			const div = $('div.foo');
-			assert(div);
-			assert(div instanceof HTMLElement);
+			expect(div).toBeTruthy()
+			expect(div instanceof HTMLElement).toBe(true)
 			assert.strictEqual(div.tagName, 'DIV');
 			assert.strictEqual(div.className, 'foo');
 		});
@@ -129,18 +129,18 @@ suite('dom', () => {
 		});
 	});
 
-	suite('h', () => {
+	describe('h', () => {
 		test('should build simple nodes', () => {
 			const div = h('div');
-			assert(div.root instanceof HTMLElement);
+			expect(div.root instanceof HTMLElement).toBe(true)
 			assert.strictEqual(div.root.tagName, 'DIV');
 
 			const span = h('span');
-			assert(span.root instanceof HTMLElement);
+			expect(span.root instanceof HTMLElement).toBe(true)
 			assert.strictEqual(span.root.tagName, 'SPAN');
 
 			const img = h('img');
-			assert(img.root instanceof HTMLElement);
+			expect(img.root instanceof HTMLElement).toBe(true)
 			assert.strictEqual(img.root.tagName, 'IMG');
 		});
 
@@ -152,22 +152,22 @@ suite('dom', () => {
 			const divClass = h('div.a');
 			assert.strictEqual(divClass.root.tagName, 'DIV');
 			assert.strictEqual(divClass.root.classList.length, 1);
-			assert(divClass.root.classList.contains('a'));
+			expect(divClass.root.classList.contains('a')).toBe(true)
 
 			const divClasses = h('div.a.b.c');
 			assert.strictEqual(divClasses.root.tagName, 'DIV');
 			assert.strictEqual(divClasses.root.classList.length, 3);
-			assert(divClasses.root.classList.contains('a'));
-			assert(divClasses.root.classList.contains('b'));
-			assert(divClasses.root.classList.contains('c'));
+			expect(divClasses.root.classList.contains('a')).toBe(true)
+			expect(divClasses.root.classList.contains('b')).toBe(true)
+			expect(divClasses.root.classList.contains('c')).toBe(true)
 
 			const divAll = h('div#myid.a.b.c');
 			assert.strictEqual(divAll.root.tagName, 'DIV');
 			assert.strictEqual(divAll.root.id, 'myid');
 			assert.strictEqual(divAll.root.classList.length, 3);
-			assert(divAll.root.classList.contains('a'));
-			assert(divAll.root.classList.contains('b'));
-			assert(divAll.root.classList.contains('c'));
+			expect(divAll.root.classList.contains('a')).toBe(true)
+			expect(divAll.root.classList.contains('b')).toBe(true)
+			expect(divAll.root.classList.contains('c')).toBe(true)
 
 			const spanId = h('span#myid');
 			assert.strictEqual(spanId.root.tagName, 'SPAN');
@@ -176,22 +176,22 @@ suite('dom', () => {
 			const spanClass = h('span.a');
 			assert.strictEqual(spanClass.root.tagName, 'SPAN');
 			assert.strictEqual(spanClass.root.classList.length, 1);
-			assert(spanClass.root.classList.contains('a'));
+			expect(spanClass.root.classList.contains('a')).toBe(true)
 
 			const spanClasses = h('span.a.b.c');
 			assert.strictEqual(spanClasses.root.tagName, 'SPAN');
 			assert.strictEqual(spanClasses.root.classList.length, 3);
-			assert(spanClasses.root.classList.contains('a'));
-			assert(spanClasses.root.classList.contains('b'));
-			assert(spanClasses.root.classList.contains('c'));
+			expect(spanClasses.root.classList.contains('a')).toBe(true)
+			expect(spanClasses.root.classList.contains('b')).toBe(true)
+			expect(spanClasses.root.classList.contains('c')).toBe(true)
 
 			const spanAll = h('span#myid.a.b.c');
 			assert.strictEqual(spanAll.root.tagName, 'SPAN');
 			assert.strictEqual(spanAll.root.id, 'myid');
 			assert.strictEqual(spanAll.root.classList.length, 3);
-			assert(spanAll.root.classList.contains('a'));
-			assert(spanAll.root.classList.contains('b'));
-			assert(spanAll.root.classList.contains('c'));
+			expect(spanAll.root.classList.contains('a')).toBe(true)
+			expect(spanAll.root.classList.contains('b')).toBe(true)
+			expect(spanAll.root.classList.contains('c')).toBe(true)
 		});
 
 		test('should implicitly handle ids and classes', () => {
@@ -202,22 +202,22 @@ suite('dom', () => {
 			const divClass = h('.a');
 			assert.strictEqual(divClass.root.tagName, 'DIV');
 			assert.strictEqual(divClass.root.classList.length, 1);
-			assert(divClass.root.classList.contains('a'));
+			expect(divClass.root.classList.contains('a')).toBe(true)
 
 			const divClasses = h('.a.b.c');
 			assert.strictEqual(divClasses.root.tagName, 'DIV');
 			assert.strictEqual(divClasses.root.classList.length, 3);
-			assert(divClasses.root.classList.contains('a'));
-			assert(divClasses.root.classList.contains('b'));
-			assert(divClasses.root.classList.contains('c'));
+			expect(divClasses.root.classList.contains('a')).toBe(true)
+			expect(divClasses.root.classList.contains('b')).toBe(true)
+			expect(divClasses.root.classList.contains('c')).toBe(true)
 
 			const divAll = h('#myid.a.b.c');
 			assert.strictEqual(divAll.root.tagName, 'DIV');
 			assert.strictEqual(divAll.root.id, 'myid');
 			assert.strictEqual(divAll.root.classList.length, 3);
-			assert(divAll.root.classList.contains('a'));
-			assert(divAll.root.classList.contains('b'));
-			assert(divAll.root.classList.contains('c'));
+			expect(divAll.root.classList.contains('a')).toBe(true)
+			expect(divAll.root.classList.contains('b')).toBe(true)
+			expect(divAll.root.classList.contains('c')).toBe(true)
 		});
 
 		test('should handle @ identifiers', () => {
@@ -243,13 +243,13 @@ suite('dom', () => {
 			assert.strictEqual(implicitClass.root, implicitClass.el);
 			assert.strictEqual(implicitClass.el.tagName, 'DIV');
 			assert.strictEqual(implicitClass.root.classList.length, 1);
-			assert(implicitClass.root.classList.contains('a'));
+			expect(implicitClass.root.classList.contains('a')).toBe(true)
 
 			const explicitClass = h('div.a@el');
 			assert.strictEqual(explicitClass.root, explicitClass.el);
 			assert.strictEqual(explicitClass.el.tagName, 'DIV');
 			assert.strictEqual(explicitClass.root.classList.length, 1);
-			assert(explicitClass.root.classList.contains('a'));
+			expect(explicitClass.root.classList.contains('a')).toBe(true)
 		});
 	});
 

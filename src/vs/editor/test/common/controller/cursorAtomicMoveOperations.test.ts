@@ -3,10 +3,9 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import * as assert from 'assert';
 import { AtomicTabMoveOperations, Direction } from 'vs/editor/common/cursor/cursorAtomicMoveOperations';
 
-suite('Cursor move command test', () => {
+describe('Cursor move command test', () => {
 
 	test('Test whitespaceVisibleColumn', () => {
 		const testCases = [
@@ -77,7 +76,7 @@ suite('Cursor move command test', () => {
 					testCase.expectedPrevTabStopVisibleColumn[position],
 					testCase.expectedVisibleColumn[position]
 				];
-				assert.deepStrictEqual(actual, expected);
+        expect(actual).toStrictEqual(expected);
 			}
 		}
 	});
@@ -145,7 +144,7 @@ suite('Cursor move command test', () => {
 			]) {
 
 				const actual = expected.map((_, i) => AtomicTabMoveOperations.atomicPosition(testCase.lineContent, i, testCase.tabSize, direction));
-				assert.deepStrictEqual(actual, expected);
+        expect(actual).toStrictEqual(expected)
 			}
 		}
 	});

@@ -98,7 +98,7 @@ function compareItemsByScore<T>(itemA: T, itemB: T, query: string, allowNonConti
 
 const NullAccessor = new NullAccessorClass();
 
-suite('Fuzzy Scorer', () => {
+describe('Fuzzy Scorer', () => {
 
 	test('score (fuzzy)', function () {
 		const target = 'HeLlo-World';

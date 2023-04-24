@@ -3,9 +3,9 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import * as assert from 'assert';
-import { ITextSearchPreviewOptions, OneLineRange, TextSearchMatch, SearchRange } from 'vs/workbench/services/search/common/search';
+import { ITextSearchPreviewOptions, OneLineRange, SearchRange, TextSearchMatch } from 'vs/workbench/services/search/common/search';
 
-suite('TextSearchResult', () => {
+describe('TextSearchResult', () => {
 
 	const previewOptions1: ITextSearchPreviewOptions = {
 		matchLines: 1,

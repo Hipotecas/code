@@ -4,29 +4,29 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
+import { DisposableStore } from 'vs/base/common/lifecycle';
 import { URI } from 'vs/base/common/uri';
-import { workbenchInstantiationService, TestEditorService } from 'vs/workbench/test/browser/workbenchTestServices';
-import { IModelService } from 'vs/editor/common/services/model';
-import { ILanguageService } from 'vs/editor/common/languages/language';
-import { LanguageService } from 'vs/editor/common/services/languageService';
-import { RangeHighlightDecorations } from 'vs/workbench/browser/codeeditor';
-import { TextModel } from 'vs/editor/common/model/textModel';
-import { createTestCodeEditor } from 'vs/editor/test/browser/testCodeEditor';
-import { Range, IRange } from 'vs/editor/common/core/range';
-import { Position } from 'vs/editor/common/core/position';
-import { IConfigurationService } from 'vs/platform/configuration/common/configuration';
-import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
-import { ModelService } from 'vs/editor/common/services/modelService';
 import { CoreNavigationCommands } from 'vs/editor/browser/coreCommands';
 import { ICodeEditor } from 'vs/editor/browser/editorBrowser';
-import { IEditorService } from 'vs/workbench/services/editor/common/editorService';
+import { Position } from 'vs/editor/common/core/position';
+import { IRange, Range } from 'vs/editor/common/core/range';
+import { ILanguageService } from 'vs/editor/common/languages/language';
+import { TextModel } from 'vs/editor/common/model/textModel';
+import { LanguageService } from 'vs/editor/common/services/languageService';
+import { IModelService } from 'vs/editor/common/services/model';
+import { ModelService } from 'vs/editor/common/services/modelService';
+import { createTestCodeEditor } from 'vs/editor/test/browser/testCodeEditor';
 import { createTextModel } from 'vs/editor/test/common/testTextModel';
+import { IConfigurationService } from 'vs/platform/configuration/common/configuration';
+import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
+import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
 import { IThemeService } from 'vs/platform/theme/common/themeService';
 import { TestThemeService } from 'vs/platform/theme/test/common/testThemeService';
-import { DisposableStore } from 'vs/base/common/lifecycle';
+import { RangeHighlightDecorations } from 'vs/workbench/browser/codeeditor';
+import { IEditorService } from 'vs/workbench/services/editor/common/editorService';
+import { TestEditorService, workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
 
-suite('Editor - Range decorations', () => {
+describe('Editor - Range decorations', () => {
 
 	let disposables: DisposableStore;
 	let instantiationService: TestInstantiationService;
@@ -36,7 +36,7 @@ suite('Editor - Range decorations', () => {
 	let testObject: RangeHighlightDecorations;
 	const modelsToDispose: TextModel[] = [];
 
-	setup(() => {
+	beforeEach(() => {
 		disposables = new DisposableStore();
 		instantiationService = <TestInstantiationService>workbenchInstantiationService(undefined, disposables);
 		instantiationService.stub(IEditorService, new TestEditorService());
@@ -52,7 +52,7 @@ suite('Editor - Range decorations', () => {
 		testObject = instantiationService.createInstance(RangeHighlightDecorations);
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		codeEditor.dispose();
 		modelsToDispose.forEach(model => model.dispose());
 		disposables.dispose();

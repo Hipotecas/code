@@ -5,7 +5,7 @@
 import * as assert from 'assert';
 import * as Formatter from 'vs/base/common/jsonFormatter';
 
-suite('JSON - formatter', () => {
+describe('JSON - formatter', () => {
 
 	function format(content: string, expected: string, insertSpaces = true) {
 		let range: Formatter.Range | undefined = undefined;

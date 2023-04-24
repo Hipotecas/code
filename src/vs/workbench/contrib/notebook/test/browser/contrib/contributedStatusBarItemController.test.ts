@@ -13,10 +13,10 @@ import { INotebookCellStatusBarService } from 'vs/workbench/contrib/notebook/com
 import { CellKind, INotebookCellStatusBarItemProvider } from 'vs/workbench/contrib/notebook/common/notebookCommon';
 import { withTestNotebook } from 'vs/workbench/contrib/notebook/test/browser/testNotebookEditor';
 
-suite('Notebook Statusbar', () => {
+describe('Notebook Statusbar', () => {
 	const testDisposables = new DisposableStore();
 
-	teardown(() => {
+	afterEach(() => {
 		testDisposables.clear();
 	});
 

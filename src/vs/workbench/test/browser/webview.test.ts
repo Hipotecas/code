@@ -6,7 +6,7 @@
 import * as assert from 'assert';
 import { parentOriginHash } from 'vs/workbench/browser/iframe';
 
-suite('parentOriginHash', () => {
+describe('parentOriginHash', () => {
 
 	test('localhost 1', async () => {
 		const hash = await parentOriginHash('http://localhost:9888', '123456');

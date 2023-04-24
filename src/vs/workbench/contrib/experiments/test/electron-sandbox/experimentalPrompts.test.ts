@@ -5,8 +5,9 @@
 
 import * as assert from 'assert';
 import { Emitter } from 'vs/base/common/event';
+import { TestCommandService } from 'vs/editor/test/browser/editorTestServices';
+import { ICommandService } from 'vs/platform/commands/common/commands';
 import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
-import { ILifecycleService } from 'vs/workbench/services/lifecycle/common/lifecycle';
 import { INotificationService, IPromptChoice, IPromptOptions, Severity } from 'vs/platform/notification/common/notification';
 import { TestNotificationService } from 'vs/platform/notification/test/common/testNotificationService';
 import { IStorageService, StorageScope } from 'vs/platform/storage/common/storage';
@@ -15,11 +16,10 @@ import { NullTelemetryService } from 'vs/platform/telemetry/common/telemetryUtil
 import { ExperimentalPrompts } from 'vs/workbench/contrib/experiments/browser/experimentalPrompt';
 import { ExperimentActionType, ExperimentState, IExperiment, IExperimentActionPromptProperties, IExperimentService, LocalizedPromptText } from 'vs/workbench/contrib/experiments/common/experimentService';
 import { TestExperimentService } from 'vs/workbench/contrib/experiments/test/electron-sandbox/experimentService.test';
+import { ILifecycleService } from 'vs/workbench/services/lifecycle/common/lifecycle';
 import { TestLifecycleService } from 'vs/workbench/test/browser/workbenchTestServices';
-import { TestCommandService } from 'vs/editor/test/browser/editorTestServices';
-import { ICommandService } from 'vs/platform/commands/common/commands';
 
-suite('Experimental Prompts', () => {
+describe('Experimental Prompts', () => {
 	let instantiationService: TestInstantiationService;
 	let experimentService: TestExperimentService;
 	let experimentalPrompt: ExperimentalPrompts;
@@ -50,7 +50,7 @@ suite('Experimental Prompts', () => {
 		}
 	};
 
-	suiteSetup(() => {
+	describeSetup(() => {
 		instantiationService = new TestInstantiationService();
 
 		instantiationService.stub(ILifecycleService, new TestLifecycleService());
@@ -60,7 +60,7 @@ suite('Experimental Prompts', () => {
 
 	});
 
-	setup(() => {
+	beforeEach(() => {
 		storageData = {};
 		instantiationService.stub(IStorageService, <Partial<IStorageService>>{
 			get: (a: string, b: StorageScope, c?: string) => a === 'experiments.experiment1' ? JSON.stringify(storageData) : c,
@@ -78,7 +78,7 @@ suite('Experimental Prompts', () => {
 		instantiationService.stub(ICommandService, commandService);
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		if (experimentService) {
 			experimentService.dispose();
 		}

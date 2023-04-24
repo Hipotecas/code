@@ -7,14 +7,14 @@ import * as assert from 'assert';
 import { renderFormattedText, renderText } from 'vs/base/browser/formattedTextRenderer';
 import { DisposableStore } from 'vs/base/common/lifecycle';
 
-suite('FormattedTextRenderer', () => {
+describe('FormattedTextRenderer', () => {
 	const store = new DisposableStore();
 
-	setup(() => {
+	beforeEach(() => {
 		store.clear();
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		store.clear();
 	});
 

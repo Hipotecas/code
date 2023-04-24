@@ -20,7 +20,7 @@ import { IWorkspace, IWorkspaceContextService, toWorkspaceFolder } from 'vs/plat
 import { Workspace } from 'vs/platform/workspace/test/common/testWorkspace';
 import { toWorkspaceFolders } from 'vs/platform/workspaces/common/workspaces';
 
-suite('Snippet Variables Resolver', function () {
+describe('Snippet Variables Resolver', function () {
 
 	const labelService = new class extends mock<ILabelService>() {
 		override getUriLabel(uri: URI) {
@@ -31,7 +31,7 @@ suite('Snippet Variables Resolver', function () {
 	let model: TextModel;
 	let resolver: VariableResolver;
 
-	setup(function () {
+	beforeEach(function () {
 		model = createTextModel([
 			'this is line one',
 			'this is line two',
@@ -44,7 +44,7 @@ suite('Snippet Variables Resolver', function () {
 		]);
 	});
 
-	teardown(function () {
+	afterEach(function () {
 		model.dispose();
 	});
 

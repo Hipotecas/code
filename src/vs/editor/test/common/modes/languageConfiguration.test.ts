@@ -8,7 +8,7 @@ import { StandardTokenType } from 'vs/editor/common/encodedTokenAttributes';
 import { StandardAutoClosingPairConditional } from 'vs/editor/common/languages/languageConfiguration';
 import { TestLanguageConfigurationService } from 'vs/editor/test/common/modes/testLanguageConfigurationService';
 
-suite('StandardAutoClosingPairConditional', () => {
+describe('StandardAutoClosingPairConditional', () => {
 
 	test('Missing notIn', () => {
 		const v = new StandardAutoClosingPairConditional({ open: '{', close: '}' });

@@ -11,7 +11,7 @@ import { canceled } from 'vs/base/common/errors';
 import { Emitter, Event } from 'vs/base/common/event';
 import { isEqual } from 'vs/base/common/resources';
 import { URI } from 'vs/base/common/uri';
-import { BufferReader, BufferWriter, ClientConnectionEvent, deserialize, IChannel, IMessagePassingProtocol, IPCClient, IPCServer, IServerChannel, ProxyChannel, serialize } from 'vs/base/parts/ipc/common/ipc';
+import { BufferReader, BufferWriter, ClientConnectionEvent, IChannel, IMessagePassingProtocol, IPCClient, IPCServer, IServerChannel, ProxyChannel, deserialize, serialize } from 'vs/base/parts/ipc/common/ipc';
 
 class QueueProtocol implements IMessagePassingProtocol {
 
@@ -211,7 +211,7 @@ class TestChannelClient implements ITestService {
 	}
 }
 
-suite('Base IPC', function () {
+describe('Base IPC', function () {
 
 	test('createProtocolPair', async function () {
 		const [clientProtocol, serverProtocol] = createProtocolPair();
@@ -229,13 +229,13 @@ suite('Base IPC', function () {
 		assert.strictEqual(b3, b4);
 	});
 
-	suite('one to one', function () {
+	describe('one to one', function () {
 		let server: IPCServer;
 		let client: IPCClient;
 		let service: TestService;
 		let ipcService: ITestService;
 
-		setup(function () {
+		beforeEach(function () {
 			service = new TestService();
 			const testServer = new TestIPCServer();
 			server = testServer;
@@ -246,7 +246,7 @@ suite('Base IPC', function () {
 			ipcService = new TestChannelClient(client.getChannel(TestChannelId));
 		});
 
-		teardown(function () {
+		afterEach(function () {
 			client.dispose();
 			server.dispose();
 		});
@@ -270,7 +270,7 @@ suite('Base IPC', function () {
 				await ipcService.neverCompleteCT(CancellationToken.Cancelled);
 				return assert.fail('should not reach here');
 			} catch (err) {
-				return assert(err.message === 'Canceled');
+				return expect(err.message === 'Canceled').toBe(true);
 			}
 		});
 
@@ -278,7 +278,7 @@ suite('Base IPC', function () {
 			const cts = new CancellationTokenSource();
 			const promise = ipcService.neverCompleteCT(cts.token).then(
 				_ => assert.fail('should not reach here'),
-				err => assert(err.message === 'Canceled')
+				err => expect(err.message === 'Canceled').toBe(true)
 			);
 
 			cts.cancel();
@@ -290,7 +290,7 @@ suite('Base IPC', function () {
 			const cts = new CancellationTokenSource();
 			const promise = ipcService.neverCompleteCT(cts.token).then(
 				_ => assert.fail('should not reach here'),
-				err => assert(err.message === 'Canceled')
+				err => expect(err.message === 'Canceled').toBe(true)
 			);
 
 			setTimeout(() => cts.cancel());
@@ -337,13 +337,13 @@ suite('Base IPC', function () {
 		});
 	});
 
-	suite('one to one (proxy)', function () {
+	describe('one to one (proxy)', function () {
 		let server: IPCServer;
 		let client: IPCClient;
 		let service: TestService;
 		let ipcService: ITestService;
 
-		setup(function () {
+		beforeEach(function () {
 			service = new TestService();
 			const testServer = new TestIPCServer();
 			server = testServer;
@@ -354,7 +354,7 @@ suite('Base IPC', function () {
 			ipcService = ProxyChannel.toService(client.getChannel(TestChannelId));
 		});
 
-		teardown(function () {
+		afterEach(function () {
 			client.dispose();
 			server.dispose();
 		});
@@ -403,13 +403,13 @@ suite('Base IPC', function () {
 		});
 	});
 
-	suite('one to one (proxy, extra context)', function () {
+	describe('one to one (proxy, extra context)', function () {
 		let server: IPCServer;
 		let client: IPCClient;
 		let service: TestService;
 		let ipcService: ITestService;
 
-		setup(function () {
+		beforeEach(function () {
 			service = new TestService();
 			const testServer = new TestIPCServer();
 			server = testServer;
@@ -420,7 +420,7 @@ suite('Base IPC', function () {
 			ipcService = ProxyChannel.toService(client.getChannel(TestChannelId), { context: 'Super Context' });
 		});
 
-		teardown(function () {
+		afterEach(function () {
 			client.dispose();
 			server.dispose();
 		});
@@ -431,7 +431,7 @@ suite('Base IPC', function () {
 		});
 	});
 
-	suite('one to many', function () {
+	describe('one to many', function () {
 		test('all clients get pinged', async function () {
 			const service = new TestService();
 			const channel = new TestChannel(service);
@@ -452,8 +452,8 @@ suite('Base IPC', function () {
 			service.ping('hello');
 
 			await timeout(1);
-			assert(client1GotPinged, 'client 1 got pinged');
-			assert(client2GotPinged, 'client 2 got pinged');
+			expect(client1GotPinged, 'client 1 got pinged').toBe(true);
+			expect(client2GotPinged, 'client 2 got pinged').toBe(true);
 
 			client1.dispose();
 			client2.dispose();

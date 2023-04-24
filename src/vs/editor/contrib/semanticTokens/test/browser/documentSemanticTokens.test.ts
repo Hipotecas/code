@@ -4,42 +4,42 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { Emitter, Event } from 'vs/base/common/event';
-import { Range } from 'vs/editor/common/core/range';
-import { ITextModel } from 'vs/editor/common/model';
-import { ModelService } from 'vs/editor/common/services/modelService';
-import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
-import { TestColorTheme, TestThemeService } from 'vs/platform/theme/test/common/testThemeService';
-import { NullLogService } from 'vs/platform/log/common/log';
-import { UndoRedoService } from 'vs/platform/undoRedo/common/undoRedoService';
-import { TestDialogService } from 'vs/platform/dialogs/test/common/testDialogService';
-import { TestNotificationService } from 'vs/platform/notification/test/common/testNotificationService';
-import { DisposableStore } from 'vs/base/common/lifecycle';
-import { DocumentSemanticTokensProvider, SemanticTokens, SemanticTokensEdits, SemanticTokensLegend } from 'vs/editor/common/languages';
-import { CancellationToken } from 'vs/base/common/cancellation';
 import { Barrier, timeout } from 'vs/base/common/async';
-import { LanguageService } from 'vs/editor/common/services/languageService';
-import { ColorScheme } from 'vs/platform/theme/common/theme';
-import { IModelService } from 'vs/editor/common/services/model';
-import { ILanguageService } from 'vs/editor/common/languages/language';
-import { TestTextResourcePropertiesService } from 'vs/editor/test/common/services/testTextResourcePropertiesService';
-import { TestLanguageConfigurationService } from 'vs/editor/test/common/modes/testLanguageConfigurationService';
-import { getDocumentSemanticTokens, isSemanticTokens } from 'vs/editor/contrib/semanticTokens/common/getSemanticTokens';
-import { LanguageFeatureDebounceService } from 'vs/editor/common/services/languageFeatureDebounce';
+import { CancellationToken } from 'vs/base/common/cancellation';
+import { Emitter, Event } from 'vs/base/common/event';
+import { DisposableStore } from 'vs/base/common/lifecycle';
 import { runWithFakedTimers } from 'vs/base/test/common/timeTravelScheduler';
-import { LanguageFeaturesService } from 'vs/editor/common/services/languageFeaturesService';
+import { Range } from 'vs/editor/common/core/range';
+import { DocumentSemanticTokensProvider, SemanticTokens, SemanticTokensEdits, SemanticTokensLegend } from 'vs/editor/common/languages';
+import { ILanguageService } from 'vs/editor/common/languages/language';
+import { ITextModel } from 'vs/editor/common/model';
+import { LanguageFeatureDebounceService } from 'vs/editor/common/services/languageFeatureDebounce';
 import { ILanguageFeaturesService } from 'vs/editor/common/services/languageFeatures';
+import { LanguageFeaturesService } from 'vs/editor/common/services/languageFeaturesService';
+import { LanguageService } from 'vs/editor/common/services/languageService';
+import { IModelService } from 'vs/editor/common/services/model';
+import { ModelService } from 'vs/editor/common/services/modelService';
 import { SemanticTokensStylingService } from 'vs/editor/common/services/semanticTokensStylingService';
 import { DocumentSemanticTokensFeature } from 'vs/editor/contrib/semanticTokens/browser/documentSemanticTokens';
+import { getDocumentSemanticTokens, isSemanticTokens } from 'vs/editor/contrib/semanticTokens/common/getSemanticTokens';
+import { TestLanguageConfigurationService } from 'vs/editor/test/common/modes/testLanguageConfigurationService';
+import { TestTextResourcePropertiesService } from 'vs/editor/test/common/services/testTextResourcePropertiesService';
+import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
+import { TestDialogService } from 'vs/platform/dialogs/test/common/testDialogService';
+import { NullLogService } from 'vs/platform/log/common/log';
+import { TestNotificationService } from 'vs/platform/notification/test/common/testNotificationService';
+import { ColorScheme } from 'vs/platform/theme/common/theme';
+import { TestColorTheme, TestThemeService } from 'vs/platform/theme/test/common/testThemeService';
+import { UndoRedoService } from 'vs/platform/undoRedo/common/undoRedoService';
 
-suite('ModelSemanticColoring', () => {
+describe('ModelSemanticColoring', () => {
 
 	const disposables = new DisposableStore();
 	let modelService: IModelService;
 	let languageService: ILanguageService;
 	let languageFeaturesService: ILanguageFeaturesService;
 
-	setup(() => {
+	beforeEach(() => {
 		const configService = new TestConfigurationService({ editor: { semanticHighlighting: true } });
 		const themeService = new TestThemeService();
 		themeService.setTheme(new TestColorTheme({}, ColorScheme.DARK, true));
@@ -57,7 +57,7 @@ suite('ModelSemanticColoring', () => {
 		disposables.add(new DocumentSemanticTokensFeature(semanticTokensStylingService, modelService, themeService, configService, new LanguageFeatureDebounceService(logService), languageFeaturesService));
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		disposables.clear();
 	});
 

@@ -11,15 +11,15 @@ import { EditorInput } from 'vs/workbench/common/editor/editorInput';
 import { SideBySideEditorInput } from 'vs/workbench/common/editor/sideBySideEditorInput';
 import { TestFileEditorInput, workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
 
-suite('SideBySideEditorInput', () => {
+describe('SideBySideEditorInput', () => {
 
 	let disposables: DisposableStore;
 
-	setup(() => {
+	beforeEach(() => {
 		disposables = new DisposableStore();
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		disposables.dispose();
 	});
 

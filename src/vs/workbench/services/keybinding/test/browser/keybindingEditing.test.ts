@@ -4,34 +4,34 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
+import { VSBuffer } from 'vs/base/common/buffer';
 import * as json from 'vs/base/common/json';
 import { KeyCode } from 'vs/base/common/keyCodes';
 import { KeyCodeChord } from 'vs/base/common/keybindings';
+import { DisposableStore } from 'vs/base/common/lifecycle';
+import { Schemas } from 'vs/base/common/network';
 import { OS } from 'vs/base/common/platform';
+import { joinPath } from 'vs/base/common/resources';
+import { URI } from 'vs/base/common/uri';
+import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
 import { ContextKeyExpr } from 'vs/platform/contextkey/common/contextkey';
 import { IEnvironmentService } from 'vs/platform/environment/common/environment';
+import { FileService } from 'vs/platform/files/common/fileService';
 import { IFileService } from 'vs/platform/files/common/files';
+import { InMemoryFileSystemProvider } from 'vs/platform/files/common/inMemoryFilesystemProvider';
 import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
 import { IUserFriendlyKeybinding } from 'vs/platform/keybinding/common/keybinding';
 import { ResolvedKeybindingItem } from 'vs/platform/keybinding/common/resolvedKeybindingItem';
 import { USLayoutResolvedKeybinding } from 'vs/platform/keybinding/common/usLayoutResolvedKeybinding';
 import { NullLogService } from 'vs/platform/log/common/log';
+import { UriIdentityService } from 'vs/platform/uriIdentity/common/uriIdentityService';
+import { FileUserDataProvider } from 'vs/platform/userData/common/fileUserDataProvider';
+import { UserDataProfilesService } from 'vs/platform/userDataProfile/common/userDataProfile';
 import { KeybindingsEditingService } from 'vs/workbench/services/keybinding/common/keybindingEditing';
 import { ITextFileService } from 'vs/workbench/services/textfile/common/textfiles';
-import { TestEnvironmentService, workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
-import { FileService } from 'vs/platform/files/common/fileService';
-import { Schemas } from 'vs/base/common/network';
-import { URI } from 'vs/base/common/uri';
-import { FileUserDataProvider } from 'vs/platform/userData/common/fileUserDataProvider';
-import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
-import { joinPath } from 'vs/base/common/resources';
-import { InMemoryFileSystemProvider } from 'vs/platform/files/common/inMemoryFilesystemProvider';
-import { DisposableStore } from 'vs/base/common/lifecycle';
-import { VSBuffer } from 'vs/base/common/buffer';
-import { UserDataProfilesService } from 'vs/platform/userDataProfile/common/userDataProfile';
-import { UserDataProfileService } from 'vs/workbench/services/userDataProfile/common/userDataProfileService';
 import { IUserDataProfileService } from 'vs/workbench/services/userDataProfile/common/userDataProfile';
-import { UriIdentityService } from 'vs/platform/uriIdentity/common/uriIdentityService';
+import { UserDataProfileService } from 'vs/workbench/services/userDataProfile/common/userDataProfileService';
+import { TestEnvironmentService, workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
 
 interface Modifiers {
 	metaKey?: boolean;
@@ -42,7 +42,7 @@ interface Modifiers {
 
 const ROOT = URI.file('tests').with({ scheme: 'vscode-tests' });
 
-suite('KeybindingsEditing', () => {
+describe('KeybindingsEditing', () => {
 
 	const disposables = new DisposableStore();
 	let instantiationService: TestInstantiationService;
@@ -51,7 +51,7 @@ suite('KeybindingsEditing', () => {
 	let userDataProfileService: IUserDataProfileService;
 	let testObject: KeybindingsEditingService;
 
-	setup(async () => {
+	beforeEach(async () => {
 
 		environmentService = TestEnvironmentService;
 
@@ -79,7 +79,7 @@ suite('KeybindingsEditing', () => {
 		testObject = disposables.add(instantiationService.createInstance(KeybindingsEditingService));
 	});
 
-	teardown(() => disposables.clear());
+	afterEach(() => disposables.clear());
 
 	test('errors cases - parse errors', async () => {
 		await fileService.writeFile(userDataProfileService.currentProfile.keybindingsResource, VSBuffer.fromString(',,,,,,,,,,,,,,'));

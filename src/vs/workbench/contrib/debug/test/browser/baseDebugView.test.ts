@@ -4,36 +4,36 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { renderExpressionValue, renderVariable, renderViewTree } from 'vs/workbench/contrib/debug/browser/baseDebugView';
 import * as dom from 'vs/base/browser/dom';
-import { Expression, Variable, Scope, StackFrame, Thread } from 'vs/workbench/contrib/debug/common/debugModel';
 import { HighlightedLabel } from 'vs/base/browser/ui/highlightedlabel/highlightedLabel';
-import { LinkDetector } from 'vs/workbench/contrib/debug/browser/linkDetector';
+import { DisposableStore } from 'vs/base/common/lifecycle';
+import { isWindows } from 'vs/base/common/platform';
 import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
-import { workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
-import { createTestSession } from 'vs/workbench/contrib/debug/test/browser/callStack.test';
+import { renderExpressionValue, renderVariable, renderViewTree } from 'vs/workbench/contrib/debug/browser/baseDebugView';
+import { LinkDetector } from 'vs/workbench/contrib/debug/browser/linkDetector';
 import { isStatusbarInDebugMode } from 'vs/workbench/contrib/debug/browser/statusbarColorProvider';
 import { State } from 'vs/workbench/contrib/debug/common/debug';
-import { isWindows } from 'vs/base/common/platform';
+import { Expression, Scope, StackFrame, Thread, Variable } from 'vs/workbench/contrib/debug/common/debugModel';
+import { createTestSession } from 'vs/workbench/contrib/debug/test/browser/callStack.test';
 import { createMockDebugModel } from 'vs/workbench/contrib/debug/test/browser/mockDebugModel';
-import { DisposableStore } from 'vs/base/common/lifecycle';
 import { MockSession } from 'vs/workbench/contrib/debug/test/common/mockDebug';
+import { workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
 const $ = dom.$;
 
-suite('Debug - Base Debug View', () => {
+describe('Debug - Base Debug View', () => {
 	let disposables: DisposableStore;
 	let linkDetector: LinkDetector;
 
 	/**
 	 * Instantiate services for use by the functions being tested.
 	 */
-	setup(() => {
+	beforeEach(() => {
 		disposables = new DisposableStore();
 		const instantiationService: TestInstantiationService = <TestInstantiationService>workbenchInstantiationService(undefined, disposables);
 		linkDetector = instantiationService.createInstance(LinkDetector);
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		disposables.dispose();
 	});
 

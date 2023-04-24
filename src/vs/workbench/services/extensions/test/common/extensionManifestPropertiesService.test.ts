@@ -4,19 +4,19 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { IExtensionManifest, ExtensionUntrustedWorkspaceSupportType } from 'vs/platform/extensions/common/extensions';
-import { ExtensionManifestPropertiesService } from 'vs/workbench/services/extensions/common/extensionManifestPropertiesService';
-import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
-import { TestProductService } from 'vs/workbench/test/common/workbenchTestServices';
-import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
-import { IConfigurationService } from 'vs/platform/configuration/common/configuration';
-import { IProductService } from 'vs/platform/product/common/productService';
 import { isWeb } from 'vs/base/common/platform';
-import { TestWorkspaceTrustEnablementService } from 'vs/workbench/services/workspaces/test/common/testWorkspaceTrustService';
-import { IWorkspaceTrustEnablementService } from 'vs/platform/workspace/common/workspaceTrust';
+import { IConfigurationService } from 'vs/platform/configuration/common/configuration';
+import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
+import { ExtensionUntrustedWorkspaceSupportType, IExtensionManifest } from 'vs/platform/extensions/common/extensions';
+import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
 import { NullLogService } from 'vs/platform/log/common/log';
+import { IProductService } from 'vs/platform/product/common/productService';
+import { IWorkspaceTrustEnablementService } from 'vs/platform/workspace/common/workspaceTrust';
+import { ExtensionManifestPropertiesService } from 'vs/workbench/services/extensions/common/extensionManifestPropertiesService';
+import { TestWorkspaceTrustEnablementService } from 'vs/workbench/services/workspaces/test/common/testWorkspaceTrustService';
+import { TestProductService } from 'vs/workbench/test/common/workbenchTestServices';
 
-suite('ExtensionManifestPropertiesService - ExtensionKind', () => {
+describe('ExtensionManifestPropertiesService - ExtensionKind', () => {
 
 	let testObject = new ExtensionManifestPropertiesService(TestProductService, new TestConfigurationService(), new TestWorkspaceTrustEnablementService(), new NullLogService());
 
@@ -94,19 +94,19 @@ suite('ExtensionManifestPropertiesService - ExtensionKind', () => {
 
 // Workspace Trust is disabled in web at the moment
 if (!isWeb) {
-	suite('ExtensionManifestPropertiesService - ExtensionUntrustedWorkspaceSupportType', () => {
+	describe('ExtensionManifestPropertiesService - ExtensionUntrustedWorkspaceSupportType', () => {
 		let testObject: ExtensionManifestPropertiesService;
 		let instantiationService: TestInstantiationService;
 		let testConfigurationService: TestConfigurationService;
 
-		setup(async () => {
+		beforeEach(async () => {
 			instantiationService = new TestInstantiationService();
 
 			testConfigurationService = new TestConfigurationService();
 			instantiationService.stub(IConfigurationService, testConfigurationService);
 		});
 
-		teardown(() => testObject.dispose());
+		afterEach(() => testObject.dispose());
 
 		function assertUntrustedWorkspaceSupport(extensionMaifest: IExtensionManifest, expected: ExtensionUntrustedWorkspaceSupportType): void {
 			testObject = instantiationService.createInstance(ExtensionManifestPropertiesService);

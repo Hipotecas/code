@@ -6,7 +6,7 @@
 import * as assert from 'assert';
 import { toErrorMessage } from 'vs/base/common/errorMessage';
 
-suite('Errors', () => {
+describe('Errors', () => {
 	test('Get Error Message', function () {
 		assert.strictEqual(toErrorMessage('Foo Bar'), 'Foo Bar');
 		assert.strictEqual(toErrorMessage(new Error('Foo Bar')), 'Foo Bar');

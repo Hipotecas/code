@@ -18,7 +18,7 @@ function testCopyLinesUpCommand(lines: string[], selection: Selection, expectedL
 	testCommand(lines, null, selection, (accessor, sel) => new CopyLinesCommand(sel, false), expectedLines, expectedSelection);
 }
 
-suite('Editor Contrib - Copy Lines Command', () => {
+describe('Editor Contrib - Copy Lines Command', () => {
 
 	test('copy first line down', function () {
 		testCopyLinesDownCommand(
@@ -199,7 +199,7 @@ suite('Editor Contrib - Copy Lines Command', () => {
 	});
 });
 
-suite('Editor Contrib - Duplicate Selection', () => {
+describe('Editor Contrib - Duplicate Selection', () => {
 
 	const duplicateSelectionAction = new DuplicateSelectionAction();
 

@@ -4,30 +4,30 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { deepStrictEqual } from 'assert';
-import { TestExtensionService, TestHistoryService, TestStorageService } from 'vs/workbench/test/common/workbenchTestServices';
-import { EnvironmentVariableService } from 'vs/workbench/contrib/terminal/common/environmentVariableService';
-import { EnvironmentVariableMutatorType, IEnvironmentVariableMutator } from 'vs/platform/terminal/common/environmentVariable';
-import { IStorageService } from 'vs/platform/storage/common/storage';
-import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
-import { IExtensionService } from 'vs/workbench/services/extensions/common/extensions';
 import { Emitter } from 'vs/base/common/event';
 import { IProcessEnvironment } from 'vs/base/common/platform';
-import { IHistoryService } from 'vs/workbench/services/history/common/history';
 import { URI } from 'vs/base/common/uri';
+import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
+import { IStorageService } from 'vs/platform/storage/common/storage';
+import { EnvironmentVariableMutatorType, IEnvironmentVariableMutator } from 'vs/platform/terminal/common/environmentVariable';
+import { EnvironmentVariableService } from 'vs/workbench/contrib/terminal/common/environmentVariableService';
+import { IExtensionService } from 'vs/workbench/services/extensions/common/extensions';
+import { IHistoryService } from 'vs/workbench/services/history/common/history';
+import { TestExtensionService, TestHistoryService, TestStorageService } from 'vs/workbench/test/common/workbenchTestServices';
 
 class TestEnvironmentVariableService extends EnvironmentVariableService {
 	persistCollections(): void { this._persistCollections(); }
 	notifyCollectionUpdates(): void { this._notifyCollectionUpdates(); }
 }
 
-suite('EnvironmentVariable - EnvironmentVariableService', () => {
+describe('EnvironmentVariable - EnvironmentVariableService', () => {
 	let instantiationService: TestInstantiationService;
 	let environmentVariableService: TestEnvironmentVariableService;
 	let storageService: TestStorageService;
 	let historyService: TestHistoryService;
 	let changeExtensionsEvent: Emitter<void>;
 
-	setup(() => {
+	beforeEach(() => {
 		changeExtensionsEvent = new Emitter<void>();
 
 		instantiationService = new TestInstantiationService();
@@ -69,7 +69,7 @@ suite('EnvironmentVariable - EnvironmentVariableService', () => {
 		]);
 	});
 
-	suite('mergedCollection', () => {
+	describe('mergedCollection', () => {
 		test('should overwrite any other variable with the first extension that replaces', () => {
 			const collection1 = new Map<string, IEnvironmentVariableMutator>();
 			const collection2 = new Map<string, IEnvironmentVariableMutator>();

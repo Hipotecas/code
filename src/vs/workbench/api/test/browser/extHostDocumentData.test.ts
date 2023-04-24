@@ -5,16 +5,16 @@
 
 import * as assert from 'assert';
 import { URI } from 'vs/base/common/uri';
+import { mock } from 'vs/base/test/common/mock';
+import { Range } from 'vs/editor/common/core/range';
+import { setDefaultGetWordAtTextConfig } from 'vs/editor/common/core/wordHelper';
+import { IModelChangedEvent } from 'vs/editor/common/model/mirrorTextModel';
+import { MainThreadDocumentsShape } from 'vs/workbench/api/common/extHost.protocol';
 import { ExtHostDocumentData } from 'vs/workbench/api/common/extHostDocumentData';
 import { Position } from 'vs/workbench/api/common/extHostTypes';
-import { Range } from 'vs/editor/common/core/range';
-import { MainThreadDocumentsShape } from 'vs/workbench/api/common/extHost.protocol';
-import { IModelChangedEvent } from 'vs/editor/common/model/mirrorTextModel';
-import { mock } from 'vs/base/test/common/mock';
 import * as perfData from './extHostDocumentData.test.perf-data';
-import { setDefaultGetWordAtTextConfig } from 'vs/editor/common/core/wordHelper';
 
-suite('ExtHostDocumentData', () => {
+describe('ExtHostDocumentData', () => {
 
 	let data: ExtHostDocumentData;
 
@@ -30,7 +30,7 @@ suite('ExtHostDocumentData', () => {
 		assert.strictEqual(actual, offset);
 	}
 
-	setup(function () {
+	beforeEach(function () {
 		data = new ExtHostDocumentData(undefined!, URI.file(''), [
 			'This is line one', //16
 			'and this is line number two', //27
@@ -372,7 +372,7 @@ enum AssertDocumentLineMappingDirection {
 	PositionToOffset
 }
 
-suite('ExtHostDocumentData updates line mapping', () => {
+describe('ExtHostDocumentData updates line mapping', () => {
 
 	function positionToStr(position: { line: number; character: number }): string {
 		return '(' + position.line + ',' + position.character + ')';

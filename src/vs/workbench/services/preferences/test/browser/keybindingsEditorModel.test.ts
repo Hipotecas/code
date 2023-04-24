@@ -4,22 +4,22 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import * as uuid from 'vs/base/common/uuid';
-import { OS, OperatingSystem } from 'vs/base/common/platform';
 import { KeyCode } from 'vs/base/common/keyCodes';
 import { KeyCodeChord } from 'vs/base/common/keybindings';
+import { OS, OperatingSystem } from 'vs/base/common/platform';
+import * as uuid from 'vs/base/common/uuid';
 import { CommandsRegistry } from 'vs/platform/commands/common/commands';
-import { IKeybindingService } from 'vs/platform/keybinding/common/keybinding';
-import { IExtensionService } from 'vs/workbench/services/extensions/common/extensions';
 import { ContextKeyExpr } from 'vs/platform/contextkey/common/contextkey';
-import { KeybindingsEditorModel } from 'vs/workbench/services/preferences/browser/keybindingsEditorModel';
+import { IKeybindingService } from 'vs/platform/keybinding/common/keybinding';
 import { ResolvedKeybindingItem } from 'vs/platform/keybinding/common/resolvedKeybindingItem';
 import { USLayoutResolvedKeybinding } from 'vs/platform/keybinding/common/usLayoutResolvedKeybinding';
+import { IExtensionService } from 'vs/workbench/services/extensions/common/extensions';
+import { KeybindingsEditorModel } from 'vs/workbench/services/preferences/browser/keybindingsEditorModel';
 
-import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
-import { IKeybindingItemEntry } from 'vs/workbench/services/preferences/common/preferences';
 import { Action2, MenuRegistry, registerAction2 } from 'vs/platform/actions/common/actions';
 import { ExtensionIdentifier, IExtensionDescription } from 'vs/platform/extensions/common/extensions';
+import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
+import { IKeybindingItemEntry } from 'vs/workbench/services/preferences/common/preferences';
 
 interface Modifiers {
 	metaKey?: boolean;
@@ -28,13 +28,13 @@ interface Modifiers {
 	shiftKey?: boolean;
 }
 
-suite('KeybindingsEditorModel', () => {
+describe('KeybindingsEditorModel', () => {
 
 	let instantiationService: TestInstantiationService;
 	let testObject: KeybindingsEditorModel;
 	let extensions: Partial<IExtensionDescription>[] = [];
 
-	setup(() => {
+	beforeEach(() => {
 		extensions = [];
 		instantiationService = new TestInstantiationService();
 

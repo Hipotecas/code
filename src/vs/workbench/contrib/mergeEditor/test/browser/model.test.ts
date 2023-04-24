@@ -19,7 +19,7 @@ import { DetailedLineRangeMapping } from 'vs/workbench/contrib/mergeEditor/brows
 import { MergeEditorModel } from 'vs/workbench/contrib/mergeEditor/browser/model/mergeEditorModel';
 import { MergeEditorTelemetry } from 'vs/workbench/contrib/mergeEditor/browser/telemetry';
 
-suite('merge editor model', () => {
+describe('merge editor model', () => {
 	ensureNoDisposablesAreLeakedInTestSuite();
 
 	test('prepend line', async () => {

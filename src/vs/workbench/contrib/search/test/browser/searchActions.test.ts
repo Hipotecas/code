@@ -11,20 +11,20 @@ import { IModelService } from 'vs/editor/common/services/model';
 import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
 import { IKeybindingService } from 'vs/platform/keybinding/common/keybinding';
 import { USLayoutResolvedKeybinding } from 'vs/platform/keybinding/common/usLayoutResolvedKeybinding';
-import { IFileMatch, QueryType } from 'vs/workbench/services/search/common/search';
+import { ILabelService } from 'vs/platform/label/common/label';
+import { INotebookEditorService } from 'vs/workbench/contrib/notebook/browser/services/notebookEditorService';
 import { getElementToFocusAfterRemoved, getLastNodeFromSameType } from 'vs/workbench/contrib/search/browser/searchActionsRemoveReplace';
 import { FileMatch, FileMatchOrMatch, FolderMatch, Match, SearchModel } from 'vs/workbench/contrib/search/browser/searchModel';
 import { MockObjectTree } from 'vs/workbench/contrib/search/test/browser/mockSearchTree';
-import { ILabelService } from 'vs/platform/label/common/label';
-import { INotebookEditorService } from 'vs/workbench/contrib/notebook/browser/services/notebookEditorService';
 import { createFileUriFromPathFromRoot, stubModelService, stubNotebookEditorService } from 'vs/workbench/contrib/search/test/browser/searchTestCommon';
+import { IFileMatch, QueryType } from 'vs/workbench/services/search/common/search';
 
-suite('Search Actions', () => {
+describe('Search Actions', () => {
 
 	let instantiationService: TestInstantiationService;
 	let counter: number;
 
-	setup(() => {
+	beforeEach(() => {
 		instantiationService = new TestInstantiationService();
 		instantiationService.stub(IModelService, stubModelService(instantiationService));
 		instantiationService.stub(INotebookEditorService, stubNotebookEditorService(instantiationService));

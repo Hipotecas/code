@@ -4,22 +4,22 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { generateUuid } from 'vs/base/common/uuid';
-import { appendStylizedStringToContainer, handleANSIOutput, calcANSI8bitColor } from 'vs/workbench/contrib/debug/browser/debugANSIHandling';
-import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
-import { workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
-import { LinkDetector } from 'vs/workbench/contrib/debug/browser/linkDetector';
 import { Color, RGBA } from 'vs/base/common/color';
-import { IThemeService } from 'vs/platform/theme/common/themeService';
-import { TestThemeService, TestColorTheme } from 'vs/platform/theme/test/common/testThemeService';
-import { ansiColorMap } from 'vs/workbench/contrib/terminal/common/terminalColorRegistry';
-import { DebugModel } from 'vs/workbench/contrib/debug/common/debugModel';
-import { DebugSession } from 'vs/workbench/contrib/debug/browser/debugSession';
-import { createTestSession } from 'vs/workbench/contrib/debug/test/browser/callStack.test';
 import { DisposableStore } from 'vs/base/common/lifecycle';
+import { generateUuid } from 'vs/base/common/uuid';
+import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
+import { IThemeService } from 'vs/platform/theme/common/themeService';
+import { TestColorTheme, TestThemeService } from 'vs/platform/theme/test/common/testThemeService';
+import { appendStylizedStringToContainer, calcANSI8bitColor, handleANSIOutput } from 'vs/workbench/contrib/debug/browser/debugANSIHandling';
+import { DebugSession } from 'vs/workbench/contrib/debug/browser/debugSession';
+import { LinkDetector } from 'vs/workbench/contrib/debug/browser/linkDetector';
+import { DebugModel } from 'vs/workbench/contrib/debug/common/debugModel';
+import { createTestSession } from 'vs/workbench/contrib/debug/test/browser/callStack.test';
 import { createMockDebugModel } from 'vs/workbench/contrib/debug/test/browser/mockDebugModel';
+import { ansiColorMap } from 'vs/workbench/contrib/terminal/common/terminalColorRegistry';
+import { workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
 
-suite('Debug - ANSI Handling', () => {
+describe('Debug - ANSI Handling', () => {
 
 	let disposables: DisposableStore;
 	let model: DebugModel;
@@ -30,7 +30,7 @@ suite('Debug - ANSI Handling', () => {
 	/**
 	 * Instantiate services for use by the functions being tested.
 	 */
-	setup(() => {
+	beforeEach(() => {
 		disposables = new DisposableStore();
 		model = createMockDebugModel();
 		session = createTestSession(model);
@@ -46,7 +46,7 @@ suite('Debug - ANSI Handling', () => {
 		themeService = new TestThemeService(testTheme);
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		disposables.dispose();
 	});
 

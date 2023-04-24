@@ -24,16 +24,16 @@ import { CellExecutionUpdateType, INotebookExecutionService } from 'vs/workbench
 import { INotebookExecutionStateService, NotebookExecutionType } from 'vs/workbench/contrib/notebook/common/notebookExecutionStateService';
 import { INotebookKernel, INotebookKernelService } from 'vs/workbench/contrib/notebook/common/notebookKernelService';
 import { INotebookService } from 'vs/workbench/contrib/notebook/common/notebookService';
-import { setupInstantiationService, withTestNotebook as _withTestNotebook } from 'vs/workbench/contrib/notebook/test/browser/testNotebookEditor';
+import { withTestNotebook as _withTestNotebook, setupInstantiationService } from 'vs/workbench/contrib/notebook/test/browser/testNotebookEditor';
 
-suite('NotebookExecutionStateService', () => {
+describe('NotebookExecutionStateService', () => {
 
 	let instantiationService: TestInstantiationService;
 	let kernelService: INotebookKernelService;
 	let disposables: DisposableStore;
 	let testNotebookModel: NotebookTextModel | undefined;
 
-	setup(function () {
+	beforeEach(function () {
 
 		disposables = new DisposableStore();
 
@@ -64,7 +64,7 @@ suite('NotebookExecutionStateService', () => {
 		instantiationService.set(INotebookExecutionStateService, instantiationService.createInstance(NotebookExecutionStateService));
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		disposables.dispose();
 	});
 

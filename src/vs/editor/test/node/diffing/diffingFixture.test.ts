@@ -3,14 +3,14 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import * as assert from 'assert';
-import { readdirSync, readFileSync, existsSync, writeFileSync, rmSync } from 'fs';
+import { existsSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'fs';
 import { join, resolve } from 'path';
 import { FileAccess } from 'vs/base/common/network';
 import { SmartLinesDiffComputer } from 'vs/editor/common/diff/smartLinesDiffComputer';
 import { StandardLinesDiffComputer } from 'vs/editor/common/diff/standardLinesDiffComputer';
 
-suite('diff fixtures', () => {
+describe('diff fixtures', () => {
+  // this will failed. it cannot use loader js
 	const fixturesOutDir = FileAccess.asFileUri('vs/editor/test/node/diffing/fixtures').fsPath;
 	// We want the dir in src, so we can directly update the source files if they disagree and create invalid files to capture the previous state.
 	// This makes it very easy to update the fixtures.
@@ -66,7 +66,7 @@ suite('diff fixtures', () => {
 			} else {
 				const expectedFileDiffResult: DiffingResult = JSON.parse(invalidJsonStr);
 				try {
-					assert.deepStrictEqual(actualDiffingResult, expectedFileDiffResult);
+          expect(actualDiffingResult).toEqual(expectedFileDiffResult)
 				} catch (e) {
 					writeFileSync(expectedFilePath, actualJsonStr);
 					throw e;
@@ -79,7 +79,7 @@ suite('diff fixtures', () => {
 			const expectedJsonStr = readFileSync(expectedFilePath, 'utf8');
 			const expectedFileDiffResult: DiffingResult = JSON.parse(expectedJsonStr);
 			try {
-				assert.deepStrictEqual(actualDiffingResult, expectedFileDiffResult);
+        expect(actualDiffingResult).toEqual(expectedFileDiffResult)
 			} catch (e) {
 				// Backup expected file
 				writeFileSync(invalidFilePath, expectedJsonStr);

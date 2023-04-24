@@ -4,8 +4,8 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { StandardTokenType } from 'vs/editor/common/encodedTokenAttributes';
 import * as fs from 'fs';
+import { StandardTokenType } from 'vs/editor/common/encodedTokenAttributes';
 // import { getPathFromAmdModule } from 'vs/base/test/node/testUtils';
 // import { parse } from 'vs/editor/common/modes/tokenization/typescript';
 import { toStandardTokenType } from 'vs/editor/common/languages/supports/tokenization';
@@ -134,7 +134,7 @@ function executeTest(fileName: string, parseFunc: IParseFunc): void {
 	}
 }
 
-suite('Classification', () => {
+describe('Classification', () => {
 	test('TypeScript', () => {
 		// executeTest(getPathFromAmdModule(require, 'vs/editor/test/node/classification/typescript-test.ts').replace(/\bout\b/, 'src'), parse);
 	});

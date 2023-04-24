@@ -7,8 +7,8 @@ import { strictEqual } from 'assert';
 import { OperatingSystem, OS } from 'vs/base/common/platform';
 import { collapseTildePath, sanitizeCwd } from 'vs/platform/terminal/common/terminalEnvironment';
 
-suite('terminalEnvironment', () => {
-	suite('collapseTildePath', () => {
+describe('terminalEnvironment', () => {
+	describe('collapseTildePath', () => {
 		test('should return empty string for a falsy path', () => {
 			strictEqual(collapseTildePath('', '/foo', '/'), '');
 			strictEqual(collapseTildePath(undefined, '/foo', '/'), '');
@@ -38,7 +38,7 @@ suite('terminalEnvironment', () => {
 			strictEqual(collapseTildePath('/foo/bar/baz', '/foo/', '/'), '~/bar/baz');
 		});
 	});
-	suite('sanitizeCwd', () => {
+	describe('sanitizeCwd', () => {
 		if (OS === OperatingSystem.Windows) {
 			test('should make the Windows drive letter uppercase', () => {
 				strictEqual(sanitizeCwd('c:\\foo\\bar'), 'C:\\foo\\bar');

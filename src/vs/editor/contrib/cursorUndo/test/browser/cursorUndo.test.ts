@@ -10,7 +10,7 @@ import { Handler } from 'vs/editor/common/editorCommon';
 import { CursorUndo, CursorUndoRedoController } from 'vs/editor/contrib/cursorUndo/browser/cursorUndo';
 import { withTestCodeEditor } from 'vs/editor/test/browser/testCodeEditor';
 
-suite('FindController', () => {
+describe('FindController', () => {
 
 	const cursorUndoAction = new CursorUndo();
 

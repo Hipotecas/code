@@ -13,18 +13,18 @@ import { CellKind, CellUri, diff, MimeTypeDisplayOrder, NotebookWorkingCopyTypeI
 import { cellIndexesToRanges, cellRangesToIndexes, reduceCellRanges } from 'vs/workbench/contrib/notebook/common/notebookRange';
 import { setupInstantiationService, TestCell } from 'vs/workbench/contrib/notebook/test/browser/testNotebookEditor';
 
-suite('NotebookCommon', () => {
+describe('NotebookCommon', () => {
 	let disposables: DisposableStore;
 	let instantiationService: TestInstantiationService;
 	let languageService: ILanguageService;
 
-	suiteSetup(() => {
+	describeSetup(() => {
 		disposables = new DisposableStore();
 		instantiationService = setupInstantiationService(disposables);
 		languageService = instantiationService.get(ILanguageService);
 	});
 
-	suiteTeardown(() => disposables.dispose());
+	describeTeardown(() => disposables.dispose());
 
 	test('sortMimeTypes default orders', function () {
 		assert.deepStrictEqual(new MimeTypeDisplayOrder().sort(
@@ -291,7 +291,7 @@ suite('NotebookCommon', () => {
 });
 
 
-suite('CellUri', function () {
+describe('CellUri', function () {
 
 	test('parse, generate (file-scheme)', function () {
 
@@ -334,7 +334,7 @@ suite('CellUri', function () {
 });
 
 
-suite('CellRange', function () {
+describe('CellRange', function () {
 
 	test('Cell range to index', function () {
 		assert.deepStrictEqual(cellRangesToIndexes([]), []);
@@ -385,7 +385,7 @@ suite('CellRange', function () {
 	});
 });
 
-suite('NotebookWorkingCopyTypeIdentifier', function () {
+describe('NotebookWorkingCopyTypeIdentifier', function () {
 
 	test('works', function () {
 		const viewType = 'testViewType';

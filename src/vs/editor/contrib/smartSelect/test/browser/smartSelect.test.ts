@@ -9,31 +9,31 @@ import { DisposableStore } from 'vs/base/common/lifecycle';
 import { URI } from 'vs/base/common/uri';
 import { Position } from 'vs/editor/common/core/position';
 import { IRange, Range } from 'vs/editor/common/core/range';
+import { LanguageFeatureRegistry } from 'vs/editor/common/languageFeatureRegistry';
 import { SelectionRangeProvider } from 'vs/editor/common/languages';
+import { ILanguageSelection, ILanguageService } from 'vs/editor/common/languages/language';
 import { ILanguageConfigurationService } from 'vs/editor/common/languages/languageConfigurationRegistry';
 import { IModelService } from 'vs/editor/common/services/model';
 import { BracketSelectionRangeProvider } from 'vs/editor/contrib/smartSelect/browser/bracketSelections';
 import { provideSelectionRanges } from 'vs/editor/contrib/smartSelect/browser/smartSelect';
 import { WordSelectionRangeProvider } from 'vs/editor/contrib/smartSelect/browser/wordSelections';
-import { createModelServices } from 'vs/editor/test/common/testTextModel';
 import { javascriptOnEnterRules } from 'vs/editor/test/common/modes/supports/javascriptOnEnterRules';
-import { LanguageFeatureRegistry } from 'vs/editor/common/languageFeatureRegistry';
-import { ILanguageSelection, ILanguageService } from 'vs/editor/common/languages/language';
+import { createModelServices } from 'vs/editor/test/common/testTextModel';
 
 class StaticLanguageSelector implements ILanguageSelection {
 	readonly onDidChange: Event<string> = Event.None;
 	constructor(public readonly languageId: string) { }
 }
 
-suite('SmartSelect', () => {
+describe('SmartSelect', () => {
 
 	const OriginalBracketSelectionRangeProviderMaxDuration = BracketSelectionRangeProvider._maxDuration;
 
-	suiteSetup(() => {
+	beforeAll(() => {
 		BracketSelectionRangeProvider._maxDuration = 5000; // 5 seconds
 	});
 
-	suiteTeardown(() => {
+	afterAll(() => {
 		BracketSelectionRangeProvider._maxDuration = OriginalBracketSelectionRangeProviderMaxDuration;
 	});
 
@@ -42,7 +42,7 @@ suite('SmartSelect', () => {
 	let modelService: IModelService;
 	const providers = new LanguageFeatureRegistry<SelectionRangeProvider>();
 
-	setup(() => {
+	beforeEach(() => {
 		disposables = new DisposableStore();
 		const instantiationService = createModelServices(disposables);
 		modelService = instantiationService.get(IModelService);
@@ -60,7 +60,7 @@ suite('SmartSelect', () => {
 		}));
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		disposables.dispose();
 	});
 

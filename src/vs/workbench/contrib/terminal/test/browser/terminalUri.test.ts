@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { deepStrictEqual, strictEqual } from 'assert';
-import { getInstanceFromResource, getTerminalResourcesFromDragEvent, getTerminalUri, IPartialDragEvent } from 'vs/workbench/contrib/terminal/browser/terminalUri';
+import { IPartialDragEvent, getInstanceFromResource, getTerminalResourcesFromDragEvent, getTerminalUri } from 'vs/workbench/contrib/terminal/browser/terminalUri';
 
 function fakeDragEvent(data: string): IPartialDragEvent {
 	return {
@@ -16,8 +16,8 @@ function fakeDragEvent(data: string): IPartialDragEvent {
 	};
 }
 
-suite('terminalUri', () => {
-	suite('getTerminalResourcesFromDragEvent', () => {
+describe('terminalUri', () => {
+	describe('getTerminalResourcesFromDragEvent', () => {
 		test('should give undefined when no terminal resources is in event', () => {
 			deepStrictEqual(
 				getTerminalResourcesFromDragEvent(fakeDragEvent(''))?.map(e => e.toString()),
@@ -43,7 +43,7 @@ suite('terminalUri', () => {
 			);
 		});
 	});
-	suite('getInstanceFromResource', () => {
+	describe('getInstanceFromResource', () => {
 		test('should return undefined if there is no match', () => {
 			strictEqual(
 				getInstanceFromResource([

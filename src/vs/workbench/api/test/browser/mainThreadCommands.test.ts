@@ -4,13 +4,13 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { MainThreadCommands } from 'vs/workbench/api/browser/mainThreadCommands';
+import { mock } from 'vs/base/test/common/mock';
 import { CommandsRegistry, ICommandService } from 'vs/platform/commands/common/commands';
+import { MainThreadCommands } from 'vs/workbench/api/browser/mainThreadCommands';
 import { SingleProxyRPCProtocol } from 'vs/workbench/api/test/common/testRPCProtocol';
 import { IExtensionService } from 'vs/workbench/services/extensions/common/extensions';
-import { mock } from 'vs/base/test/common/mock';
 
-suite('MainThreadCommands', function () {
+describe('MainThreadCommands', function () {
 
 	test('dispose on unregister', function () {
 

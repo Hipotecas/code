@@ -6,7 +6,7 @@
 import * as assert from 'assert';
 import { getDomainsOfRemotes, getRemotes } from 'vs/platform/extensionManagement/common/configRemotes';
 
-suite('Config Remotes', () => {
+describe('Config Remotes', () => {
 
 	const allowedDomains = [
 		'github.com',

@@ -3,16 +3,16 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import * as assert from 'assert';
-import { resolveWorkbenchCommonProperties } from 'vs/workbench/services/telemetry/browser/workbenchCommonProperties';
 import { IStorageService, InMemoryStorageService } from 'vs/platform/storage/common/storage';
+import { resolveWorkbenchCommonProperties } from 'vs/workbench/services/telemetry/browser/workbenchCommonProperties';
 
-suite('Browser Telemetry - common properties', function () {
+describe('Browser Telemetry - common properties', function () {
 
 	const commit: string = (undefined)!;
 	const version: string = (undefined)!;
 	let testStorageService: IStorageService;
 
-	setup(() => {
+	beforeEach(() => {
 		testStorageService = new InMemoryStorageService();
 	});
 

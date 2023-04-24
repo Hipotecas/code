@@ -8,7 +8,7 @@ import { Range } from 'vs/editor/common/core/range';
 import { DecorationSegment, LineDecoration, LineDecorationsNormalizer } from 'vs/editor/common/viewLayout/lineDecorations';
 import { InlineDecoration, InlineDecorationType } from 'vs/editor/common/viewModel';
 
-suite('Editor ViewLayout - ViewLineParts', () => {
+describe('Editor ViewLayout - ViewLineParts', () => {
 
 	test('Bug 9827:Overlapping inline decorations can cause wrong inline class to be applied', () => {
 

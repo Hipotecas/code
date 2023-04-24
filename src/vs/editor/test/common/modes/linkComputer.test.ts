@@ -60,7 +60,7 @@ function assertLink(text: string, extractedLink: string): void {
 	}]);
 }
 
-suite('Editor Modes - Link Computer', () => {
+describe('Editor Modes - Link Computer', () => {
 
 	test('Null model', () => {
 		const r = computeLinks(null);

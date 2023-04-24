@@ -5,26 +5,26 @@
 
 import * as assert from 'assert';
 import { Disposable, DisposableStore } from 'vs/base/common/lifecycle';
+import { ColorId, FontStyle, MetadataConsts } from 'vs/editor/common/encodedTokenAttributes';
 import { EncodedTokenizationResult, IState, TokenizationRegistry } from 'vs/editor/common/languages';
-import { FontStyle, ColorId, MetadataConsts } from 'vs/editor/common/encodedTokenAttributes';
 import { ILanguageService } from 'vs/editor/common/languages/language';
-import { tokenizeLineToHTML, _tokenizeToString } from 'vs/editor/common/languages/textToHtmlTokenizer';
+import { _tokenizeToString, tokenizeLineToHTML } from 'vs/editor/common/languages/textToHtmlTokenizer';
 import { LanguageIdCodec } from 'vs/editor/common/services/languagesRegistry';
 import { TestLineToken, TestLineTokens } from 'vs/editor/test/common/core/testLineToken';
 import { createModelServices } from 'vs/editor/test/common/testTextModel';
 import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
 
-suite('Editor Modes - textToHtmlTokenizer', () => {
+describe('Editor Modes - textToHtmlTokenizer', () => {
 
 	let disposables: DisposableStore;
 	let instantiationService: TestInstantiationService;
 
-	setup(() => {
+	beforeEach(() => {
 		disposables = new DisposableStore();
 		instantiationService = createModelServices(disposables);
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		disposables.dispose();
 	});
 

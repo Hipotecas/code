@@ -1,8 +1,4 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
-
+// @vitest-environment node
 import * as assert from 'assert';
 import { ISingleEditOperation } from 'vs/editor/common/core/editOperation';
 import { Range } from 'vs/editor/common/core/range';
@@ -12,7 +8,7 @@ import { lengthAdd, lengthToObj, lengthToPosition, positionToLength, toLength } 
 import { TextModel } from 'vs/editor/common/model/textModel';
 import { createTextModel } from 'vs/editor/test/common/testTextModel';
 
-suite('combineTextEditInfos', () => {
+describe('combineTextEditInfos', () => {
 	for (let seed = 0; seed < 50; seed++) {
 		test('test' + seed, () => {
 			runTest(seed);
@@ -48,7 +44,7 @@ function runTest(seed: number) {
 	}
 
 	assert.deepStrictEqual(textModelS2.getValue(), textModelS0.getValue());
-
+  expect(textModelS2.getValue()).toStrictEqual(textModelS0.getValue())
 	textModelS0.dispose();
 	textModelS1.dispose();
 	textModelS2.dispose();

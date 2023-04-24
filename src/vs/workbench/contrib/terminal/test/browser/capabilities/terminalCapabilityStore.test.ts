@@ -7,12 +7,12 @@ import { deepStrictEqual } from 'assert';
 import { TerminalCapability } from 'vs/platform/terminal/common/capabilities/capabilities';
 import { TerminalCapabilityStore, TerminalCapabilityStoreMultiplexer } from 'vs/platform/terminal/common/capabilities/terminalCapabilityStore';
 
-suite('TerminalCapabilityStore', () => {
+describe('TerminalCapabilityStore', () => {
 	let store: TerminalCapabilityStore;
 	let addEvents: TerminalCapability[];
 	let removeEvents: TerminalCapability[];
 
-	setup(() => {
+	beforeEach(() => {
 		store = new TerminalCapabilityStore();
 		store.onDidAddCapability(e => addEvents.push(e));
 		store.onDidRemoveCapability(e => removeEvents.push(e));
@@ -20,7 +20,7 @@ suite('TerminalCapabilityStore', () => {
 		removeEvents = [];
 	});
 
-	teardown(() => store.dispose());
+	afterEach(() => store.dispose());
 
 	test('should fire events when capabilities are added', () => {
 		assertEvents(addEvents, []);
@@ -52,14 +52,14 @@ suite('TerminalCapabilityStore', () => {
 	});
 });
 
-suite('TerminalCapabilityStoreMultiplexer', () => {
+describe('TerminalCapabilityStoreMultiplexer', () => {
 	let multiplexer: TerminalCapabilityStoreMultiplexer;
 	let store1: TerminalCapabilityStore;
 	let store2: TerminalCapabilityStore;
 	let addEvents: TerminalCapability[];
 	let removeEvents: TerminalCapability[];
 
-	setup(() => {
+	beforeEach(() => {
 		multiplexer = new TerminalCapabilityStoreMultiplexer();
 		multiplexer.onDidAddCapability(e => addEvents.push(e));
 		multiplexer.onDidRemoveCapability(e => removeEvents.push(e));
@@ -69,7 +69,7 @@ suite('TerminalCapabilityStoreMultiplexer', () => {
 		removeEvents = [];
 	});
 
-	teardown(() => multiplexer.dispose());
+	afterEach(() => multiplexer.dispose());
 
 	test('should fire events when capabilities are enabled', async () => {
 		assertEvents(addEvents, []);

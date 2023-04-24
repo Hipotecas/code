@@ -19,13 +19,13 @@ flakySuite('Workspaces', () => {
 
 	const tmpDir = os.tmpdir();
 
-	setup(async () => {
+	beforeEach(async () => {
 		testDir = getRandomTestPath(tmpDir, 'vsctests', 'workspacesmanagementmainservice');
 
 		return pfs.Promises.mkdir(testDir, { recursive: true });
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		return pfs.Promises.rm(testDir);
 	});
 

@@ -3,25 +3,25 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import * as resources from 'vs/base/common/resources';
 import * as assert from 'assert';
-import { TestEnvironmentService, TestLifecycleService, TestPathService, TestRemoteAgentService } from 'vs/workbench/test/browser/workbenchTestServices';
+import { sep } from 'vs/base/common/path';
+import { isWindows } from 'vs/base/common/platform';
+import * as resources from 'vs/base/common/resources';
 import { URI } from 'vs/base/common/uri';
-import { LabelService } from 'vs/workbench/services/label/common/labelService';
-import { TestContextService, TestStorageService } from 'vs/workbench/test/common/workbenchTestServices';
+import { ResourceLabelFormatter } from 'vs/platform/label/common/label';
+import { StorageScope, StorageTarget } from 'vs/platform/storage/common/storage';
 import { WorkspaceFolder } from 'vs/platform/workspace/common/workspace';
 import { TestWorkspace, Workspace } from 'vs/platform/workspace/test/common/testWorkspace';
-import { isWindows } from 'vs/base/common/platform';
-import { StorageScope, StorageTarget } from 'vs/platform/storage/common/storage';
 import { Memento } from 'vs/workbench/common/memento';
-import { ResourceLabelFormatter } from 'vs/platform/label/common/label';
-import { sep } from 'vs/base/common/path';
+import { LabelService } from 'vs/workbench/services/label/common/labelService';
+import { TestEnvironmentService, TestLifecycleService, TestPathService, TestRemoteAgentService } from 'vs/workbench/test/browser/workbenchTestServices';
+import { TestContextService, TestStorageService } from 'vs/workbench/test/common/workbenchTestServices';
 
-suite('URI Label', () => {
+describe('URI Label', () => {
 	let labelService: LabelService;
 	let storageService: TestStorageService;
 
-	setup(() => {
+	beforeEach(() => {
 		storageService = new TestStorageService();
 		labelService = new LabelService(TestEnvironmentService, new TestContextService(), new TestPathService(URI.file('/foobar')), new TestRemoteAgentService(), storageService, new TestLifecycleService());
 	});
@@ -223,10 +223,10 @@ suite('URI Label', () => {
 });
 
 
-suite('multi-root workspace', () => {
+describe('multi-root workspace', () => {
 	let labelService: LabelService;
 
-	setup(() => {
+	beforeEach(() => {
 		const sources = URI.file('folder1/src');
 		const tests = URI.file('folder1/test');
 		const other = URI.file('folder2');
@@ -341,10 +341,10 @@ suite('multi-root workspace', () => {
 	});
 });
 
-suite('workspace at FSP root', () => {
+describe('workspace at FSP root', () => {
 	let labelService: LabelService;
 
-	setup(() => {
+	beforeEach(() => {
 		const rootFolder = URI.parse('myscheme://myauthority/');
 
 		labelService = new LabelService(

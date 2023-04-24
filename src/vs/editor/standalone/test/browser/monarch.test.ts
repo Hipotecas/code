@@ -4,17 +4,17 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { LanguageService } from 'vs/editor/common/services/languageService';
-import { ILanguageService } from 'vs/editor/common/languages/language';
-import { MonarchTokenizer } from 'vs/editor/standalone/common/monarch/monarchLexer';
-import { compile } from 'vs/editor/standalone/common/monarch/monarchCompile';
-import { Token, TokenizationRegistry } from 'vs/editor/common/languages';
-import { IMonarchLanguage } from 'vs/editor/standalone/common/monarch/monarchTypes';
 import { DisposableStore } from 'vs/base/common/lifecycle';
-import { IConfigurationService } from 'vs/platform/configuration/common/configuration';
+import { Token, TokenizationRegistry } from 'vs/editor/common/languages';
+import { ILanguageService } from 'vs/editor/common/languages/language';
+import { LanguageService } from 'vs/editor/common/services/languageService';
 import { StandaloneConfigurationService } from 'vs/editor/standalone/browser/standaloneServices';
+import { compile } from 'vs/editor/standalone/common/monarch/monarchCompile';
+import { MonarchTokenizer } from 'vs/editor/standalone/common/monarch/monarchLexer';
+import { IMonarchLanguage } from 'vs/editor/standalone/common/monarch/monarchTypes';
+import { IConfigurationService } from 'vs/platform/configuration/common/configuration';
 
-suite('Monarch', () => {
+describe('Monarch', () => {
 
 	function createMonarchTokenizer(languageService: ILanguageService, languageId: string, language: IMonarchLanguage, configurationService: IConfigurationService): MonarchTokenizer {
 		return new MonarchTokenizer(languageService, null!, languageId, compile(languageId, language), configurationService);

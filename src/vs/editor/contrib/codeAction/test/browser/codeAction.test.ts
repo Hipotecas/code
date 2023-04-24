@@ -28,7 +28,7 @@ function staticCodeActionProvider(...actions: languages.CodeAction[]): languages
 }
 
 
-suite('CodeAction', () => {
+describe('CodeAction', () => {
 
 	const langId = 'fooLang';
 	const uri = URI.parse('untitled:path');
@@ -94,14 +94,14 @@ suite('CodeAction', () => {
 		}
 	};
 
-	setup(() => {
+	beforeEach(() => {
 		registry = new LanguageFeatureRegistry();
 		disposables.clear();
 		model = createTextModel('test1\ntest2\ntest3', langId, undefined, uri);
 		disposables.add(model);
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		disposables.clear();
 	});
 

@@ -4,26 +4,26 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { EditorResourceAccessor, SideBySideEditor, EditorInputWithPreferredResource, EditorInputCapabilities, isEditorIdentifier, IResourceDiffEditorInput, IUntitledTextResourceEditorInput, isResourceEditorInput, isUntitledResourceEditorInput, isResourceDiffEditorInput, isEditorInputWithOptionsAndGroup, EditorInputWithOptions, isEditorInputWithOptions, isEditorInput, EditorInputWithOptionsAndGroup, isResourceSideBySideEditorInput, IResourceSideBySideEditorInput, isTextEditorViewState, isResourceMergeEditorInput, IResourceMergeEditorInput } from 'vs/workbench/common/editor';
-import { DiffEditorInput } from 'vs/workbench/common/editor/diffEditorInput';
-import { URI } from 'vs/base/common/uri';
-import { IInstantiationService } from 'vs/platform/instantiation/common/instantiation';
-import { workbenchInstantiationService, TestServiceAccessor, TestEditorInput, registerTestEditor, registerTestFileEditor, registerTestResourceEditor, TestFileEditorInput, createEditorPart, registerTestSideBySideEditor } from 'vs/workbench/test/browser/workbenchTestServices';
-import { Schemas } from 'vs/base/common/network';
-import { UntitledTextEditorInput } from 'vs/workbench/services/untitled/common/untitledTextEditorInput';
 import { DisposableStore } from 'vs/base/common/lifecycle';
+import { Schemas } from 'vs/base/common/network';
+import { URI } from 'vs/base/common/uri';
 import { toResource } from 'vs/base/test/common/utils';
-import { SyncDescriptor } from 'vs/platform/instantiation/common/descriptors';
-import { whenEditorClosed } from 'vs/workbench/browser/editor';
-import { IEditorGroupsService } from 'vs/workbench/services/editor/common/editorGroupsService';
-import { EditorService } from 'vs/workbench/services/editor/browser/editorService';
-import { IEditorService } from 'vs/workbench/services/editor/common/editorService';
-import { SideBySideEditorInput } from 'vs/workbench/common/editor/sideBySideEditorInput';
-import { EditorResolution, IResourceEditorInput } from 'vs/platform/editor/common/editor';
-import { ICodeEditorViewState, IDiffEditorViewState } from 'vs/editor/common/editorCommon';
 import { Position } from 'vs/editor/common/core/position';
+import { ICodeEditorViewState, IDiffEditorViewState } from 'vs/editor/common/editorCommon';
+import { EditorResolution, IResourceEditorInput } from 'vs/platform/editor/common/editor';
+import { SyncDescriptor } from 'vs/platform/instantiation/common/descriptors';
+import { IInstantiationService } from 'vs/platform/instantiation/common/instantiation';
+import { whenEditorClosed } from 'vs/workbench/browser/editor';
+import { EditorInputCapabilities, EditorInputWithOptions, EditorInputWithOptionsAndGroup, EditorInputWithPreferredResource, EditorResourceAccessor, IResourceDiffEditorInput, IResourceMergeEditorInput, IResourceSideBySideEditorInput, IUntitledTextResourceEditorInput, SideBySideEditor, isEditorIdentifier, isEditorInput, isEditorInputWithOptions, isEditorInputWithOptionsAndGroup, isResourceDiffEditorInput, isResourceEditorInput, isResourceMergeEditorInput, isResourceSideBySideEditorInput, isTextEditorViewState, isUntitledResourceEditorInput } from 'vs/workbench/common/editor';
+import { DiffEditorInput } from 'vs/workbench/common/editor/diffEditorInput';
+import { SideBySideEditorInput } from 'vs/workbench/common/editor/sideBySideEditorInput';
+import { EditorService } from 'vs/workbench/services/editor/browser/editorService';
+import { IEditorGroupsService } from 'vs/workbench/services/editor/common/editorGroupsService';
+import { IEditorService } from 'vs/workbench/services/editor/common/editorService';
+import { UntitledTextEditorInput } from 'vs/workbench/services/untitled/common/untitledTextEditorInput';
+import { TestEditorInput, TestFileEditorInput, TestServiceAccessor, createEditorPart, registerTestEditor, registerTestFileEditor, registerTestResourceEditor, registerTestSideBySideEditor, workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
 
-suite('Workbench editor utils', () => {
+describe('Workbench editor utils', () => {
 
 	class TestEditorInputWithPreferredResource extends TestEditorInput implements EditorInputWithPreferredResource {
 
@@ -51,7 +51,7 @@ suite('Workbench editor utils', () => {
 		return instantiationService.createInstance(TestServiceAccessor);
 	}
 
-	setup(() => {
+	beforeEach(() => {
 		instantiationService = workbenchInstantiationService(undefined, disposables);
 		accessor = instantiationService.createInstance(TestServiceAccessor);
 
@@ -61,7 +61,7 @@ suite('Workbench editor utils', () => {
 		disposables.add(registerTestEditor(TEST_EDITOR_ID, [new SyncDescriptor(TestFileEditorInput)]));
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		accessor.untitledTextEditorService.dispose();
 
 		disposables.clear();

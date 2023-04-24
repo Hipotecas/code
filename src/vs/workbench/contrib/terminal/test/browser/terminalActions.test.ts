@@ -26,14 +26,14 @@ function makePair(folder: IWorkspaceFolder, cwd?: URI | IWorkspaceFolder, isAbso
 	};
 }
 
-suite('terminalActions', () => {
+describe('terminalActions', () => {
 	const root: URI = URI.file('/some-root');
 	const a = makeFakeFolder('a', URI.joinPath(root, 'a'));
 	const b = makeFakeFolder('b', URI.joinPath(root, 'b'));
 	const c = makeFakeFolder('c', URI.joinPath(root, 'c'));
 	const d = makeFakeFolder('d', URI.joinPath(root, 'd'));
 
-	suite('shrinkWorkspaceFolderCwdPairs', () => {
+	describe('shrinkWorkspaceFolderCwdPairs', () => {
 		test('should return empty when given array is empty', () => {
 			deepStrictEqual(shrinkWorkspaceFolderCwdPairs([]), []);
 		});
@@ -48,7 +48,7 @@ suite('terminalActions', () => {
 			deepStrictEqual(shrinkWorkspaceFolderCwdPairs(pairs), pairs);
 		});
 
-		suite('should select the pair that has the same URI when repeated cwds exist', () => {
+		describe('should select the pair that has the same URI when repeated cwds exist', () => {
 			test('all repeated', () => {
 				const pairA = makePair(a);
 				const pairB = makePair(b, a); // CWD points to A

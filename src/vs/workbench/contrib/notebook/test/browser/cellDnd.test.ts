@@ -3,11 +3,11 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
+import * as assert from 'assert';
 import { performCellDropEdits } from 'vs/workbench/contrib/notebook/browser/view/cellParts/cellDnd';
 import { CellKind } from 'vs/workbench/contrib/notebook/common/notebookCommon';
-import { withTestNotebook } from 'vs/workbench/contrib/notebook/test/browser/testNotebookEditor';
-import * as assert from 'assert';
 import { ICellRange } from 'vs/workbench/contrib/notebook/common/notebookRange';
+import { withTestNotebook } from 'vs/workbench/contrib/notebook/test/browser/testNotebookEditor';
 
 interface IBeginningState {
 	startOrder: string[];
@@ -45,7 +45,7 @@ async function testCellDnd(beginning: IBeginningState, dragAction: IDragAction, 
 		});
 }
 
-suite('cellDND', () => {
+describe('cellDND', () => {
 	test('drag 1 cell', async () => {
 		await testCellDnd(
 			{

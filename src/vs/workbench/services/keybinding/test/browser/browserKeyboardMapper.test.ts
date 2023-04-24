@@ -3,19 +3,19 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import * as assert from 'assert';
-import 'vs/workbench/services/keybinding/browser/keyboardLayouts/en.darwin';
-import 'vs/workbench/services/keybinding/browser/keyboardLayouts/de.darwin';
-import { KeyboardLayoutContribution } from 'vs/workbench/services/keybinding/browser/keyboardLayouts/_.contribution';
-import { BrowserKeyboardMapperFactoryBase } from 'vs/workbench/services/keybinding/browser/keyboardLayoutService';
-import { KeymapInfo, IKeymapInfo } from 'vs/workbench/services/keybinding/common/keymapInfo';
-import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
-import { INotificationService } from 'vs/platform/notification/common/notification';
 import { ICommandService } from 'vs/platform/commands/common/commands';
-import { IStorageService } from 'vs/platform/storage/common/storage';
-import { TestNotificationService } from 'vs/platform/notification/test/common/testNotificationService';
-import { TestStorageService } from 'vs/workbench/test/common/workbenchTestServices';
 import { IConfigurationService } from 'vs/platform/configuration/common/configuration';
 import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
+import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
+import { INotificationService } from 'vs/platform/notification/common/notification';
+import { TestNotificationService } from 'vs/platform/notification/test/common/testNotificationService';
+import { IStorageService } from 'vs/platform/storage/common/storage';
+import { BrowserKeyboardMapperFactoryBase } from 'vs/workbench/services/keybinding/browser/keyboardLayoutService';
+import { KeyboardLayoutContribution } from 'vs/workbench/services/keybinding/browser/keyboardLayouts/_.contribution';
+import 'vs/workbench/services/keybinding/browser/keyboardLayouts/de.darwin';
+import 'vs/workbench/services/keybinding/browser/keyboardLayouts/en.darwin';
+import { IKeymapInfo, KeymapInfo } from 'vs/workbench/services/keybinding/common/keymapInfo';
+import { TestStorageService } from 'vs/workbench/test/common/workbenchTestServices';
 
 class TestKeyboardMapperFactory extends BrowserKeyboardMapperFactoryBase {
 	constructor(configurationService: IConfigurationService, notificationService: INotificationService, storageService: IStorageService, commandService: ICommandService) {
@@ -34,7 +34,7 @@ class TestKeyboardMapperFactory extends BrowserKeyboardMapperFactoryBase {
 	}
 }
 
-suite('keyboard layout loader', () => {
+describe('keyboard layout loader', () => {
 	const instantiationService: TestInstantiationService = new TestInstantiationService();
 	const notitifcationService = instantiationService.stub(INotificationService, new TestNotificationService());
 	const storageService = instantiationService.stub(IStorageService, new TestStorageService());

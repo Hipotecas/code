@@ -27,11 +27,11 @@ class TestUserDataAutoSyncService extends UserDataAutoSyncService {
 	}
 }
 
-suite('UserDataAutoSyncService', () => {
+describe('UserDataAutoSyncService', () => {
 
 	const disposableStore = new DisposableStore();
 
-	teardown(() => disposableStore.clear());
+	afterEach(() => disposableStore.clear());
 
 	test('test auto sync with sync resource change triggers sync', async () => {
 		await runWithFakedTimers({}, async () => {

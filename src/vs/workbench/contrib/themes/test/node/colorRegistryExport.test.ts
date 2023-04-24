@@ -7,7 +7,7 @@ import { Color } from 'vs/base/common/color';
 import { Registry } from 'vs/platform/registry/common/platform';
 import { Extensions, IColorRegistry } from 'vs/platform/theme/common/colorRegistry';
 
-suite('ColorRegistry', () => {
+describe('ColorRegistry', () => {
 	if (process.env.VSCODE_COLOR_REGISTRY_EXPORT) {
 		test('exports', () => {
 			const themingRegistry = Registry.as<IColorRegistry>(Extensions.ColorContribution);

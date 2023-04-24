@@ -8,9 +8,9 @@ import { isEqual, isEqualOrParent } from 'vs/base/common/extpath';
 import { isLinux, isMacintosh, isWindows } from 'vs/base/common/platform';
 import { URI } from 'vs/base/common/uri';
 import { toResource } from 'vs/base/test/common/utils';
-import { FileChangesEvent, FileChangeType, isParent } from 'vs/platform/files/common/files';
+import { FileChangeType, FileChangesEvent, isParent } from 'vs/platform/files/common/files';
 
-suite('Files', () => {
+describe('Files', () => {
 
 	test('FileChangesEvent - basics', function () {
 		const changes = [

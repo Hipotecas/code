@@ -4,12 +4,12 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { Extensions as ThemeingExtensions, IColorRegistry, ColorIdentifier } from 'vs/platform/theme/common/colorRegistry';
-import { Registry } from 'vs/platform/registry/common/platform';
-import { ansiColorIdentifiers, registerColors } from 'vs/workbench/contrib/terminal/common/terminalColorRegistry';
-import { IColorTheme } from 'vs/platform/theme/common/themeService';
 import { Color } from 'vs/base/common/color';
+import { Registry } from 'vs/platform/registry/common/platform';
+import { ColorIdentifier, IColorRegistry, Extensions as ThemeingExtensions } from 'vs/platform/theme/common/colorRegistry';
 import { ColorScheme } from 'vs/platform/theme/common/theme';
+import { IColorTheme } from 'vs/platform/theme/common/themeService';
+import { ansiColorIdentifiers, registerColors } from 'vs/workbench/contrib/terminal/common/terminalColorRegistry';
 
 registerColors();
 
@@ -28,7 +28,7 @@ function getMockTheme(type: ColorScheme): IColorTheme {
 	return theme;
 }
 
-suite('Workbench - TerminalColorRegistry', () => {
+describe('Workbench - TerminalColorRegistry', () => {
 
 	test('hc colors', function () {
 		const theme = getMockTheme(ColorScheme.HIGH_CONTRAST_DARK);

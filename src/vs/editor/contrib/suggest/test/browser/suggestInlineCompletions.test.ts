@@ -22,7 +22,7 @@ import { ServiceCollection } from 'vs/platform/instantiation/common/serviceColle
 import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
 
 
-suite('Suggest Inline Completions', function () {
+describe('Suggest Inline Completions', function () {
 
 	const disposables = new DisposableStore();
 	const services = new ServiceCollection([ISuggestMemoryService, new class extends mock<ISuggestMemoryService>() {
@@ -35,7 +35,7 @@ suite('Suggest Inline Completions', function () {
 	let model: TextModel;
 	let editor: ITestCodeEditor;
 
-	setup(function () {
+	beforeEach(function () {
 
 		insta = createCodeEditorServices(disposables, services);
 		model = createTextModel('he', undefined, undefined, URI.from({ scheme: 'foo', path: 'foo.bar' }));
@@ -63,7 +63,7 @@ suite('Suggest Inline Completions', function () {
 		});
 	});
 
-	teardown(function () {
+	afterEach(function () {
 		disposables.clear();
 		model.dispose();
 		editor.dispose();

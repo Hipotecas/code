@@ -14,7 +14,7 @@ import { FindModelBoundToEditorModel } from 'vs/editor/contrib/find/browser/find
 import { FindReplaceState } from 'vs/editor/contrib/find/browser/findState';
 import { withTestCodeEditor } from 'vs/editor/test/browser/testCodeEditor';
 
-suite('FindModel', () => {
+describe('FindModel', () => {
 
 	function findTest(testName: string, callback: (editor: IActiveCodeEditor) => void): void {
 		test(testName, () => {

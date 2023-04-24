@@ -5,52 +5,52 @@
 
 import * as assert from 'assert';
 import * as sinon from 'sinon';
-import { URI } from 'vs/base/common/uri';
-import { Registry } from 'vs/platform/registry/common/platform';
-import { IEnvironmentService } from 'vs/platform/environment/common/environment';
-import { IConfigurationRegistry, Extensions as ConfigurationExtensions, ConfigurationScope, keyFromOverrideIdentifiers } from 'vs/platform/configuration/common/configurationRegistry';
-import { WorkspaceService } from 'vs/workbench/services/configuration/browser/configurationService';
-import { ConfigurationEditingErrorCode } from 'vs/workbench/services/configuration/common/configurationEditing';
-import { IFileService } from 'vs/platform/files/common/files';
-import { IWorkspaceContextService, WorkbenchState, IWorkspaceFoldersChangeEvent, ISingleFolderWorkspaceIdentifier, IWorkspaceIdentifier } from 'vs/platform/workspace/common/workspace';
-import { ConfigurationTarget, IConfigurationService, IConfigurationChangeEvent } from 'vs/platform/configuration/common/configuration';
-import { workbenchInstantiationService, RemoteFileSystemProvider, TestEnvironmentService, TestTextFileService } from 'vs/workbench/test/browser/workbenchTestServices';
-import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
-import { ITextFileService } from 'vs/workbench/services/textfile/common/textfiles';
-import { ITextModelService } from 'vs/editor/common/services/resolverService';
-import { TextModelResolverService } from 'vs/workbench/services/textmodelResolver/common/textModelResolverService';
-import { IJSONEditingService } from 'vs/workbench/services/configuration/common/jsonEditing';
-import { JSONEditingService } from 'vs/workbench/services/configuration/common/jsonEditingService';
-import { Schemas } from 'vs/base/common/network';
-import { joinPath, dirname, basename } from 'vs/base/common/resources';
-import { isLinux, isMacintosh } from 'vs/base/common/platform';
-import { IRemoteAgentService } from 'vs/workbench/services/remote/common/remoteAgentService';
-import { FileService } from 'vs/platform/files/common/fileService';
-import { NullLogService } from 'vs/platform/log/common/log';
-import { IRemoteAgentEnvironment } from 'vs/platform/remote/common/remoteAgentEnvironment';
-import { IConfigurationCache } from 'vs/workbench/services/configuration/common/configuration';
-import { SignService } from 'vs/platform/sign/browser/signService';
-import { FileUserDataProvider } from 'vs/platform/userData/common/fileUserDataProvider';
-import { IKeybindingEditingService, KeybindingsEditingService } from 'vs/workbench/services/keybinding/common/keybindingEditing';
-import { IWorkbenchEnvironmentService } from 'vs/workbench/services/environment/common/environmentService';
 import { timeout } from 'vs/base/common/async';
 import { VSBuffer } from 'vs/base/common/buffer';
-import { DisposableStore } from 'vs/base/common/lifecycle';
 import { Event } from 'vs/base/common/event';
-import { UriIdentityService } from 'vs/platform/uriIdentity/common/uriIdentityService';
-import { InMemoryFileSystemProvider } from 'vs/platform/files/common/inMemoryFilesystemProvider';
-import { BrowserWorkbenchEnvironmentService } from 'vs/workbench/services/environment/browser/environmentService';
-import { RemoteAgentService } from 'vs/workbench/services/remote/browser/remoteAgentService';
-import { RemoteAuthorityResolverService } from 'vs/platform/remote/browser/remoteAuthorityResolverService';
 import { hash } from 'vs/base/common/hash';
-import { TestProductService } from 'vs/workbench/test/common/workbenchTestServices';
-import { IUserDataProfilesService, toUserDataProfile, UserDataProfilesService } from 'vs/platform/userDataProfile/common/userDataProfile';
-import { NullPolicyService } from 'vs/platform/policy/common/policy';
-import { FilePolicyService } from 'vs/platform/policy/common/filePolicyService';
+import { DisposableStore } from 'vs/base/common/lifecycle';
+import { Schemas } from 'vs/base/common/network';
+import { isLinux, isMacintosh } from 'vs/base/common/platform';
+import { basename, dirname, joinPath } from 'vs/base/common/resources';
+import { URI } from 'vs/base/common/uri';
 import { runWithFakedTimers } from 'vs/base/test/common/timeTravelScheduler';
-import { UserDataProfileService } from 'vs/workbench/services/userDataProfile/common/userDataProfileService';
-import { IUserDataProfileService } from 'vs/workbench/services/userDataProfile/common/userDataProfile';
+import { ITextModelService } from 'vs/editor/common/services/resolverService';
+import { ConfigurationTarget, IConfigurationChangeEvent, IConfigurationService } from 'vs/platform/configuration/common/configuration';
+import { Extensions as ConfigurationExtensions, ConfigurationScope, IConfigurationRegistry, keyFromOverrideIdentifiers } from 'vs/platform/configuration/common/configurationRegistry';
+import { IEnvironmentService } from 'vs/platform/environment/common/environment';
+import { FileService } from 'vs/platform/files/common/fileService';
+import { IFileService } from 'vs/platform/files/common/files';
+import { InMemoryFileSystemProvider } from 'vs/platform/files/common/inMemoryFilesystemProvider';
+import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
+import { NullLogService } from 'vs/platform/log/common/log';
+import { FilePolicyService } from 'vs/platform/policy/common/filePolicyService';
+import { NullPolicyService } from 'vs/platform/policy/common/policy';
+import { Registry } from 'vs/platform/registry/common/platform';
+import { RemoteAuthorityResolverService } from 'vs/platform/remote/browser/remoteAuthorityResolverService';
+import { IRemoteAgentEnvironment } from 'vs/platform/remote/common/remoteAgentEnvironment';
+import { SignService } from 'vs/platform/sign/browser/signService';
+import { UriIdentityService } from 'vs/platform/uriIdentity/common/uriIdentityService';
+import { FileUserDataProvider } from 'vs/platform/userData/common/fileUserDataProvider';
+import { IUserDataProfilesService, UserDataProfilesService, toUserDataProfile } from 'vs/platform/userDataProfile/common/userDataProfile';
+import { ISingleFolderWorkspaceIdentifier, IWorkspaceContextService, IWorkspaceFoldersChangeEvent, IWorkspaceIdentifier, WorkbenchState } from 'vs/platform/workspace/common/workspace';
 import { TasksSchemaProperties } from 'vs/workbench/contrib/tasks/common/tasks';
+import { WorkspaceService } from 'vs/workbench/services/configuration/browser/configurationService';
+import { IConfigurationCache } from 'vs/workbench/services/configuration/common/configuration';
+import { ConfigurationEditingErrorCode } from 'vs/workbench/services/configuration/common/configurationEditing';
+import { IJSONEditingService } from 'vs/workbench/services/configuration/common/jsonEditing';
+import { JSONEditingService } from 'vs/workbench/services/configuration/common/jsonEditingService';
+import { BrowserWorkbenchEnvironmentService } from 'vs/workbench/services/environment/browser/environmentService';
+import { IWorkbenchEnvironmentService } from 'vs/workbench/services/environment/common/environmentService';
+import { IKeybindingEditingService, KeybindingsEditingService } from 'vs/workbench/services/keybinding/common/keybindingEditing';
+import { RemoteAgentService } from 'vs/workbench/services/remote/browser/remoteAgentService';
+import { IRemoteAgentService } from 'vs/workbench/services/remote/common/remoteAgentService';
+import { ITextFileService } from 'vs/workbench/services/textfile/common/textfiles';
+import { TextModelResolverService } from 'vs/workbench/services/textmodelResolver/common/textModelResolverService';
+import { IUserDataProfileService } from 'vs/workbench/services/userDataProfile/common/userDataProfile';
+import { UserDataProfileService } from 'vs/workbench/services/userDataProfile/common/userDataProfileService';
+import { RemoteFileSystemProvider, TestEnvironmentService, TestTextFileService, workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
+import { TestProductService } from 'vs/workbench/test/common/workbenchTestServices';
 
 function convertToWorkspacePayload(folder: URI): ISingleFolderWorkspaceIdentifier {
 	return {
@@ -68,14 +68,14 @@ class ConfigurationCache implements IConfigurationCache {
 
 const ROOT = URI.file('tests').with({ scheme: 'vscode-tests' });
 
-suite('WorkspaceContextService - Folder', () => {
+describe('WorkspaceContextService - Folder', () => {
 
 	const folderName = 'Folder A';
 	let folder: URI;
 	let testObject: WorkspaceService;
 	const disposables = new DisposableStore();
 
-	setup(async () => {
+	beforeEach(async () => {
 		const logService = new NullLogService();
 		const fileService = disposables.add(new FileService(logService));
 		const fileSystemProvider = disposables.add(new InMemoryFileSystemProvider());
@@ -93,7 +93,7 @@ suite('WorkspaceContextService - Folder', () => {
 		await (<WorkspaceService>testObject).initialize(convertToWorkspacePayload(folder));
 	});
 
-	teardown(() => disposables.clear());
+	afterEach(() => disposables.clear());
 
 	test('getWorkspace()', () => {
 		const actual = testObject.getWorkspace();
@@ -175,12 +175,12 @@ suite('WorkspaceContextService - Folder', () => {
 	test('workspace is complete', () => testObject.getCompleteWorkspace());
 });
 
-suite('WorkspaceContextService - Workspace', () => {
+describe('WorkspaceContextService - Workspace', () => {
 
 	let testObject: WorkspaceService;
 	const disposables = new DisposableStore();
 
-	setup(async () => {
+	beforeEach(async () => {
 		const logService = new NullLogService();
 		const fileService = disposables.add(new FileService(logService));
 		const fileSystemProvider = disposables.add(new InMemoryFileSystemProvider());
@@ -214,7 +214,7 @@ suite('WorkspaceContextService - Workspace', () => {
 		testObject.acquireInstantiationService(instantiationService);
 	});
 
-	teardown(() => disposables.clear());
+	afterEach(() => disposables.clear());
 
 	test('workspace folders', () => {
 		const actual = testObject.getWorkspace().folders;
@@ -235,12 +235,12 @@ suite('WorkspaceContextService - Workspace', () => {
 
 });
 
-suite('WorkspaceContextService - Workspace Editing', () => {
+describe('WorkspaceContextService - Workspace Editing', () => {
 
 	let testObject: WorkspaceService, fileService: IFileService;
 	const disposables = new DisposableStore();
 
-	setup(async () => {
+	beforeEach(async () => {
 		const logService = new NullLogService();
 		fileService = disposables.add(new FileService(logService));
 		const fileSystemProvider = disposables.add(new InMemoryFileSystemProvider());
@@ -278,7 +278,7 @@ suite('WorkspaceContextService - Workspace Editing', () => {
 		testObject.acquireInstantiationService(instantiationService);
 	});
 
-	teardown(() => disposables.clear());
+	afterEach(() => disposables.clear());
 
 	test('add folders', () => runWithFakedTimers<void>({ useFakeTimers: true }, async () => {
 		await testObject.addFolders([{ uri: joinPath(ROOT, 'd') }, { uri: joinPath(ROOT, 'c') }]);
@@ -461,13 +461,13 @@ suite('WorkspaceContextService - Workspace Editing', () => {
 
 });
 
-suite('WorkspaceService - Initialization', () => {
+describe('WorkspaceService - Initialization', () => {
 
 	let configResource: URI, testObject: WorkspaceService, fileService: IFileService, environmentService: BrowserWorkbenchEnvironmentService, userDataProfileService: IUserDataProfileService;
 	const configurationRegistry = Registry.as<IConfigurationRegistry>(ConfigurationExtensions.Configuration);
 	const disposables = new DisposableStore();
 
-	suiteSetup(() => {
+	describeSetup(() => {
 		configurationRegistry.registerConfiguration({
 			'id': '_test',
 			'type': 'object',
@@ -486,7 +486,7 @@ suite('WorkspaceService - Initialization', () => {
 		});
 	});
 
-	setup(async () => {
+	beforeEach(async () => {
 		const logService = new NullLogService();
 		fileService = disposables.add(new FileService(logService));
 		const fileSystemProvider = disposables.add(new InMemoryFileSystemProvider());
@@ -523,7 +523,7 @@ suite('WorkspaceService - Initialization', () => {
 		testObject.acquireInstantiationService(instantiationService);
 	});
 
-	teardown(() => disposables.clear());
+	afterEach(() => disposables.clear());
 
 	(isMacintosh ? test.skip : test)('initialize a folder workspace from an empty workspace with no configuration changes', () => runWithFakedTimers<void>({ useFakeTimers: true }, async () => {
 
@@ -693,13 +693,13 @@ suite('WorkspaceService - Initialization', () => {
 
 });
 
-suite('WorkspaceConfigurationService - Folder', () => {
+describe('WorkspaceConfigurationService - Folder', () => {
 
 	let testObject: WorkspaceService, workspaceService: WorkspaceService, fileService: IFileService, environmentService: IWorkbenchEnvironmentService, userDataProfileService: IUserDataProfileService, instantiationService: TestInstantiationService;
 	const configurationRegistry = Registry.as<IConfigurationRegistry>(ConfigurationExtensions.Configuration);
 	const disposables: DisposableStore = new DisposableStore();
 
-	suiteSetup(() => {
+	describeSetup(() => {
 		configurationRegistry.registerConfiguration({
 			'id': '_test',
 			'type': 'object',
@@ -754,7 +754,7 @@ suite('WorkspaceConfigurationService - Folder', () => {
 		}]);
 	});
 
-	setup(async () => {
+	beforeEach(async () => {
 		const logService = new NullLogService();
 		fileService = disposables.add(new FileService(logService));
 		const fileSystemProvider = disposables.add(new InMemoryFileSystemProvider());
@@ -785,7 +785,7 @@ suite('WorkspaceConfigurationService - Folder', () => {
 		workspaceService.acquireInstantiationService(instantiationService);
 	});
 
-	teardown(() => disposables.clear());
+	afterEach(() => disposables.clear());
 
 	test('defaults', () => {
 		assert.deepStrictEqual(testObject.getValue('configurationService'), { 'folder': { 'applicationSetting': 'isSet', 'machineSetting': 'isSet', 'machineOverridableSetting': 'isSet', 'testSetting': 'isSet', 'languageSetting': 'isSet', 'restrictedSetting': 'isSet', 'policySetting': 'isSet' } });
@@ -1517,13 +1517,13 @@ suite('WorkspaceConfigurationService - Folder', () => {
 	}));
 });
 
-suite('WorkspaceConfigurationService - Profiles', () => {
+describe('WorkspaceConfigurationService - Profiles', () => {
 
 	let testObject: WorkspaceService, workspaceService: WorkspaceService, fileService: IFileService, environmentService: IWorkbenchEnvironmentService, userDataProfileService: IUserDataProfileService, instantiationService: TestInstantiationService;
 	const configurationRegistry = Registry.as<IConfigurationRegistry>(ConfigurationExtensions.Configuration);
 	const disposables: DisposableStore = new DisposableStore();
 
-	suiteSetup(() => {
+	describeSetup(() => {
 		configurationRegistry.registerConfiguration({
 			'id': '_test',
 			'type': 'object',
@@ -1550,7 +1550,7 @@ suite('WorkspaceConfigurationService - Profiles', () => {
 		});
 	});
 
-	setup(async () => {
+	beforeEach(async () => {
 		const logService = new NullLogService();
 		fileService = disposables.add(new FileService(logService));
 		const fileSystemProvider = disposables.add(new InMemoryFileSystemProvider());
@@ -1583,7 +1583,7 @@ suite('WorkspaceConfigurationService - Profiles', () => {
 		workspaceService.acquireInstantiationService(instantiationService);
 	});
 
-	teardown(() => disposables.clear());
+	afterEach(() => disposables.clear());
 
 	test('initialize', () => runWithFakedTimers<void>({ useFakeTimers: true }, async () => {
 		assert.strictEqual(testObject.getValue('configurationService.profiles.applicationSetting2'), 'applicationValue');
@@ -1726,13 +1726,13 @@ suite('WorkspaceConfigurationService - Profiles', () => {
 
 });
 
-suite('WorkspaceConfigurationService-Multiroot', () => {
+describe('WorkspaceConfigurationService-Multiroot', () => {
 
 	let workspaceContextService: IWorkspaceContextService, jsonEditingServce: IJSONEditingService, testObject: WorkspaceService, fileService: IFileService, environmentService: BrowserWorkbenchEnvironmentService, userDataProfileService: IUserDataProfileService;
 	const configurationRegistry = Registry.as<IConfigurationRegistry>(ConfigurationExtensions.Configuration);
 	const disposables = new DisposableStore();
 
-	suiteSetup(() => {
+	describeSetup(() => {
 		configurationRegistry.registerConfiguration({
 			'id': '_test',
 			'type': 'object',
@@ -1782,7 +1782,7 @@ suite('WorkspaceConfigurationService-Multiroot', () => {
 		});
 	});
 
-	setup(async () => {
+	beforeEach(async () => {
 		const logService = new NullLogService();
 		fileService = disposables.add(new FileService(logService));
 		const fileSystemProvider = disposables.add(new InMemoryFileSystemProvider());
@@ -1827,7 +1827,7 @@ suite('WorkspaceConfigurationService-Multiroot', () => {
 		testObject = workspaceService;
 	});
 
-	teardown(() => disposables.clear());
+	afterEach(() => disposables.clear());
 
 	test('application settings are not read from workspace', () => runWithFakedTimers<void>({ useFakeTimers: true }, async () => {
 		await fileService.writeFile(userDataProfileService.currentProfile.settingsResource, VSBuffer.fromString('{ "configurationService.folder.applicationSetting": "userValue" }'));
@@ -2488,7 +2488,7 @@ suite('WorkspaceConfigurationService-Multiroot', () => {
 
 });
 
-suite('WorkspaceConfigurationService - Remote Folder', () => {
+describe('WorkspaceConfigurationService - Remote Folder', () => {
 
 	let testObject: WorkspaceService, folder: URI,
 		machineSettingsResource: URI, remoteSettingsResource: URI, fileSystemProvider: InMemoryFileSystemProvider, resolveRemoteEnvironment: () => void,
@@ -2497,7 +2497,7 @@ suite('WorkspaceConfigurationService - Remote Folder', () => {
 	const configurationRegistry = Registry.as<IConfigurationRegistry>(ConfigurationExtensions.Configuration);
 	const disposables = new DisposableStore();
 
-	suiteSetup(() => {
+	describeSetup(() => {
 		configurationRegistry.registerConfiguration({
 			'id': '_test',
 			'type': 'object',
@@ -2526,7 +2526,7 @@ suite('WorkspaceConfigurationService - Remote Folder', () => {
 		});
 	});
 
-	setup(async () => {
+	beforeEach(async () => {
 		const logService = new NullLogService();
 		fileService = disposables.add(new FileService(logService));
 		fileSystemProvider = disposables.add(new InMemoryFileSystemProvider());
@@ -2576,7 +2576,7 @@ suite('WorkspaceConfigurationService - Remote Folder', () => {
 		});
 	}
 
-	teardown(() => disposables.clear());
+	afterEach(() => disposables.clear());
 
 	test('remote settings override globals', () => runWithFakedTimers<void>({ useFakeTimers: true }, async () => {
 		await fileService.writeFile(machineSettingsResource, VSBuffer.fromString('{ "configurationService.remote.machineSetting": "remoteValue" }'));

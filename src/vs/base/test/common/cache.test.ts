@@ -7,7 +7,7 @@ import * as assert from 'assert';
 import { timeout } from 'vs/base/common/async';
 import { Cache } from 'vs/base/common/cache';
 
-suite('Cache', () => {
+describe('Cache', () => {
 
 	test('simple value', () => {
 		let counter = 0;

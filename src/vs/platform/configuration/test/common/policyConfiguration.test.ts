@@ -4,23 +4,23 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { DisposableStore } from 'vs/base/common/lifecycle';
+import { VSBuffer } from 'vs/base/common/buffer';
 import { Event } from 'vs/base/common/event';
+import { DisposableStore } from 'vs/base/common/lifecycle';
+import { deepClone } from 'vs/base/common/objects';
 import { URI } from 'vs/base/common/uri';
+import { runWithFakedTimers } from 'vs/base/test/common/timeTravelScheduler';
+import { Extensions, IConfigurationNode, IConfigurationRegistry } from 'vs/platform/configuration/common/configurationRegistry';
 import { DefaultConfiguration, PolicyConfiguration } from 'vs/platform/configuration/common/configurations';
-import { IFileService } from 'vs/platform/files/common/files';
 import { FileService } from 'vs/platform/files/common/fileService';
+import { IFileService } from 'vs/platform/files/common/files';
 import { InMemoryFileSystemProvider } from 'vs/platform/files/common/inMemoryFilesystemProvider';
 import { NullLogService } from 'vs/platform/log/common/log';
-import { Extensions, IConfigurationNode, IConfigurationRegistry } from 'vs/platform/configuration/common/configurationRegistry';
-import { Registry } from 'vs/platform/registry/common/platform';
-import { VSBuffer } from 'vs/base/common/buffer';
-import { deepClone } from 'vs/base/common/objects';
-import { IPolicyService } from 'vs/platform/policy/common/policy';
 import { FilePolicyService } from 'vs/platform/policy/common/filePolicyService';
-import { runWithFakedTimers } from 'vs/base/test/common/timeTravelScheduler';
+import { IPolicyService } from 'vs/platform/policy/common/policy';
+import { Registry } from 'vs/platform/registry/common/platform';
 
-suite('PolicyConfiguration', () => {
+describe('PolicyConfiguration', () => {
 
 	let testObject: PolicyConfiguration;
 	let fileService: IFileService;
@@ -56,10 +56,10 @@ suite('PolicyConfiguration', () => {
 		}
 	};
 
-	suiteSetup(() => Registry.as<IConfigurationRegistry>(Extensions.Configuration).registerConfiguration(policyConfigurationNode));
-	suiteTeardown(() => Registry.as<IConfigurationRegistry>(Extensions.Configuration).deregisterConfigurations([policyConfigurationNode]));
+	describeSetup(() => Registry.as<IConfigurationRegistry>(Extensions.Configuration).registerConfiguration(policyConfigurationNode));
+	describeTeardown(() => Registry.as<IConfigurationRegistry>(Extensions.Configuration).deregisterConfigurations([policyConfigurationNode]));
 
-	setup(async () => {
+	beforeEach(async () => {
 		const defaultConfiguration = disposables.add(new DefaultConfiguration());
 		await defaultConfiguration.initialize();
 		fileService = disposables.add(new FileService(new NullLogService()));
@@ -69,7 +69,7 @@ suite('PolicyConfiguration', () => {
 		testObject = disposables.add(new PolicyConfiguration(defaultConfiguration, policyService, new NullLogService()));
 	});
 
-	teardown(() => disposables.clear());
+	afterEach(() => disposables.clear());
 
 	test('initialize: with policies', async () => {
 		await fileService.writeFile(policyFile, VSBuffer.fromString(JSON.stringify({ 'PolicySettingA': 'policyValueA' })));

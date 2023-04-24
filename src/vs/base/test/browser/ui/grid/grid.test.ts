@@ -29,10 +29,10 @@ import { nodesToArrays, TestView } from './util';
 //    | +-5
 //    +-3
 
-suite('Grid', function () {
+describe('Grid', function () {
 	let container: HTMLElement;
 
-	setup(function () {
+	beforeEach(function () {
 		container = document.createElement('div');
 		container.style.position = 'absolute';
 		container.style.width = `${800}px`;
@@ -506,11 +506,11 @@ function nodesToNames(node: GridNode<TestSerializableView>): any {
 	}
 }
 
-suite('SerializableGrid', function () {
+describe('SerializableGrid', function () {
 
 	let container: HTMLElement;
 
-	setup(function () {
+	beforeEach(function () {
 		container = document.createElement('div');
 		container.style.position = 'absolute';
 		container.style.width = `${800}px`;

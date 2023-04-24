@@ -9,8 +9,8 @@ import { FindMatch, ITextModel } from 'vs/editor/common/model';
 import { ISearchRange, ITextQuery, ITextSearchContext, QueryType } from 'vs/workbench/services/search/common/search';
 import { addContextToEditorMatches, editorMatchesToTextSearchResults } from 'vs/workbench/services/search/common/searchHelpers';
 
-suite('SearchHelpers', () => {
-	suite('editorMatchesToTextSearchResults', () => {
+describe('SearchHelpers', () => {
+	describe('editorMatchesToTextSearchResults', () => {
 		const mockTextModel: ITextModel = <ITextModel>{
 			getLineContent(lineNumber: number): string {
 				return '' + lineNumber;
@@ -71,7 +71,7 @@ suite('SearchHelpers', () => {
 		});
 	});
 
-	suite('addContextToEditorMatches', () => {
+	describe('addContextToEditorMatches', () => {
 		const MOCK_LINE_COUNT = 100;
 
 		const mockTextModel: ITextModel = <ITextModel>{

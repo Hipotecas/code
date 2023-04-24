@@ -9,7 +9,7 @@ import { DefaultEndOfLine } from 'vs/editor/common/model';
 import { IValidatedEditOperation, PieceTreeTextBuffer } from 'vs/editor/common/model/pieceTreeTextBuffer/pieceTreeTextBuffer';
 import { createTextBufferFactory } from 'vs/editor/common/model/textModel';
 
-suite('PieceTreeTextBuffer._getInverseEdits', () => {
+describe('PieceTreeTextBuffer._getInverseEdits', () => {
 
 	function editOp(startLineNumber: number, startColumn: number, endLineNumber: number, endColumn: number, text: string[] | null): IValidatedEditOperation {
 		return {
@@ -263,7 +263,7 @@ suite('PieceTreeTextBuffer._getInverseEdits', () => {
 	});
 });
 
-suite('PieceTreeTextBuffer._toSingleEditOperation', () => {
+describe('PieceTreeTextBuffer._toSingleEditOperation', () => {
 
 	function editOp(startLineNumber: number, startColumn: number, endLineNumber: number, endColumn: number, rangeOffset: number, rangeLength: number, text: string[] | null): IValidatedEditOperation {
 		return {

@@ -5,12 +5,12 @@
 
 import * as assert from 'assert';
 import { Position } from 'vs/editor/common/core/position';
-import { Range, IRange } from 'vs/editor/common/core/range';
+import { IRange, Range } from 'vs/editor/common/core/range';
 import { TextEdit } from 'vs/editor/common/languages';
 import { EditorSimpleWorker, ICommonModel } from 'vs/editor/common/services/editorSimpleWorker';
 import { IEditorWorkerHost } from 'vs/editor/common/services/editorWorkerHost';
 
-suite('EditorSimpleWorker', () => {
+describe('EditorSimpleWorker', () => {
 
 	class WorkerWithModels extends EditorSimpleWorker {
 
@@ -33,7 +33,7 @@ suite('EditorSimpleWorker', () => {
 	let worker: WorkerWithModels;
 	let model: ICommonModel;
 
-	setup(() => {
+	beforeEach(() => {
 		worker = new WorkerWithModels(<IEditorWorkerHost>null!, null);
 		model = worker.addModel([
 			'This is line one', //16

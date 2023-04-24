@@ -4,22 +4,22 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { ITextFileService, snapshotToString, TextFileOperationError, TextFileOperationResult, stringToSnapshot } from 'vs/workbench/services/textfile/common/textfiles';
-import { URI } from 'vs/base/common/uri';
-import { join, basename } from 'vs/base/common/path';
-import { UTF16le, UTF8_with_bom, UTF16be, UTF8, UTF16le_BOM, UTF16be_BOM, UTF8_BOM } from 'vs/workbench/services/textfile/common/encoding';
-import { bufferToStream, VSBuffer } from 'vs/base/common/buffer';
-import { createTextModel } from 'vs/editor/test/common/testTextModel';
-import { ITextSnapshot, DefaultEndOfLine } from 'vs/editor/common/model';
+import { VSBuffer, bufferToStream } from 'vs/base/common/buffer';
+import { basename, join } from 'vs/base/common/path';
 import { isWindows } from 'vs/base/common/platform';
+import { URI } from 'vs/base/common/uri';
+import { DefaultEndOfLine, ITextSnapshot } from 'vs/editor/common/model';
 import { createTextBufferFactoryFromStream } from 'vs/editor/common/model/textModel';
+import { createTextModel } from 'vs/editor/test/common/testTextModel';
+import { UTF16be, UTF16be_BOM, UTF16le, UTF16le_BOM, UTF8, UTF8_BOM, UTF8_with_bom } from 'vs/workbench/services/textfile/common/encoding';
+import { ITextFileService, TextFileOperationError, TextFileOperationResult, snapshotToString, stringToSnapshot } from 'vs/workbench/services/textfile/common/textfiles';
 
 export interface Params {
-	setup(): Promise<{
+	beforeEach(): Promise<{
 		service: ITextFileService;
 		testDir: string;
 	}>;
-	teardown(): Promise<void>;
+	afterEach(): Promise<void>;
 
 	exists(fsPath: string): Promise<boolean>;
 	stat(fsPath: string): Promise<{ size: number }>;
@@ -30,7 +30,7 @@ export interface Params {
 }
 
 /**
- * Allows us to reuse test suite across different environments.
+ * Allows us to reuse test describe across different environments.
  *
  * It introduces a bit of complexity with setup and teardown, however
  * it helps us to ensure that tests are added for all environments at once,
@@ -41,14 +41,14 @@ export default function createSuite(params: Params) {
 	let testDir = '';
 	const { exists, stat, readFile, detectEncodingByBOM } = params;
 
-	setup(async () => {
-		const result = await params.setup();
+	beforeEach(async () => {
+		const result = await params.beforeEach();
 		service = result.service;
 		testDir = result.testDir;
 	});
 
-	teardown(async () => {
-		await params.teardown();
+	afterEach(async () => {
+		await params.afterEach();
 	});
 
 	test('create - no encoding - content empty', async () => {

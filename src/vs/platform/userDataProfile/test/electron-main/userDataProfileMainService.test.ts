@@ -4,18 +4,18 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { FileService } from 'vs/platform/files/common/fileService';
-import { NullLogService } from 'vs/platform/log/common/log';
-import { Schemas } from 'vs/base/common/network';
-import { URI } from 'vs/base/common/uri';
-import { joinPath } from 'vs/base/common/resources';
 import { DisposableStore } from 'vs/base/common/lifecycle';
-import { InMemoryFileSystemProvider } from 'vs/platform/files/common/inMemoryFilesystemProvider';
+import { Schemas } from 'vs/base/common/network';
+import { joinPath } from 'vs/base/common/resources';
+import { URI } from 'vs/base/common/uri';
 import { AbstractNativeEnvironmentService } from 'vs/platform/environment/common/environmentService';
+import { FileService } from 'vs/platform/files/common/fileService';
+import { InMemoryFileSystemProvider } from 'vs/platform/files/common/inMemoryFilesystemProvider';
+import { NullLogService } from 'vs/platform/log/common/log';
 import product from 'vs/platform/product/common/product';
-import { UserDataProfilesMainService } from 'vs/platform/userDataProfile/electron-main/userDataProfile';
 import { SaveStrategy, StateService } from 'vs/platform/state/node/stateService';
 import { UriIdentityService } from 'vs/platform/uriIdentity/common/uriIdentityService';
+import { UserDataProfilesMainService } from 'vs/platform/userDataProfile/electron-main/userDataProfile';
 
 const ROOT = URI.file('tests').with({ scheme: 'vscode-tests' });
 
@@ -29,13 +29,13 @@ class TestEnvironmentService extends AbstractNativeEnvironmentService {
 	override get cacheHome() { return joinPath(this.userRoamingDataHome, 'cache'); }
 }
 
-suite('UserDataProfileMainService', () => {
+describe('UserDataProfileMainService', () => {
 
 	const disposables = new DisposableStore();
 	let testObject: UserDataProfilesMainService;
 	let environmentService: TestEnvironmentService, stateService: StateService;
 
-	setup(async () => {
+	beforeEach(async () => {
 		const logService = new NullLogService();
 		const fileService = disposables.add(new FileService(logService));
 		const fileSystemProvider = disposables.add(new InMemoryFileSystemProvider());
@@ -48,7 +48,7 @@ suite('UserDataProfileMainService', () => {
 		await stateService.init();
 	});
 
-	teardown(() => disposables.clear());
+	afterEach(() => disposables.clear());
 
 	test('default profile', () => {
 		assert.strictEqual(testObject.defaultProfile.isDefault, true);

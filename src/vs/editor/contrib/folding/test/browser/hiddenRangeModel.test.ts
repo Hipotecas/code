@@ -16,7 +16,7 @@ interface ExpectedRange {
 	endLineNumber: number;
 }
 
-suite('Hidden Range Model', () => {
+describe('Hidden Range Model', () => {
 	function r(startLineNumber: number, endLineNumber: number): ExpectedRange {
 		return { startLineNumber, endLineNumber };
 	}

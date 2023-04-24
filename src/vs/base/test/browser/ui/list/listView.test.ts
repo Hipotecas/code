@@ -8,7 +8,7 @@ import { IListRenderer, IListVirtualDelegate } from 'vs/base/browser/ui/list/lis
 import { ListView } from 'vs/base/browser/ui/list/listView';
 import { range } from 'vs/base/common/arrays';
 
-suite('ListView', function () {
+describe('ListView', function () {
 	test('all rows get disposed', function () {
 		const element = document.createElement('div');
 		element.style.height = '200px';

@@ -20,7 +20,7 @@ import { RegisteredEditorPriority } from 'vs/workbench/services/editor/common/ed
 import { IExtensionService, nullExtensionDescription } from 'vs/workbench/services/extensions/common/extensions';
 import { workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
 
-suite('NotebookProviderInfoStore', function () {
+describe('NotebookProviderInfoStore', function () {
 
 	test('Can\'t open untitled notebooks in test #119363', function () {
 		const disposables = new DisposableStore();

@@ -3,17 +3,17 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import * as assert from 'assert';
 import { context, ipcRenderer, process, webFrame } from 'vs/base/parts/sandbox/electron-sandbox/globals';
 
-suite('Sandbox', () => {
+describe('Sandbox', () => {
+  // this will fail
 	test('globals', async () => {
-		assert.ok(typeof ipcRenderer.send === 'function');
-		assert.ok(typeof webFrame.setZoomLevel === 'function');
-		assert.ok(typeof process.platform === 'string');
+		expect(typeof ipcRenderer.send === 'function').toBe(true);
+		expect(typeof webFrame.setZoomLevel === 'function').toBe(true);
+		expect(typeof process.platform === 'string').toBe(true);
 
 		const config = await context.resolveConfiguration();
-		assert.ok(config);
-		assert.ok(context.configuration());
+		expect(config).toBe(true);
+		expect(context.configuration()).toBe(true);
 	});
 });

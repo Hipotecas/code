@@ -11,7 +11,7 @@ import { getRandomTestPath } from 'vs/base/test/node/testUtils';
 import { parseServerConnectionToken, ServerConnectionToken, ServerConnectionTokenParseError, ServerConnectionTokenType } from 'vs/server/node/serverConnectionToken';
 import { ServerParsedArgs } from 'vs/server/node/serverEnvironmentService';
 
-suite('parseServerConnectionToken', () => {
+describe('parseServerConnectionToken', () => {
 
 	function isError(r: ServerConnectionToken | ServerConnectionTokenParseError): r is ServerConnectionTokenParseError {
 		return (r instanceof ServerConnectionTokenParseError);

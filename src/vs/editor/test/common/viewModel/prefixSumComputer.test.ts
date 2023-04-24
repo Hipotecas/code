@@ -16,7 +16,7 @@ function toUint32Array(arr: number[]): Uint32Array {
 	return r;
 }
 
-suite('Editor ViewModel - PrefixSumComputer', () => {
+describe('Editor ViewModel - PrefixSumComputer', () => {
 
 	test('PrefixSumComputer', () => {
 		let indexOfResult: PrefixSumIndexOfResult;

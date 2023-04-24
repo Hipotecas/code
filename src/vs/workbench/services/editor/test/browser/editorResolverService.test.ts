@@ -11,15 +11,15 @@ import { EditorPart } from 'vs/workbench/browser/parts/editor/editorPart';
 import { DiffEditorInput } from 'vs/workbench/common/editor/diffEditorInput';
 import { EditorResolverService } from 'vs/workbench/services/editor/browser/editorResolverService';
 import { IEditorGroupsService } from 'vs/workbench/services/editor/common/editorGroupsService';
-import { IEditorResolverService, ResolvedStatus, RegisteredEditorPriority } from 'vs/workbench/services/editor/common/editorResolverService';
-import { createEditorPart, ITestInstantiationService, TestFileEditorInput, TestServiceAccessor, workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
+import { IEditorResolverService, RegisteredEditorPriority, ResolvedStatus } from 'vs/workbench/services/editor/common/editorResolverService';
+import { ITestInstantiationService, TestFileEditorInput, TestServiceAccessor, createEditorPart, workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
 
-suite('EditorResolverService', () => {
+describe('EditorResolverService', () => {
 
 	const TEST_EDITOR_INPUT_ID = 'testEditorInputForEditorResolverService';
 	const disposables = new DisposableStore();
 
-	teardown(() => disposables.clear());
+	afterEach(() => disposables.clear());
 
 	async function createEditorResolverService(instantiationService: ITestInstantiationService = workbenchInstantiationService(undefined, disposables)): Promise<[EditorPart, EditorResolverService, TestServiceAccessor]> {
 		const part = await createEditorPart(instantiationService, disposables);

@@ -6,12 +6,12 @@
 import * as assert from 'assert';
 import { $ } from 'vs/base/browser/dom';
 import { GridView, IView, Orientation, Sizing } from 'vs/base/browser/ui/grid/gridview';
-import { nodesToArrays, TestView } from './util';
+import { TestView, nodesToArrays } from './util';
 
-suite('Gridview', function () {
+describe('Gridview', function () {
 	let gridview: GridView;
 
-	setup(function () {
+	beforeEach(function () {
 		gridview = new GridView();
 		const container = $('.container');
 

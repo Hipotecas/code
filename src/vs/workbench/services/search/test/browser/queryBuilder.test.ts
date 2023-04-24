@@ -6,27 +6,27 @@ import * as assert from 'assert';
 import { IExpression } from 'vs/base/common/glob';
 import { join } from 'vs/base/common/path';
 import { isWindows } from 'vs/base/common/platform';
+import { extUriBiasedIgnorePathCase } from 'vs/base/common/resources';
 import { URI, URI as uri } from 'vs/base/common/uri';
 import { IConfigurationService } from 'vs/platform/configuration/common/configuration';
 import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
+import { IEnvironmentService } from 'vs/platform/environment/common/environment';
 import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
 import { IWorkspaceContextService, toWorkspaceFolder } from 'vs/platform/workspace/common/workspace';
-import { toWorkspaceFolders } from 'vs/platform/workspaces/common/workspaces';
-import { ISearchPathsInfo, QueryBuilder } from 'vs/workbench/services/search/common/queryBuilder';
-import { IPathService } from 'vs/workbench/services/path/common/pathService';
-import { IFileQuery, IFolderQuery, IPatternInfo, ITextQuery, QueryType } from 'vs/workbench/services/search/common/search';
-import { TestPathService, TestEnvironmentService } from 'vs/workbench/test/browser/workbenchTestServices';
-import { TestContextService } from 'vs/workbench/test/common/workbenchTestServices';
-import { IEnvironmentService } from 'vs/platform/environment/common/environment';
 import { Workspace } from 'vs/platform/workspace/test/common/testWorkspace';
-import { extUriBiasedIgnorePathCase } from 'vs/base/common/resources';
+import { toWorkspaceFolders } from 'vs/platform/workspaces/common/workspaces';
+import { IPathService } from 'vs/workbench/services/path/common/pathService';
+import { ISearchPathsInfo, QueryBuilder } from 'vs/workbench/services/search/common/queryBuilder';
+import { IFileQuery, IFolderQuery, IPatternInfo, ITextQuery, QueryType } from 'vs/workbench/services/search/common/search';
+import { TestEnvironmentService, TestPathService } from 'vs/workbench/test/browser/workbenchTestServices';
+import { TestContextService } from 'vs/workbench/test/common/workbenchTestServices';
 
 const DEFAULT_EDITOR_CONFIG = {};
 const DEFAULT_USER_CONFIG = { useRipgrep: true, useIgnoreFiles: true, useGlobalIgnoreFiles: true, useParentIgnoreFiles: true };
 const DEFAULT_QUERY_PROPS = {};
 const DEFAULT_TEXT_QUERY_PROPS = { usePCRE2: false };
 
-suite('QueryBuilder', () => {
+describe('QueryBuilder', () => {
 	const PATTERN_INFO: IPatternInfo = { pattern: 'a' };
 	const ROOT_1 = fixPath('/foo/root1');
 	const ROOT_1_URI = getUri(ROOT_1);
@@ -39,7 +39,7 @@ suite('QueryBuilder', () => {
 	let mockContextService: TestContextService;
 	let mockWorkspace: Workspace;
 
-	setup(() => {
+	beforeEach(() => {
 		instantiationService = new TestInstantiationService();
 
 		mockConfigService = new TestConfigurationService();
@@ -551,7 +551,7 @@ suite('QueryBuilder', () => {
 			});
 	});
 
-	suite('parseSearchPaths 1', () => {
+	describe('parseSearchPaths 1', () => {
 		test('simple includes', () => {
 			function testSimpleIncludes(includePattern: string, expectedPatterns: string[]): void {
 				const result = queryBuilder.parseSearchPaths(includePattern);
@@ -925,7 +925,7 @@ suite('QueryBuilder', () => {
 		});
 	});
 
-	suite('parseSearchPaths 2', () => {
+	describe('parseSearchPaths 2', () => {
 
 		function testIncludes(includePattern: string, expectedResult: ISearchPathsInfo): void {
 			assertEqualSearchPathResults(
@@ -965,7 +965,7 @@ suite('QueryBuilder', () => {
 		});
 	});
 
-	suite('smartCase', () => {
+	describe('smartCase', () => {
 		test('no flags -> no change', () => {
 			const query = queryBuilder.text(
 				{
@@ -1056,7 +1056,7 @@ suite('QueryBuilder', () => {
 		});
 	});
 
-	suite('file', () => {
+	describe('file', () => {
 		test('simple file query', () => {
 			const cacheKey = 'asdf';
 			const query = queryBuilder.file(

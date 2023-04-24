@@ -7,7 +7,7 @@ import { EXTENSION_IDENTIFIER_PATTERN } from 'vs/platform/extensionManagement/co
 import { ExtensionKey } from 'vs/platform/extensionManagement/common/extensionManagementUtil';
 import { TargetPlatform } from 'vs/platform/extensions/common/extensions';
 
-suite('Extension Identifier Pattern', () => {
+describe('Extension Identifier Pattern', () => {
 
 	test('extension identifier pattern', () => {
 		const regEx = new RegExp(EXTENSION_IDENTIFIER_PATTERN);

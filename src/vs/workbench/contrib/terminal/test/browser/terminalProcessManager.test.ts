@@ -4,21 +4,21 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { strictEqual } from 'assert';
-import { IConfigurationService } from 'vs/platform/configuration/common/configuration';
-import { TerminalConfigHelper } from 'vs/workbench/contrib/terminal/browser/terminalConfigHelper';
-import { TerminalProcessManager } from 'vs/workbench/contrib/terminal/browser/terminalProcessManager';
-import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
-import { ITestInstantiationService, TestTerminalProfileResolverService, workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
-import { IProductService } from 'vs/platform/product/common/productService';
-import { IEnvironmentVariableService } from 'vs/workbench/contrib/terminal/common/environmentVariable';
-import { EnvironmentVariableService } from 'vs/workbench/contrib/terminal/common/environmentVariableService';
+import { Event } from 'vs/base/common/event';
+import { DisposableStore } from 'vs/base/common/lifecycle';
 import { Schemas } from 'vs/base/common/network';
 import { URI } from 'vs/base/common/uri';
+import { IConfigurationService } from 'vs/platform/configuration/common/configuration';
+import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
+import { IProductService } from 'vs/platform/product/common/productService';
 import { ITerminalChildProcess } from 'vs/platform/terminal/common/terminal';
-import { ITerminalProfileResolverService } from 'vs/workbench/contrib/terminal/common/terminal';
 import { ITerminalInstanceService } from 'vs/workbench/contrib/terminal/browser/terminal';
-import { DisposableStore } from 'vs/base/common/lifecycle';
-import { Event } from 'vs/base/common/event';
+import { TerminalConfigHelper } from 'vs/workbench/contrib/terminal/browser/terminalConfigHelper';
+import { TerminalProcessManager } from 'vs/workbench/contrib/terminal/browser/terminalProcessManager';
+import { IEnvironmentVariableService } from 'vs/workbench/contrib/terminal/common/environmentVariable';
+import { EnvironmentVariableService } from 'vs/workbench/contrib/terminal/common/environmentVariableService';
+import { ITerminalProfileResolverService } from 'vs/workbench/contrib/terminal/common/terminal';
+import { ITestInstantiationService, TestTerminalProfileResolverService, workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
 import { TestProductService } from 'vs/workbench/test/common/workbenchTestServices';
 
 class TestTerminalChildProcess implements ITerminalChildProcess {
@@ -78,12 +78,12 @@ class TestTerminalInstanceService implements Partial<ITerminalInstanceService> {
 	}
 }
 
-suite('Workbench - TerminalProcessManager', () => {
+describe('Workbench - TerminalProcessManager', () => {
 	let disposables: DisposableStore;
 	let instantiationService: ITestInstantiationService;
 	let manager: TerminalProcessManager;
 
-	setup(async () => {
+	beforeEach(async () => {
 		disposables = new DisposableStore();
 		instantiationService = workbenchInstantiationService(undefined, disposables);
 		const configurationService = new TestConfigurationService();
@@ -107,12 +107,12 @@ suite('Workbench - TerminalProcessManager', () => {
 		manager = instantiationService.createInstance(TerminalProcessManager, 1, configHelper, undefined, undefined);
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		disposables.dispose();
 	});
 
-	suite('process persistence', () => {
-		suite('local', () => {
+	describe('process persistence', () => {
+		describe('local', () => {
 			test('regular terminal should persist', async () => {
 				const p = await manager.createProcess({
 				}, 1, 1, false);
@@ -127,7 +127,7 @@ suite('Workbench - TerminalProcessManager', () => {
 				strictEqual(manager.shouldPersist, false);
 			});
 		});
-		suite('remote', () => {
+		describe('remote', () => {
 			const remoteCwd = URI.from({
 				scheme: Schemas.vscodeRemote,
 				path: 'test/cwd'

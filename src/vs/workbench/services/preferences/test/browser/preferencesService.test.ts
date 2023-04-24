@@ -15,16 +15,16 @@ import { TestJSONEditingService } from 'vs/workbench/services/configuration/test
 import { PreferencesService } from 'vs/workbench/services/preferences/browser/preferencesService';
 import { IPreferencesService, ISettingsEditorOptions } from 'vs/workbench/services/preferences/common/preferences';
 import { IRemoteAgentService } from 'vs/workbench/services/remote/common/remoteAgentService';
-import { TestRemoteAgentService, ITestInstantiationService, TestEditorService, workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
+import { ITestInstantiationService, TestEditorService, TestRemoteAgentService, workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
 
-suite('PreferencesService', () => {
+describe('PreferencesService', () => {
 
 	let disposables: DisposableStore;
 	let testInstantiationService: ITestInstantiationService;
 	let testObject: PreferencesService;
 	let editorService: TestEditorService2;
 
-	setup(() => {
+	beforeEach(() => {
 		disposables = new DisposableStore();
 		editorService = new TestEditorService2();
 		testInstantiationService = workbenchInstantiationService({
@@ -42,7 +42,7 @@ suite('PreferencesService', () => {
 		testObject = instantiationService.createInstance(PreferencesService);
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		disposables.dispose();
 	});
 

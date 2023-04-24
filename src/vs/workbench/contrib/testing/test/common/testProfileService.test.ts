@@ -11,10 +11,10 @@ import { TestProfileService } from 'vs/workbench/contrib/testing/common/testProf
 import { ITestRunProfile, TestRunProfileBitset } from 'vs/workbench/contrib/testing/common/testTypes';
 import { TestStorageService } from 'vs/workbench/test/common/workbenchTestServices';
 
-suite('Workbench - TestProfileService', () => {
+describe('Workbench - TestProfileService', () => {
 	let t: TestProfileService;
 	let idCounter = 0;
-	setup(() => {
+	beforeEach(() => {
 		idCounter = 0;
 		t = new TestProfileService(
 			new MockContextKeyService(),
@@ -55,7 +55,7 @@ suite('Workbench - TestProfileService', () => {
 		expectProfiles(t.getGroupDefaultProfiles(TestRunProfileBitset.Debug), ['a']);
 	});
 
-	suite('setGroupDefaultProfiles', () => {
+	describe('setGroupDefaultProfiles', () => {
 		test('applies simple changes', () => {
 			const p1 = addProfile({ isDefault: false, group: TestRunProfileBitset.Debug, label: 'a' });
 			addProfile({ isDefault: false, group: TestRunProfileBitset.Debug, label: 'b' });

@@ -5,7 +5,7 @@
 import * as assert from 'assert';
 import { CancellationToken, CancellationTokenSource } from 'vs/base/common/cancellation';
 
-suite('CancellationToken', function () {
+describe('CancellationToken', function () {
 
 	test('None', () => {
 		assert.strictEqual(CancellationToken.None.isCancellationRequested, false);

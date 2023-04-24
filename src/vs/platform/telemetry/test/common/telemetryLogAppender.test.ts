@@ -85,7 +85,7 @@ export class TestTelemetryLoggerService implements ILoggerService {
 	getRegisteredLogger() { return undefined; }
 }
 
-suite('TelemetryLogAdapter', () => {
+describe('TelemetryLogAdapter', () => {
 
 	test('Do not Log Telemetry if log level is not trace', async () => {
 		const testLoggerService = new TestTelemetryLoggerService(DEFAULT_LOG_LEVEL);

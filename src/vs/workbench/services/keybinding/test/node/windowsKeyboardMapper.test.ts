@@ -4,11 +4,11 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { KeyChord, KeyCode, KeyMod, ScanCode } from 'vs/base/common/keyCodes';
-import { KeyCodeChord, decodeKeybinding, ScanCodeChord, Keybinding } from 'vs/base/common/keybindings';
+import { KeyCodeChord, Keybinding, ScanCodeChord, decodeKeybinding } from 'vs/base/common/keybindings';
 import { OperatingSystem } from 'vs/base/common/platform';
-import { WindowsKeyboardMapper } from 'vs/workbench/services/keybinding/common/windowsKeyboardMapper';
-import { IResolvedKeybinding, assertMapping, assertResolveKeyboardEvent, assertResolveKeybinding, readRawMapping } from 'vs/workbench/services/keybinding/test/node/keyboardMapperTestUtils';
 import { IWindowsKeyboardMapping } from 'vs/platform/keyboardLayout/common/keyboardLayout';
+import { WindowsKeyboardMapper } from 'vs/workbench/services/keybinding/common/windowsKeyboardMapper';
+import { IResolvedKeybinding, assertMapping, assertResolveKeybinding, assertResolveKeyboardEvent, readRawMapping } from 'vs/workbench/services/keybinding/test/node/keyboardMapperTestUtils';
 
 const WRITE_FILE_IF_DIFFERENT = false;
 
@@ -22,11 +22,11 @@ function _assertResolveKeybinding(mapper: WindowsKeyboardMapper, k: number, expe
 	assertResolveKeybinding(mapper, keyBinding!, expected);
 }
 
-suite('keyboardMapper - WINDOWS de_ch', () => {
+describe('keyboardMapper - WINDOWS de_ch', () => {
 
 	let mapper: WindowsKeyboardMapper;
 
-	suiteSetup(async () => {
+	describeSetup(async () => {
 		mapper = await createKeyboardMapper(false, 'win_de_ch', false);
 	});
 
@@ -336,11 +336,11 @@ suite('keyboardMapper - WINDOWS de_ch', () => {
 	});
 });
 
-suite('keyboardMapper - WINDOWS en_us', () => {
+describe('keyboardMapper - WINDOWS en_us', () => {
 
 	let mapper: WindowsKeyboardMapper;
 
-	suiteSetup(async () => {
+	describeSetup(async () => {
 		mapper = await createKeyboardMapper(true, 'win_en_us', false);
 	});
 
@@ -561,11 +561,11 @@ suite('keyboardMapper - WINDOWS en_us', () => {
 	});
 });
 
-suite('keyboardMapper - WINDOWS por_ptb', () => {
+describe('keyboardMapper - WINDOWS por_ptb', () => {
 
 	let mapper: WindowsKeyboardMapper;
 
-	suiteSetup(async () => {
+	describeSetup(async () => {
 		mapper = await createKeyboardMapper(false, 'win_por_ptb', false);
 	});
 
@@ -626,11 +626,11 @@ suite('keyboardMapper - WINDOWS por_ptb', () => {
 	});
 });
 
-suite('keyboardMapper - WINDOWS ru', () => {
+describe('keyboardMapper - WINDOWS ru', () => {
 
 	let mapper: WindowsKeyboardMapper;
 
-	suiteSetup(async () => {
+	describeSetup(async () => {
 		mapper = await createKeyboardMapper(false, 'win_ru', false);
 	});
 
@@ -656,7 +656,7 @@ suite('keyboardMapper - WINDOWS ru', () => {
 	});
 });
 
-suite('keyboardMapper - misc', () => {
+describe('keyboardMapper - misc', () => {
 	test('issue #23513: Toggle Sidebar Visibility and Go to Line display same key mapping in Arabic keyboard', () => {
 		const mapper = new WindowsKeyboardMapper(false, {
 			'KeyB': {

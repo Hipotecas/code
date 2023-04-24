@@ -4,15 +4,15 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { ExtHostCommands } from 'vs/workbench/api/common/extHostCommands';
-import { MainThreadCommandsShape } from 'vs/workbench/api/common/extHost.protocol';
-import { CommandsRegistry } from 'vs/platform/commands/common/commands';
-import { SingleProxyRPCProtocol } from 'vs/workbench/api/test/common/testRPCProtocol';
 import { mock } from 'vs/base/test/common/mock';
+import { CommandsRegistry } from 'vs/platform/commands/common/commands';
 import { NullLogService } from 'vs/platform/log/common/log';
+import { MainThreadCommandsShape } from 'vs/workbench/api/common/extHost.protocol';
+import { ExtHostCommands } from 'vs/workbench/api/common/extHostCommands';
 import { IExtHostTelemetry } from 'vs/workbench/api/common/extHostTelemetry';
+import { SingleProxyRPCProtocol } from 'vs/workbench/api/test/common/testRPCProtocol';
 
-suite('ExtHostCommands', function () {
+describe('ExtHostCommands', function () {
 
 	test('dispose calls unregister', function () {
 

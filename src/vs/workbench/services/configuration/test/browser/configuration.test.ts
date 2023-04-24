@@ -23,13 +23,13 @@ class ConfigurationCache implements IConfigurationCache {
 	async remove({ type, key }: ConfigurationKey): Promise<void> { this.cache.delete(`${type}:${key}`); }
 }
 
-suite('DefaultConfiguration', () => {
+describe('DefaultConfiguration', () => {
 
 	const configurationRegistry = Registry.as<IConfigurationRegistry>(Extensions.Configuration);
 	const cacheKey: ConfigurationKey = { type: 'defaults', key: 'configurationDefaultsOverrides' };
 	let configurationCache: ConfigurationCache;
 
-	setup(() => {
+	beforeEach(() => {
 		configurationCache = new ConfigurationCache();
 		configurationRegistry.registerConfiguration({
 			'id': 'test.configurationDefaultsOverride',
@@ -43,7 +43,7 @@ suite('DefaultConfiguration', () => {
 		});
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		configurationRegistry.deregisterConfigurations(configurationRegistry.getConfigurations());
 		const configurationDefaultsOverrides = configurationRegistry.getConfigurationDefaultsOverrides();
 		configurationRegistry.deregisterDefaultConfigurations([...configurationDefaultsOverrides.keys()].map(key => ({ extensionId: configurationDefaultsOverrides.get(key)?.source, overrides: { [key]: configurationDefaultsOverrides.get(key)?.value } })));

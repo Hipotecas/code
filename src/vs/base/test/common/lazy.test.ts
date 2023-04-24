@@ -6,7 +6,7 @@
 import * as assert from 'assert';
 import { Lazy } from 'vs/base/common/lazy';
 
-suite('Lazy', () => {
+describe('Lazy', () => {
 
 	test('lazy values should only be resolved once', () => {
 		let counter = 0;

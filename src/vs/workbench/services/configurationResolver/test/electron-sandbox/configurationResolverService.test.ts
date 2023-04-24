@@ -58,7 +58,7 @@ const nullContext = {
 	getExecPath: () => undefined
 };
 
-suite('Configuration Resolver Service', () => {
+describe('Configuration Resolver Service', () => {
 	let configurationResolverService: IConfigurationResolverService | null;
 	const envVariables: { [key: string]: string } = { key1: 'Value for key1', key2: 'Value for key2' };
 	// let environmentService: MockWorkbenchEnvironmentService;
@@ -71,7 +71,7 @@ suite('Configuration Resolver Service', () => {
 	let pathService: MockPathService;
 	let extensionService: IExtensionService;
 
-	setup(() => {
+	beforeEach(() => {
 		mockCommandService = new MockCommandService();
 		editorService = new TestEditorServiceWithActiveEditor();
 		quickInputService = new TestQuickInputService();
@@ -84,7 +84,7 @@ suite('Configuration Resolver Service', () => {
 		configurationResolverService = new TestConfigurationResolverService(nullContext, Promise.resolve(envVariables), editorService, new MockInputsConfigurationService(), mockCommandService, new TestContextService(containingWorkspace), quickInputService, labelService, pathService, extensionService);
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		configurationResolverService = null;
 	});
 

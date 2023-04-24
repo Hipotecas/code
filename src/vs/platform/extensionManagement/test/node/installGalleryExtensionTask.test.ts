@@ -124,11 +124,11 @@ class TestInstallGalleryExtensionTask extends InstallGalleryExtensionTask {
 	protected override async validateManifest(): Promise<void> { }
 }
 
-suite('InstallGalleryExtensionTask Tests', () => {
+describe('InstallGalleryExtensionTask Tests', () => {
 
 	const disposables = new DisposableStore();
 
-	teardown(() => disposables.clear());
+	afterEach(() => disposables.clear());
 
 	test('if verification is enabled by default, the task completes', async () => {
 		const testObject = new TestInstallGalleryExtensionTask(aGalleryExtension('a', { isSigned: true }), anExtensionsDownloader({ isSignatureVerificationEnabled: true, verificationResult: true, didExecute: true }));

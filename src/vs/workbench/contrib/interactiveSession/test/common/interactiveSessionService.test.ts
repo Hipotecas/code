@@ -4,8 +4,8 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { Emitter } from 'vs/base/common/event';
 import { CancellationToken } from 'vs/base/common/cancellation';
+import { Emitter } from 'vs/base/common/event';
 import { Disposable, DisposableStore } from 'vs/base/common/lifecycle';
 import { ProviderResult } from 'vs/editor/common/languages';
 import { IContextKeyService } from 'vs/platform/contextkey/common/contextkey';
@@ -53,13 +53,13 @@ class SimpleTestProvider extends Disposable implements IInteractiveProvider {
 	}
 }
 
-suite('InteractiveSession', () => {
+describe('InteractiveSession', () => {
 	const testDisposables = new DisposableStore();
 
 	let storageService: IStorageService;
 	let instantiationService: TestInstantiationService;
 
-	suiteSetup(async () => {
+	describeSetup(async () => {
 		instantiationService = new TestInstantiationService();
 		instantiationService.stub(IStorageService, storageService = new TestStorageService());
 		instantiationService.stub(ILogService, new NullLogService());
@@ -69,7 +69,7 @@ suite('InteractiveSession', () => {
 		instantiationService.stub(IInteractiveSessionContributionService, new TestExtensionService());
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		testDisposables.clear();
 	});
 

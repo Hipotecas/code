@@ -4,60 +4,60 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
-import { setUnexpectedErrorHandler, errorHandler } from 'vs/base/common/errors';
-import { URI } from 'vs/base/common/uri';
-import * as types from 'vs/workbench/api/common/extHostTypes';
-import { createTextModel } from 'vs/editor/test/common/testTextModel';
-import { Position as EditorPosition, Position } from 'vs/editor/common/core/position';
-import { Range as EditorRange } from 'vs/editor/common/core/range';
-import { TestRPCProtocol } from 'vs/workbench/api/test/common/testRPCProtocol';
-import { IMarkerService } from 'vs/platform/markers/common/markers';
-import { MarkerService } from 'vs/platform/markers/common/markerService';
-import { ExtHostLanguageFeatures } from 'vs/workbench/api/common/extHostLanguageFeatures';
-import { MainThreadLanguageFeatures } from 'vs/workbench/api/browser/mainThreadLanguageFeatures';
-import { ExtHostCommands } from 'vs/workbench/api/common/extHostCommands';
-import { MainThreadCommands } from 'vs/workbench/api/browser/mainThreadCommands';
-import { ExtHostDocuments } from 'vs/workbench/api/common/extHostDocuments';
-import { ExtHostDocumentsAndEditors } from 'vs/workbench/api/common/extHostDocumentsAndEditors';
-import * as languages from 'vs/editor/common/languages';
-import { getCodeLensModel } from 'vs/editor/contrib/codelens/browser/codelens';
-import { getDefinitionsAtPosition, getImplementationsAtPosition, getTypeDefinitionsAtPosition, getDeclarationsAtPosition, getReferencesAtPosition } from 'vs/editor/contrib/gotoSymbol/browser/goToSymbol';
-import { getHoverPromise } from 'vs/editor/contrib/hover/browser/getHover';
-import { getOccurrencesAtPosition } from 'vs/editor/contrib/wordHighlighter/browser/wordHighlighter';
-import { getCodeActions } from 'vs/editor/contrib/codeAction/browser/codeAction';
-import { getWorkspaceSymbols } from 'vs/workbench/contrib/search/common/search';
-import { rename } from 'vs/editor/contrib/rename/browser/rename';
-import { provideSignatureHelp } from 'vs/editor/contrib/parameterHints/browser/provideSignatureHelp';
-import { provideSuggestionItems, CompletionOptions } from 'vs/editor/contrib/suggest/browser/suggest';
-import { getDocumentFormattingEditsUntilResult, getDocumentRangeFormattingEditsUntilResult, getOnTypeFormattingEdits } from 'vs/editor/contrib/format/browser/format';
-import { getLinks } from 'vs/editor/contrib/links/browser/getLinks';
-import { MainContext, ExtHostContext } from 'vs/workbench/api/common/extHost.protocol';
-import { ExtHostDiagnostics } from 'vs/workbench/api/common/extHostDiagnostics';
-import type * as vscode from 'vscode';
-import { IInstantiationService } from 'vs/platform/instantiation/common/instantiation';
-import { NullLogService } from 'vs/platform/log/common/log';
-import { ITextModel, EndOfLineSequence } from 'vs/editor/common/model';
-import { getColors } from 'vs/editor/contrib/colorPicker/browser/color';
 import { CancellationToken } from 'vs/base/common/cancellation';
-import { nullExtensionDescription as defaultExtension } from 'vs/workbench/services/extensions/common/extensions';
-import { provideSelectionRanges } from 'vs/editor/contrib/smartSelect/browser/smartSelect';
-import { mock } from 'vs/base/test/common/mock';
-import { IEditorWorkerService } from 'vs/editor/common/services/editorWorker';
+import { errorHandler, setUnexpectedErrorHandler } from 'vs/base/common/errors';
 import { dispose } from 'vs/base/common/lifecycle';
 import { withNullAsUndefined } from 'vs/base/common/types';
-import { NullApiDeprecationService } from 'vs/workbench/api/common/extHostApiDeprecationService';
-import { Progress } from 'vs/platform/progress/common/progress';
-import { IExtHostFileSystemInfo } from 'vs/workbench/api/common/extHostFileSystemInfo';
-import { URITransformerService } from 'vs/workbench/api/common/extHostUriTransformerService';
-import { OutlineModel } from 'vs/editor/contrib/documentSymbols/browser/outlineModel';
+import { URI } from 'vs/base/common/uri';
+import { mock } from 'vs/base/test/common/mock';
+import { Position as EditorPosition, Position } from 'vs/editor/common/core/position';
+import { Range as EditorRange } from 'vs/editor/common/core/range';
+import * as languages from 'vs/editor/common/languages';
+import { EndOfLineSequence, ITextModel } from 'vs/editor/common/model';
+import { IEditorWorkerService } from 'vs/editor/common/services/editorWorker';
 import { ILanguageFeaturesService } from 'vs/editor/common/services/languageFeatures';
 import { LanguageFeaturesService } from 'vs/editor/common/services/languageFeaturesService';
+import { getCodeActions } from 'vs/editor/contrib/codeAction/browser/codeAction';
 import { CodeActionTriggerSource } from 'vs/editor/contrib/codeAction/common/types';
+import { getCodeLensModel } from 'vs/editor/contrib/codelens/browser/codelens';
+import { getColors } from 'vs/editor/contrib/colorPicker/browser/color';
+import { OutlineModel } from 'vs/editor/contrib/documentSymbols/browser/outlineModel';
+import { getDocumentFormattingEditsUntilResult, getDocumentRangeFormattingEditsUntilResult, getOnTypeFormattingEdits } from 'vs/editor/contrib/format/browser/format';
+import { getDeclarationsAtPosition, getDefinitionsAtPosition, getImplementationsAtPosition, getReferencesAtPosition, getTypeDefinitionsAtPosition } from 'vs/editor/contrib/gotoSymbol/browser/goToSymbol';
+import { getHoverPromise } from 'vs/editor/contrib/hover/browser/getHover';
+import { getLinks } from 'vs/editor/contrib/links/browser/getLinks';
+import { provideSignatureHelp } from 'vs/editor/contrib/parameterHints/browser/provideSignatureHelp';
+import { rename } from 'vs/editor/contrib/rename/browser/rename';
+import { provideSelectionRanges } from 'vs/editor/contrib/smartSelect/browser/smartSelect';
+import { CompletionOptions, provideSuggestionItems } from 'vs/editor/contrib/suggest/browser/suggest';
+import { getOccurrencesAtPosition } from 'vs/editor/contrib/wordHighlighter/browser/wordHighlighter';
+import { createTextModel } from 'vs/editor/test/common/testTextModel';
+import { IInstantiationService } from 'vs/platform/instantiation/common/instantiation';
+import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
+import { NullLogService } from 'vs/platform/log/common/log';
+import { MarkerService } from 'vs/platform/markers/common/markerService';
+import { IMarkerService } from 'vs/platform/markers/common/markers';
+import { Progress } from 'vs/platform/progress/common/progress';
 import { IUriIdentityService } from 'vs/platform/uriIdentity/common/uriIdentity';
+import { MainThreadCommands } from 'vs/workbench/api/browser/mainThreadCommands';
+import { MainThreadLanguageFeatures } from 'vs/workbench/api/browser/mainThreadLanguageFeatures';
+import { ExtHostContext, MainContext } from 'vs/workbench/api/common/extHost.protocol';
+import { NullApiDeprecationService } from 'vs/workbench/api/common/extHostApiDeprecationService';
+import { ExtHostCommands } from 'vs/workbench/api/common/extHostCommands';
+import { ExtHostDiagnostics } from 'vs/workbench/api/common/extHostDiagnostics';
+import { ExtHostDocuments } from 'vs/workbench/api/common/extHostDocuments';
+import { ExtHostDocumentsAndEditors } from 'vs/workbench/api/common/extHostDocumentsAndEditors';
+import { IExtHostFileSystemInfo } from 'vs/workbench/api/common/extHostFileSystemInfo';
+import { ExtHostLanguageFeatures } from 'vs/workbench/api/common/extHostLanguageFeatures';
 import { IExtHostTelemetry } from 'vs/workbench/api/common/extHostTelemetry';
+import * as types from 'vs/workbench/api/common/extHostTypes';
+import { URITransformerService } from 'vs/workbench/api/common/extHostUriTransformerService';
+import { TestRPCProtocol } from 'vs/workbench/api/test/common/testRPCProtocol';
+import { getWorkspaceSymbols } from 'vs/workbench/contrib/search/common/search';
+import { nullExtensionDescription as defaultExtension } from 'vs/workbench/services/extensions/common/extensions';
+import type * as vscode from 'vscode';
 
-suite('ExtHostLanguageFeatures', function () {
+describe('ExtHostLanguageFeatures', function () {
 
 	const defaultSelector = { scheme: 'far' };
 	let model: ITextModel;
@@ -68,7 +68,7 @@ suite('ExtHostLanguageFeatures', function () {
 	let languageFeaturesService: ILanguageFeaturesService;
 	let originalErrorHandler: (e: any) => any;
 
-	suiteSetup(() => {
+	describeSetup(() => {
 
 		model = createTextModel(
 			[
@@ -136,13 +136,13 @@ suite('ExtHostLanguageFeatures', function () {
 		mainThread = rpcProtocol.set(MainContext.MainThreadLanguageFeatures, inst.createInstance(MainThreadLanguageFeatures, rpcProtocol));
 	});
 
-	suiteTeardown(() => {
+	describeTeardown(() => {
 		setUnexpectedErrorHandler(originalErrorHandler);
 		model.dispose();
 		mainThread.dispose();
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		disposables = dispose(disposables);
 		return rpcProtocol.sync();
 	});

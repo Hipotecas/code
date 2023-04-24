@@ -9,10 +9,10 @@ import { ConsoleLogger, ILogService } from 'vs/platform/log/common/log';
 import { LogService } from 'vs/platform/log/common/logService';
 import { RequestStore } from 'vs/platform/terminal/common/requestStore';
 
-suite('RequestStore', () => {
+describe('RequestStore', () => {
 	let instantiationService: TestInstantiationService;
 
-	setup(() => {
+	beforeEach(() => {
 		instantiationService = new TestInstantiationService();
 		instantiationService.stub(ILogService, new LogService(new ConsoleLogger()));
 	});

@@ -11,14 +11,14 @@ const _enablePerf = false;
 
 function perfSuite(name: string, callback: (this: Mocha.Suite) => void) {
 	if (_enablePerf) {
-		suite(name, callback);
+		describe(name, callback);
 	}
 }
 
 perfSuite('Performance - fuzzyMatch', function () {
 
-	// suiteSetup(() => console.profile());
-	// suiteTeardown(() => console.profileEnd());
+	// describeSetup(() => console.profile());
+	// describeTeardown(() => console.profileEnd());
 
 	console.log(`Matching ${data.length} items against ${patterns.length} patterns (${data.length * patterns.length} operations) `);
 

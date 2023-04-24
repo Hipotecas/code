@@ -7,7 +7,7 @@ import * as assert from 'assert';
 import { NullLogService } from 'vs/platform/log/common/log';
 import { merge } from 'vs/platform/userDataSync/common/globalStateMerge';
 
-suite('GlobalStateMerge', () => {
+describe('GlobalStateMerge', () => {
 
 	test('merge when local and remote are same with one value and local is not synced yet', async () => {
 		const local = { 'a': { version: 1, value: 'a' } };

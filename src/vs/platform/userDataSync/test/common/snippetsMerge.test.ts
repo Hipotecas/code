@@ -108,7 +108,7 @@ const cSnippet = `{
 	}
 }`;
 
-suite('SnippetsMerge', () => {
+describe('SnippetsMerge', () => {
 
 	test('merge when local and remote are same with one snippet', async () => {
 		const local = { 'html.json': htmlSnippet1 };

@@ -12,7 +12,7 @@ import { TestNotificationService } from 'vs/platform/notification/test/common/te
 import { IUndoRedoElement, UndoRedoElementType, UndoRedoGroup } from 'vs/platform/undoRedo/common/undoRedo';
 import { UndoRedoService } from 'vs/platform/undoRedo/common/undoRedoService';
 
-suite('UndoRedoService', () => {
+describe('UndoRedoService', () => {
 
 	function createUndoRedoService(dialogService: IDialogService = new TestDialogService()): UndoRedoService {
 		const notificationService = new TestNotificationService();

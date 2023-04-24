@@ -5,7 +5,7 @@
 import * as matchers from 'vs/workbench/contrib/tasks/common/problemMatcher';
 
 import * as assert from 'assert';
-import { ValidationState, IProblemReporter, ValidationStatus } from 'vs/base/common/parsers';
+import { IProblemReporter, ValidationState, ValidationStatus } from 'vs/base/common/parsers';
 
 class ProblemReporter implements IProblemReporter {
 	private _validationStatus: ValidationStatus;
@@ -55,17 +55,17 @@ class ProblemReporter implements IProblemReporter {
 	}
 }
 
-suite('ProblemPatternParser', () => {
+describe('ProblemPatternParser', () => {
 	let reporter: ProblemReporter;
 	let parser: matchers.ProblemPatternParser;
 	const testRegexp = new RegExp('test');
 
-	setup(() => {
+	beforeEach(() => {
 		reporter = new ProblemReporter();
 		parser = new matchers.ProblemPatternParser(reporter);
 	});
 
-	suite('single-pattern definitions', () => {
+	describe('single-pattern definitions', () => {
 		test('parses a pattern defined by only a regexp', () => {
 			const problemPattern: matchers.Config.IProblemPattern = {
 				regexp: 'test'
@@ -96,7 +96,7 @@ suite('ProblemPatternParser', () => {
 		});
 	});
 
-	suite('multi-pattern definitions', () => {
+	describe('multi-pattern definitions', () => {
 		test('defines a pattern based on regexp and property fields, with file/line location', () => {
 			const problemPattern: matchers.Config.MultiLineProblemPattern = [
 				{ regexp: 'test', file: 3, line: 4, column: 5, message: 6 }

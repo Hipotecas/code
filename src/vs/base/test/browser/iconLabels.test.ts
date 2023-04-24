@@ -6,7 +6,7 @@
 import * as assert from 'assert';
 import { renderLabelWithIcons } from 'vs/base/browser/ui/iconLabel/iconLabels';
 
-suite('renderLabelWithIcons', () => {
+describe('renderLabelWithIcons', () => {
 
 	test('no icons', () => {
 		const result = renderLabelWithIcons(' hello World .');

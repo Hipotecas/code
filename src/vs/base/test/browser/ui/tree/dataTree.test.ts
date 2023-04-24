@@ -13,7 +13,7 @@ interface E {
 	children?: E[];
 }
 
-suite('DataTree', function () {
+describe('DataTree', function () {
 	let tree: DataTree<E, E>;
 
 	const root: E = {
@@ -30,7 +30,7 @@ suite('DataTree', function () {
 		children: []
 	};
 
-	setup(() => {
+	beforeEach(() => {
 		const container = document.createElement('div');
 		container.style.width = '200px';
 		container.style.height = '200px';
@@ -67,7 +67,7 @@ suite('DataTree', function () {
 		tree.layout(200);
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		tree.dispose();
 	});
 

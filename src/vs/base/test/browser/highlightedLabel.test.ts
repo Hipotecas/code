@@ -6,10 +6,10 @@
 import * as assert from 'assert';
 import { HighlightedLabel } from 'vs/base/browser/ui/highlightedlabel/highlightedLabel';
 
-suite('HighlightedLabel', () => {
+describe('HighlightedLabel', () => {
 	let label: HighlightedLabel;
 
-	setup(() => {
+	beforeEach(() => {
 		label = new HighlightedLabel(document.createElement('div'), { supportIcons: true });
 	});
 

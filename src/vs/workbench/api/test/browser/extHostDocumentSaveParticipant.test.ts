@@ -3,28 +3,28 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import * as assert from 'assert';
+import { timeout } from 'vs/base/common/async';
 import { URI } from 'vs/base/common/uri';
-import { ExtHostDocuments } from 'vs/workbench/api/common/extHostDocuments';
-import { ExtHostDocumentsAndEditors } from 'vs/workbench/api/common/extHostDocumentsAndEditors';
-import { TextDocumentSaveReason, TextEdit, Position, EndOfLine } from 'vs/workbench/api/common/extHostTypes';
-import { MainThreadTextEditorsShape, IWorkspaceEditDto, IWorkspaceTextEditDto, MainThreadBulkEditsShape } from 'vs/workbench/api/common/extHost.protocol';
-import { ExtHostDocumentSaveParticipant } from 'vs/workbench/api/common/extHostDocumentSaveParticipant';
-import { SingleProxyRPCProtocol } from 'vs/workbench/api/test/common/testRPCProtocol';
-import { SaveReason } from 'vs/workbench/common/editor';
-import type * as vscode from 'vscode';
 import { mock } from 'vs/base/test/common/mock';
 import { NullLogService } from 'vs/platform/log/common/log';
-import { timeout } from 'vs/base/common/async';
+import { IWorkspaceEditDto, IWorkspaceTextEditDto, MainThreadBulkEditsShape, MainThreadTextEditorsShape } from 'vs/workbench/api/common/extHost.protocol';
+import { ExtHostDocumentSaveParticipant } from 'vs/workbench/api/common/extHostDocumentSaveParticipant';
+import { ExtHostDocuments } from 'vs/workbench/api/common/extHostDocuments';
+import { ExtHostDocumentsAndEditors } from 'vs/workbench/api/common/extHostDocumentsAndEditors';
+import { EndOfLine, Position, TextDocumentSaveReason, TextEdit } from 'vs/workbench/api/common/extHostTypes';
+import { SingleProxyRPCProtocol } from 'vs/workbench/api/test/common/testRPCProtocol';
+import { SaveReason } from 'vs/workbench/common/editor';
 import { nullExtensionDescription } from 'vs/workbench/services/extensions/common/extensions';
+import type * as vscode from 'vscode';
 
-suite('ExtHostDocumentSaveParticipant', () => {
+describe('ExtHostDocumentSaveParticipant', () => {
 
 	const resource = URI.parse('foo:bar');
 	const mainThreadBulkEdits = new class extends mock<MainThreadBulkEditsShape>() { };
 	let documents: ExtHostDocuments;
 	const nullLogService = new NullLogService();
 
-	setup(() => {
+	beforeEach(() => {
 		const documentsAndEditors = new ExtHostDocumentsAndEditors(SingleProxyRPCProtocol(null), new NullLogService());
 		documentsAndEditors.$acceptDocumentsAndEditorsDelta({
 			addedDocuments: [{

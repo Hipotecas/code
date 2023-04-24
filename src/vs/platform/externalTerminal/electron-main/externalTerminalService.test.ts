@@ -18,7 +18,7 @@ const mockConfig = Object.freeze<IExternalTerminalConfiguration>({
 	}
 });
 
-suite('ExternalTerminalService', () => {
+describe('ExternalTerminalService', () => {
 	test(`WinTerminalService - uses terminal from configuration`, done => {
 		const testShell = 'cmd';
 		const testCwd = 'path/to/workspace';

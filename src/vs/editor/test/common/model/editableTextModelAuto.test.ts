@@ -11,7 +11,7 @@ import { testApplyEditsWithSyncedModels } from 'vs/editor/test/common/model/edit
 
 const GENERATE_TESTS = false;
 
-suite('EditorModel Auto Tests', () => {
+describe('EditorModel Auto Tests', () => {
 	function editOp(startLineNumber: number, startColumn: number, endLineNumber: number, endColumn: number, text: string[]): ISingleEditOperation {
 		return {
 			range: new Range(startLineNumber, startColumn, endLineNumber, endColumn),

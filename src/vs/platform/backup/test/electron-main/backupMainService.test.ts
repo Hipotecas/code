@@ -13,7 +13,8 @@ import * as platform from 'vs/base/common/platform';
 import { isEqual } from 'vs/base/common/resources';
 import { URI } from 'vs/base/common/uri';
 import { Promises } from 'vs/base/node/pfs';
-import { flakySuite, getRandomTestPath } from 'vs/base/test/node/testUtils';
+import { getRandomTestPath } from 'vs/base/test/node/testUtils';
+import { IFolderBackupInfo, IWorkspaceBackupInfo, isFolderBackupInfo } from 'vs/platform/backup/common/backup';
 import { BackupMainService } from 'vs/platform/backup/electron-main/backupMainService';
 import { ISerializedBackupWorkspaces, ISerializedWorkspaceBackupInfo } from 'vs/platform/backup/node/backup';
 import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
@@ -21,17 +22,17 @@ import { EnvironmentMainService } from 'vs/platform/environment/electron-main/en
 import { OPTIONS, parseArgs } from 'vs/platform/environment/node/argv';
 import { HotExitConfiguration } from 'vs/platform/files/common/files';
 import { ConsoleMainLogger } from 'vs/platform/log/common/log';
-import product from 'vs/platform/product/common/product';
-import { IFolderBackupInfo, isFolderBackupInfo, IWorkspaceBackupInfo } from 'vs/platform/backup/common/backup';
-import { IWorkspaceIdentifier } from 'vs/platform/workspace/common/workspace';
-import { InMemoryTestStateMainService } from 'vs/platform/test/electron-main/workbenchTestServices';
 import { LogService } from 'vs/platform/log/common/logService';
+import product from 'vs/platform/product/common/product';
+import { InMemoryTestStateMainService } from 'vs/platform/test/electron-main/workbenchTestServices';
+import { IWorkspaceIdentifier } from 'vs/platform/workspace/common/workspace';
 
-flakySuite('BackupMainService', () => {
+describe('BackupMainService', () => {
 
 	function assertEqualFolderInfos(actual: IFolderBackupInfo[], expected: IFolderBackupInfo[]) {
 		const withUriAsString = (f: IFolderBackupInfo) => ({ folderUri: f.folderUri.toString(), remoteAuthority: f.remoteAuthority });
 		assert.deepStrictEqual(actual.map(withUriAsString), expected.map(withUriAsString));
+    expect(actual.map(withUriAsString)).toStrictEqual(expected.map(withUriAsString))
 	}
 
 	function toWorkspace(path: string): IWorkspaceIdentifier {
@@ -123,7 +124,7 @@ flakySuite('BackupMainService', () => {
 	let backupHome: string;
 	let existingTestFolder1: URI;
 
-	setup(async () => {
+	beforeEach(async () => {
 		testDir = getRandomTestPath(os.tmpdir(), 'vsctests', 'backupmainservice');
 		backupHome = path.join(testDir, 'Backups');
 		existingTestFolder1 = URI.file(path.join(testDir, 'folder1'));
@@ -163,7 +164,7 @@ flakySuite('BackupMainService', () => {
 		return service.initialize();
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		return Promises.rm(testDir);
 	});
 
@@ -295,7 +296,7 @@ flakySuite('BackupMainService', () => {
 		assert.strictEqual(1, fs.readdirSync(path.join(backupHome, emptyBackups[0].backupFolder!)).length);
 	});
 
-	suite('loadSync', () => {
+	describe('loadSync', () => {
 		test('getFolderBackupPaths() should return [] when workspaces.json doesn\'t exist', () => {
 			assertEqualFolderInfos(service.testGetFolderBackups(), []);
 		});
@@ -430,7 +431,7 @@ flakySuite('BackupMainService', () => {
 		});
 	});
 
-	suite('dedupeFolderWorkspaces', () => {
+	describe('dedupeFolderWorkspaces', () => {
 		test('should ignore duplicates (folder workspace)', async () => {
 
 			await ensureFolderExists(existingTestFolder1);
@@ -489,7 +490,7 @@ flakySuite('BackupMainService', () => {
 		});
 	});
 
-	suite('registerWindowForBackups', () => {
+	describe('registerWindowForBackups', () => {
 		test('should persist paths to workspaces.json (folder workspace)', async () => {
 			service.registerFolderBackup(toFolderBackupInfo(fooFile));
 			service.registerFolderBackup(toFolderBackupInfo(barFile));
@@ -533,7 +534,7 @@ flakySuite('BackupMainService', () => {
 		assert.deepStrictEqual(json.workspaces.map(b => b.configURIPath), [URI.file(upperFooPath).toString()]);
 	});
 
-	suite('getWorkspaceHash', () => {
+	describe('getWorkspaceHash', () => {
 		(platform.isLinux ? test.skip : test)('should ignore case on Windows and Mac', () => {
 			const assertFolderHash = (uri1: URI, uri2: URI) => {
 				assert.strictEqual(service.testGetFolderHash(toFolderBackupInfo(uri1)), service.testGetFolderHash(toFolderBackupInfo(uri2)));
@@ -549,7 +550,7 @@ flakySuite('BackupMainService', () => {
 		});
 	});
 
-	suite('mixed path casing', () => {
+	describe('mixed path casing', () => {
 		test('should handle case insensitive paths properly (registerWindowForBackupsSync) (folder workspace)', () => {
 			service.registerFolderBackup(toFolderBackupInfo(fooFile));
 			service.registerFolderBackup(toFolderBackupInfo(URI.file(fooFile.fsPath.toUpperCase())));
@@ -573,7 +574,7 @@ flakySuite('BackupMainService', () => {
 		});
 	});
 
-	suite('getDirtyWorkspaces', () => {
+	describe('getDirtyWorkspaces', () => {
 		test('should report if a workspace or folder has backups', async () => {
 			const folderBackupPath = service.registerFolderBackup(toFolderBackupInfo(fooFile));
 

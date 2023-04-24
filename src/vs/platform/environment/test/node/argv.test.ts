@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { formatOptions, Option, OptionDescriptions, Subcommand, parseArgs, ErrorReporter } from 'vs/platform/environment/node/argv';
+import { ErrorReporter, Option, OptionDescriptions, Subcommand, formatOptions, parseArgs } from 'vs/platform/environment/node/argv';
 import { addArg } from 'vs/platform/environment/node/argvHelper';
 
 function o(description: string, type: 'boolean' | 'string' | 'string[]' = 'string'): Option<any> {
@@ -18,7 +18,7 @@ function c(description: string, options: OptionDescriptions<any>): Subcommand<an
 	};
 }
 
-suite('formatOptions', () => {
+describe('formatOptions', () => {
 
 	test('Text should display small columns correctly', () => {
 		assert.deepStrictEqual(
@@ -83,7 +83,7 @@ suite('formatOptions', () => {
 	});
 });
 
-suite('parseArgs', () => {
+describe('parseArgs', () => {
 	function newErrorReporter(result: string[] = [], command = ''): ErrorReporter & { result: string[] } {
 		const commandPrefix = command ? command + '-' : '';
 		return {

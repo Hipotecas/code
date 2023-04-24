@@ -19,7 +19,7 @@ function randomMarkerData(severity = MarkerSeverity.Error): IMarkerData {
 	};
 }
 
-suite('Marker Service', () => {
+describe('Marker Service', () => {
 
 	test('query', () => {
 

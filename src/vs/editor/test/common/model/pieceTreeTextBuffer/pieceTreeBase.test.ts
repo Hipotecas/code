@@ -1,5 +1,5 @@
 import {expect, describe, test} from "vitest";
-import {createLineStartsFast, createUintArray} from "vs/editor/common/model/pieceTreeTextBuffer/pieceTreeBase"
+import {createLineStartsFast, createUintArray } from "vs/editor/common/model/pieceTreeTextBuffer/pieceTreeBase"
 
 
 function getLineStarts(str: string): number[] {

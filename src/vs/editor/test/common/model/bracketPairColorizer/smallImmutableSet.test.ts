@@ -6,7 +6,7 @@
 import * as assert from 'assert';
 import { DenseKeyProvider, SmallImmutableSet } from 'vs/editor/common/model/bracketPairsTextModelPart/bracketPairsTree/smallImmutableSet';
 
-suite('Bracket Pair Colorizer - ImmutableSet', () => {
+describe('Bracket Pair Colorizer - ImmutableSet', () => {
 	test('Basic', () => {
 		const keyProvider = new DenseKeyProvider<string>();
 

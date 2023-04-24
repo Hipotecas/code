@@ -9,7 +9,7 @@ import { ShutdownReason } from 'vs/workbench/services/lifecycle/common/lifecycle
 import { NativeLifecycleService } from 'vs/workbench/services/lifecycle/electron-sandbox/lifecycleService';
 import { workbenchInstantiationService } from 'vs/workbench/test/electron-sandbox/workbenchTestServices';
 
-suite('Lifecycleservice', function () {
+describe('Lifecycleservice', function () {
 
 	let lifecycleService: TestLifecycleService;
 	let disposables: DisposableStore;
@@ -25,14 +25,14 @@ suite('Lifecycleservice', function () {
 		}
 	}
 
-	setup(async () => {
+	beforeEach(async () => {
 		disposables = new DisposableStore();
 
 		const instantiationService = workbenchInstantiationService(undefined, disposables);
 		lifecycleService = instantiationService.createInstance(TestLifecycleService);
 	});
 
-	teardown(async () => {
+	afterEach(async () => {
 		disposables.dispose();
 	});
 

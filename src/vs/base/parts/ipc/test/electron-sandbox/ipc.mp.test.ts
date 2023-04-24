@@ -6,7 +6,7 @@
 import * as assert from 'assert';
 import { Client as MessagePortClient } from 'vs/base/parts/ipc/browser/ipc.mp';
 
-suite('IPC, MessagePorts', () => {
+describe('IPC, MessagePorts', () => {
 
 	test('message port close event', async () => {
 		const { port1, port2 } = new MessageChannel();

@@ -20,20 +20,20 @@ import { IUriIdentityService } from 'vs/platform/uriIdentity/common/uriIdentity'
 import { UriIdentityService } from 'vs/platform/uriIdentity/common/uriIdentityService';
 import { IWorkspaceContextService } from 'vs/platform/workspace/common/workspace';
 import { TestWorkspace } from 'vs/platform/workspace/test/common/testWorkspace';
-import { FileMatch, FolderMatch, Match, searchComparer, searchMatchComparer, SearchModel, SearchResult } from 'vs/workbench/contrib/search/browser/searchModel';
+import { INotebookEditorService } from 'vs/workbench/contrib/notebook/browser/services/notebookEditorService';
+import { NotebookEditorWidgetService } from 'vs/workbench/contrib/notebook/browser/services/notebookEditorServiceImpl';
+import { FileMatch, FolderMatch, Match, SearchModel, SearchResult, searchComparer, searchMatchComparer } from 'vs/workbench/contrib/search/browser/searchModel';
+import { createFileUriFromPathFromRoot, getRootName } from 'vs/workbench/contrib/search/test/browser/searchTestCommon';
+import { IEditorGroupsService } from 'vs/workbench/services/editor/common/editorGroupsService';
 import { MockLabelService } from 'vs/workbench/services/label/test/common/mockLabelService';
 import { IFileMatch, ITextSearchMatch, OneLineRange, QueryType, SearchSortOrder } from 'vs/workbench/services/search/common/search';
-import { TestContextService } from 'vs/workbench/test/common/workbenchTestServices';
-import { INotebookEditorService } from 'vs/workbench/contrib/notebook/browser/services/notebookEditorService';
-import { IEditorGroupsService } from 'vs/workbench/services/editor/common/editorGroupsService';
 import { TestEditorGroupsService } from 'vs/workbench/test/browser/workbenchTestServices';
-import { NotebookEditorWidgetService } from 'vs/workbench/contrib/notebook/browser/services/notebookEditorServiceImpl';
-import { createFileUriFromPathFromRoot, getRootName } from 'vs/workbench/contrib/search/test/browser/searchTestCommon';
+import { TestContextService } from 'vs/workbench/test/common/workbenchTestServices';
 
-suite('Search - Viewlet', () => {
+describe('Search - Viewlet', () => {
 	let instantiation: TestInstantiationService;
 
-	setup(() => {
+	beforeEach(() => {
 		instantiation = new TestInstantiationService();
 		instantiation.stub(ILanguageConfigurationService, TestLanguageConfigurationService);
 		instantiation.stub(IModelService, stubModelService(instantiation));

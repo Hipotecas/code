@@ -10,7 +10,7 @@ import { IRange, Range } from 'vs/editor/common/core/range';
 import { BeforeEditPositionMapper, TextEditInfo } from 'vs/editor/common/model/bracketPairsTextModelPart/bracketPairsTree/beforeEditPositionMapper';
 import { Length, lengthOfString, lengthToObj, lengthToPosition, toLength } from 'vs/editor/common/model/bracketPairsTextModelPart/bracketPairsTree/length';
 
-suite('Bracket Pair Colorizer - BeforeEditPositionMapper', () => {
+describe('Bracket Pair Colorizer - BeforeEditPositionMapper', () => {
 	test('Single-Line 1', () => {
 		assert.deepStrictEqual(
 			compute(

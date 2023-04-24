@@ -14,7 +14,7 @@ import { IKeybindingService } from 'vs/platform/keybinding/common/keybinding';
 import { ResolvedKeybindingItem } from 'vs/platform/keybinding/common/resolvedKeybindingItem';
 import { USLayoutResolvedKeybinding } from 'vs/platform/keybinding/common/usLayoutResolvedKeybinding';
 
-suite('CodeActionKeybindingResolver', () => {
+describe('CodeActionKeybindingResolver', () => {
 	const refactorKeybinding = createCodeActionKeybinding(
 		KeyCode.KeyA,
 		refactorCommandId,

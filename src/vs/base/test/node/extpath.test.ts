@@ -12,13 +12,13 @@ import { flakySuite, getRandomTestPath } from 'vs/base/test/node/testUtils';
 flakySuite('Extpath', () => {
 	let testDir: string;
 
-	setup(() => {
+	beforeEach(() => {
 		testDir = getRandomTestPath(tmpdir(), 'vsctests', 'extpath');
 
 		return Promises.mkdir(testDir, { recursive: true });
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		return Promises.rm(testDir);
 	});
 

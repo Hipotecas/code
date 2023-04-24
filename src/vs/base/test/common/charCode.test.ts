@@ -6,7 +6,7 @@
 import * as assert from 'assert';
 import { CharCode } from 'vs/base/common/charCode';
 
-suite('CharCode', () => {
+describe('CharCode', () => {
 	test('has good values', () => {
 
 		function assertValue(actual: CharCode, expected: string): void {

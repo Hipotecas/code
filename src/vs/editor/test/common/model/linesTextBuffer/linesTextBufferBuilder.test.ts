@@ -17,7 +17,7 @@ function testTextBufferFactory(text: string, eol: string, mightContainNonBasicAS
 	assert.strictEqual(textBuffer.getEOL(), eol);
 }
 
-suite('ModelBuilder', () => {
+describe('ModelBuilder', () => {
 
 	test('t1', () => {
 		testTextBufferFactory('', '\n', false, false);

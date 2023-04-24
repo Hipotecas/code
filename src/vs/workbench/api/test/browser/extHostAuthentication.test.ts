@@ -17,12 +17,12 @@ import { NullTelemetryService } from 'vs/platform/telemetry/common/telemetryUtil
 import { MainThreadAuthentication } from 'vs/workbench/api/browser/mainThreadAuthentication';
 import { ExtHostContext, MainContext } from 'vs/workbench/api/common/extHost.protocol';
 import { ExtHostAuthentication } from 'vs/workbench/api/common/extHostAuthentication';
+import { TestRPCProtocol } from 'vs/workbench/api/test/common/testRPCProtocol';
 import { IActivityService } from 'vs/workbench/services/activity/common/activity';
 import { AuthenticationService } from 'vs/workbench/services/authentication/browser/authenticationService';
 import { IAuthenticationService } from 'vs/workbench/services/authentication/common/authentication';
 import { IExtensionService, nullExtensionDescription as extensionDescription } from 'vs/workbench/services/extensions/common/extensions';
 import { IRemoteAgentService } from 'vs/workbench/services/remote/common/remoteAgentService';
-import { TestRPCProtocol } from 'vs/workbench/api/test/common/testRPCProtocol';
 import { TestQuickInputService, TestRemoteAgentService } from 'vs/workbench/test/browser/workbenchTestServices';
 import { TestActivityService, TestExtensionService, TestStorageService } from 'vs/workbench/test/common/workbenchTestServices';
 import type { AuthenticationProvider, AuthenticationSession } from 'vscode';
@@ -92,13 +92,13 @@ class TestAuthProvider implements AuthenticationProvider {
 
 }
 
-suite('ExtHostAuthentication', () => {
+describe('ExtHostAuthentication', () => {
 	let disposables: DisposableStore;
 
 	let extHostAuthentication: ExtHostAuthentication;
 	let instantiationService: TestInstantiationService;
 
-	suiteSetup(async () => {
+	describeSetup(async () => {
 		instantiationService = new TestInstantiationService();
 		instantiationService.stub(IDialogService, new TestDialogService({ confirmed: true }));
 		instantiationService.stub(IStorageService, new TestStorageService());
@@ -117,7 +117,7 @@ suite('ExtHostAuthentication', () => {
 		rpcProtocol.set(ExtHostContext.ExtHostAuthentication, extHostAuthentication);
 	});
 
-	setup(async () => {
+	beforeEach(async () => {
 		disposables = new DisposableStore();
 		disposables.add(extHostAuthentication.registerAuthenticationProvider('test', 'test provider', new TestAuthProvider('test')));
 		disposables.add(extHostAuthentication.registerAuthenticationProvider(
@@ -127,7 +127,7 @@ suite('ExtHostAuthentication', () => {
 			{ supportsMultipleAccounts: true }));
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		disposables.dispose();
 	});
 

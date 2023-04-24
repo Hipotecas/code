@@ -4,14 +4,14 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { deepStrictEqual, ok } from 'assert';
-import { Terminal } from 'xterm';
-import { CommandDetectionCapability } from 'vs/platform/terminal/common/capabilities/commandDetectionCapability';
-import { ILogService, NullLogService } from 'vs/platform/log/common/log';
-import { ITerminalCommand } from 'vs/platform/terminal/common/capabilities/capabilities';
+import { IContextMenuDelegate } from 'vs/base/browser/contextmenu';
 import { IContextMenuService } from 'vs/platform/contextview/browser/contextView';
 import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
-import { IContextMenuDelegate } from 'vs/base/browser/contextmenu';
+import { ILogService, NullLogService } from 'vs/platform/log/common/log';
+import { ITerminalCommand } from 'vs/platform/terminal/common/capabilities/capabilities';
+import { CommandDetectionCapability } from 'vs/platform/terminal/common/capabilities/commandDetectionCapability';
 import { writeP } from 'vs/workbench/contrib/terminal/browser/terminalTestHelpers';
+import { Terminal } from 'xterm';
 
 type TestTerminalCommandMatch = Pick<ITerminalCommand, 'command' | 'cwd' | 'exitCode'> & { marker: { line: number } };
 
@@ -21,7 +21,7 @@ class TestCommandDetectionCapability extends CommandDetectionCapability {
 	}
 }
 
-suite('CommandDetectionCapability', () => {
+describe('CommandDetectionCapability', () => {
 	let xterm: Terminal;
 	let capability: TestCommandDetectionCapability;
 	let addEvents: ITerminalCommand[];
@@ -54,7 +54,7 @@ suite('CommandDetectionCapability', () => {
 		capability.handleCommandFinished(exitCode);
 	}
 
-	setup(() => {
+	beforeEach(() => {
 		xterm = new Terminal({ allowProposedApi: true, cols: 80 });
 		const instantiationService = new TestInstantiationService();
 		instantiationService.stub(IContextMenuService, { showContextMenu(delegate: IContextMenuDelegate): void { } } as Partial<IContextMenuService>);
@@ -92,7 +92,7 @@ suite('CommandDetectionCapability', () => {
 		}]);
 	});
 
-	suite('cwd', () => {
+	describe('cwd', () => {
 		test('should add cwd to commands when it\'s set', async () => {
 			await printStandardCommand('$ ', 'echo foo', 'foo', '/home', 0);
 			await printStandardCommand('$ ', 'echo bar', 'bar', '/home/second', 0);

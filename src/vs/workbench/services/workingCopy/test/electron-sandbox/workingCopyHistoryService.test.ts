@@ -4,25 +4,25 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { TestContextService, TestStorageService, TestWorkingCopy } from 'vs/workbench/test/common/workbenchTestServices';
-import { NullLogService } from 'vs/platform/log/common/log';
-import { FileService } from 'vs/platform/files/common/fileService';
-import { Schemas } from 'vs/base/common/network';
-import { URI } from 'vs/base/common/uri';
+import { firstOrDefault } from 'vs/base/common/arrays';
+import { VSBuffer } from 'vs/base/common/buffer';
 import { CancellationToken, CancellationTokenSource } from 'vs/base/common/cancellation';
-import { IWorkingCopyHistoryEntry, IWorkingCopyHistoryEntryDescriptor, IWorkingCopyHistoryEvent } from 'vs/workbench/services/workingCopy/common/workingCopyHistory';
+import { Schemas } from 'vs/base/common/network';
+import { join } from 'vs/base/common/path';
+import { basename, dirname, joinPath } from 'vs/base/common/resources';
+import { URI } from 'vs/base/common/uri';
+import { generateUuid } from 'vs/base/common/uuid';
+import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
+import { FileService } from 'vs/platform/files/common/fileService';
 import { IFileService } from 'vs/platform/files/common/files';
+import { InMemoryFileSystemProvider } from 'vs/platform/files/common/inMemoryFilesystemProvider';
+import { NullLogService } from 'vs/platform/log/common/log';
 import { UriIdentityService } from 'vs/platform/uriIdentity/common/uriIdentityService';
 import { LabelService } from 'vs/workbench/services/label/common/labelService';
-import { TestEnvironmentService, TestLifecycleService, TestPathService, TestRemoteAgentService, TestWillShutdownEvent } from 'vs/workbench/test/browser/workbenchTestServices';
-import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
+import { IWorkingCopyHistoryEntry, IWorkingCopyHistoryEntryDescriptor, IWorkingCopyHistoryEvent } from 'vs/workbench/services/workingCopy/common/workingCopyHistory';
 import { NativeWorkingCopyHistoryService } from 'vs/workbench/services/workingCopy/common/workingCopyHistoryService';
-import { joinPath, dirname, basename } from 'vs/base/common/resources';
-import { firstOrDefault } from 'vs/base/common/arrays';
-import { InMemoryFileSystemProvider } from 'vs/platform/files/common/inMemoryFilesystemProvider';
-import { generateUuid } from 'vs/base/common/uuid';
-import { join } from 'vs/base/common/path';
-import { VSBuffer } from 'vs/base/common/buffer';
+import { TestEnvironmentService, TestLifecycleService, TestPathService, TestRemoteAgentService, TestWillShutdownEvent } from 'vs/workbench/test/browser/workbenchTestServices';
+import { TestContextService, TestStorageService, TestWorkingCopy } from 'vs/workbench/test/common/workbenchTestServices';
 
 export class TestWorkingCopyHistoryService extends NativeWorkingCopyHistoryService {
 
@@ -58,7 +58,7 @@ export class TestWorkingCopyHistoryService extends NativeWorkingCopyHistoryServi
 	}
 }
 
-suite('WorkingCopyHistoryService', () => {
+describe('WorkingCopyHistoryService', () => {
 
 	let testDir: URI;
 	let historyHome: URI;
@@ -79,7 +79,7 @@ suite('WorkingCopyHistoryService', () => {
 	].join('');
 	const testFile3PathContents = 'Hello Bar';
 
-	setup(async () => {
+	beforeEach(async () => {
 		testDir = URI.file(join(generateUuid(), 'vsctests', 'workingcopyhistoryservice')).with({ scheme: Schemas.inMemory });
 		historyHome = joinPath(testDir, 'User', 'History');
 		workHome = joinPath(testDir, 'work');
@@ -117,7 +117,7 @@ suite('WorkingCopyHistoryService', () => {
 		return entry;
 	}
 
-	teardown(() => {
+	afterEach(() => {
 		service.dispose();
 	});
 

@@ -70,7 +70,7 @@ function assertGuess(expectedInsertSpaces: boolean | undefined, expectedTabSize:
 	}
 }
 
-suite('TextModelData.fromString', () => {
+describe('TextModelData.fromString', () => {
 
 	interface ITextBufferData {
 		EOL: string;
@@ -164,7 +164,7 @@ suite('TextModelData.fromString', () => {
 
 });
 
-suite('Editor Model - TextModel', () => {
+describe('Editor Model - TextModel', () => {
 
 	test('TextModel does not use events internally', () => {
 		// Make sure that all model parts receive text model events explicitly
@@ -1065,7 +1065,7 @@ suite('Editor Model - TextModel', () => {
 	});
 });
 
-suite('TextModel.mightContainRTL', () => {
+describe('TextModel.mightContainRTL', () => {
 
 	test('nope', () => {
 		const model = createTextModel('hello world!');
@@ -1097,7 +1097,7 @@ suite('TextModel.mightContainRTL', () => {
 
 });
 
-suite('TextModel.createSnapshot', () => {
+describe('TextModel.createSnapshot', () => {
 
 	test('empty file', () => {
 		const model = createTextModel('');

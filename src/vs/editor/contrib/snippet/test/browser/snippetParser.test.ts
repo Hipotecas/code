@@ -5,7 +5,7 @@
 import * as assert from 'assert';
 import { Choice, FormatString, Marker, Placeholder, Scanner, SnippetParser, Text, TextmateSnippet, TokenType, Transform, Variable } from 'vs/editor/contrib/snippet/browser/snippetParser';
 
-suite('SnippetParser', () => {
+describe('SnippetParser', () => {
 
 	test('Scanner', () => {
 

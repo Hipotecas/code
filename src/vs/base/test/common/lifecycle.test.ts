@@ -13,7 +13,7 @@ class Disposable implements IDisposable {
 	dispose() { this.isDisposed = true; }
 }
 
-suite('Lifecycle', () => {
+describe('Lifecycle', () => {
 
 	test('dispose single disposable', () => {
 		const disposable = new Disposable();
@@ -128,7 +128,7 @@ suite('Lifecycle', () => {
 	});
 });
 
-suite('DisposableStore', () => {
+describe('DisposableStore', () => {
 	test('dispose should call all child disposes even if a child throws on dispose', () => {
 		const disposedValues = new Set<number>();
 
@@ -174,7 +174,7 @@ suite('DisposableStore', () => {
 	});
 });
 
-suite('Reference Collection', () => {
+describe('Reference Collection', () => {
 	class Collection extends ReferenceCollection<number> {
 		private _count = 0;
 		get count() { return this._count; }
@@ -221,8 +221,8 @@ function assertThrows(fn: () => void, test: (error: any) => void) {
 	}
 }
 
-suite('No Leakage Utilities', () => {
-	suite('throwIfDisposablesAreLeaked', () => {
+describe('No Leakage Utilities', () => {
+	describe('throwIfDisposablesAreLeaked', () => {
 		test('throws if an event subscription is not cleaned up', () => {
 			const eventEmitter = new Emitter();
 
@@ -270,7 +270,7 @@ suite('No Leakage Utilities', () => {
 		});
 	});
 
-	suite('ensureNoDisposablesAreLeakedInTest', () => {
+	describe('ensureNoDisposablesAreLeakedInTest', () => {
 		ensureNoDisposablesAreLeakedInTestSuite();
 
 		test('Basic Test', () => {

@@ -7,11 +7,11 @@ import * as assert from 'assert';
 import { timeout } from 'vs/base/common/async';
 import { MockDebugAdapter } from 'vs/workbench/contrib/debug/test/common/mockDebug';
 
-suite('Debug - AbstractDebugAdapter', () => {
-	suite('event ordering', () => {
+describe('Debug - AbstractDebugAdapter', () => {
+	describe('event ordering', () => {
 		let adapter: MockDebugAdapter;
 		let output: string[];
-		setup(() => {
+		beforeEach(() => {
 			adapter = new MockDebugAdapter();
 			output = [];
 			adapter.onEvent(ev => {

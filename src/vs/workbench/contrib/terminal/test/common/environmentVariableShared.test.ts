@@ -4,10 +4,10 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { deepStrictEqual } from 'assert';
-import { deserializeEnvironmentVariableCollection, serializeEnvironmentVariableCollection } from 'vs/platform/terminal/common/environmentVariableShared';
 import { EnvironmentVariableMutatorType, IEnvironmentVariableMutator } from 'vs/platform/terminal/common/environmentVariable';
+import { deserializeEnvironmentVariableCollection, serializeEnvironmentVariableCollection } from 'vs/platform/terminal/common/environmentVariableShared';
 
-suite('EnvironmentVariable - deserializeEnvironmentVariableCollection', () => {
+describe('EnvironmentVariable - deserializeEnvironmentVariableCollection', () => {
 	test('should construct correctly with 3 arguments', () => {
 		const c = deserializeEnvironmentVariableCollection([
 			['A', { value: 'a', type: EnvironmentVariableMutatorType.Replace, variable: 'A' }],
@@ -22,7 +22,7 @@ suite('EnvironmentVariable - deserializeEnvironmentVariableCollection', () => {
 	});
 });
 
-suite('EnvironmentVariable - serializeEnvironmentVariableCollection', () => {
+describe('EnvironmentVariable - serializeEnvironmentVariableCollection', () => {
 	test('should correctly serialize the object', () => {
 		const collection = new Map<string, IEnvironmentVariableMutator>();
 		deepStrictEqual(serializeEnvironmentVariableCollection(collection), []);

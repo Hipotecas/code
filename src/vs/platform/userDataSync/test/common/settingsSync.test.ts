@@ -13,18 +13,18 @@ import { ConfigurationScope, Extensions, IConfigurationRegistry } from 'vs/platf
 import { IFileService } from 'vs/platform/files/common/files';
 import { Registry } from 'vs/platform/registry/common/platform';
 import { IUserDataProfile, IUserDataProfilesService } from 'vs/platform/userDataProfile/common/userDataProfile';
-import { ISettingsSyncContent, parseSettingsSyncContent, SettingsSynchroniser } from 'vs/platform/userDataSync/common/settingsSync';
+import { ISettingsSyncContent, SettingsSynchroniser, parseSettingsSyncContent } from 'vs/platform/userDataSync/common/settingsSync';
 import { ISyncData, IUserDataSyncStoreService, SyncResource, SyncStatus, UserDataSyncError, UserDataSyncErrorCode } from 'vs/platform/userDataSync/common/userDataSync';
 import { UserDataSyncClient, UserDataSyncTestServer } from 'vs/platform/userDataSync/test/common/userDataSyncClient';
 
-suite('SettingsSync - Auto', () => {
+describe('SettingsSync - Auto', () => {
 
 	const disposableStore = new DisposableStore();
 	const server = new UserDataSyncTestServer();
 	let client: UserDataSyncClient;
 	let testObject: SettingsSynchroniser;
 
-	setup(async () => {
+	beforeEach(async () => {
 		Registry.as<IConfigurationRegistry>(Extensions.Configuration).registerConfiguration({
 			'id': 'settingsSync',
 			'type': 'object',
@@ -45,7 +45,7 @@ suite('SettingsSync - Auto', () => {
 		disposableStore.add(toDisposable(() => client.instantiationService.get(IUserDataSyncStoreService).clear()));
 	});
 
-	teardown(() => disposableStore.clear());
+	afterEach(() => disposableStore.clear());
 
 	test('when settings file does not exist', () => runWithFakedTimers<void>({ useFakeTimers: true }, async () => {
 		const fileService = client.instantiationService.get(IFileService);
@@ -525,21 +525,21 @@ suite('SettingsSync - Auto', () => {
 
 });
 
-suite('SettingsSync - Manual', () => {
+describe('SettingsSync - Manual', () => {
 
 	const disposableStore = new DisposableStore();
 	const server = new UserDataSyncTestServer();
 	let client: UserDataSyncClient;
 	let testObject: SettingsSynchroniser;
 
-	setup(async () => {
+	beforeEach(async () => {
 		client = disposableStore.add(new UserDataSyncClient(server));
 		await client.setUp(true);
 		testObject = client.getSynchronizer(SyncResource.Settings) as SettingsSynchroniser;
 		disposableStore.add(toDisposable(() => client.instantiationService.get(IUserDataSyncStoreService).clear()));
 	});
 
-	teardown(() => disposableStore.clear());
+	afterEach(() => disposableStore.clear());
 
 	test('do not sync ignored settings', () => runWithFakedTimers<void>({ useFakeTimers: true }, async () => {
 		const settingsContent =

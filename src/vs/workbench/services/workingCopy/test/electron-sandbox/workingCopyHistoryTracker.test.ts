@@ -4,33 +4,33 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
+import { DeferredPromise } from 'vs/base/common/async';
+import { VSBuffer } from 'vs/base/common/buffer';
+import { CancellationToken } from 'vs/base/common/cancellation';
 import { Event } from 'vs/base/common/event';
-import { TestContextService, TestStorageService, TestWorkingCopy } from 'vs/workbench/test/common/workbenchTestServices';
 import { randomPath } from 'vs/base/common/extpath';
+import { IDisposable } from 'vs/base/common/lifecycle';
+import { Schemas } from 'vs/base/common/network';
 import { join } from 'vs/base/common/path';
+import { basename, dirname, isEqual, joinPath } from 'vs/base/common/resources';
+import { assertIsDefined } from 'vs/base/common/types';
 import { URI } from 'vs/base/common/uri';
+import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
+import { TestDialogService } from 'vs/platform/dialogs/test/common/testDialogService';
+import { FileService } from 'vs/platform/files/common/fileService';
+import { IFileService } from 'vs/platform/files/common/files';
+import { InMemoryFileSystemProvider } from 'vs/platform/files/common/inMemoryFilesystemProvider';
+import { NullLogService } from 'vs/platform/log/common/log';
+import { TestNotificationService } from 'vs/platform/notification/test/common/testNotificationService';
+import { UndoRedoService } from 'vs/platform/undoRedo/common/undoRedoService';
+import { UriIdentityService } from 'vs/platform/uriIdentity/common/uriIdentityService';
+import { LabelService } from 'vs/workbench/services/label/common/labelService';
+import { IWorkingCopyHistoryEntry, IWorkingCopyHistoryEntryDescriptor } from 'vs/workbench/services/workingCopy/common/workingCopyHistory';
+import { NativeWorkingCopyHistoryService } from 'vs/workbench/services/workingCopy/common/workingCopyHistoryService';
 import { WorkingCopyHistoryTracker } from 'vs/workbench/services/workingCopy/common/workingCopyHistoryTracker';
 import { WorkingCopyService } from 'vs/workbench/services/workingCopy/common/workingCopyService';
-import { UriIdentityService } from 'vs/platform/uriIdentity/common/uriIdentityService';
 import { TestEnvironmentService, TestFileService, TestLifecycleService, TestPathService, TestRemoteAgentService } from 'vs/workbench/test/browser/workbenchTestServices';
-import { DeferredPromise } from 'vs/base/common/async';
-import { IFileService } from 'vs/platform/files/common/files';
-import { Schemas } from 'vs/base/common/network';
-import { basename, dirname, isEqual, joinPath } from 'vs/base/common/resources';
-import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
-import { UndoRedoService } from 'vs/platform/undoRedo/common/undoRedoService';
-import { TestDialogService } from 'vs/platform/dialogs/test/common/testDialogService';
-import { TestNotificationService } from 'vs/platform/notification/test/common/testNotificationService';
-import { CancellationToken } from 'vs/base/common/cancellation';
-import { IWorkingCopyHistoryEntry, IWorkingCopyHistoryEntryDescriptor } from 'vs/workbench/services/workingCopy/common/workingCopyHistory';
-import { assertIsDefined } from 'vs/base/common/types';
-import { VSBuffer } from 'vs/base/common/buffer';
-import { InMemoryFileSystemProvider } from 'vs/platform/files/common/inMemoryFilesystemProvider';
-import { IDisposable } from 'vs/base/common/lifecycle';
-import { NativeWorkingCopyHistoryService } from 'vs/workbench/services/workingCopy/common/workingCopyHistoryService';
-import { NullLogService } from 'vs/platform/log/common/log';
-import { FileService } from 'vs/platform/files/common/fileService';
-import { LabelService } from 'vs/workbench/services/label/common/labelService';
+import { TestContextService, TestStorageService, TestWorkingCopy } from 'vs/workbench/test/common/workbenchTestServices';
 
 class TestWorkingCopyHistoryService extends NativeWorkingCopyHistoryService {
 
@@ -63,7 +63,7 @@ class TestWorkingCopyHistoryService extends NativeWorkingCopyHistoryService {
 	}
 }
 
-suite('WorkingCopyHistoryTracker', () => {
+describe('WorkingCopyHistoryTracker', () => {
 
 	let testDir: URI;
 	let historyHome: URI;
@@ -99,7 +99,7 @@ suite('WorkingCopyHistoryTracker', () => {
 		return assertIsDefined(entry);
 	}
 
-	setup(async () => {
+	beforeEach(async () => {
 		testDir = URI.file(randomPath(join('vsctests', 'workingcopyhistorytracker'))).with({ scheme: Schemas.inMemory });
 		historyHome = joinPath(testDir, 'User', 'History');
 		workHome = joinPath(testDir, 'work');
@@ -136,7 +136,7 @@ suite('WorkingCopyHistoryTracker', () => {
 		);
 	}
 
-	teardown(async () => {
+	afterEach(async () => {
 		workingCopyHistoryService.dispose();
 		workingCopyService.dispose();
 		tracker.dispose();

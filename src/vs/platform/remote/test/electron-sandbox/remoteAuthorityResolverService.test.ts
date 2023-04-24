@@ -9,7 +9,7 @@ import { IProductService } from 'vs/platform/product/common/productService';
 import { RemoteAuthorityResolverError, RemoteAuthorityResolverErrorCode } from 'vs/platform/remote/common/remoteAuthorityResolver';
 import { RemoteAuthorityResolverService } from 'vs/platform/remote/electron-sandbox/remoteAuthorityResolverService';
 
-suite('RemoteAuthorityResolverService', () => {
+describe('RemoteAuthorityResolverService', () => {
 	test('issue #147318: RemoteAuthorityResolverError keeps the same type', async () => {
 		const productService: IProductService = { _serviceBrand: undefined, ...product };
 		const service = new RemoteAuthorityResolverService(productService);

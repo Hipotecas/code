@@ -65,10 +65,10 @@ function getSashes(splitview: SplitView): Sash[] {
 	return splitview.sashItems.map((i: any) => i.sash) as Sash[];
 }
 
-suite('Splitview', () => {
+describe('Splitview', () => {
 	let container: HTMLElement;
 
-	setup(() => {
+	beforeEach(() => {
 		container = document.createElement('div');
 		container.style.position = 'absolute';
 		container.style.width = `${200}px`;

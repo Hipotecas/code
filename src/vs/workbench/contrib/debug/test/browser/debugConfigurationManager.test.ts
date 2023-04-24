@@ -5,23 +5,23 @@
 
 import * as assert from 'assert';
 import { CancellationToken } from 'vs/base/common/cancellation';
-import { DisposableStore } from 'vs/base/common/lifecycle';
 import { Event } from 'vs/base/common/event';
+import { DisposableStore } from 'vs/base/common/lifecycle';
+import { URI } from 'vs/base/common/uri';
 import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
 import { ContextKeyService } from 'vs/platform/contextkey/browser/contextKeyService';
 import { FileService } from 'vs/platform/files/common/fileService';
+import { ServiceCollection } from 'vs/platform/instantiation/common/serviceCollection';
 import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
 import { NullLogService } from 'vs/platform/log/common/log';
 import { UriIdentityService } from 'vs/platform/uriIdentity/common/uriIdentityService';
 import { ConfigurationManager } from 'vs/workbench/contrib/debug/browser/debugConfigurationManager';
 import { DebugConfigurationProviderTriggerKind, IAdapterManager, IConfig, IDebugAdapterExecutable, IDebugSession } from 'vs/workbench/contrib/debug/common/debug';
+import { IPreferencesService } from 'vs/workbench/services/preferences/common/preferences';
 import { TestHistoryService, TestQuickInputService } from 'vs/workbench/test/browser/workbenchTestServices';
 import { TestContextService, TestExtensionService, TestStorageService } from 'vs/workbench/test/common/workbenchTestServices';
-import { ServiceCollection } from 'vs/platform/instantiation/common/serviceCollection';
-import { IPreferencesService } from 'vs/workbench/services/preferences/common/preferences';
-import { URI } from 'vs/base/common/uri';
 
-suite('debugConfigurationManager', () => {
+describe('debugConfigurationManager', () => {
 	const configurationProviderType = 'custom-type';
 	let _debugConfigurationManager: ConfigurationManager;
 	const disposables = new DisposableStore();
@@ -45,7 +45,7 @@ suite('debugConfigurationManager', () => {
 	};
 
 	const configurationService = new TestConfigurationService();
-	setup(() => {
+	beforeEach(() => {
 		const fileService = disposables.add(new FileService(new NullLogService()));
 		_debugConfigurationManager = new ConfigurationManager(
 			adapterManager,
@@ -119,5 +119,5 @@ suite('debugConfigurationManager', () => {
 		assert.strictEqual((resultConfig as any).configurationResolved, true, 'Configuration should be updated by test provider');
 	});
 
-	teardown(() => disposables.clear());
+	afterEach(() => disposables.clear());
 });

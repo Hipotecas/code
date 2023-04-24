@@ -4,10 +4,10 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { getNonWhitespacePrefix } from 'vs/workbench/contrib/snippets/browser/snippetsService';
 import { Position } from 'vs/editor/common/core/position';
+import { getNonWhitespacePrefix } from 'vs/workbench/contrib/snippets/browser/snippetsService';
 
-suite('getNonWhitespacePrefix', () => {
+describe('getNonWhitespacePrefix', () => {
 
 	function assertGetNonWhitespacePrefix(line: string, column: number, expected: string): void {
 		const model = {

@@ -8,7 +8,7 @@ import { PositionAffinity } from 'vs/editor/common/model';
 import { ModelDecorationInjectedTextOptions } from 'vs/editor/common/model/textModel';
 import { ModelLineProjectionData } from 'vs/editor/common/modelLineProjectionData';
 
-suite('Editor ViewModel - LineBreakData', () => {
+describe('Editor ViewModel - LineBreakData', () => {
 	test('Basic', () => {
 		const data = new ModelLineProjectionData([], [], [100], [0], 10);
 
@@ -43,7 +43,7 @@ suite('Editor ViewModel - LineBreakData', () => {
 		return arr.map(e => ModelDecorationInjectedTextOptions.from({ content: e }));
 	}
 
-	suite('Injected Text 1', () => {
+	describe('Injected Text 1', () => {
 		const data = new ModelLineProjectionData([2, 3, 10], mapTextToInjectedTextOptions(['1', '22', '333']), [10, 100], [], 10);
 
 		test('getInputOffsetOfOutputPosition', () => {
@@ -182,7 +182,7 @@ suite('Editor ViewModel - LineBreakData', () => {
 		});
 	});
 
-	suite('Injected Text 2', () => {
+	describe('Injected Text 2', () => {
 		const data = new ModelLineProjectionData([2, 2, 6], mapTextToInjectedTextOptions(['1', '22', '333']), [10, 100], [], 0);
 
 		test('getInputOffsetOfOutputPosition', () => {
@@ -204,7 +204,7 @@ suite('Editor ViewModel - LineBreakData', () => {
 		});
 	});
 
-	suite('Injected Text 3', () => {
+	describe('Injected Text 3', () => {
 		const data = new ModelLineProjectionData([2, 2, 7], mapTextToInjectedTextOptions(['1', '22', '333']), [10, 100], [], 0);
 
 		test('getInputOffsetOfOutputPosition', () => {

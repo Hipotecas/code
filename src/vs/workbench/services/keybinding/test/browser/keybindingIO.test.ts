@@ -4,13 +4,13 @@
  *--------------------------------------------------------------------------------------------*/
 import * as assert from 'assert';
 import { KeyChord, KeyCode, KeyMod, ScanCode } from 'vs/base/common/keyCodes';
-import { KeyCodeChord, decodeKeybinding, ScanCodeChord, Keybinding } from 'vs/base/common/keybindings';
 import { KeybindingParser } from 'vs/base/common/keybindingParser';
+import { KeyCodeChord, Keybinding, ScanCodeChord, decodeKeybinding } from 'vs/base/common/keybindings';
 import { OperatingSystem } from 'vs/base/common/platform';
-import { KeybindingIO } from 'vs/workbench/services/keybinding/common/keybindingIO';
 import { createUSLayoutResolvedKeybinding } from 'vs/platform/keybinding/test/common/keybindingsTestUtils';
+import { KeybindingIO } from 'vs/workbench/services/keybinding/common/keybindingIO';
 
-suite('keybindingIO', () => {
+describe('keybindingIO', () => {
 
 	test('serialize/deserialize', () => {
 

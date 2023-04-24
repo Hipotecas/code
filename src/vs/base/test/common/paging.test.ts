@@ -28,7 +28,7 @@ class TestPager implements IPager<number> {
 	}
 }
 
-suite('PagedModel', () => {
+describe('PagedModel', () => {
 
 	test('isResolved', () => {
 		const pager = new TestPager();

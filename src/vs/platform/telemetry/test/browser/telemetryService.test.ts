@@ -87,7 +87,7 @@ class ErrorTestingSettings {
 	}
 }
 
-suite('TelemetryService', () => {
+describe('TelemetryService', () => {
 
 	const TestProductService: IProductService = { _serviceBrand: undefined, ...product };
 

@@ -6,7 +6,7 @@
 import * as assert from 'assert';
 import { Color, HSLA, HSVA, RGBA } from 'vs/base/common/color';
 
-suite('Color', () => {
+describe('Color', () => {
 
 	test('isLighterColor', () => {
 		const color1 = new Color(new HSLA(60, 1, 0.5, 1)), color2 = new Color(new HSLA(0, 0, 0.753, 1));
@@ -78,7 +78,7 @@ suite('Color', () => {
 		assert.deepStrictEqual(new Color(new RGBA(0, 0, 0, 0.58)).blend(new Color(new RGBA(255, 255, 255, 0.33))), new Color(new RGBA(49, 49, 49, 0.719)));
 	});
 
-	suite('HSLA', () => {
+	describe('HSLA', () => {
 		test('HSLA.toRGBA', () => {
 			assert.deepStrictEqual(HSLA.toRGBA(new HSLA(0, 0, 0, 0)), new RGBA(0, 0, 0, 0));
 			assert.deepStrictEqual(HSLA.toRGBA(new HSLA(0, 0, 0, 1)), new RGBA(0, 0, 0, 1));
@@ -128,7 +128,7 @@ suite('Color', () => {
 		});
 	});
 
-	suite('HSVA', () => {
+	describe('HSVA', () => {
 		test('HSVA.toRGBA', () => {
 			assert.deepStrictEqual(HSVA.toRGBA(new HSVA(0, 0, 0, 0)), new RGBA(0, 0, 0, 0));
 			assert.deepStrictEqual(HSVA.toRGBA(new HSVA(0, 0, 0, 1)), new RGBA(0, 0, 0, 1));
@@ -199,8 +199,8 @@ suite('Color', () => {
 		});
 	});
 
-	suite('Format', () => {
-		suite('CSS', () => {
+	describe('Format', () => {
+		describe('CSS', () => {
 			test('parseHex', () => {
 
 				// invalid

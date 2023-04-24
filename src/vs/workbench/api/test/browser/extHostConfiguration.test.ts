@@ -4,23 +4,23 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { URI, UriComponents } from 'vs/base/common/uri';
-import { ExtHostWorkspace } from 'vs/workbench/api/common/extHostWorkspace';
-import { ExtHostConfigProvider } from 'vs/workbench/api/common/extHostConfiguration';
-import { MainThreadConfigurationShape, IConfigurationInitData } from 'vs/workbench/api/common/extHost.protocol';
-import { ConfigurationModel, ConfigurationModelParser } from 'vs/platform/configuration/common/configurationModels';
-import { TestRPCProtocol } from 'vs/workbench/api/test/common/testRPCProtocol';
-import { mock } from 'vs/base/test/common/mock';
-import { IWorkspaceFolder, WorkspaceFolder } from 'vs/platform/workspace/common/workspace';
-import { ConfigurationTarget, IConfigurationModel, IConfigurationChange } from 'vs/platform/configuration/common/configuration';
-import { NullLogService } from 'vs/platform/log/common/log';
-import { IExtHostInitDataService } from 'vs/workbench/api/common/extHostInitDataService';
-import { IExtHostFileSystemInfo } from 'vs/workbench/api/common/extHostFileSystemInfo';
-import { FileSystemProviderCapabilities } from 'vs/platform/files/common/files';
 import { isLinux } from 'vs/base/common/platform';
+import { URI, UriComponents } from 'vs/base/common/uri';
+import { mock } from 'vs/base/test/common/mock';
+import { ConfigurationTarget, IConfigurationChange, IConfigurationModel } from 'vs/platform/configuration/common/configuration';
+import { ConfigurationModel, ConfigurationModelParser } from 'vs/platform/configuration/common/configurationModels';
+import { FileSystemProviderCapabilities } from 'vs/platform/files/common/files';
+import { NullLogService } from 'vs/platform/log/common/log';
+import { IWorkspaceFolder, WorkspaceFolder } from 'vs/platform/workspace/common/workspace';
+import { IConfigurationInitData, MainThreadConfigurationShape } from 'vs/workbench/api/common/extHost.protocol';
+import { ExtHostConfigProvider } from 'vs/workbench/api/common/extHostConfiguration';
+import { IExtHostFileSystemInfo } from 'vs/workbench/api/common/extHostFileSystemInfo';
+import { IExtHostInitDataService } from 'vs/workbench/api/common/extHostInitDataService';
 import { IURITransformerService } from 'vs/workbench/api/common/extHostUriTransformerService';
+import { ExtHostWorkspace } from 'vs/workbench/api/common/extHostWorkspace';
+import { TestRPCProtocol } from 'vs/workbench/api/test/common/testRPCProtocol';
 
-suite('ExtHostConfiguration', function () {
+describe('ExtHostConfiguration', function () {
 
 	class RecordingShape extends mock<MainThreadConfigurationShape>() {
 		lastArgs!: [ConfigurationTarget, string, any];

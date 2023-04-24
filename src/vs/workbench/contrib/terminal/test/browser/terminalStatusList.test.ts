@@ -6,9 +6,9 @@
 import { deepStrictEqual, strictEqual } from 'assert';
 import { Codicon } from 'vs/base/common/codicons';
 import Severity from 'vs/base/common/severity';
+import { ThemeIcon } from 'vs/base/common/themables';
 import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
 import { spinningLoading } from 'vs/platform/theme/common/iconRegistry';
-import { ThemeIcon } from 'vs/base/common/themables';
 import { TerminalStatusList } from 'vs/workbench/contrib/terminal/browser/terminalStatusList';
 import { ITerminalStatus } from 'vs/workbench/contrib/terminal/common/terminal';
 
@@ -16,16 +16,16 @@ function statusesEqual(list: TerminalStatusList, expected: [string, Severity][])
 	deepStrictEqual(list.statuses.map(e => [e.id, e.severity]), expected);
 }
 
-suite('Workbench - TerminalStatusList', () => {
+describe('Workbench - TerminalStatusList', () => {
 	let list: TerminalStatusList;
 	let configService: TestConfigurationService;
 
-	setup(() => {
+	beforeEach(() => {
 		configService = new TestConfigurationService();
 		list = new TerminalStatusList(configService);
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		list.dispose();
 	});
 

@@ -4,19 +4,19 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { Event } from 'vs/base/common/event';
-import { URI } from 'vs/base/common/uri';
 import { CancellationToken } from 'vs/base/common/cancellation';
-import { TestServiceAccessor, workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
+import { Event } from 'vs/base/common/event';
+import { DisposableStore } from 'vs/base/common/lifecycle';
+import { URI } from 'vs/base/common/uri';
+import { runWithFakedTimers } from 'vs/base/test/common/timeTravelScheduler';
+import { FileChangeType, FileChangesEvent } from 'vs/platform/files/common/files';
 import { IInstantiationService } from 'vs/platform/instantiation/common/instantiation';
-import { FileChangesEvent, FileChangeType } from 'vs/platform/files/common/files';
 import { IRevertOptions, ISaveOptions } from 'vs/workbench/common/editor';
 import { ResourceWorkingCopy } from 'vs/workbench/services/workingCopy/common/resourceWorkingCopy';
-import { WorkingCopyCapabilities, IWorkingCopyBackup } from 'vs/workbench/services/workingCopy/common/workingCopy';
-import { DisposableStore } from 'vs/base/common/lifecycle';
-import { runWithFakedTimers } from 'vs/base/test/common/timeTravelScheduler';
+import { IWorkingCopyBackup, WorkingCopyCapabilities } from 'vs/workbench/services/workingCopy/common/workingCopy';
+import { TestServiceAccessor, workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
 
-suite('ResourceWorkingCopy', function () {
+describe('ResourceWorkingCopy', function () {
 
 	class TestResourceWorkingCopy extends ResourceWorkingCopy {
 		name = 'testName';
@@ -42,7 +42,7 @@ suite('ResourceWorkingCopy', function () {
 		return new TestResourceWorkingCopy(uri, accessor.fileService);
 	}
 
-	setup(() => {
+	beforeEach(() => {
 		disposables = new DisposableStore();
 		instantiationService = workbenchInstantiationService(undefined, disposables);
 		accessor = instantiationService.createInstance(TestServiceAccessor);
@@ -50,7 +50,7 @@ suite('ResourceWorkingCopy', function () {
 		workingCopy = createWorkingCopy();
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		workingCopy.dispose();
 		disposables.dispose();
 	});

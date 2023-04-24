@@ -13,7 +13,6 @@ import { Emitter, Event } from 'vs/base/common/event';
 import { Disposable, DisposableStore } from 'vs/base/common/lifecycle';
 import { ILoadEstimator, PersistentProtocol, Protocol, ProtocolConstants, SocketCloseEvent, SocketDiagnosticsEventType } from 'vs/base/parts/ipc/common/ipc.net';
 import { createRandomIPCHandle, createStaticIPCHandle, NodeSocket, WebSocketNodeSocket } from 'vs/base/parts/ipc/node/ipc.net';
-import { flakySuite } from 'vs/base/test/common/testUtils';
 import { runWithFakedTimers } from 'vs/base/test/common/timeTravelScheduler';
 import { ensureNoDisposablesAreLeakedInTestSuite } from 'vs/base/test/common/utils';
 
@@ -132,13 +131,13 @@ class Ether {
 	}
 }
 
-suite('IPC, Socket Protocol', () => {
+describe('IPC, Socket Protocol', () => {
 
 	ensureNoDisposablesAreLeakedInTestSuite();
 
 	let ether: Ether;
 
-	setup(() => {
+	beforeEach(() => {
 		ether = new Ether();
 	});
 
@@ -188,7 +187,7 @@ suite('IPC, Socket Protocol', () => {
 
 });
 
-suite('PersistentProtocol reconnection', () => {
+describe('PersistentProtocol reconnection', () => {
 
 	ensureNoDisposablesAreLeakedInTestSuite();
 
@@ -537,7 +536,7 @@ suite('PersistentProtocol reconnection', () => {
 	});
 });
 
-flakySuite('IPC, create handle', () => {
+describe('IPC, create handle', () => {
 
 	test('createRandomIPCHandle', async () => {
 		return testIPCHandle(createRandomIPCHandle());
@@ -569,7 +568,7 @@ flakySuite('IPC, create handle', () => {
 
 });
 
-suite('WebSocketNodeSocket', () => {
+describe('WebSocketNodeSocket', () => {
 
 	function toUint8Array(data: number[]): Uint8Array {
 		const result = new Uint8Array(data.length);
@@ -669,7 +668,7 @@ suite('WebSocketNodeSocket', () => {
 		assert.deepStrictEqual(actual, 'Hello');
 	});
 
-	suite('compression', () => {
+	describe('compression', () => {
 		test('A single-frame compressed text message', async () => {
 			// contains "Hello"
 			const frames = [

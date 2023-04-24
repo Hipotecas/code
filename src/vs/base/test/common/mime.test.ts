@@ -6,7 +6,7 @@
 import * as assert from 'assert';
 import { normalizeMimeType } from 'vs/base/common/mime';
 
-suite('Mime', () => {
+describe('Mime', () => {
 
 	test('normalize', () => {
 		assert.strictEqual(normalizeMimeType('invalid'), 'invalid');

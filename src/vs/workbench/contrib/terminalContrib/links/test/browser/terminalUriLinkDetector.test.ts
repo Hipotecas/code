@@ -3,6 +3,8 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
+import { OperatingSystem } from 'vs/base/common/platform';
+import { URI } from 'vs/base/common/uri';
 import { IConfigurationService } from 'vs/platform/configuration/common/configuration';
 import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
 import { IFileService } from 'vs/platform/files/common/files';
@@ -12,17 +14,15 @@ import { TerminalLinkResolver } from 'vs/workbench/contrib/terminalContrib/links
 import { TerminalUriLinkDetector } from 'vs/workbench/contrib/terminalContrib/links/browser/terminalUriLinkDetector';
 import { assertLinkHelper } from 'vs/workbench/contrib/terminalContrib/links/test/browser/linkTestUtils';
 import { createFileStat } from 'vs/workbench/test/common/workbenchTestServices';
-import { URI } from 'vs/base/common/uri';
 import { Terminal } from 'xterm';
-import { OperatingSystem } from 'vs/base/common/platform';
 
-suite('Workbench - TerminalUriLinkDetector', () => {
+describe('Workbench - TerminalUriLinkDetector', () => {
 	let configurationService: TestConfigurationService;
 	let detector: TerminalUriLinkDetector;
 	let xterm: Terminal;
 	let validResources: URI[] = [];
 
-	setup(() => {
+	beforeEach(() => {
 		const instantiationService = new TestInstantiationService();
 		configurationService = new TestConfigurationService();
 		instantiationService.stub(IConfigurationService, configurationService);

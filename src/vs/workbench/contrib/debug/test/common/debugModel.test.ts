@@ -6,8 +6,8 @@
 import * as assert from 'assert';
 import { ExceptionBreakpoint } from 'vs/workbench/contrib/debug/common/debugModel';
 
-suite('DebugModel', () => {
-	suite('ExceptionBreakpoint', () => {
+describe('DebugModel', () => {
+	describe('ExceptionBreakpoint', () => {
 		test('Restored matches new', () => {
 			const ebp = new ExceptionBreakpoint('id', 'label', true, true, 'condition', 'description', 'condition description', false);
 			const strigified = JSON.stringify(ebp);

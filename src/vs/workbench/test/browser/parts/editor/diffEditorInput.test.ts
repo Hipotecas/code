@@ -4,14 +4,14 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { EditorInput } from 'vs/workbench/common/editor/editorInput';
-import { DiffEditorInput } from 'vs/workbench/common/editor/diffEditorInput';
-import { workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
-import { EditorResourceAccessor, isDiffEditorInput, isResourceDiffEditorInput, isResourceSideBySideEditorInput, IUntypedEditorInput } from 'vs/workbench/common/editor';
-import { URI } from 'vs/base/common/uri';
 import { DisposableStore } from 'vs/base/common/lifecycle';
+import { URI } from 'vs/base/common/uri';
+import { EditorResourceAccessor, isDiffEditorInput, isResourceDiffEditorInput, isResourceSideBySideEditorInput, IUntypedEditorInput } from 'vs/workbench/common/editor';
+import { DiffEditorInput } from 'vs/workbench/common/editor/diffEditorInput';
+import { EditorInput } from 'vs/workbench/common/editor/editorInput';
+import { workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
 
-suite('Diff editor input', () => {
+describe('Diff editor input', () => {
 
 	class MyEditorInput extends EditorInput {
 
@@ -38,11 +38,11 @@ suite('Diff editor input', () => {
 
 	let disposables: DisposableStore;
 
-	setup(() => {
+	beforeEach(() => {
 		disposables = new DisposableStore();
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		disposables.dispose();
 	});
 

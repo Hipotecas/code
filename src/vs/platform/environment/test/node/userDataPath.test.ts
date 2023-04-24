@@ -8,7 +8,7 @@ import { OPTIONS, parseArgs } from 'vs/platform/environment/node/argv';
 import { getUserDataPath } from 'vs/platform/environment/node/userDataPath';
 import product from 'vs/platform/product/common/product';
 
-suite('User data path', () => {
+describe('User data path', () => {
 
 	test('getUserDataPath - default', () => {
 		const path = getUserDataPath(parseArgs(process.argv, OPTIONS), product.nameShort);

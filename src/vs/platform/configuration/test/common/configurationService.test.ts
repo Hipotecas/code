@@ -20,20 +20,20 @@ import { NullLogService } from 'vs/platform/log/common/log';
 import { NullPolicyService } from 'vs/platform/policy/common/policy';
 import { Registry } from 'vs/platform/registry/common/platform';
 
-suite('ConfigurationService', () => {
+describe('ConfigurationService', () => {
 
 	let fileService: IFileService;
 	let settingsResource: URI;
 	const disposables: DisposableStore = new DisposableStore();
 
-	setup(async () => {
+	beforeEach(async () => {
 		fileService = disposables.add(new FileService(new NullLogService()));
 		const diskFileSystemProvider = disposables.add(new InMemoryFileSystemProvider());
 		fileService.registerProvider(Schemas.file, diskFileSystemProvider);
 		settingsResource = URI.file('settings.json');
 	});
 
-	teardown(() => disposables.clear());
+	afterEach(() => disposables.clear());
 
 	test('simple', () => runWithFakedTimers<void>({ useFakeTimers: true }, async () => {
 		await fileService.writeFile(settingsResource, VSBuffer.fromString('{ "foo": "bar" }'));

@@ -26,8 +26,8 @@ function executeAction(action: EditorAction, editor: ICodeEditor): void {
 	action.run(null!, editor, undefined);
 }
 
-suite('Editor Contrib - Line Operations', () => {
-	suite('SortLinesAscendingAction', () => {
+describe('Editor Contrib - Line Operations', () => {
+	describe('SortLinesAscendingAction', () => {
 		test('should sort selected lines in ascending order', function () {
 			withTestCodeEditor(
 				[
@@ -85,7 +85,7 @@ suite('Editor Contrib - Line Operations', () => {
 		});
 	});
 
-	suite('SortLinesDescendingAction', () => {
+	describe('SortLinesDescendingAction', () => {
 		test('should sort selected lines in descending order', function () {
 			withTestCodeEditor(
 				[
@@ -143,7 +143,7 @@ suite('Editor Contrib - Line Operations', () => {
 		});
 	});
 
-	suite('DeleteDuplicateLinesAction', () => {
+	describe('DeleteDuplicateLinesAction', () => {
 		test('should remove duplicate lines', function () {
 			withTestCodeEditor(
 				[
@@ -205,7 +205,7 @@ suite('Editor Contrib - Line Operations', () => {
 	});
 
 
-	suite('DeleteAllLeftAction', () => {
+	describe('DeleteAllLeftAction', () => {
 		test('should delete to the left of the cursor', function () {
 			withTestCodeEditor(
 				[
@@ -385,7 +385,7 @@ suite('Editor Contrib - Line Operations', () => {
 		});
 	});
 
-	suite('JoinLinesAction', () => {
+	describe('JoinLinesAction', () => {
 		test('should join lines and insert space if necessary', function () {
 			withTestCodeEditor(
 				[
@@ -933,7 +933,7 @@ suite('Editor Contrib - Line Operations', () => {
 		);
 	});
 
-	suite('DeleteAllRightAction', () => {
+	describe('DeleteAllRightAction', () => {
 		test('should be noop on empty', () => {
 			withTestCodeEditor([''], {}, (editor) => {
 				const model = editor.getModel()!;

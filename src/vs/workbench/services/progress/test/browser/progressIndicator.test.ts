@@ -61,7 +61,7 @@ class TestProgressBar {
 	hide(): void { }
 }
 
-suite('Progress Indicator', () => {
+describe('Progress Indicator', () => {
 
 	test('ScopedProgressIndicator', async () => {
 		const testProgressBar = new TestProgressBar();

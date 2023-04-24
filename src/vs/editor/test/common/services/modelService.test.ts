@@ -5,6 +5,7 @@
 
 import * as assert from 'assert';
 import { CharCode } from 'vs/base/common/charCode';
+import { DisposableStore } from 'vs/base/common/lifecycle';
 import * as platform from 'vs/base/common/platform';
 import { URI } from 'vs/base/common/uri';
 import { EditOperation } from 'vs/editor/common/core/editOperation';
@@ -13,22 +14,21 @@ import { Selection } from 'vs/editor/common/core/selection';
 import { StringBuilder } from 'vs/editor/common/core/stringBuilder';
 import { DefaultEndOfLine } from 'vs/editor/common/model';
 import { createTextBuffer } from 'vs/editor/common/model/textModel';
-import { ModelService } from 'vs/editor/common/services/modelService';
-import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
-import { createModelServices, createTextModel } from 'vs/editor/test/common/testTextModel';
-import { DisposableStore } from 'vs/base/common/lifecycle';
 import { IModelService } from 'vs/editor/common/services/model';
+import { ModelService } from 'vs/editor/common/services/modelService';
+import { createModelServices, createTextModel } from 'vs/editor/test/common/testTextModel';
 import { IConfigurationService } from 'vs/platform/configuration/common/configuration';
+import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
 import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
 
 const GENERATE_TESTS = false;
 
-suite('ModelService', () => {
+describe('ModelService', () => {
 	let disposables: DisposableStore;
 	let modelService: IModelService;
 	let instantiationService: TestInstantiationService;
 
-	setup(() => {
+	beforeEach(() => {
 		disposables = new DisposableStore();
 
 		const configService = new TestConfigurationService();
@@ -41,7 +41,7 @@ suite('ModelService', () => {
 		modelService = instantiationService.get(IModelService);
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		disposables.dispose();
 	});
 

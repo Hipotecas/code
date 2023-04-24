@@ -39,17 +39,17 @@ const emptySigHelpResult: languages.SignatureHelpResult = {
 	dispose: () => { }
 };
 
-suite('ParameterHintsModel', () => {
+describe('ParameterHintsModel', () => {
 	const disposables = new DisposableStore();
 
 	let registry = new LanguageFeatureRegistry<languages.SignatureHelpProvider>();
 
-	setup(() => {
+	beforeEach(() => {
 		disposables.clear();
 		registry = new LanguageFeatureRegistry<languages.SignatureHelpProvider>();
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		disposables.clear();
 	});
 

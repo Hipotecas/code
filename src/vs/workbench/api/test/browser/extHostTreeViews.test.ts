@@ -6,23 +6,23 @@
 import * as assert from 'assert';
 import * as sinon from 'sinon';
 import { Emitter } from 'vs/base/common/event';
-import { ExtHostTreeViews } from 'vs/workbench/api/common/extHostTreeViews';
-import { ExtHostCommands } from 'vs/workbench/api/common/extHostCommands';
-import { MainThreadTreeViewsShape, MainContext } from 'vs/workbench/api/common/extHost.protocol';
-import { TreeDataProvider, TreeItem } from 'vscode';
-import { TestRPCProtocol } from 'vs/workbench/api/test/common/testRPCProtocol';
-import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
-import { MainThreadCommands } from 'vs/workbench/api/browser/mainThreadCommands';
-import { IInstantiationService } from 'vs/platform/instantiation/common/instantiation';
-import { mock } from 'vs/base/test/common/mock';
-import { TreeItemCollapsibleState, ITreeItem, IRevealOptions } from 'vs/workbench/common/views';
-import { NullLogService } from 'vs/platform/log/common/log';
 import type { IDisposable } from 'vs/base/common/lifecycle';
-import { nullExtensionDescription as extensionsDescription } from 'vs/workbench/services/extensions/common/extensions';
+import { mock } from 'vs/base/test/common/mock';
 import { runWithFakedTimers } from 'vs/base/test/common/timeTravelScheduler';
+import { IInstantiationService } from 'vs/platform/instantiation/common/instantiation';
+import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
+import { NullLogService } from 'vs/platform/log/common/log';
+import { MainThreadCommands } from 'vs/workbench/api/browser/mainThreadCommands';
+import { MainContext, MainThreadTreeViewsShape } from 'vs/workbench/api/common/extHost.protocol';
+import { ExtHostCommands } from 'vs/workbench/api/common/extHostCommands';
 import { IExtHostTelemetry } from 'vs/workbench/api/common/extHostTelemetry';
+import { ExtHostTreeViews } from 'vs/workbench/api/common/extHostTreeViews';
+import { TestRPCProtocol } from 'vs/workbench/api/test/common/testRPCProtocol';
+import { IRevealOptions, ITreeItem, TreeItemCollapsibleState } from 'vs/workbench/common/views';
+import { nullExtensionDescription as extensionsDescription } from 'vs/workbench/services/extensions/common/extensions';
+import { TreeDataProvider, TreeItem } from 'vscode';
 
-suite('ExtHostTreeView', function () {
+describe('ExtHostTreeView', function () {
 
 	class RecordingShape extends mock<MainThreadTreeViewsShape>() {
 
@@ -51,7 +51,7 @@ suite('ExtHostTreeView', function () {
 	let labels: { [key: string]: string };
 	let nodes: { [key: string]: { key: string } };
 
-	setup(() => {
+	beforeEach(() => {
 		tree = {
 			'a': {
 				'aa': {},

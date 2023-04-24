@@ -4,16 +4,16 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { IWorkspaceTextEditDto } from 'vs/workbench/api/common/extHost.protocol';
-import { mock } from 'vs/base/test/common/mock';
 import { Event } from 'vs/base/common/event';
 import { URI } from 'vs/base/common/uri';
-import { FileSystemProviderCapabilities, IFileService } from 'vs/platform/files/common/files';
-import { reviveWorkspaceEditDto } from 'vs/workbench/api/browser/mainThreadBulkEdits';
-import { UriIdentityService } from 'vs/platform/uriIdentity/common/uriIdentityService';
+import { mock } from 'vs/base/test/common/mock';
 import { IWorkspaceTextEdit } from 'vs/editor/common/languages';
+import { FileSystemProviderCapabilities, IFileService } from 'vs/platform/files/common/files';
+import { UriIdentityService } from 'vs/platform/uriIdentity/common/uriIdentityService';
+import { reviveWorkspaceEditDto } from 'vs/workbench/api/browser/mainThreadBulkEdits';
+import { IWorkspaceTextEditDto } from 'vs/workbench/api/common/extHost.protocol';
 
-suite('MainThreadBulkEdits', function () {
+describe('MainThreadBulkEdits', function () {
 
 	test('"Rename failed to apply edits" in monorepo with pnpm #158845', function () {
 

@@ -6,7 +6,7 @@ import * as assert from 'assert';
 import { IExtensionManifest } from 'vs/platform/extensions/common/extensions';
 import { INormalizedVersion, IParsedVersion, isValidExtensionVersion, isValidVersion, isValidVersionStr, normalizeVersion, parseVersion } from 'vs/platform/extensions/common/extensionValidator';
 
-suite('Extension Version Validator', () => {
+describe('Extension Version Validator', () => {
 	const productVersion = '2021-05-11T21:54:30.577Z';
 
 	test('isValidVersionStr', () => {

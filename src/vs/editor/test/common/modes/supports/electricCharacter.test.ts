@@ -11,7 +11,7 @@ import { TokenText, createFakeScopedLineTokens } from 'vs/editor/test/common/mod
 
 const fakeLanguageId = 'test';
 
-suite('Editor Modes - Auto Indentation', () => {
+describe('Editor Modes - Auto Indentation', () => {
 	function _testOnElectricCharacter(electricCharacterSupport: BracketElectricCharacterSupport, line: TokenText[], character: string, offset: number): IElectricAction | null {
 		return electricCharacterSupport.onElectricCharacter(character, createFakeScopedLineTokens(line), offset);
 	}

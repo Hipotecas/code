@@ -10,7 +10,7 @@ import { UserDataProfilesManifestSynchroniser } from 'vs/platform/userDataSync/c
 import { ISyncData, ISyncUserDataProfile, IUserDataSyncStoreService, SyncResource, SyncStatus } from 'vs/platform/userDataSync/common/userDataSync';
 import { UserDataSyncClient, UserDataSyncTestServer } from 'vs/platform/userDataSync/test/common/userDataSyncClient';
 
-suite('UserDataProfilesManifestSync', () => {
+describe('UserDataProfilesManifestSync', () => {
 
 	const disposableStore = new DisposableStore();
 	const server = new UserDataSyncTestServer();
@@ -19,7 +19,7 @@ suite('UserDataProfilesManifestSync', () => {
 
 	let testObject: UserDataProfilesManifestSynchroniser;
 
-	setup(async () => {
+	beforeEach(async () => {
 		testClient = disposableStore.add(new UserDataSyncClient(server));
 		await testClient.setUp(true);
 		testObject = testClient.getSynchronizer(SyncResource.Profiles) as UserDataProfilesManifestSynchroniser;
@@ -29,7 +29,7 @@ suite('UserDataProfilesManifestSync', () => {
 		await client2.setUp(true);
 	});
 
-	teardown(() => disposableStore.clear());
+	afterEach(() => disposableStore.clear());
 
 	test('when profiles does not exist', async () => {
 		assert.deepStrictEqual(await testObject.getLastSyncUserData(), null);

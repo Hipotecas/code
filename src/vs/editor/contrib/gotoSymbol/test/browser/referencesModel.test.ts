@@ -9,7 +9,7 @@ import { Position } from 'vs/editor/common/core/position';
 import { Range } from 'vs/editor/common/core/range';
 import { ReferencesModel } from 'vs/editor/contrib/gotoSymbol/browser/referencesModel';
 
-suite('references', function () {
+describe('references', function () {
 
 	test('nearestReference', () => {
 		const model = new ReferencesModel([{

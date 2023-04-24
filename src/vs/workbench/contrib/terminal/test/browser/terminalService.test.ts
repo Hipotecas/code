@@ -5,31 +5,31 @@
 
 import { fail } from 'assert';
 import { Emitter } from 'vs/base/common/event';
-import { TerminalLocation } from 'vs/platform/terminal/common/terminal';
-import { TerminalService } from 'vs/workbench/contrib/terminal/browser/terminalService';
-import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
-import { IContextKeyService } from 'vs/platform/contextkey/common/contextkey';
-import { ContextKeyService } from 'vs/platform/contextkey/browser/contextKeyService';
-import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
 import { IConfigurationService } from 'vs/platform/configuration/common/configuration';
-import { TestEditorService, TestLifecycleService, TestRemoteAgentService, TestTerminalEditorService, TestTerminalGroupService, TestTerminalInstanceService, TestTerminalProfileService } from 'vs/workbench/test/browser/workbenchTestServices';
-import { ITerminalEditorService, ITerminalGroupService, ITerminalInstance, ITerminalInstanceService, ITerminalService } from 'vs/workbench/contrib/terminal/browser/terminal';
-import { ILifecycleService } from 'vs/workbench/services/lifecycle/common/lifecycle';
-import { IThemeService } from 'vs/platform/theme/common/themeService';
-import { TestThemeService } from 'vs/platform/theme/test/common/testThemeService';
-import { ITerminalProfileService } from 'vs/workbench/contrib/terminal/common/terminal';
-import { IEditorService } from 'vs/workbench/services/editor/common/editorService';
+import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
+import { ContextKeyService } from 'vs/platform/contextkey/browser/contextKeyService';
+import { IContextKeyService } from 'vs/platform/contextkey/common/contextkey';
 import { IDialogService } from 'vs/platform/dialogs/common/dialogs';
 import { TestDialogService } from 'vs/platform/dialogs/test/common/testDialogService';
+import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
+import { TerminalLocation } from 'vs/platform/terminal/common/terminal';
+import { IThemeService } from 'vs/platform/theme/common/themeService';
+import { TestThemeService } from 'vs/platform/theme/test/common/testThemeService';
+import { ITerminalEditorService, ITerminalGroupService, ITerminalInstance, ITerminalInstanceService, ITerminalService } from 'vs/workbench/contrib/terminal/browser/terminal';
+import { TerminalService } from 'vs/workbench/contrib/terminal/browser/terminalService';
+import { ITerminalProfileService } from 'vs/workbench/contrib/terminal/common/terminal';
+import { IEditorService } from 'vs/workbench/services/editor/common/editorService';
+import { ILifecycleService } from 'vs/workbench/services/lifecycle/common/lifecycle';
 import { IRemoteAgentService } from 'vs/workbench/services/remote/common/remoteAgentService';
+import { TestEditorService, TestLifecycleService, TestRemoteAgentService, TestTerminalEditorService, TestTerminalGroupService, TestTerminalInstanceService, TestTerminalProfileService } from 'vs/workbench/test/browser/workbenchTestServices';
 
-suite('Workbench - TerminalService', () => {
+describe('Workbench - TerminalService', () => {
 	let instantiationService: TestInstantiationService;
 	let terminalService: TerminalService;
 	let configurationService: TestConfigurationService;
 	let dialogService: TestDialogService;
 
-	setup(async () => {
+	beforeEach(async () => {
 		dialogService = new TestDialogService();
 		configurationService = new TestConfigurationService({
 			terminal: {
@@ -57,10 +57,10 @@ suite('Workbench - TerminalService', () => {
 		instantiationService.stub(ITerminalService, terminalService);
 	});
 
-	suite('safeDisposeTerminal', () => {
+	describe('safeDisposeTerminal', () => {
 		let onExitEmitter: Emitter<number | undefined>;
 
-		setup(() => {
+		beforeEach(() => {
 			onExitEmitter = new Emitter<number | undefined>();
 		});
 

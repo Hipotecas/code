@@ -7,14 +7,14 @@ import * as assert from 'assert';
 import { DisposableStore } from 'vs/base/common/lifecycle';
 import { Position } from 'vs/editor/common/core/position';
 import { Range } from 'vs/editor/common/core/range';
-import { IFoundBracket } from 'vs/editor/common/textModelBracketPairs';
-import { TextModel } from 'vs/editor/common/model/textModel';
-import { ITokenizationSupport, TokenizationRegistry, EncodedTokenizationResult } from 'vs/editor/common/languages';
-import { StandardTokenType, MetadataConsts } from 'vs/editor/common/encodedTokenAttributes';
+import { MetadataConsts, StandardTokenType } from 'vs/editor/common/encodedTokenAttributes';
+import { EncodedTokenizationResult, ITokenizationSupport, TokenizationRegistry } from 'vs/editor/common/languages';
+import { ILanguageService } from 'vs/editor/common/languages/language';
 import { CharacterPair } from 'vs/editor/common/languages/languageConfiguration';
 import { ILanguageConfigurationService } from 'vs/editor/common/languages/languageConfigurationRegistry';
 import { NullState } from 'vs/editor/common/languages/nullTokenize';
-import { ILanguageService } from 'vs/editor/common/languages/language';
+import { TextModel } from 'vs/editor/common/model/textModel';
+import { IFoundBracket } from 'vs/editor/common/textModelBracketPairs';
 import { TestLineToken } from 'vs/editor/test/common/core/testLineToken';
 import { createModelServices, createTextModel, instantiateTextModel } from 'vs/editor/test/common/testTextModel';
 import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
@@ -31,7 +31,7 @@ function createTextModelWithBrackets(disposables: DisposableStore, text: string,
 	return disposables.add(instantiateTextModel(instantiationService, text, languageId));
 }
 
-suite('TextModelWithTokens', () => {
+describe('TextModelWithTokens', () => {
 	function testBrackets(contents: string[], brackets: CharacterPair[]): void {
 		const languageId = 'testMode';
 		const disposables = new DisposableStore();
@@ -167,7 +167,7 @@ function assertIsBracket(model: TextModel, testPosition: Position, expected: [Ra
 	assert.deepStrictEqual(actual, expected, 'matches brackets at ' + testPosition);
 }
 
-suite('TextModelWithTokens - bracket matching', () => {
+describe('TextModelWithTokens - bracket matching', () => {
 
 	const languageId = 'bracketMode1';
 	let disposables: DisposableStore;
@@ -175,7 +175,7 @@ suite('TextModelWithTokens - bracket matching', () => {
 	let languageConfigurationService: ILanguageConfigurationService;
 	let languageService: ILanguageService;
 
-	setup(() => {
+	beforeEach(() => {
 		disposables = new DisposableStore();
 		instantiationService = createModelServices(disposables);
 		languageConfigurationService = instantiationService.get(ILanguageConfigurationService);
@@ -190,7 +190,7 @@ suite('TextModelWithTokens - bracket matching', () => {
 		}));
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		disposables.dispose();
 	});
 
@@ -271,7 +271,7 @@ suite('TextModelWithTokens - bracket matching', () => {
 	});
 });
 
-suite('TextModelWithTokens 2', () => {
+describe('TextModelWithTokens 2', () => {
 
 	test('bracket matching 3', () => {
 		const text = [
@@ -532,7 +532,7 @@ suite('TextModelWithTokens 2', () => {
 });
 
 
-suite('TextModelWithTokens regression tests', () => {
+describe('TextModelWithTokens regression tests', () => {
 
 	test('microsoft/monaco-editor#122: Unhandled Exception: TypeError: Unable to get property \'replace\' of undefined or null reference', () => {
 		function assertViewLineTokens(model: TextModel, lineNumber: number, forceTokenization: boolean, expected: TestLineToken[]): void {
@@ -698,7 +698,7 @@ suite('TextModelWithTokens regression tests', () => {
 	});
 });
 
-suite('TextModel.getLineIndentGuide', () => {
+describe('TextModel.getLineIndentGuide', () => {
 	function assertIndentGuides(lines: [number, number, number, number, string][], indentSize: number): void {
 		const languageId = 'testLang';
 		const disposables = new DisposableStore();

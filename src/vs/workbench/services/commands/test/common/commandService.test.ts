@@ -3,22 +3,22 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import * as assert from 'assert';
-import { IDisposable, DisposableStore } from 'vs/base/common/lifecycle';
+import { DisposableStore, IDisposable } from 'vs/base/common/lifecycle';
 import { CommandsRegistry } from 'vs/platform/commands/common/commands';
-import { CommandService } from 'vs/workbench/services/commands/common/commandService';
-import { NullExtensionService } from 'vs/workbench/services/extensions/common/extensions';
 import { InstantiationService } from 'vs/platform/instantiation/common/instantiationService';
 import { NullLogService } from 'vs/platform/log/common/log';
+import { CommandService } from 'vs/workbench/services/commands/common/commandService';
+import { NullExtensionService } from 'vs/workbench/services/extensions/common/extensions';
 
-suite('CommandService', function () {
+describe('CommandService', function () {
 
 	let commandRegistration: IDisposable;
 
-	setup(function () {
+	beforeEach(function () {
 		commandRegistration = CommandsRegistry.registerCommand('foo', function () { });
 	});
 
-	teardown(function () {
+	afterEach(function () {
 		commandRegistration.dispose();
 	});
 

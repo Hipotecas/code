@@ -13,16 +13,16 @@ import { IConfigurationService } from 'vs/platform/configuration/common/configur
 import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
 import { IEnvironmentService } from 'vs/platform/environment/common/environment';
 import { IRawGalleryExtensionVersion, sortExtensionVersions } from 'vs/platform/extensionManagement/common/extensionGalleryService';
-import { IFileService } from 'vs/platform/files/common/files';
+import { TargetPlatform } from 'vs/platform/extensions/common/extensions';
+import { resolveMarketplaceHeaders } from 'vs/platform/externalServices/common/marketplace';
 import { FileService } from 'vs/platform/files/common/fileService';
+import { IFileService } from 'vs/platform/files/common/files';
 import { InMemoryFileSystemProvider } from 'vs/platform/files/common/inMemoryFilesystemProvider';
 import { NullLogService } from 'vs/platform/log/common/log';
 import product from 'vs/platform/product/common/product';
 import { IProductService } from 'vs/platform/product/common/productService';
-import { resolveMarketplaceHeaders } from 'vs/platform/externalServices/common/marketplace';
-import { InMemoryStorageService, IStorageService } from 'vs/platform/storage/common/storage';
-import { TelemetryConfiguration, TELEMETRY_SETTING_ID } from 'vs/platform/telemetry/common/telemetry';
-import { TargetPlatform } from 'vs/platform/extensions/common/extensions';
+import { IStorageService, InMemoryStorageService } from 'vs/platform/storage/common/storage';
+import { TELEMETRY_SETTING_ID, TelemetryConfiguration } from 'vs/platform/telemetry/common/telemetry';
 import { NullTelemetryService } from 'vs/platform/telemetry/common/telemetryUtils';
 
 class EnvironmentServiceMock extends mock<IEnvironmentService>() {
@@ -34,11 +34,11 @@ class EnvironmentServiceMock extends mock<IEnvironmentService>() {
 	}
 }
 
-suite('Extension Gallery Service', () => {
+describe('Extension Gallery Service', () => {
 	const disposables: DisposableStore = new DisposableStore();
 	let fileService: IFileService, environmentService: IEnvironmentService, storageService: IStorageService, productService: IProductService, configurationService: IConfigurationService;
 
-	setup(() => {
+	beforeEach(() => {
 		const serviceMachineIdResource = joinPath(URI.file('tests').with({ scheme: 'vscode-tests' }), 'machineid');
 		environmentService = new EnvironmentServiceMock(serviceMachineIdResource);
 		fileService = disposables.add(new FileService(new NullLogService()));
@@ -50,7 +50,7 @@ suite('Extension Gallery Service', () => {
 		productService = { _serviceBrand: undefined, ...product, enableTelemetry: true };
 	});
 
-	teardown(() => disposables.clear());
+	afterEach(() => disposables.clear());
 
 	test('marketplace machine id', async () => {
 		const headers = await resolveMarketplaceHeaders(product.version, productService, environmentService, configurationService, fileService, storageService, NullTelemetryService);

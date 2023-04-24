@@ -35,11 +35,11 @@ class MockQuickInputService implements Partial<IQuickInputService>{
 
 }
 
-suite('ExternalUriOpenerService', () => {
+describe('ExternalUriOpenerService', () => {
 
 	let instantiationService: TestInstantiationService;
 
-	setup(() => {
+	beforeEach(() => {
 		instantiationService = new TestInstantiationService();
 
 		instantiationService.stub(IConfigurationService, new TestConfigurationService());

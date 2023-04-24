@@ -5,20 +5,20 @@
 
 import * as assert from 'assert';
 import * as sinon from 'sinon';
-import { IViewsRegistry, IViewDescriptor, IViewContainersRegistry, Extensions as ViewContainerExtensions, ViewContainerLocation, IViewContainerModel, IViewDescriptorService, ViewContainer } from 'vs/workbench/common/views';
-import { IDisposable, dispose, DisposableStore } from 'vs/base/common/lifecycle';
 import { move } from 'vs/base/common/arrays';
-import { workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
-import { ContextKeyExpr, IContextKeyService } from 'vs/platform/contextkey/common/contextkey';
-import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
-import { ContextKeyService } from 'vs/platform/contextkey/browser/contextKeyService';
-import { ViewDescriptorService } from 'vs/workbench/services/views/browser/viewDescriptorService';
-import { Registry } from 'vs/platform/registry/common/platform';
-import { SyncDescriptor } from 'vs/platform/instantiation/common/descriptors';
-import { IStorageService, StorageScope, StorageTarget } from 'vs/platform/storage/common/storage';
 import { Event } from 'vs/base/common/event';
-import { getViewsStateStorageId } from 'vs/workbench/services/views/common/viewContainerModel';
+import { DisposableStore, IDisposable, dispose } from 'vs/base/common/lifecycle';
 import { runWithFakedTimers } from 'vs/base/test/common/timeTravelScheduler';
+import { ContextKeyService } from 'vs/platform/contextkey/browser/contextKeyService';
+import { ContextKeyExpr, IContextKeyService } from 'vs/platform/contextkey/common/contextkey';
+import { SyncDescriptor } from 'vs/platform/instantiation/common/descriptors';
+import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
+import { Registry } from 'vs/platform/registry/common/platform';
+import { IStorageService, StorageScope, StorageTarget } from 'vs/platform/storage/common/storage';
+import { IViewContainerModel, IViewContainersRegistry, IViewDescriptor, IViewDescriptorService, IViewsRegistry, ViewContainer, Extensions as ViewContainerExtensions, ViewContainerLocation } from 'vs/workbench/common/views';
+import { ViewDescriptorService } from 'vs/workbench/services/views/browser/viewDescriptorService';
+import { getViewsStateStorageId } from 'vs/workbench/services/views/common/viewContainerModel';
+import { workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
 
 const ViewContainerRegistry = Registry.as<IViewContainersRegistry>(ViewContainerExtensions.ViewContainersRegistry);
 const ViewsRegistry = Registry.as<IViewsRegistry>(ViewContainerExtensions.ViewsRegistry);
@@ -40,7 +40,7 @@ class ViewDescriptorSequence {
 	}
 }
 
-suite('ViewContainerModel', () => {
+describe('ViewContainerModel', () => {
 
 	let container: ViewContainer;
 	let disposableStore: DisposableStore;
@@ -48,7 +48,7 @@ suite('ViewContainerModel', () => {
 	let viewDescriptorService: IViewDescriptorService;
 	let storageService: IStorageService;
 
-	setup(() => {
+	beforeEach(() => {
 		disposableStore = new DisposableStore();
 		const instantiationService: TestInstantiationService = <TestInstantiationService>workbenchInstantiationService(undefined, disposableStore);
 		contextKeyService = instantiationService.createInstance(ContextKeyService);
@@ -57,7 +57,7 @@ suite('ViewContainerModel', () => {
 		viewDescriptorService = instantiationService.createInstance(ViewDescriptorService);
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		disposableStore.dispose();
 		ViewsRegistry.deregisterViews(ViewsRegistry.getViews(container), container);
 		ViewContainerRegistry.deregisterViewContainer(container);

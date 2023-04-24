@@ -7,20 +7,20 @@ import * as assert from 'assert';
 import { timeout } from 'vs/base/common/async';
 import { bufferToStream, newWriteableBufferStream, VSBuffer } from 'vs/base/common/buffer';
 import { Lazy } from 'vs/base/common/lazy';
+import { DisposableStore } from 'vs/base/common/lifecycle';
+import { URI } from 'vs/base/common/uri';
+import { FileService } from 'vs/platform/files/common/fileService';
+import { InMemoryFileSystemProvider } from 'vs/platform/files/common/inMemoryFilesystemProvider';
 import { MockContextKeyService } from 'vs/platform/keybinding/test/common/mockKeybindingService';
 import { NullLogService } from 'vs/platform/log/common/log';
-import { ITestTaskState, ResolvedTestRunRequest, TestResultItem, TestResultState, TestRunProfileBitset } from 'vs/workbench/contrib/testing/common/testTypes';
 import { TestId } from 'vs/workbench/contrib/testing/common/testId';
 import { TestProfileService } from 'vs/workbench/contrib/testing/common/testProfileService';
 import { HydratedTestResult, LiveOutputController, LiveTestResult, makeEmptyCounts, resultItemParents, TestResultItemChange, TestResultItemChangeReason } from 'vs/workbench/contrib/testing/common/testResult';
 import { TestResultService } from 'vs/workbench/contrib/testing/common/testResultService';
 import { InMemoryResultStorage, ITestResultStorage, TestResultStorage } from 'vs/workbench/contrib/testing/common/testResultStorage';
+import { ITestTaskState, ResolvedTestRunRequest, TestResultItem, TestResultState, TestRunProfileBitset } from 'vs/workbench/contrib/testing/common/testTypes';
 import { getInitializedMainTestCollection, testStubs, TestTestCollection } from 'vs/workbench/contrib/testing/test/common/testStubs';
 import { TestStorageService } from 'vs/workbench/test/common/workbenchTestServices';
-import { InMemoryFileSystemProvider } from 'vs/platform/files/common/inMemoryFilesystemProvider';
-import { FileService } from 'vs/platform/files/common/fileService';
-import { DisposableStore } from 'vs/base/common/lifecycle';
-import { URI } from 'vs/base/common/uri';
 
 export const emptyOutputController = () => new LiveOutputController(
 	new Lazy(() => [newWriteableBufferStream(), Promise.resolve()]),
@@ -28,7 +28,7 @@ export const emptyOutputController = () => new LiveOutputController(
 	() => Promise.resolve(VSBuffer.alloc(0)),
 );
 
-suite('Workbench - Test Results Service', () => {
+describe('Workbench - Test Results Service', () => {
 	const getLabelsIn = (it: Iterable<TestResultItem>) => [...it].map(t => t.item.label).sort();
 	const getChangeSummary = () => [...changed]
 		.map(c => ({ reason: c.reason, label: c.item.item.label }))
@@ -53,7 +53,7 @@ suite('Workbench - Test Results Service', () => {
 		}
 	}
 
-	setup(async () => {
+	beforeEach(async () => {
 		changed = new Set();
 		r = new TestLiveTestResult(
 			'foo',
@@ -88,7 +88,7 @@ suite('Workbench - Test Results Service', () => {
 		]);
 	});
 
-	suite('LiveTestResult', () => {
+	describe('LiveTestResult', () => {
 		test('is empty if no tests are yet present', async () => {
 			assert.deepStrictEqual(getLabelsIn(new TestLiveTestResult(
 				'foo',
@@ -203,7 +203,7 @@ suite('Workbench - Test Results Service', () => {
 		});
 	});
 
-	suite('service', () => {
+	describe('service', () => {
 		let storage: ITestResultStorage;
 		let results: TestResultService;
 
@@ -211,7 +211,7 @@ suite('Workbench - Test Results Service', () => {
 			protected override persistScheduler = { schedule: () => this.persistImmediately() } as any;
 		}
 
-		setup(() => {
+		beforeEach(() => {
 			storage = new InMemoryResultStorage(new TestStorageService(), new NullLogService());
 			results = new TestTestResultService(new MockContextKeyService(), storage, new TestProfileService(new MockContextKeyService(), new TestStorageService()));
 		});
@@ -329,13 +329,13 @@ suite('Workbench - Test Results Service', () => {
 		]);
 	});
 
-	suite('output controller', () => {
+	describe('output controller', () => {
 
 		const disposables = new DisposableStore();
 		const ROOT = URI.file('tests').with({ scheme: 'vscode-tests' });
 		let storage: TestResultStorage;
 
-		setup(() => {
+		beforeEach(() => {
 			const logService = new NullLogService();
 			const fileService = disposables.add(new FileService(logService));
 			const fileSystemProvider = disposables.add(new InMemoryFileSystemProvider());
@@ -350,7 +350,7 @@ suite('Workbench - Test Results Service', () => {
 			);
 		});
 
-		teardown(() => disposables.clear());
+		afterEach(() => disposables.clear());
 
 		test('reads live output ranges', async () => {
 			const ctrl = storage.getOutputController('a');

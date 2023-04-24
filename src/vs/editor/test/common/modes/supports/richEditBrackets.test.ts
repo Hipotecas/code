@@ -7,7 +7,7 @@ import * as assert from 'assert';
 import { Range } from 'vs/editor/common/core/range';
 import { BracketsUtils } from 'vs/editor/common/languages/supports/richEditBrackets';
 
-suite('richEditBrackets', () => {
+describe('richEditBrackets', () => {
 
 	function findPrevBracketInRange(reversedBracketRegex: RegExp, lineText: string, currentTokenStart: number, currentTokenEnd: number): Range | null {
 		return BracketsUtils.findPrevBracketInRange(reversedBracketRegex, 1, lineText, currentTokenStart, currentTokenEnd);

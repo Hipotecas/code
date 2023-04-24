@@ -29,7 +29,7 @@ function testBlockCommentCommand(lines: string[], selection: Selection, expected
 	_testCommentCommand(lines, selection, (accessor, sel) => new BlockCommentCommand(sel, true, accessor.get(ILanguageConfigurationService)), expectedLines, expectedSelection);
 }
 
-suite('Editor Contrib - Block Comment Command', () => {
+describe('Editor Contrib - Block Comment Command', () => {
 
 	test('empty selection wraps itself', function () {
 		testBlockCommentCommand(

@@ -6,10 +6,10 @@
 import * as assert from 'assert';
 import { CharCode } from 'vs/base/common/charCode';
 import * as strings from 'vs/base/common/strings';
-import { IViewLineTokens } from 'vs/editor/common/tokens/lineTokens';
 import { MetadataConsts } from 'vs/editor/common/encodedTokenAttributes';
+import { IViewLineTokens } from 'vs/editor/common/tokens/lineTokens';
 import { LineDecoration } from 'vs/editor/common/viewLayout/lineDecorations';
-import { CharacterMapping, RenderLineInput, renderViewLine2 as renderViewLine, LineRange, DomPosition, RenderLineOutput2 } from 'vs/editor/common/viewLayout/viewLineRenderer';
+import { CharacterMapping, DomPosition, LineRange, RenderLineInput, RenderLineOutput2, renderViewLine2 as renderViewLine } from 'vs/editor/common/viewLayout/viewLineRenderer';
 import { InlineDecorationType } from 'vs/editor/common/viewModel';
 import { TestLineToken, TestLineTokens } from 'vs/editor/test/common/core/testLineToken';
 
@@ -48,7 +48,7 @@ function inflateRenderLineOutput(renderLineOutput: RenderLineOutput2) {
 	};
 }
 
-suite('viewLineRenderer.renderLine', () => {
+describe('viewLineRenderer.renderLine', () => {
 
 	function assertCharacterReplacement(lineContent: string, tabSize: number, expected: string, expectedCharOffsetInPart: number[]): void {
 		const _actual = renderViewLine(new RenderLineInput(
@@ -964,7 +964,7 @@ function assertCharacterMapping3(actual: CharacterMapping, expectedInfo: Charact
 	assert.strictEqual(actual.length, expectedInfo.length, `length mismatch`);
 }
 
-suite('viewLineRenderer.renderLine 2', () => {
+describe('viewLineRenderer.renderLine 2', () => {
 
 	function testCreateLineParts(fontIsMonospace: boolean, lineContent: string, tokens: TestLineToken[], fauxIndentLength: number, renderWhitespace: 'none' | 'boundary' | 'selection' | 'trailing' | 'all', selections: LineRange[] | null) {
 		const actual = renderViewLine(new RenderLineInput(

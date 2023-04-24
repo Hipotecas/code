@@ -14,13 +14,13 @@ import { ExtHostDecorations } from 'vs/workbench/api/common/extHostDecorations';
 import { IExtHostRpcService } from 'vs/workbench/api/common/extHostRpcService';
 import { nullExtensionDescription } from 'vs/workbench/services/extensions/common/extensions';
 
-suite('ExtHostDecorations', function () {
+describe('ExtHostDecorations', function () {
 
 	let mainThreadShape: MainThreadDecorationsShape;
 	let extHostDecorations: ExtHostDecorations;
 	const providers = new Set<number>();
 
-	setup(function () {
+	beforeEach(function () {
 
 		providers.clear();
 

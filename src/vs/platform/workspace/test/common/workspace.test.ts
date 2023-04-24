@@ -11,7 +11,7 @@ import { URI } from 'vs/base/common/uri';
 import { IRawFileWorkspaceFolder, Workspace, WorkspaceFolder } from 'vs/platform/workspace/common/workspace';
 import { toWorkspaceFolders } from 'vs/platform/workspaces/common/workspaces';
 
-suite('Workspace', () => {
+describe('Workspace', () => {
 
 	const fileFolder = isWindows ? 'c:\\src' : '/src';
 	const abcFolder = isWindows ? 'c:\\abc' : '/abc';

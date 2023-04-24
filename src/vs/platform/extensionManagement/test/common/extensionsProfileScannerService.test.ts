@@ -24,7 +24,7 @@ import { IUserDataProfilesService, UserDataProfilesService } from 'vs/platform/u
 
 class TestObject extends AbstractExtensionsProfileScannerService { }
 
-suite('ExtensionsProfileScannerService', () => {
+describe('ExtensionsProfileScannerService', () => {
 
 	const ROOT = URI.file('/ROOT');
 	const disposables = new DisposableStore();
@@ -32,7 +32,7 @@ suite('ExtensionsProfileScannerService', () => {
 	const extensionsLocation = joinPath(ROOT, 'extensions');
 	let instantiationService: TestInstantiationService;
 
-	setup(async () => {
+	beforeEach(async () => {
 		instantiationService = new TestInstantiationService();
 		const logService = new NullLogService();
 		const fileService = disposables.add(new FileService(logService));

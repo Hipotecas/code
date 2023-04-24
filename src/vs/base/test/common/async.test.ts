@@ -5,16 +5,16 @@
 
 import * as assert from 'assert';
 import * as async from 'vs/base/common/async';
-import * as MicrotaskDelay from "vs/base/common/symbols";
 import { CancellationToken, CancellationTokenSource } from 'vs/base/common/cancellation';
 import { isCancellationError } from 'vs/base/common/errors';
 import { Event } from 'vs/base/common/event';
+import * as MicrotaskDelay from "vs/base/common/symbols";
 import { URI } from 'vs/base/common/uri';
 import { runWithFakedTimers } from 'vs/base/test/common/timeTravelScheduler';
 
-suite('Async', () => {
+describe('Async', () => {
 
-	suite('cancelablePromise', function () {
+	describe('cancelablePromise', function () {
 		test('set token, don\'t wait for inner promise', function () {
 			let canceled = 0;
 			const promise = async.createCancelablePromise(token => {
@@ -99,7 +99,7 @@ suite('Async', () => {
 		});
 	});
 
-	suite('Throttler', function () {
+	describe('Throttler', function () {
 		test('non async', function () {
 			let count = 0;
 			const factory = () => {
@@ -157,7 +157,7 @@ suite('Async', () => {
 		});
 	});
 
-	suite('Delayer', function () {
+	describe('Delayer', function () {
 		test('simple', () => {
 			let count = 0;
 			const factory = () => {
@@ -208,7 +208,7 @@ suite('Async', () => {
 			});
 		});
 
-		suite('ThrottledDelayer', () => {
+		describe('ThrottledDelayer', () => {
 			test('promise should resolve if disposed', async () => {
 				const throttledDelayer = new async.ThrottledDelayer<void>(100);
 				const promise = throttledDelayer.trigger(async () => { }, 0);
@@ -371,7 +371,7 @@ suite('Async', () => {
 		});
 	});
 
-	suite('sequence', () => {
+	describe('sequence', () => {
 		test('simple', () => {
 			const factoryFactory = (n: number) => () => {
 				return Promise.resolve(n);
@@ -394,7 +394,7 @@ suite('Async', () => {
 		});
 	});
 
-	suite('Limiter', () => {
+	describe('Limiter', () => {
 		test('assert degree of paralellism', function () {
 			let activePromises = 0;
 			const factoryFactory = (n: number) => () => {
@@ -415,7 +415,7 @@ suite('Async', () => {
 		});
 	});
 
-	suite('Queue', () => {
+	describe('Queue', () => {
 		test('simple', function () {
 			const queue = new async.Queue();
 
@@ -544,7 +544,7 @@ suite('Async', () => {
 		});
 	});
 
-	suite('ResourceQueue', () => {
+	describe('ResourceQueue', () => {
 		test('simple', async function () {
 			const queue = new async.ResourceQueue();
 
@@ -591,7 +591,7 @@ suite('Async', () => {
 		});
 	});
 
-	suite('retry', () => {
+	describe('retry', () => {
 		test('success case', async () => {
 			return runWithFakedTimers({ useFakeTimers: true }, async () => {
 				let counter = 0;
@@ -623,7 +623,7 @@ suite('Async', () => {
 		});
 	});
 
-	suite('TaskSequentializer', () => {
+	describe('TaskSequentializer', () => {
 		test('pending basics', async function () {
 			const sequentializer = new async.TaskSequentializer();
 
@@ -828,7 +828,7 @@ suite('Async', () => {
 		assert.strictEqual(counter.increment(), 3);
 	});
 
-	suite('firstParallel', () => {
+	describe('firstParallel', () => {
 		test('simple', async () => {
 			const a = await async.firstParallel([
 				Promise.resolve(1),
@@ -889,7 +889,7 @@ suite('Async', () => {
 		});
 	});
 
-	suite('DeferredPromise', () => {
+	describe('DeferredPromise', () => {
 		test('resolves', async () => {
 			const deferred = new async.DeferredPromise<number>();
 			assert.strictEqual(deferred.isResolved, false);
@@ -916,7 +916,7 @@ suite('Async', () => {
 		});
 	});
 
-	suite('Promises.settled', () => {
+	describe('Promises.settled', () => {
 		test('resolves', async () => {
 			const p1 = Promise.resolve(1);
 			const p2 = async.timeout(1).then(() => 2);
@@ -1003,7 +1003,7 @@ suite('Async', () => {
 		});
 	});
 
-	suite('Promises.withAsyncBody', () => {
+	describe('Promises.withAsyncBody', () => {
 		test('basics', async () => {
 
 			const p1 = async.Promises.withAsyncBody(async (resolve, reject) => {
@@ -1041,7 +1041,7 @@ suite('Async', () => {
 		});
 	});
 
-	suite('ThrottledWorker', () => {
+	describe('ThrottledWorker', () => {
 
 		function assertArrayEquals(actual: unknown[], expected: unknown[]) {
 			assert.strictEqual(actual.length, expected.length);

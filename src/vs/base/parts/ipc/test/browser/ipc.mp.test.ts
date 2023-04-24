@@ -8,7 +8,7 @@ import { CancellationToken } from 'vs/base/common/cancellation';
 import { Event } from 'vs/base/common/event';
 import { Client as MessagePortClient } from 'vs/base/parts/ipc/browser/ipc.mp';
 
-suite('IPC, MessagePorts', () => {
+describe('IPC, MessagePorts', () => {
 
 	test('message passing', async () => {
 		const { port1, port2 } = new MessageChannel();

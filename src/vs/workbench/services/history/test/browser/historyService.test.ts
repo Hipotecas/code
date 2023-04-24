@@ -4,32 +4,32 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { toResource } from 'vs/base/test/common/utils';
-import { URI } from 'vs/base/common/uri';
-import { workbenchInstantiationService, TestFileEditorInput, registerTestEditor, createEditorPart, registerTestFileEditor, TestServiceAccessor, TestTextFileEditor } from 'vs/workbench/test/browser/workbenchTestServices';
-import { EditorPart } from 'vs/workbench/browser/parts/editor/editorPart';
-import { SyncDescriptor } from 'vs/platform/instantiation/common/descriptors';
-import { IEditorGroupsService, GroupDirection } from 'vs/workbench/services/editor/common/editorGroupsService';
-import { EditorNavigationStack, HistoryService } from 'vs/workbench/services/history/browser/historyService';
-import { IEditorService, SIDE_GROUP } from 'vs/workbench/services/editor/common/editorService';
-import { EditorService } from 'vs/workbench/services/editor/browser/editorService';
-import { DisposableStore } from 'vs/base/common/lifecycle';
-import { GoFilter, GoScope, IHistoryService } from 'vs/workbench/services/history/common/history';
 import { DeferredPromise, timeout } from 'vs/base/common/async';
 import { Event } from 'vs/base/common/event';
-import { EditorPaneSelectionChangeReason, isResourceEditorInput, IUntypedEditorInput } from 'vs/workbench/common/editor';
-import { IResourceEditorInput, ITextEditorOptions } from 'vs/platform/editor/common/editor';
-import { EditorInput } from 'vs/workbench/common/editor/editorInput';
-import { IResolvedTextFileEditorModel, ITextFileService } from 'vs/workbench/services/textfile/common/textfiles';
-import { IInstantiationService } from 'vs/platform/instantiation/common/instantiation';
-import { FileChangesEvent, FileChangeType, FileOperation, FileOperationEvent } from 'vs/platform/files/common/files';
+import { DisposableStore } from 'vs/base/common/lifecycle';
 import { isLinux } from 'vs/base/common/platform';
+import { URI } from 'vs/base/common/uri';
+import { toResource } from 'vs/base/test/common/utils';
 import { Selection } from 'vs/editor/common/core/selection';
-import { EditorPane } from 'vs/workbench/browser/parts/editor/editorPane';
-import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
 import { IConfigurationService } from 'vs/platform/configuration/common/configuration';
+import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
+import { IResourceEditorInput, ITextEditorOptions } from 'vs/platform/editor/common/editor';
+import { FileChangeType, FileChangesEvent, FileOperation, FileOperationEvent } from 'vs/platform/files/common/files';
+import { SyncDescriptor } from 'vs/platform/instantiation/common/descriptors';
+import { IInstantiationService } from 'vs/platform/instantiation/common/instantiation';
+import { EditorPane } from 'vs/workbench/browser/parts/editor/editorPane';
+import { EditorPart } from 'vs/workbench/browser/parts/editor/editorPart';
+import { EditorPaneSelectionChangeReason, IUntypedEditorInput, isResourceEditorInput } from 'vs/workbench/common/editor';
+import { EditorInput } from 'vs/workbench/common/editor/editorInput';
+import { EditorService } from 'vs/workbench/services/editor/browser/editorService';
+import { GroupDirection, IEditorGroupsService } from 'vs/workbench/services/editor/common/editorGroupsService';
+import { IEditorService, SIDE_GROUP } from 'vs/workbench/services/editor/common/editorService';
+import { EditorNavigationStack, HistoryService } from 'vs/workbench/services/history/browser/historyService';
+import { GoFilter, GoScope, IHistoryService } from 'vs/workbench/services/history/common/history';
+import { IResolvedTextFileEditorModel, ITextFileService } from 'vs/workbench/services/textfile/common/textfiles';
+import { TestFileEditorInput, TestServiceAccessor, TestTextFileEditor, createEditorPart, registerTestEditor, registerTestFileEditor, workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
 
-suite('HistoryService', function () {
+describe('HistoryService', function () {
 
 	const TEST_EDITOR_ID = 'MyTestEditorForEditorHistory';
 	const TEST_EDITOR_INPUT_ID = 'testEditorInputForHistoyService';
@@ -61,12 +61,12 @@ suite('HistoryService', function () {
 
 	const disposables = new DisposableStore();
 
-	setup(() => {
+	beforeEach(() => {
 		disposables.add(registerTestEditor(TEST_EDITOR_ID, [new SyncDescriptor(TestFileEditorInput)]));
 		disposables.add(registerTestFileEditor());
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		disposables.clear();
 	});
 

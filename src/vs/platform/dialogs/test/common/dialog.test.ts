@@ -9,7 +9,7 @@ import { IMassagedMessageBoxOptions, massageMessageBoxOptions } from 'vs/platfor
 import product from 'vs/platform/product/common/product';
 import { IProductService } from 'vs/platform/product/common/productService';
 
-suite('Dialog', () => {
+describe('Dialog', () => {
 
 	function assertOptions({ options, buttonIndeces }: IMassagedMessageBoxOptions, buttons: string[], defaultId: number, cancelId: number, indeces: number[]): void {
 		deepEqual(options.buttons, buttons);

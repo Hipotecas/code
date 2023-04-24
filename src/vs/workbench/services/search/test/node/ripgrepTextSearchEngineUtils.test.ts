@@ -6,10 +6,10 @@
 import * as assert from 'assert';
 import { joinPath } from 'vs/base/common/resources';
 import { URI } from 'vs/base/common/uri';
-import { fixRegexNewline, IRgMatch, IRgMessage, RipgrepParser, unicodeEscapesToPCRE2, fixNewline, getRgArgs, performBraceExpansionForRipgrep } from 'vs/workbench/services/search/node/ripgrepTextSearchEngine';
 import { Range, TextSearchOptions, TextSearchQuery, TextSearchResult } from 'vs/workbench/services/search/common/searchExtTypes';
+import { IRgMatch, IRgMessage, RipgrepParser, fixNewline, fixRegexNewline, getRgArgs, performBraceExpansionForRipgrep, unicodeEscapesToPCRE2 } from 'vs/workbench/services/search/node/ripgrepTextSearchEngine';
 
-suite('RipgrepTextSearchEngine', () => {
+describe('RipgrepTextSearchEngine', () => {
 	test('unicodeEscapesToPCRE2', async () => {
 		assert.strictEqual(unicodeEscapesToPCRE2('\\u1234'), '\\x{1234}');
 		assert.strictEqual(unicodeEscapesToPCRE2('\\u1234\\u0001'), '\\x{1234}\\x{0001}');
@@ -99,7 +99,7 @@ suite('RipgrepTextSearchEngine', () => {
 		] as const).forEach(testFixNewline);
 	});
 
-	suite('RipgrepParser', () => {
+	describe('RipgrepParser', () => {
 		const TEST_FOLDER = URI.file('/foo/bar');
 
 		function testParser(inputData: string[], expectedResults: TextSearchResult[]): void {
@@ -297,7 +297,7 @@ suite('RipgrepTextSearchEngine', () => {
 		});
 	});
 
-	suite('getRgArgs', () => {
+	describe('getRgArgs', () => {
 		test('simple includes', () => {
 			// Only testing the args that come from includes.
 			function testGetRgArgs(includes: string[], expectedFromIncludes: string[]): void {

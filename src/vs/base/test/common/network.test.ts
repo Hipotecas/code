@@ -9,7 +9,7 @@ import { isWeb } from 'vs/base/common/platform';
 import { isEqual } from 'vs/base/common/resources';
 import { URI } from 'vs/base/common/uri';
 
-suite('network', () => {
+describe('network', () => {
 
 	(isWeb ? test.skip : test)('FileAccess: URI (native)', () => {
 

@@ -5,15 +5,15 @@
 
 import * as assert from 'assert';
 import { URI } from 'vs/base/common/uri';
-import { MainThreadDocumentContentProviders } from 'vs/workbench/api/browser/mainThreadDocumentContentProviders';
-import { createTextModel } from 'vs/editor/test/common/testTextModel';
 import { mock } from 'vs/base/test/common/mock';
-import { IModelService } from 'vs/editor/common/services/model';
-import { IEditorWorkerService } from 'vs/editor/common/services/editorWorker';
-import { TestRPCProtocol } from 'vs/workbench/api/test/common/testRPCProtocol';
 import { TextEdit } from 'vs/editor/common/languages';
+import { IEditorWorkerService } from 'vs/editor/common/services/editorWorker';
+import { IModelService } from 'vs/editor/common/services/model';
+import { createTextModel } from 'vs/editor/test/common/testTextModel';
+import { MainThreadDocumentContentProviders } from 'vs/workbench/api/browser/mainThreadDocumentContentProviders';
+import { TestRPCProtocol } from 'vs/workbench/api/test/common/testRPCProtocol';
 
-suite('MainThreadDocumentContentProviders', function () {
+describe('MainThreadDocumentContentProviders', function () {
 
 	test('events are processed properly', function () {
 

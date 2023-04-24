@@ -17,12 +17,12 @@ import { NullLogService } from 'vs/platform/log/common/log';
 import { IMarker, MarkerSeverity } from 'vs/platform/markers/common/markers';
 import { OutlineElement, OutlineGroup, OutlineModel, OutlineModelService } from '../../browser/outlineModel';
 
-suite('OutlineModel', function () {
+describe('OutlineModel', function () {
 
 	const disposables = new DisposableStore();
 	const languageFeaturesService = new LanguageFeaturesService();
 
-	teardown(function () {
+	afterEach(function () {
 		disposables.clear();
 	});
 

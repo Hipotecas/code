@@ -4,18 +4,18 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { ok, strictEqual } from 'assert';
-import { InMemoryStorageService, IStorageService, IStorageTargetChangeEvent, IStorageValueChangeEvent, StorageScope, StorageTarget } from 'vs/platform/storage/common/storage';
+import { IStorageService, IStorageTargetChangeEvent, IStorageValueChangeEvent, InMemoryStorageService, StorageScope, StorageTarget } from 'vs/platform/storage/common/storage';
 
 export function createSuite<T extends IStorageService>(params: { setup: () => Promise<T>; teardown: (service: T) => Promise<void> }): void {
 
 	let storageService: T;
 
-	setup(async () => {
-		storageService = await params.setup();
+	beforeEach(async () => {
+		storageService = await params.beforeEach();
 	});
 
-	teardown(() => {
-		return params.teardown(storageService);
+	afterEach(() => {
+		return params.afterEach(storageService);
 	});
 
 	test('Get Data, Integer, Boolean (application)', () => {
@@ -211,7 +211,7 @@ export function createSuite<T extends IStorageService>(params: { setup: () => Pr
 	});
 }
 
-suite('StorageService (in-memory)', function () {
+describe('StorageService (in-memory)', function () {
 	createSuite<InMemoryStorageService>({
 		setup: async () => new InMemoryStorageService(),
 		teardown: async () => { }

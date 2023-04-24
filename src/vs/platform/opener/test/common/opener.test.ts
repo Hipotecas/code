@@ -7,7 +7,7 @@ import * as assert from 'assert';
 import { URI } from 'vs/base/common/uri';
 import { extractSelection, withSelection } from 'vs/platform/opener/common/opener';
 
-suite('extractSelection', () => {
+describe('extractSelection', () => {
 
 	test('extractSelection with only startLineNumber', async () => {
 		const uri = URI.parse('file:///some/file.js#73');

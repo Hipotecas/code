@@ -6,7 +6,7 @@
 import * as assert from 'assert';
 import { Iterable } from 'vs/base/common/iterator';
 
-suite('Iterable', function () {
+describe('Iterable', function () {
 
 	const customIterable = new class {
 

@@ -7,7 +7,7 @@ import * as assert from 'assert';
 import { ActionBar, prepareActions } from 'vs/base/browser/ui/actionbar/actionbar';
 import { Action, Separator } from 'vs/base/common/actions';
 
-suite('Actionbar', () => {
+describe('Actionbar', () => {
 
 	test('prepareActions()', function () {
 		const a1 = new Separator();
@@ -20,9 +20,9 @@ suite('Actionbar', () => {
 
 		const actions = prepareActions([a1, a2, a3, a4, a5, a6, a7]);
 		assert.strictEqual(actions.length, 3); // duplicate separators get removed
-		assert(actions[0] === a3);
-		assert(actions[1] === a5);
-		assert(actions[2] === a6);
+		expect(actions[0] === a3).toBe(true);
+		expect(actions[1] === a5).toBe(true);
+		expect(actions[2] === a6).toBe(true);
 	});
 
 	test('hasAction()', function () {

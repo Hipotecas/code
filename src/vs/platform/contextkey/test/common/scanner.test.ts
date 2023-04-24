@@ -5,7 +5,7 @@
 import * as assert from 'assert';
 import { Scanner, Token, TokenType } from 'vs/platform/contextkey/common/scanner';
 
-suite('Context Key Scanner', () => {
+describe('Context Key Scanner', () => {
 	function tokenTypeToStr(token: Token) {
 		switch (token.type) {
 			case TokenType.LParen:
@@ -68,7 +68,7 @@ suite('Context Key Scanner', () => {
 		});
 	}
 
-	suite('scanning various cases of context keys', () => {
+	describe('scanning various cases of context keys', () => {
 
 		test('foo.bar<C-shift+2>', () => {
 			const input = 'foo.bar<C-shift+2>';
@@ -197,7 +197,7 @@ suite('Context Key Scanner', () => {
 		assert.deepStrictEqual(scan(input), ([{ type: "Str", offset: 0, lexeme: "foo" }, { type: "===", offset: 4 }, { type: "Str", offset: 8, lexeme: "bar" }, { type: "ErrorToken", offset: 11, lexeme: "'" }, { type: "EOF", offset: 12 }]));
 	});
 
-	suite('handling lexical errors', () => {
+	describe('handling lexical errors', () => {
 
 		test(`foo === '`, () => {
 			const input = `foo === '`;

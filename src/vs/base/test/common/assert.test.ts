@@ -6,7 +6,7 @@
 import * as assert from 'assert';
 import { ok } from 'vs/base/common/assert';
 
-suite('Assert', () => {
+describe('Assert', () => {
 	test('ok', () => {
 		assert.throws(function () {
 			ok(false);

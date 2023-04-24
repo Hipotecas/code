@@ -32,8 +32,8 @@ function getRanges(cells: ICellViewModel[], included: (cell: ICellViewModel) => 
 }
 
 
-suite('notebookBrowser', () => {
-	suite('getRanges', function () {
+describe('notebookBrowser', () => {
+	describe('getRanges', function () {
 		const predicate = (cell: ICellViewModel) => cell.cellKind === CellKind.Code;
 
 		test('all code', function () {

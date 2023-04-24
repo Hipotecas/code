@@ -5,7 +5,7 @@
 import * as assert from 'assert';
 import * as strings from 'vs/base/common/strings';
 
-suite('Strings', () => {
+describe('Strings', () => {
 	test('equalsIgnoreCase', () => {
 		assert(strings.equalsIgnoreCase('', ''));
 		assert(!strings.equalsIgnoreCase('', '1'));

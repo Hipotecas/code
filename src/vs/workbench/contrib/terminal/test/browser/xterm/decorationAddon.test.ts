@@ -5,21 +5,21 @@
 
 import { notEqual, strictEqual, throws } from 'assert';
 import { IConfigurationService } from 'vs/platform/configuration/common/configuration';
+import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
+import { ContextMenuService } from 'vs/platform/contextview/browser/contextMenuService';
+import { IContextMenuService } from 'vs/platform/contextview/browser/contextView';
 import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
 import { ILogService, NullLogService } from 'vs/platform/log/common/log';
-import { DecorationAddon } from 'vs/workbench/contrib/terminal/browser/xterm/decorationAddon';
-import { TerminalCapabilityStore } from 'vs/platform/terminal/common/capabilities/terminalCapabilityStore';
-import { ITerminalCommand } from 'vs/workbench/contrib/terminal/common/terminal';
-import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
-import { IDecoration, IDecorationOptions, Terminal } from 'xterm';
 import { TerminalCapability } from 'vs/platform/terminal/common/capabilities/capabilities';
 import { CommandDetectionCapability } from 'vs/platform/terminal/common/capabilities/commandDetectionCapability';
-import { IContextMenuService } from 'vs/platform/contextview/browser/contextView';
-import { ContextMenuService } from 'vs/platform/contextview/browser/contextMenuService';
-import { TestThemeService } from 'vs/platform/theme/test/common/testThemeService';
+import { TerminalCapabilityStore } from 'vs/platform/terminal/common/capabilities/terminalCapabilityStore';
 import { IThemeService } from 'vs/platform/theme/common/themeService';
+import { TestThemeService } from 'vs/platform/theme/test/common/testThemeService';
+import { DecorationAddon } from 'vs/workbench/contrib/terminal/browser/xterm/decorationAddon';
+import { ITerminalCommand } from 'vs/workbench/contrib/terminal/common/terminal';
 import { ILifecycleService } from 'vs/workbench/services/lifecycle/common/lifecycle';
 import { TestLifecycleService } from 'vs/workbench/test/browser/workbenchTestServices';
+import { IDecoration, IDecorationOptions, Terminal } from 'xterm';
 
 class TestTerminal extends Terminal {
 	override registerDecoration(decorationOptions: IDecorationOptions): IDecoration | undefined {
@@ -31,11 +31,11 @@ class TestTerminal extends Terminal {
 	}
 }
 
-suite('DecorationAddon', () => {
+describe('DecorationAddon', () => {
 	let decorationAddon: DecorationAddon;
 	let xterm: TestTerminal;
 
-	setup(() => {
+	beforeEach(() => {
 		const instantiationService = new TestInstantiationService();
 		const configurationService = new TestConfigurationService({
 			workbench: {
@@ -65,7 +65,7 @@ suite('DecorationAddon', () => {
 		instantiationService.stub(ILogService, NullLogService);
 	});
 
-	suite('registerDecoration', async () => {
+	describe('registerDecoration', async () => {
 		test('should throw when command has no marker', async () => {
 			throws(() => decorationAddon.registerCommandDecoration({ command: 'cd src', timestamp: Date.now(), hasOutput: () => false } as ITerminalCommand));
 		});

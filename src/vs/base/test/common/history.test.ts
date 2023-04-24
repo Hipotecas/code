@@ -5,7 +5,7 @@
 import * as assert from 'assert';
 import { HistoryNavigator, HistoryNavigator2 } from 'vs/base/common/history';
 
-suite('History Navigator', () => {
+describe('History Navigator', () => {
 
 	test('create reduces the input to limit', () => {
 		const testObject = new HistoryNavigator(['1', '2', '3', '4'], 2);
@@ -179,7 +179,7 @@ suite('History Navigator', () => {
 	}
 });
 
-suite('History Navigator 2', () => {
+describe('History Navigator 2', () => {
 
 	test('constructor', () => {
 		const testObject = new HistoryNavigator2(['1', '2', '3', '4']);

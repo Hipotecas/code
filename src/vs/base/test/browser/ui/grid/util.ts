@@ -3,7 +3,6 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import * as assert from 'assert';
 import { IView } from 'vs/base/browser/ui/grid/grid';
 import { GridNode, isGridBranchNode } from 'vs/base/browser/ui/grid/gridview';
 import { Emitter, Event } from 'vs/base/common/event';
@@ -57,8 +56,8 @@ export class TestView implements IView {
 		private _minimumHeight: number,
 		private _maximumHeight: number
 	) {
-		assert(_minimumWidth <= _maximumWidth, 'gridview view minimum width must be <= maximum width');
-		assert(_minimumHeight <= _maximumHeight, 'gridview view minimum height must be <= maximum height');
+		expect(_minimumWidth <= _maximumWidth, 'gridview view minimum width must be <= maximum width').toBe(true);
+		expect(_minimumHeight <= _maximumHeight, 'gridview view minimum height must be <= maximum height').toBe(true);
 	}
 
 	layout(width: number, height: number, top: number, left: number): void {

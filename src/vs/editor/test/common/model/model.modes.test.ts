@@ -8,14 +8,14 @@ import { IDisposable } from 'vs/base/common/lifecycle';
 import { EditOperation } from 'vs/editor/common/core/editOperation';
 import { Position } from 'vs/editor/common/core/position';
 import { Range } from 'vs/editor/common/core/range';
-import { TextModel } from 'vs/editor/common/model/textModel';
 import * as languages from 'vs/editor/common/languages';
 import { NullState } from 'vs/editor/common/languages/nullTokenize';
+import { TextModel } from 'vs/editor/common/model/textModel';
 import { createTextModel } from 'vs/editor/test/common/testTextModel';
 
 // --------- utils
 
-suite('Editor Model - Model Modes 1', () => {
+describe('Editor Model - Model Modes 1', () => {
 
 	let calledFor: string[] = [];
 
@@ -37,7 +37,7 @@ suite('Editor Model - Model Modes 1', () => {
 	let thisModel: TextModel;
 	let languageRegistration: IDisposable;
 
-	setup(() => {
+	beforeEach(() => {
 		const TEXT =
 			'1\r\n' +
 			'2\n' +
@@ -50,7 +50,7 @@ suite('Editor Model - Model Modes 1', () => {
 		thisModel = createTextModel(TEXT, LANGUAGE_ID);
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		thisModel.dispose();
 		languageRegistration.dispose();
 		calledFor = [];
@@ -153,7 +153,7 @@ suite('Editor Model - Model Modes 1', () => {
 	});
 });
 
-suite('Editor Model - Model Modes 2', () => {
+describe('Editor Model - Model Modes 2', () => {
 
 	class ModelState2 implements languages.IState {
 		prevLineContent: string;
@@ -192,7 +192,7 @@ suite('Editor Model - Model Modes 2', () => {
 	let thisModel: TextModel;
 	let languageRegistration: IDisposable;
 
-	setup(() => {
+	beforeEach(() => {
 		const TEXT =
 			'Line1' + '\r\n' +
 			'Line2' + '\n' +
@@ -204,7 +204,7 @@ suite('Editor Model - Model Modes 2', () => {
 		thisModel = createTextModel(TEXT, LANGUAGE_ID);
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		thisModel.dispose();
 		languageRegistration.dispose();
 	});

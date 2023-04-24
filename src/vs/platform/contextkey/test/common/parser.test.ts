@@ -32,7 +32,7 @@ function parseToStr(input: string): string {
 	return prints.join('');
 }
 
-suite('Context Key Parser', () => {
+describe('Context Key Parser', () => {
 
 	test(' foo', () => {
 		const input = ' foo';
@@ -134,7 +134,7 @@ suite('Context Key Parser', () => {
 		assert.deepStrictEqual(parseToStr(input), "foo");
 	});
 
-	suite('controversial', () => {
+	describe('controversial', () => {
 		/*
 			new parser KEEPS old one's behavior:
 
@@ -164,7 +164,7 @@ suite('Context Key Parser', () => {
 
 	});
 
-	suite('regex', () => {
+	describe('regex', () => {
 
 		test(`resource =~ //foo/(barr|door/(Foo-Bar%20Templates|Soo%20Looo)|Web%20Site%Jjj%20Llll)(/.*)*$/`, () => {
 			const input = `resource =~ //foo/(barr|door/(Foo-Bar%20Templates|Soo%20Looo)|Web%20Site%Jjj%20Llll)(/.*)*$/`;
@@ -183,7 +183,7 @@ suite('Context Key Parser', () => {
 
 	});
 
-	suite('error handling', () => {
+	describe('error handling', () => {
 
 		test(`/foo`, () => {
 			const input = `/foo`;

@@ -22,18 +22,18 @@ class AppInsightsCoreMock implements IAppInsightsCore {
 	}
 }
 
-suite('AIAdapter', () => {
+describe('AIAdapter', () => {
 	let appInsightsMock: AppInsightsCoreMock;
 	let adapter: OneDataSystemWebAppender;
 	const prefix = 'prefix';
 
 
-	setup(() => {
+	beforeEach(() => {
 		appInsightsMock = new AppInsightsCoreMock();
 		adapter = new OneDataSystemWebAppender(false, prefix, undefined!, () => appInsightsMock);
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		adapter.flush();
 	});
 

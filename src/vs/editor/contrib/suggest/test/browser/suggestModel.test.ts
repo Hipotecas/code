@@ -13,32 +13,32 @@ import { Position } from 'vs/editor/common/core/position';
 import { Range } from 'vs/editor/common/core/range';
 import { Selection } from 'vs/editor/common/core/selection';
 import { Handler } from 'vs/editor/common/editorCommon';
-import { ITextModel } from 'vs/editor/common/model';
-import { TextModel } from 'vs/editor/common/model/textModel';
-import { CompletionItemKind, CompletionItemProvider, CompletionList, CompletionTriggerKind, EncodedTokenizationResult, IState, TokenizationRegistry } from 'vs/editor/common/languages';
 import { MetadataConsts } from 'vs/editor/common/encodedTokenAttributes';
+import { CompletionItemKind, CompletionItemProvider, CompletionList, CompletionTriggerKind, EncodedTokenizationResult, IState, TokenizationRegistry } from 'vs/editor/common/languages';
+import { ILanguageService } from 'vs/editor/common/languages/language';
 import { ILanguageConfigurationService } from 'vs/editor/common/languages/languageConfigurationRegistry';
 import { NullState } from 'vs/editor/common/languages/nullTokenize';
-import { ILanguageService } from 'vs/editor/common/languages/language';
+import { ITextModel } from 'vs/editor/common/model';
+import { TextModel } from 'vs/editor/common/model/textModel';
+import { ILanguageFeaturesService } from 'vs/editor/common/services/languageFeatures';
+import { LanguageFeaturesService } from 'vs/editor/common/services/languageFeaturesService';
 import { SnippetController2 } from 'vs/editor/contrib/snippet/browser/snippetController2';
+import { getSnippetSuggestSupport, setSnippetSuggestSupport } from 'vs/editor/contrib/suggest/browser/suggest';
 import { SuggestController } from 'vs/editor/contrib/suggest/browser/suggestController';
 import { ISuggestMemoryService } from 'vs/editor/contrib/suggest/browser/suggestMemory';
 import { LineContext, SuggestModel } from 'vs/editor/contrib/suggest/browser/suggestModel';
 import { ISelectedSuggestion } from 'vs/editor/contrib/suggest/browser/suggestWidget';
-import { createTestCodeEditor, ITestCodeEditor } from 'vs/editor/test/browser/testCodeEditor';
+import { ITestCodeEditor, createTestCodeEditor } from 'vs/editor/test/browser/testCodeEditor';
 import { createModelServices, createTextModel, instantiateTextModel } from 'vs/editor/test/common/testTextModel';
+import { IInstantiationService } from 'vs/platform/instantiation/common/instantiation';
 import { ServiceCollection } from 'vs/platform/instantiation/common/serviceCollection';
 import { IKeybindingService } from 'vs/platform/keybinding/common/keybinding';
 import { MockKeybindingService } from 'vs/platform/keybinding/test/common/mockKeybindingService';
 import { ILabelService } from 'vs/platform/label/common/label';
-import { InMemoryStorageService, IStorageService } from 'vs/platform/storage/common/storage';
+import { IStorageService, InMemoryStorageService } from 'vs/platform/storage/common/storage';
 import { ITelemetryService } from 'vs/platform/telemetry/common/telemetry';
 import { NullTelemetryService } from 'vs/platform/telemetry/common/telemetryUtils';
 import { IWorkspaceContextService } from 'vs/platform/workspace/common/workspace';
-import { LanguageFeaturesService } from 'vs/editor/common/services/languageFeaturesService';
-import { ILanguageFeaturesService } from 'vs/editor/common/services/languageFeatures';
-import { IInstantiationService } from 'vs/platform/instantiation/common/instantiation';
-import { getSnippetSuggestSupport, setSnippetSuggestSupport } from 'vs/editor/contrib/suggest/browser/suggest';
 
 
 function createMockEditor(model: TextModel, languageFeaturesService: ILanguageFeaturesService): ITestCodeEditor {
@@ -66,7 +66,7 @@ function createMockEditor(model: TextModel, languageFeaturesService: ILanguageFe
 	return editor;
 }
 
-suite('SuggestModel - Context', function () {
+describe('SuggestModel - Context', function () {
 	const OUTER_LANGUAGE_ID = 'outerMode';
 	const INNER_LANGUAGE_ID = 'innerMode';
 
@@ -128,11 +128,11 @@ suite('SuggestModel - Context', function () {
 
 	let disposables: DisposableStore;
 
-	setup(() => {
+	beforeEach(() => {
 		disposables = new DisposableStore();
 	});
 
-	teardown(function () {
+	afterEach(function () {
 		disposables.dispose();
 	});
 
@@ -167,7 +167,7 @@ suite('SuggestModel - Context', function () {
 	});
 });
 
-suite('SuggestModel - TriggerAndCancelOracle', function () {
+describe('SuggestModel - TriggerAndCancelOracle', function () {
 
 
 	function getDefaultSuggestRange(model: ITextModel, position: Position) {
@@ -203,13 +203,13 @@ suite('SuggestModel - TriggerAndCancelOracle', function () {
 	const languageFeaturesService = new LanguageFeaturesService();
 	const registry = languageFeaturesService.completionProvider;
 
-	setup(function () {
+	beforeEach(function () {
 		disposables = new DisposableStore();
 		model = createTextModel('abc def', undefined, undefined, URI.parse('test:somefile.ttt'));
 		disposables.add(model);
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		disposables.dispose();
 	});
 

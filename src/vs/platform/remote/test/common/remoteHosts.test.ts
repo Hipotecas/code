@@ -6,7 +6,7 @@
 import * as assert from 'assert';
 import { parseAuthorityWithOptionalPort, parseAuthorityWithPort } from 'vs/platform/remote/common/remoteHosts';
 
-suite('remoteHosts', () => {
+describe('remoteHosts', () => {
 
 	test('parseAuthority hostname', () => {
 		assert.deepStrictEqual(parseAuthorityWithPort('localhost:8080'), { host: 'localhost', port: 8080 });

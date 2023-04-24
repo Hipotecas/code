@@ -6,11 +6,11 @@
 import * as assert from 'assert';
 import * as crypto from 'crypto';
 import * as net from 'net';
-import * as platform from 'vs/base/common/platform';
 import { tmpdir } from 'os';
 import { join } from 'vs/base/common/path';
+import * as platform from 'vs/base/common/platform';
 import * as ports from 'vs/base/node/ports';
-import { SocketDebugAdapter, NamedPipeDebugAdapter, StreamDebugAdapter } from 'vs/workbench/contrib/debug/node/debugAdapter';
+import { NamedPipeDebugAdapter, SocketDebugAdapter, StreamDebugAdapter } from 'vs/workbench/contrib/debug/node/debugAdapter';
 
 
 function sendInitializeRequest(debugAdapter: StreamDebugAdapter): Promise<DebugProtocol.Response> {
@@ -43,7 +43,7 @@ function serverConnection(socket: net.Socket) {
 	});
 }
 
-suite('Debug - StreamDebugAdapter', () => {
+describe('Debug - StreamDebugAdapter', () => {
 
 	test(`StreamDebugAdapter (NamedPipeDebugAdapter) can initialize a connection`, async () => {
 		// todo@connor4312: debug test failure that seems to only happen in CI.

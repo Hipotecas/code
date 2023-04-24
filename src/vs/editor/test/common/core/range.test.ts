@@ -6,50 +6,50 @@ import * as assert from 'assert';
 import { Position } from 'vs/editor/common/core/position';
 import { Range } from 'vs/editor/common/core/range';
 
-suite('Editor Core - Range', () => {
+describe('Editor Core - Range', () => {
 	test('empty range', () => {
 		const s = new Range(1, 1, 1, 1);
-		assert.strictEqual(s.startLineNumber, 1);
-		assert.strictEqual(s.startColumn, 1);
-		assert.strictEqual(s.endLineNumber, 1);
-		assert.strictEqual(s.endColumn, 1);
-		assert.strictEqual(s.isEmpty(), true);
+		expect(s.startLineNumber).toStrictEqual(1)
+		expect(s.startColumn).toStrictEqual(1)
+		expect(s.endLineNumber).toStrictEqual(1)
+		expect(s.endColumn).toStrictEqual(1)
+		expect(s.isEmpty()).toStrictEqual(true)
 	});
 
 	test('swap start and stop same line', () => {
 		const s = new Range(1, 2, 1, 1);
-		assert.strictEqual(s.startLineNumber, 1);
-		assert.strictEqual(s.startColumn, 1);
-		assert.strictEqual(s.endLineNumber, 1);
-		assert.strictEqual(s.endColumn, 2);
-		assert.strictEqual(s.isEmpty(), false);
+		expect(s.startLineNumber).toStrictEqual(1)
+		expect(s.startColumn).toStrictEqual(1)
+		expect(s.endLineNumber).toStrictEqual(1)
+		expect(s.endColumn).toStrictEqual(2)
+		expect(s.isEmpty()).toStrictEqual(false)
 	});
 
 	test('swap start and stop', () => {
 		const s = new Range(2, 1, 1, 2);
-		assert.strictEqual(s.startLineNumber, 1);
-		assert.strictEqual(s.startColumn, 2);
-		assert.strictEqual(s.endLineNumber, 2);
-		assert.strictEqual(s.endColumn, 1);
-		assert.strictEqual(s.isEmpty(), false);
+		expect(s.startLineNumber).toStrictEqual(1)
+		expect(s.startColumn).toStrictEqual(2)
+		expect(s.endLineNumber).toStrictEqual(2)
+		expect(s.endColumn).toStrictEqual(1)
+		expect(s.isEmpty()).toStrictEqual(false)
 	});
 
 	test('no swap same line', () => {
 		const s = new Range(1, 1, 1, 2);
-		assert.strictEqual(s.startLineNumber, 1);
-		assert.strictEqual(s.startColumn, 1);
-		assert.strictEqual(s.endLineNumber, 1);
-		assert.strictEqual(s.endColumn, 2);
-		assert.strictEqual(s.isEmpty(), false);
+		expect(s.startLineNumber).toStrictEqual(1)
+		expect(s.startColumn).toStrictEqual(1)
+		expect(s.endLineNumber).toStrictEqual(1)
+		expect(s.endColumn).toStrictEqual(2)
+		expect(s.isEmpty()).toStrictEqual(false)
 	});
 
 	test('no swap', () => {
 		const s = new Range(1, 1, 2, 1);
-		assert.strictEqual(s.startLineNumber, 1);
-		assert.strictEqual(s.startColumn, 1);
-		assert.strictEqual(s.endLineNumber, 2);
-		assert.strictEqual(s.endColumn, 1);
-		assert.strictEqual(s.isEmpty(), false);
+		expect(s.startLineNumber).toStrictEqual(1)
+		expect(s.startColumn).toStrictEqual(1)
+		expect(s.endLineNumber).toStrictEqual(2)
+		expect(s.endColumn).toStrictEqual(1)
+		expect(s.isEmpty()).toStrictEqual(false)
 	});
 
 	test('compareRangesUsingEnds', () => {
@@ -93,36 +93,36 @@ suite('Editor Core - Range', () => {
 	});
 
 	test('containsPosition', () => {
-		assert.strictEqual(new Range(2, 2, 5, 10).containsPosition(new Position(1, 3)), false);
-		assert.strictEqual(new Range(2, 2, 5, 10).containsPosition(new Position(2, 1)), false);
-		assert.strictEqual(new Range(2, 2, 5, 10).containsPosition(new Position(2, 2)), true);
-		assert.strictEqual(new Range(2, 2, 5, 10).containsPosition(new Position(2, 3)), true);
-		assert.strictEqual(new Range(2, 2, 5, 10).containsPosition(new Position(3, 1)), true);
-		assert.strictEqual(new Range(2, 2, 5, 10).containsPosition(new Position(5, 9)), true);
-		assert.strictEqual(new Range(2, 2, 5, 10).containsPosition(new Position(5, 10)), true);
-		assert.strictEqual(new Range(2, 2, 5, 10).containsPosition(new Position(5, 11)), false);
-		assert.strictEqual(new Range(2, 2, 5, 10).containsPosition(new Position(6, 1)), false);
+		expect(new Range(2, 2, 5, 10).containsPosition(new Position(1, 3))).toStrictEqual(false)
+		expect(new Range(2, 2, 5, 10).containsPosition(new Position(2, 1))).toStrictEqual(false)
+		expect(new Range(2, 2, 5, 10).containsPosition(new Position(2, 2))).toStrictEqual(true)
+		expect(new Range(2, 2, 5, 10).containsPosition(new Position(2, 3))).toStrictEqual(true)
+		expect(new Range(2, 2, 5, 10).containsPosition(new Position(3, 1))).toStrictEqual(true)
+		expect(new Range(2, 2, 5, 10).containsPosition(new Position(5, 9))).toStrictEqual(true)
+		expect(new Range(2, 2, 5, 10).containsPosition(new Position(5, 10))).toStrictEqual(true)
+		expect(new Range(2, 2, 5, 10).containsPosition(new Position(5, 11))).toStrictEqual(false)
+		expect(new Range(2, 2, 5, 10).containsPosition(new Position(6, 1))).toStrictEqual(false)
 	});
 
 	test('containsRange', () => {
-		assert.strictEqual(new Range(2, 2, 5, 10).containsRange(new Range(1, 3, 2, 2)), false);
-		assert.strictEqual(new Range(2, 2, 5, 10).containsRange(new Range(2, 1, 2, 2)), false);
-		assert.strictEqual(new Range(2, 2, 5, 10).containsRange(new Range(2, 2, 5, 11)), false);
-		assert.strictEqual(new Range(2, 2, 5, 10).containsRange(new Range(2, 2, 6, 1)), false);
-		assert.strictEqual(new Range(2, 2, 5, 10).containsRange(new Range(5, 9, 6, 1)), false);
-		assert.strictEqual(new Range(2, 2, 5, 10).containsRange(new Range(5, 10, 6, 1)), false);
-		assert.strictEqual(new Range(2, 2, 5, 10).containsRange(new Range(2, 2, 5, 10)), true);
-		assert.strictEqual(new Range(2, 2, 5, 10).containsRange(new Range(2, 3, 5, 9)), true);
-		assert.strictEqual(new Range(2, 2, 5, 10).containsRange(new Range(3, 100, 4, 100)), true);
+		expect(new Range(2, 2, 5, 10).containsRange(new Range(1, 3, 2, 2))).toStrictEqual(false)
+		expect(new Range(2, 2, 5, 10).containsRange(new Range(2, 1, 2, 2))).toStrictEqual(false)
+		expect(new Range(2, 2, 5, 10).containsRange(new Range(2, 2, 5, 11))).toStrictEqual(false)
+		expect(new Range(2, 2, 5, 10).containsRange(new Range(2, 2, 6, 1))).toStrictEqual(false)
+		expect(new Range(2, 2, 5, 10).containsRange(new Range(5, 9, 6, 1))).toStrictEqual(false)
+		expect(new Range(2, 2, 5, 10).containsRange(new Range(5, 10, 6, 1))).toStrictEqual(false)
+		expect(new Range(2, 2, 5, 10).containsRange(new Range(2, 2, 5, 10))).toStrictEqual(true)
+		expect(new Range(2, 2, 5, 10).containsRange(new Range(2, 3, 5, 9))).toStrictEqual(true)
+		expect(new Range(2, 2, 5, 10).containsRange(new Range(3, 100, 4, 100))).toStrictEqual(true)
 	});
 
 	test('areIntersecting', () => {
-		assert.strictEqual(Range.areIntersecting(new Range(2, 2, 3, 2), new Range(4, 2, 5, 2)), false);
-		assert.strictEqual(Range.areIntersecting(new Range(4, 2, 5, 2), new Range(2, 2, 3, 2)), false);
-		assert.strictEqual(Range.areIntersecting(new Range(4, 2, 5, 2), new Range(5, 2, 6, 2)), false);
-		assert.strictEqual(Range.areIntersecting(new Range(5, 2, 6, 2), new Range(4, 2, 5, 2)), false);
-		assert.strictEqual(Range.areIntersecting(new Range(2, 2, 2, 7), new Range(2, 4, 2, 6)), true);
-		assert.strictEqual(Range.areIntersecting(new Range(2, 2, 2, 7), new Range(2, 4, 2, 9)), true);
-		assert.strictEqual(Range.areIntersecting(new Range(2, 4, 2, 9), new Range(2, 2, 2, 7)), true);
+		expect(Range.areIntersecting(new Range(2, 2, 3, 2), new Range(4, 2, 5, 2))).toStrictEqual(false)
+		expect(Range.areIntersecting(new Range(4, 2, 5, 2), new Range(2, 2, 3, 2))).toStrictEqual(false)
+		expect(Range.areIntersecting(new Range(4, 2, 5, 2), new Range(5, 2, 6, 2))).toStrictEqual(false)
+		expect(Range.areIntersecting(new Range(5, 2, 6, 2), new Range(4, 2, 5, 2))).toStrictEqual(false)
+		expect(Range.areIntersecting(new Range(2, 2, 2, 7), new Range(2, 4, 2, 6))).toStrictEqual(true)
+		expect(Range.areIntersecting(new Range(2, 2, 2, 7), new Range(2, 4, 2, 9))).toStrictEqual(true)
+		expect(Range.areIntersecting(new Range(2, 4, 2, 9), new Range(2, 2, 2, 7))).toStrictEqual(true)
 	});
 });

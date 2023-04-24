@@ -22,8 +22,8 @@ function assertNodeEquals(actualNode: HTMLElement, expectedHtml: string) {
 		`Expected: ${expectedNode.outerHTML}\nActual: ${actualNode.outerHTML}`);
 }
 
-suite('MarkdownRenderer', () => {
-	suite('Sanitization', () => {
+describe('MarkdownRenderer', () => {
+	describe('Sanitization', () => {
 		test('Should not render images with unknown schemes', () => {
 			const markdown = { value: `![image](no-such://example.com/cat.gif)` };
 			const result: HTMLElement = renderMarkdown(markdown).element;
@@ -31,7 +31,7 @@ suite('MarkdownRenderer', () => {
 		});
 	});
 
-	suite('Images', () => {
+	describe('Images', () => {
 		test('image rendering conforms to default', () => {
 			const markdown = { value: `![image](http://example.com/cat.gif 'caption')` };
 			const result: HTMLElement = renderMarkdown(markdown).element;
@@ -68,7 +68,7 @@ suite('MarkdownRenderer', () => {
 		});
 	});
 
-	suite('Code block renderer', () => {
+	describe('Code block renderer', () => {
 		const simpleCodeBlockRenderer = (lang: string, code: string): Promise<HTMLElement> => {
 			const element = document.createElement('code');
 			element.textContent = code;
@@ -131,7 +131,7 @@ suite('MarkdownRenderer', () => {
 		});
 	});
 
-	suite('ThemeIcons Support On', () => {
+	describe('ThemeIcons Support On', () => {
 
 		test('render appendText', () => {
 			const mds = new MarkdownString(undefined, { supportThemeIcons: true });
@@ -197,7 +197,7 @@ suite('MarkdownRenderer', () => {
 		});
 	});
 
-	suite('ThemeIcons Support Off', () => {
+	describe('ThemeIcons Support Off', () => {
 
 		test('render appendText', () => {
 			const mds = new MarkdownString(undefined, { supportThemeIcons: false });
@@ -252,7 +252,7 @@ suite('MarkdownRenderer', () => {
 		assert.strictEqual(result.innerHTML, `<p><a data-href="command:doFoo" href="" title="command:doFoo">command1</a> <a data-href="command:doFoo" href="">command2</a></p>`);
 	});
 
-	suite('PlaintextMarkdownRender', () => {
+	describe('PlaintextMarkdownRender', () => {
 
 		test('test code, blockquote, heading, list, listitem, paragraph, table, tablerow, tablecell, strong, em, br, del, text are rendered plaintext', () => {
 			const markdown = { value: '`code`\n>quote\n# heading\n- list\n\n\ntable | table2\n--- | --- \none | two\n\n\nbo**ld**\n_italic_\n~~del~~\nsome text' };
@@ -269,7 +269,7 @@ suite('MarkdownRenderer', () => {
 		});
 	});
 
-	suite('supportHtml', () => {
+	describe('supportHtml', () => {
 		test('supportHtml is disabled by default', () => {
 			const mds = new MarkdownString(undefined, {});
 			mds.appendMarkdown('a<b>b</b>c');
@@ -327,7 +327,7 @@ suite('MarkdownRenderer', () => {
 		});
 	});
 
-	suite('fillInIncompleteTokens', () => {
+	describe('fillInIncompleteTokens', () => {
 		function ignoreRaw(...tokenLists: marked.Token[][]): void {
 			tokenLists.forEach(tokens => {
 				tokens.forEach(t => t.raw = '');
@@ -336,7 +336,7 @@ suite('MarkdownRenderer', () => {
 
 		const completeTable = '| a | b |\n| --- | --- |';
 
-		suite('table', () => {
+		describe('table', () => {
 			test('complete table', () => {
 				const tokens = marked.lexer(completeTable);
 				const newTokens = fillInIncompleteTokens(tokens);
@@ -457,7 +457,7 @@ suite('MarkdownRenderer', () => {
 			});
 		});
 
-		suite('codeblock', () => {
+		describe('codeblock', () => {
 			test('complete code block', () => {
 				const completeCodeblock = '```js\nconst xyz = 123;\n```';
 				const tokens = marked.lexer(completeCodeblock);
@@ -565,7 +565,7 @@ suite('MarkdownRenderer', () => {
 			});
 		}
 
-		suite('codespan', () => {
+		describe('codespan', () => {
 			simpleMarkdownTestSuite('codespan', '`');
 
 			test(`backtick between letters`, () => {
@@ -578,7 +578,7 @@ suite('MarkdownRenderer', () => {
 			});
 		});
 
-		suite('star', () => {
+		describe('star', () => {
 			simpleMarkdownTestSuite('star', '*');
 
 			test(`star between letters`, () => {
@@ -600,7 +600,7 @@ suite('MarkdownRenderer', () => {
 			});
 		});
 
-		suite('double star', () => {
+		describe('double star', () => {
 			simpleMarkdownTestSuite('double star', '**');
 
 			test(`double star between letters`, () => {
@@ -613,7 +613,7 @@ suite('MarkdownRenderer', () => {
 			});
 		});
 
-		suite('underscore', () => {
+		describe('underscore', () => {
 			simpleMarkdownTestSuite('underscore', '_');
 
 			test(`underscore between letters`, () => {
@@ -625,7 +625,7 @@ suite('MarkdownRenderer', () => {
 			});
 		});
 
-		suite('double underscore', () => {
+		describe('double underscore', () => {
 			simpleMarkdownTestSuite('double underscore', '__');
 
 			test(`double underscore between letters`, () => {
@@ -637,7 +637,7 @@ suite('MarkdownRenderer', () => {
 			});
 		});
 
-		suite('link', () => {
+		describe('link', () => {
 			test('incomplete link text', () => {
 				const incomplete = 'abc [text';
 				const tokens = marked.lexer(incomplete);

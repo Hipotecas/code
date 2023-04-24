@@ -4,63 +4,63 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { setUnexpectedErrorHandler, errorHandler } from 'vs/base/common/errors';
-import { URI } from 'vs/base/common/uri';
+import { errorHandler, setUnexpectedErrorHandler } from 'vs/base/common/errors';
 import { Event } from 'vs/base/common/event';
-import * as types from 'vs/workbench/api/common/extHostTypes';
-import { createTextModel } from 'vs/editor/test/common/testTextModel';
-import { TestRPCProtocol } from 'vs/workbench/api/test/common/testRPCProtocol';
-import { MarkerService } from 'vs/platform/markers/common/markerService';
-import { IMarkerService } from 'vs/platform/markers/common/markers';
-import { ICommandService, CommandsRegistry } from 'vs/platform/commands/common/commands';
-import { IModelService } from 'vs/editor/common/services/model';
-import { ExtHostLanguageFeatures } from 'vs/workbench/api/common/extHostLanguageFeatures';
-import { MainThreadLanguageFeatures } from 'vs/workbench/api/browser/mainThreadLanguageFeatures';
-import { ExtHostApiCommands } from 'vs/workbench/api/common/extHostApiCommands';
-import { ExtHostCommands } from 'vs/workbench/api/common/extHostCommands';
-import { MainThreadCommands } from 'vs/workbench/api/browser/mainThreadCommands';
-import { ExtHostDocuments } from 'vs/workbench/api/common/extHostDocuments';
-import { ExtHostDocumentsAndEditors } from 'vs/workbench/api/common/extHostDocumentsAndEditors';
-import { MainContext, ExtHostContext } from 'vs/workbench/api/common/extHost.protocol';
-import { ExtHostDiagnostics } from 'vs/workbench/api/common/extHostDiagnostics';
-import type * as vscode from 'vscode';
-import 'vs/workbench/contrib/search/browser/search.contribution';
-import { ILogService, NullLogService } from 'vs/platform/log/common/log';
-import { ITextModel } from 'vs/editor/common/model';
-import { nullExtensionDescription, IExtensionService } from 'vs/workbench/services/extensions/common/extensions';
-import { dispose, ImmortalReference } from 'vs/base/common/lifecycle';
-import { IEditorWorkerService } from 'vs/editor/common/services/editorWorker';
+import { ImmortalReference, dispose } from 'vs/base/common/lifecycle';
+import { URI } from 'vs/base/common/uri';
 import { mock } from 'vs/base/test/common/mock';
-import { NullApiDeprecationService } from 'vs/workbench/api/common/extHostApiDeprecationService';
-import { ServiceCollection } from 'vs/platform/instantiation/common/serviceCollection';
+import { ITextModel } from 'vs/editor/common/model';
+import { IEditorWorkerService } from 'vs/editor/common/services/editorWorker';
+import { ILanguageFeatureDebounceService, LanguageFeatureDebounceService } from 'vs/editor/common/services/languageFeatureDebounce';
+import { IModelService } from 'vs/editor/common/services/model';
+import { IResolvedTextEditorModel, ITextModelService } from 'vs/editor/common/services/resolverService';
+import { IOutlineModelService, OutlineModelService } from 'vs/editor/contrib/documentSymbols/browser/outlineModel';
+import { createTextModel } from 'vs/editor/test/common/testTextModel';
+import { CommandsRegistry, ICommandService } from 'vs/platform/commands/common/commands';
 import { SyncDescriptor } from 'vs/platform/instantiation/common/descriptors';
 import { InstantiationService } from 'vs/platform/instantiation/common/instantiationService';
-import { IResolvedTextEditorModel, ITextModelService } from 'vs/editor/common/services/resolverService';
+import { ServiceCollection } from 'vs/platform/instantiation/common/serviceCollection';
+import { ILogService, NullLogService } from 'vs/platform/log/common/log';
+import { MarkerService } from 'vs/platform/markers/common/markerService';
+import { IMarkerService } from 'vs/platform/markers/common/markers';
+import { MainThreadCommands } from 'vs/workbench/api/browser/mainThreadCommands';
+import { MainThreadLanguageFeatures } from 'vs/workbench/api/browser/mainThreadLanguageFeatures';
+import { ExtHostContext, MainContext } from 'vs/workbench/api/common/extHost.protocol';
+import { ExtHostApiCommands } from 'vs/workbench/api/common/extHostApiCommands';
+import { NullApiDeprecationService } from 'vs/workbench/api/common/extHostApiDeprecationService';
+import { ExtHostCommands } from 'vs/workbench/api/common/extHostCommands';
+import { ExtHostDiagnostics } from 'vs/workbench/api/common/extHostDiagnostics';
+import { ExtHostDocuments } from 'vs/workbench/api/common/extHostDocuments';
+import { ExtHostDocumentsAndEditors } from 'vs/workbench/api/common/extHostDocumentsAndEditors';
 import { IExtHostFileSystemInfo } from 'vs/workbench/api/common/extHostFileSystemInfo';
+import { ExtHostLanguageFeatures } from 'vs/workbench/api/common/extHostLanguageFeatures';
+import * as types from 'vs/workbench/api/common/extHostTypes';
 import { URITransformerService } from 'vs/workbench/api/common/extHostUriTransformerService';
-import { IOutlineModelService, OutlineModelService } from 'vs/editor/contrib/documentSymbols/browser/outlineModel';
-import { ILanguageFeatureDebounceService, LanguageFeatureDebounceService } from 'vs/editor/common/services/languageFeatureDebounce';
+import { TestRPCProtocol } from 'vs/workbench/api/test/common/testRPCProtocol';
+import 'vs/workbench/contrib/search/browser/search.contribution';
+import { IExtensionService, nullExtensionDescription } from 'vs/workbench/services/extensions/common/extensions';
+import type * as vscode from 'vscode';
 
+import { assertType } from 'vs/base/common/types';
+import { ILanguageFeaturesService } from 'vs/editor/common/services/languageFeatures';
+import { LanguageFeaturesService } from 'vs/editor/common/services/languageFeaturesService';
 import 'vs/editor/contrib/codeAction/browser/codeAction';
 import 'vs/editor/contrib/codelens/browser/codelens';
 import 'vs/editor/contrib/colorPicker/browser/color';
+import 'vs/editor/contrib/documentSymbols/browser/documentSymbols';
 import 'vs/editor/contrib/format/browser/format';
 import 'vs/editor/contrib/gotoSymbol/browser/goToCommands';
-import 'vs/editor/contrib/documentSymbols/browser/documentSymbols';
 import 'vs/editor/contrib/hover/browser/getHover';
+import 'vs/editor/contrib/inlayHints/browser/inlayHintsController';
 import 'vs/editor/contrib/links/browser/getLinks';
 import 'vs/editor/contrib/parameterHints/browser/provideSignatureHelp';
+import 'vs/editor/contrib/rename/browser/rename';
 import 'vs/editor/contrib/smartSelect/browser/smartSelect';
 import 'vs/editor/contrib/suggest/browser/suggest';
-import 'vs/editor/contrib/rename/browser/rename';
-import 'vs/editor/contrib/inlayHints/browser/inlayHintsController';
-import { ILanguageFeaturesService } from 'vs/editor/common/services/languageFeatures';
-import { LanguageFeaturesService } from 'vs/editor/common/services/languageFeaturesService';
-import { assertType } from 'vs/base/common/types';
-import { IUriIdentityService } from 'vs/platform/uriIdentity/common/uriIdentity';
-import { IExtHostTelemetry } from 'vs/workbench/api/common/extHostTelemetry';
 import { IConfigurationService } from 'vs/platform/configuration/common/configuration';
 import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
+import { IUriIdentityService } from 'vs/platform/uriIdentity/common/uriIdentity';
+import { IExtHostTelemetry } from 'vs/workbench/api/common/extHostTelemetry';
 
 function assertRejects(fn: () => Promise<any>, message: string = 'Expected rejection') {
 	return fn().then(() => assert.ok(false, message), _err => assert.ok(true));
@@ -71,7 +71,7 @@ function isLocation(value: vscode.Location | vscode.LocationLink): value is vsco
 	return candidate && candidate.uri instanceof URI && candidate.range instanceof types.Range;
 }
 
-suite('ExtHostLanguageFeatureCommands', function () {
+describe('ExtHostLanguageFeatureCommands', function () {
 	const defaultSelector = { scheme: 'far' };
 	let model: ITextModel;
 
@@ -83,7 +83,7 @@ suite('ExtHostLanguageFeatureCommands', function () {
 
 	let originalErrorHandler: (e: any) => any;
 
-	suiteSetup(() => {
+	describeSetup(() => {
 		model = createTextModel(
 			[
 				'This is the first line',
@@ -187,13 +187,13 @@ suite('ExtHostLanguageFeatureCommands', function () {
 		return rpcProtocol.sync();
 	});
 
-	suiteTeardown(() => {
+	describeTeardown(() => {
 		setUnexpectedErrorHandler(originalErrorHandler);
 		model.dispose();
 		mainThread.dispose();
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		disposables = dispose(disposables);
 		return rpcProtocol.sync();
 	});

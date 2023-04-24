@@ -6,9 +6,9 @@
 import * as assert from 'assert';
 import { ILanguageService } from 'vs/editor/common/languages/language';
 import { CellEditType, CellKind, SelectionStateType } from 'vs/workbench/contrib/notebook/common/notebookCommon';
-import { createNotebookCellList, TestCell, withTestNotebook } from 'vs/workbench/contrib/notebook/test/browser/testNotebookEditor';
+import { TestCell, createNotebookCellList, withTestNotebook } from 'vs/workbench/contrib/notebook/test/browser/testNotebookEditor';
 
-suite('Notebook Undo/Redo', () => {
+describe('Notebook Undo/Redo', () => {
 	test('Basics', async function () {
 		await withTestNotebook(
 			[

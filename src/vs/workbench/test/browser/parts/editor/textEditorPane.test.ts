@@ -4,28 +4,28 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { toResource } from 'vs/base/test/common/utils';
-import { IEditorService } from 'vs/workbench/services/editor/common/editorService';
-import { workbenchInstantiationService, TestServiceAccessor, registerTestFileEditor, createEditorPart, TestTextFileEditor } from 'vs/workbench/test/browser/workbenchTestServices';
-import { IResolvedTextFileEditorModel } from 'vs/workbench/services/textfile/common/textfiles';
-import { IEditorGroupsService } from 'vs/workbench/services/editor/common/editorGroupsService';
-import { DisposableStore } from 'vs/base/common/lifecycle';
-import { EditorService } from 'vs/workbench/services/editor/browser/editorService';
-import { EditorPaneSelectionChangeReason, EditorPaneSelectionCompareResult, IEditorPaneSelectionChangeEvent, isEditorPaneWithSelection } from 'vs/workbench/common/editor';
 import { DeferredPromise } from 'vs/base/common/async';
-import { TextEditorPaneSelection } from 'vs/workbench/browser/parts/editor/textEditor';
+import { DisposableStore } from 'vs/base/common/lifecycle';
+import { toResource } from 'vs/base/test/common/utils';
 import { Selection } from 'vs/editor/common/core/selection';
 import { IEditorOptions } from 'vs/platform/editor/common/editor';
+import { TextEditorPaneSelection } from 'vs/workbench/browser/parts/editor/textEditor';
+import { EditorPaneSelectionChangeReason, EditorPaneSelectionCompareResult, IEditorPaneSelectionChangeEvent, isEditorPaneWithSelection } from 'vs/workbench/common/editor';
+import { EditorService } from 'vs/workbench/services/editor/browser/editorService';
+import { IEditorGroupsService } from 'vs/workbench/services/editor/common/editorGroupsService';
+import { IEditorService } from 'vs/workbench/services/editor/common/editorService';
+import { IResolvedTextFileEditorModel } from 'vs/workbench/services/textfile/common/textfiles';
+import { TestServiceAccessor, TestTextFileEditor, createEditorPart, registerTestFileEditor, workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
 
-suite('TextEditorPane', () => {
+describe('TextEditorPane', () => {
 
 	const disposables = new DisposableStore();
 
-	setup(() => {
+	beforeEach(() => {
 		disposables.add(registerTestFileEditor());
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		disposables.clear();
 	});
 

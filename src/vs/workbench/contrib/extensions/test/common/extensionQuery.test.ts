@@ -6,7 +6,7 @@
 import * as assert from 'assert';
 import { Query } from 'vs/workbench/contrib/extensions/common/extensionQuery';
 
-suite('Extension query', () => {
+describe('Extension query', () => {
 	test('parse', () => {
 		let query = Query.parse('');
 		assert.strictEqual(query.value, '');

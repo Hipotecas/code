@@ -4,13 +4,13 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { UriIdentityService } from 'vs/platform/uriIdentity/common/uriIdentityService';
-import { mock } from 'vs/base/test/common/mock';
-import { IFileService, FileSystemProviderCapabilities } from 'vs/platform/files/common/files';
-import { URI } from 'vs/base/common/uri';
 import { Event } from 'vs/base/common/event';
+import { URI } from 'vs/base/common/uri';
+import { mock } from 'vs/base/test/common/mock';
+import { FileSystemProviderCapabilities, IFileService } from 'vs/platform/files/common/files';
+import { UriIdentityService } from 'vs/platform/uriIdentity/common/uriIdentityService';
 
-suite('URI Identity', function () {
+describe('URI Identity', function () {
 
 	class FakeFileService extends mock<IFileService>() {
 
@@ -31,7 +31,7 @@ suite('URI Identity', function () {
 
 	let _service: UriIdentityService;
 
-	setup(function () {
+	beforeEach(function () {
 		_service = new UriIdentityService(new FakeFileService(new Map([
 			['bar', FileSystemProviderCapabilities.PathCaseSensitive],
 			['foo', FileSystemProviderCapabilities.None]

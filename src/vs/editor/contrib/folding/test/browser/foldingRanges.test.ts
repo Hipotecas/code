@@ -5,7 +5,7 @@
 
 import * as assert from 'assert';
 import { FoldingMarkers } from 'vs/editor/common/languages/languageConfiguration';
-import { MAX_FOLDING_REGIONS, FoldRange, FoldingRegions, FoldSource } from 'vs/editor/contrib/folding/browser/foldingRanges';
+import { FoldRange, FoldSource, FoldingRegions, MAX_FOLDING_REGIONS } from 'vs/editor/contrib/folding/browser/foldingRanges';
 import { RangesCollector, computeRanges } from 'vs/editor/contrib/folding/browser/indentRangeProvider';
 import { createTextModel } from 'vs/editor/test/common/testTextModel';
 
@@ -14,7 +14,7 @@ const markers: FoldingMarkers = {
 	end: /^#endregion$/
 };
 
-suite('FoldingRanges', () => {
+describe('FoldingRanges', () => {
 
 	const foldRange = (from: number, to: number, collapsed: boolean | undefined = undefined, source: FoldSource = FoldSource.provider, type: string | undefined = undefined) =>
 		<FoldRange>{

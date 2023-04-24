@@ -4,12 +4,12 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { IWorkingCopy } from 'vs/workbench/services/workingCopy/common/workingCopy';
 import { URI } from 'vs/base/common/uri';
-import { TestWorkingCopy } from 'vs/workbench/test/common/workbenchTestServices';
+import { IWorkingCopy } from 'vs/workbench/services/workingCopy/common/workingCopy';
 import { IWorkingCopySaveEvent, WorkingCopyService } from 'vs/workbench/services/workingCopy/common/workingCopyService';
+import { TestWorkingCopy } from 'vs/workbench/test/common/workbenchTestServices';
 
-suite('WorkingCopyService', () => {
+describe('WorkingCopyService', () => {
 
 	test('registry - basics', () => {
 		const service = new WorkingCopyService();

@@ -11,7 +11,7 @@
 import * as assert from 'assert';
 import { formatCellDuration } from 'vs/workbench/contrib/notebook/browser/contrib/cellStatusBar/executionStatusBarItemController';
 
-suite('notebookBrowser', () => {
+describe('notebookBrowser', () => {
 	test('formatCellDuration', function () {
 		assert.strictEqual(formatCellDuration(0, false), '0.0s');
 		assert.strictEqual(formatCellDuration(0), '0ms');

@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { decodeKeybinding, createSimpleKeybinding, KeyCodeChord } from 'vs/base/common/keybindings';
+import { createSimpleKeybinding, decodeKeybinding, KeyCodeChord } from 'vs/base/common/keybindings';
 import { KeyChord, KeyCode, KeyMod } from 'vs/base/common/keyCodes';
 import { OS } from 'vs/base/common/platform';
 import { ContextKeyExpr, ContextKeyExpression, IContext } from 'vs/platform/contextkey/common/contextkey';
@@ -21,7 +21,7 @@ function createContext(ctx: any) {
 	};
 }
 
-suite('KeybindingResolver', () => {
+describe('KeybindingResolver', () => {
 
 	function kbItem(keybinding: number | number[], command: string, commandArgs: any, when: ContextKeyExpression | undefined, isDefault: boolean): ResolvedKeybindingItem {
 		const resolvedKeybinding = createUSLayoutResolvedKeybinding(keybinding, OS);
@@ -73,7 +73,7 @@ suite('KeybindingResolver', () => {
 		assert.strictEqual(r.commandArgs, commandArgs);
 	});
 
-	suite('handle keybinding removals', () => {
+	describe('handle keybinding removals', () => {
 
 		test('simple 1', () => {
 			const defaults = [
@@ -313,7 +313,7 @@ suite('KeybindingResolver', () => {
 		});
 	});
 
-	suite('resolve command', () => {
+	describe('resolve command', () => {
 
 		function _kbItem(keybinding: number | number[], command: string, when: ContextKeyExpression | undefined): ResolvedKeybindingItem {
 			return kbItem(keybinding, command, null, when, true);

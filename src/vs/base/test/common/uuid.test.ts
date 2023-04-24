@@ -5,7 +5,7 @@
 import * as assert from 'assert';
 import * as uuid from 'vs/base/common/uuid';
 
-suite('UUID', () => {
+describe('UUID', () => {
 	test('generation', () => {
 		const asHex = uuid.generateUuid();
 		assert.strictEqual(asHex.length, 36);

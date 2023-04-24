@@ -29,7 +29,7 @@ class CellSequence implements ISequence {
 }
 
 
-suite('NotebookCommon', () => {
+describe('NotebookCommon', () => {
 	const configurationService = new TestConfigurationService();
 
 	test('diff different source', async () => {

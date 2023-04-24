@@ -12,17 +12,17 @@ import { Promises } from 'vs/base/node/pfs';
 import { extract } from 'vs/base/node/zip';
 import { getRandomTestPath } from 'vs/base/test/node/testUtils';
 
-suite('Zip', () => {
+describe('Zip', () => {
 
 	let testDir: string;
 
-	setup(() => {
+	beforeEach(() => {
 		testDir = getRandomTestPath(tmpdir(), 'vsctests', 'zip');
 
 		return Promises.mkdir(testDir, { recursive: true });
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		return Promises.rm(testDir);
 	});
 

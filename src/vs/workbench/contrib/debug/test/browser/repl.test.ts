@@ -5,24 +5,24 @@
 
 
 import * as assert from 'assert';
-import severity from 'vs/base/common/severity';
-import { DebugModel, StackFrame, Thread } from 'vs/workbench/contrib/debug/common/debugModel';
-import { createMockDebugModel } from 'vs/workbench/contrib/debug/test/browser/mockDebugModel';
-import { ReplOutputElement, RawObjectReplElement, ReplEvaluationInput, ReplModel, ReplEvaluationResult, ReplGroup, ReplVariableElement } from 'vs/workbench/contrib/debug/common/replModel';
-import { RawDebugSession } from 'vs/workbench/contrib/debug/browser/rawDebugSession';
-import { timeout } from 'vs/base/common/async';
-import { createTestSession } from 'vs/workbench/contrib/debug/test/browser/callStack.test';
-import { ReplFilter } from 'vs/workbench/contrib/debug/browser/replFilter';
 import { TreeVisibility } from 'vs/base/browser/ui/tree/tree';
+import { timeout } from 'vs/base/common/async';
+import severity from 'vs/base/common/severity';
 import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
+import { RawDebugSession } from 'vs/workbench/contrib/debug/browser/rawDebugSession';
+import { ReplFilter } from 'vs/workbench/contrib/debug/browser/replFilter';
+import { DebugModel, StackFrame, Thread } from 'vs/workbench/contrib/debug/common/debugModel';
+import { RawObjectReplElement, ReplEvaluationInput, ReplEvaluationResult, ReplGroup, ReplModel, ReplOutputElement, ReplVariableElement } from 'vs/workbench/contrib/debug/common/replModel';
+import { createTestSession } from 'vs/workbench/contrib/debug/test/browser/callStack.test';
+import { createMockDebugModel } from 'vs/workbench/contrib/debug/test/browser/mockDebugModel';
 import { MockDebugAdapter, MockRawSession } from 'vs/workbench/contrib/debug/test/common/mockDebug';
 
-suite('Debug - REPL', () => {
+describe('Debug - REPL', () => {
 	let model: DebugModel;
 	let rawSession: MockRawSession;
 	const configurationService = new TestConfigurationService({ debug: { console: { collapseIdenticalLines: true } } });
 
-	setup(() => {
+	beforeEach(() => {
 		model = createMockDebugModel();
 		rawSession = new MockRawSession();
 	});

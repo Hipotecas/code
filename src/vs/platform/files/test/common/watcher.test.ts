@@ -8,8 +8,8 @@ import { Emitter, Event } from 'vs/base/common/event';
 import { isLinux, isWindows } from 'vs/base/common/platform';
 import { isEqual } from 'vs/base/common/resources';
 import { URI as uri } from 'vs/base/common/uri';
-import { FileChangesEvent, FileChangeType, IFileChange } from 'vs/platform/files/common/files';
-import { IDiskFileChange, coalesceEvents, toFileChanges, parseWatcherPatterns } from 'vs/platform/files/common/watcher';
+import { FileChangeType, FileChangesEvent, IFileChange } from 'vs/platform/files/common/files';
+import { IDiskFileChange, coalesceEvents, parseWatcherPatterns, toFileChanges } from 'vs/platform/files/common/watcher';
 
 class TestFileWatcher {
 	private readonly _onDidFilesChange: Emitter<{ raw: IFileChange[]; event: FileChangesEvent }>;
@@ -48,7 +48,7 @@ enum Path {
 	UNC
 }
 
-suite('Watcher', () => {
+describe('Watcher', () => {
 
 	(isWindows ? test.skip : test)('parseWatcherPatterns - posix', () => {
 		const path = '/users/data/src';
@@ -105,7 +105,7 @@ suite('Watcher', () => {
 	});
 });
 
-suite('Watcher Events Normalizer', () => {
+describe('Watcher Events Normalizer', () => {
 
 	test('simple add/update/delete', done => {
 		const watch = new TestFileWatcher();

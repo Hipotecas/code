@@ -18,17 +18,17 @@ import { NotebookFileWorkingCopyModel } from 'vs/workbench/contrib/notebook/comm
 import { INotebookSerializer, INotebookService, SimpleNotebookProviderInfo } from 'vs/workbench/contrib/notebook/common/notebookService';
 import { setupInstantiationService } from 'vs/workbench/contrib/notebook/test/browser/testNotebookEditor';
 
-suite('NotebookFileWorkingCopyModel', function () {
+describe('NotebookFileWorkingCopyModel', function () {
 
 	let disposables: DisposableStore;
 	let instantiationService: TestInstantiationService;
 
-	suiteSetup(() => {
+	describeSetup(() => {
 		disposables = new DisposableStore();
 		instantiationService = setupInstantiationService(disposables);
 	});
 
-	suiteTeardown(() => disposables.dispose());
+	describeTeardown(() => disposables.dispose());
 
 	test('no transient output is send to serializer', async function () {
 

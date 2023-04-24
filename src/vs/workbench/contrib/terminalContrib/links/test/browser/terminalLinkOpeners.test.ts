@@ -8,24 +8,24 @@ import { Schemas } from 'vs/base/common/network';
 import { OperatingSystem } from 'vs/base/common/platform';
 import { URI } from 'vs/base/common/uri';
 import { ITextEditorSelection, ITextResourceEditorInput } from 'vs/platform/editor/common/editor';
-import { IFileService, IFileStatWithPartialMetadata } from 'vs/platform/files/common/files';
 import { FileService } from 'vs/platform/files/common/fileService';
+import { IFileService, IFileStatWithPartialMetadata } from 'vs/platform/files/common/files';
 import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
 import { ILogService, NullLogService } from 'vs/platform/log/common/log';
 import { IQuickInputService } from 'vs/platform/quickinput/common/quickInput';
-import { IWorkspaceContextService } from 'vs/platform/workspace/common/workspace';
+import { ITerminalCommand, IXtermMarker, TerminalCapability } from 'vs/platform/terminal/common/capabilities/capabilities';
 import { CommandDetectionCapability } from 'vs/platform/terminal/common/capabilities/commandDetectionCapability';
+import { TerminalCapabilityStore } from 'vs/platform/terminal/common/capabilities/terminalCapabilityStore';
+import { ITerminalOutputMatcher } from 'vs/platform/terminal/common/terminal';
+import { IWorkspaceContextService } from 'vs/platform/workspace/common/workspace';
 import { TerminalBuiltinLinkType } from 'vs/workbench/contrib/terminalContrib/links/browser/links';
 import { TerminalLocalFileLinkOpener, TerminalLocalFolderInWorkspaceLinkOpener, TerminalSearchLinkOpener } from 'vs/workbench/contrib/terminalContrib/links/browser/terminalLinkOpeners';
-import { TerminalCapability, ITerminalCommand, IXtermMarker } from 'vs/platform/terminal/common/capabilities/capabilities';
-import { TerminalCapabilityStore } from 'vs/platform/terminal/common/capabilities/terminalCapabilityStore';
 import { IEditorService } from 'vs/workbench/services/editor/common/editorService';
 import { IWorkbenchEnvironmentService } from 'vs/workbench/services/environment/common/environmentService';
-import { TestContextService } from 'vs/workbench/test/common/workbenchTestServices';
-import { Terminal } from 'xterm';
 import { IFileQuery, ISearchComplete, ISearchService } from 'vs/workbench/services/search/common/search';
 import { SearchService } from 'vs/workbench/services/search/common/searchService';
-import { ITerminalOutputMatcher } from 'vs/platform/terminal/common/terminal';
+import { TestContextService } from 'vs/workbench/test/common/workbenchTestServices';
+import { Terminal } from 'xterm';
 
 interface ITerminalLinkActivationResult {
 	source: 'editor' | 'search';
@@ -68,14 +68,14 @@ class TestTerminalSearchLinkOpener extends TerminalSearchLinkOpener {
 	}
 }
 
-suite('Workbench - TerminalLinkOpeners', () => {
+describe('Workbench - TerminalLinkOpeners', () => {
 	let instantiationService: TestInstantiationService;
 	let fileService: TestFileService;
 	let searchService: TestSearchService;
 	let activationResult: ITerminalLinkActivationResult | undefined;
 	let xterm: Terminal;
 
-	setup(() => {
+	beforeEach(() => {
 		instantiationService = new TestInstantiationService();
 		fileService = new TestFileService(new NullLogService());
 		searchService = new TestSearchService(null!, null!, null!, null!, null!, null!, null!);
@@ -110,13 +110,13 @@ suite('Workbench - TerminalLinkOpeners', () => {
 		xterm = new Terminal({ allowProposedApi: true });
 	});
 
-	suite('TerminalSearchLinkOpener', () => {
+	describe('TerminalSearchLinkOpener', () => {
 		let opener: TestTerminalSearchLinkOpener;
 		let capabilities: TerminalCapabilityStore;
 		let commandDetection: TestCommandDetectionCapability;
 		let localFileOpener: TerminalLocalFileLinkOpener;
 
-		setup(() => {
+		beforeEach(() => {
 			capabilities = new TerminalCapabilityStore();
 			commandDetection = instantiationService.createInstance(TestCommandDetectionCapability, xterm);
 			capabilities.add(TerminalCapability.CommandDetection, commandDetection);
@@ -248,8 +248,8 @@ suite('Workbench - TerminalLinkOpeners', () => {
 			});
 		});
 
-		suite('macOS/Linux', () => {
-			setup(() => {
+		describe('macOS/Linux', () => {
+			beforeEach(() => {
 				localFileOpener = instantiationService.createInstance(TerminalLocalFileLinkOpener);
 				const localFolderOpener = instantiationService.createInstance(TerminalLocalFolderInWorkspaceLinkOpener);
 				opener = instantiationService.createInstance(TestTerminalSearchLinkOpener, capabilities, '', localFileOpener, localFolderOpener, () => OperatingSystem.Linux);
@@ -329,8 +329,8 @@ suite('Workbench - TerminalLinkOpeners', () => {
 			});
 		});
 
-		suite('Windows', () => {
-			setup(() => {
+		describe('Windows', () => {
+			beforeEach(() => {
 				localFileOpener = instantiationService.createInstance(TerminalLocalFileLinkOpener);
 				const localFolderOpener = instantiationService.createInstance(TerminalLocalFolderInWorkspaceLinkOpener);
 				opener = instantiationService.createInstance(TestTerminalSearchLinkOpener, capabilities, '', localFileOpener, localFolderOpener, () => OperatingSystem.Windows);

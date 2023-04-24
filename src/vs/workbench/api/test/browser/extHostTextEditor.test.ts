@@ -3,24 +3,24 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import * as assert from 'assert';
-import { TextEditorLineNumbersStyle, Range } from 'vs/workbench/api/common/extHostTypes';
-import { TextEditorCursorStyle, RenderLineNumbersType } from 'vs/editor/common/config/editorOptions';
-import { MainThreadTextEditorsShape, IResolvedTextEditorConfiguration, ITextEditorConfigurationUpdate } from 'vs/workbench/api/common/extHost.protocol';
-import { ExtHostTextEditorOptions, ExtHostTextEditor } from 'vs/workbench/api/common/extHostTextEditor';
-import { ExtHostDocumentData } from 'vs/workbench/api/common/extHostDocumentData';
+import { Lazy } from 'vs/base/common/lazy';
 import { URI } from 'vs/base/common/uri';
 import { mock } from 'vs/base/test/common/mock';
+import { RenderLineNumbersType, TextEditorCursorStyle } from 'vs/editor/common/config/editorOptions';
 import { NullLogService } from 'vs/platform/log/common/log';
-import { Lazy } from 'vs/base/common/lazy';
+import { IResolvedTextEditorConfiguration, ITextEditorConfigurationUpdate, MainThreadTextEditorsShape } from 'vs/workbench/api/common/extHost.protocol';
+import { ExtHostDocumentData } from 'vs/workbench/api/common/extHostDocumentData';
+import { ExtHostTextEditor, ExtHostTextEditorOptions } from 'vs/workbench/api/common/extHostTextEditor';
+import { Range, TextEditorLineNumbersStyle } from 'vs/workbench/api/common/extHostTypes';
 
-suite('ExtHostTextEditor', () => {
+describe('ExtHostTextEditor', () => {
 
 	let editor: ExtHostTextEditor;
 	const doc = new ExtHostDocumentData(undefined!, URI.file(''), [
 		'aaaa bbbb+cccc abc'
 	], '\n', 1, 'text', false);
 
-	setup(() => {
+	beforeEach(() => {
 		editor = new ExtHostTextEditor('fake', null!, new NullLogService(), new Lazy(() => doc.document), [], { cursorStyle: TextEditorCursorStyle.Line, insertSpaces: true, lineNumbers: 1, tabSize: 4, indentSize: 4 }, [], 1);
 	});
 
@@ -61,12 +61,12 @@ suite('ExtHostTextEditor', () => {
 	});
 });
 
-suite('ExtHostTextEditorOptions', () => {
+describe('ExtHostTextEditorOptions', () => {
 
 	let opts: ExtHostTextEditorOptions;
 	let calls: ITextEditorConfigurationUpdate[] = [];
 
-	setup(() => {
+	beforeEach(() => {
 		calls = [];
 		const mockProxy: MainThreadTextEditorsShape = {
 			dispose: undefined!,
@@ -97,7 +97,7 @@ suite('ExtHostTextEditorOptions', () => {
 		}, new NullLogService());
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		opts = null!;
 		calls = null!;
 	});

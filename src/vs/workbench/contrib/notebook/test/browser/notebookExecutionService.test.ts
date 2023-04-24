@@ -25,16 +25,16 @@ import { CellKind, IOutputDto, NotebookCellMetadata } from 'vs/workbench/contrib
 import { INotebookExecutionStateService } from 'vs/workbench/contrib/notebook/common/notebookExecutionStateService';
 import { INotebookKernel, INotebookKernelHistoryService, INotebookKernelService, INotebookTextModelLike } from 'vs/workbench/contrib/notebook/common/notebookKernelService';
 import { INotebookService } from 'vs/workbench/contrib/notebook/common/notebookService';
-import { setupInstantiationService, withTestNotebook as _withTestNotebook } from 'vs/workbench/contrib/notebook/test/browser/testNotebookEditor';
+import { withTestNotebook as _withTestNotebook, setupInstantiationService } from 'vs/workbench/contrib/notebook/test/browser/testNotebookEditor';
 
-suite('NotebookExecutionService', () => {
+describe('NotebookExecutionService', () => {
 
 	let instantiationService: TestInstantiationService;
 	let contextKeyService: IContextKeyService;
 	let kernelService: INotebookKernelService;
 	let disposables: DisposableStore;
 
-	setup(function () {
+	beforeEach(function () {
 
 		disposables = new DisposableStore();
 
@@ -74,7 +74,7 @@ suite('NotebookExecutionService', () => {
 		contextKeyService = instantiationService.get(IContextKeyService);
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		disposables.dispose();
 	});
 

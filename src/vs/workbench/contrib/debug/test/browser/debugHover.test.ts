@@ -12,7 +12,7 @@ import { Source } from 'vs/workbench/contrib/debug/common/debugSource';
 import { createTestSession } from 'vs/workbench/contrib/debug/test/browser/callStack.test';
 import { createMockDebugModel, mockUriIdentityService } from 'vs/workbench/contrib/debug/test/browser/mockDebugModel';
 
-suite('Debug - Hover', () => {
+describe('Debug - Hover', () => {
 	test('find expression in stack frame', async () => {
 		const model = createMockDebugModel();
 		const session = createTestSession(model);

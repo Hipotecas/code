@@ -12,7 +12,7 @@ import { TextAreaState } from 'vs/editor/browser/controller/textAreaState';
 import { Position } from 'vs/editor/common/core/position';
 import { IRecorded, IRecordedEvent, IRecordedTextareaState } from 'vs/editor/test/browser/controller/imeRecordedTypes';
 
-suite('TextAreaInput', () => {
+describe('TextAreaInput', () => {
 
 	interface OutgoingType {
 		type: 'type';

@@ -15,7 +15,7 @@ const checkNot = (one: any, other: any, msg: string) => {
 	assert(!objects.equals(other, one), '[reverse] ' + msg);
 };
 
-suite('Objects', () => {
+describe('Objects', () => {
 
 	test('equals', () => {
 		check(null, null, 'null');

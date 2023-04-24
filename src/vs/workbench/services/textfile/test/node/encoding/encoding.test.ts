@@ -3,14 +3,14 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
+import * as iconv from '@vscode/iconv-lite-umd';
 import * as assert from 'assert';
 import * as fs from 'fs';
-import * as encoding from 'vs/workbench/services/textfile/common/encoding';
-import * as streams from 'vs/base/common/stream';
-import * as iconv from '@vscode/iconv-lite-umd';
-import { newWriteableBufferStream, VSBuffer, VSBufferReadableStream, streamToBufferReadableStream } from 'vs/base/common/buffer';
-import { splitLines } from 'vs/base/common/strings';
+import { VSBuffer, VSBufferReadableStream, newWriteableBufferStream, streamToBufferReadableStream } from 'vs/base/common/buffer';
 import { FileAccess } from 'vs/base/common/network';
+import * as streams from 'vs/base/common/stream';
+import { splitLines } from 'vs/base/common/strings';
+import * as encoding from 'vs/workbench/services/textfile/common/encoding';
 
 export async function detectEncodingByBOM(file: string): Promise<typeof encoding.UTF16be | typeof encoding.UTF16le | typeof encoding.UTF8_with_bom | null> {
 	try {
@@ -76,7 +76,7 @@ function readExactlyByFile(file: string, totalBytes: number): Promise<ReadResult
 	});
 }
 
-suite('Encoding', () => {
+describe('Encoding', () => {
 
 	test('detectBOM does not return error for non existing file', async () => {
 		const file = FileAccess.asFileUri('vs/workbench/services/textfile/test/node/encoding/fixtures/not-exist.css').fsPath;

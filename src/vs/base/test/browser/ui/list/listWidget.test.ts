@@ -9,7 +9,7 @@ import { List } from 'vs/base/browser/ui/list/listWidget';
 import { range } from 'vs/base/common/arrays';
 import { timeout } from 'vs/base/common/async';
 
-suite('ListWidget', function () {
+describe('ListWidget', function () {
 	test('Page up and down', async function () {
 		const element = document.createElement('div');
 		element.style.height = '200px';

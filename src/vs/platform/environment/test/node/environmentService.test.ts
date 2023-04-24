@@ -9,7 +9,7 @@ import { OPTIONS, parseArgs } from 'vs/platform/environment/node/argv';
 import { NativeEnvironmentService } from 'vs/platform/environment/node/environmentService';
 import product from 'vs/platform/product/common/product';
 
-suite('EnvironmentService', () => {
+describe('EnvironmentService', () => {
 
 	test('parseExtensionHostPort when built', () => {
 		const parse = (a: string[]) => parseExtensionHostDebugPort(parseArgs(a, OPTIONS), true);

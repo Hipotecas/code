@@ -43,7 +43,7 @@ function assertDiff(originalLines: string[], modifiedLines: string[], expectedCh
 	});
 
 	assert.deepStrictEqual(actual, expectedChanges);
-
+  expect(actual).toStrictEqual(expectedChanges)
 	if (!shouldIgnoreTrimWhitespace) {
 		// The diffs should describe how to apply edits to the original text model to get to the modified text model.
 
@@ -55,6 +55,7 @@ function assertDiff(originalLines: string[], modifiedLines: string[], expectedCh
 			const originalTextModel = createTextModel(originalLines.join('\n'));
 			originalTextModel.applyEdits(changes.map(c => getLineEdit(c, modifiedTextModel)));
 			assert.deepStrictEqual(originalTextModel.getValue(), expectedValue);
+      expect(originalTextModel.getValue()).toStrictEqual(expectedValue)
 			originalTextModel.dispose();
 		}
 
@@ -63,6 +64,7 @@ function assertDiff(originalLines: string[], modifiedLines: string[], expectedCh
 			const originalTextModel = createTextModel(originalLines.join('\n'));
 			originalTextModel.applyEdits(changes.flatMap(c => getCharEdits(c, modifiedTextModel)));
 			assert.deepStrictEqual(originalTextModel.getValue(), expectedValue);
+      expect(originalTextModel.getValue()).toStrictEqual(expectedValue)
 			originalTextModel.dispose();
 		}
 
@@ -221,7 +223,7 @@ function createCharChange(
 	};
 }
 
-suite('Editor Diff - DiffComputer', () => {
+describe('Editor Diff - DiffComputer', () => {
 
 	// ---- insertions
 
@@ -568,7 +570,7 @@ suite('Editor Diff - DiffComputer', () => {
 
 	test('pretty diff 1', () => {
 		const original = [
-			'suite(function () {',
+			'describe(function () {',
 			'	test1() {',
 			'		assert.ok(true);',
 			'	}',
@@ -581,7 +583,7 @@ suite('Editor Diff - DiffComputer', () => {
 		];
 		const modified = [
 			'// An insertion',
-			'suite(function () {',
+			'describe(function () {',
 			'	test1() {',
 			'		assert.ok(true);',
 			'	}',

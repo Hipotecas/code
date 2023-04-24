@@ -13,16 +13,16 @@ import { IContextMenuService } from 'vs/platform/contextview/browser/contextView
 import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
 import { ILogService, NullLogService } from 'vs/platform/log/common/log';
 import { IStorageService } from 'vs/platform/storage/common/storage';
+import { ITerminalCapabilityImplMap, ITerminalCapabilityStore, TerminalCapability } from 'vs/platform/terminal/common/capabilities/capabilities';
 import { IThemeService } from 'vs/platform/theme/common/themeService';
 import { TestThemeService } from 'vs/platform/theme/test/common/testThemeService';
 import { IViewDescriptorService } from 'vs/workbench/common/views';
-import { IDetectedLinks, TerminalLinkManager } from 'vs/workbench/contrib/terminalContrib/links/browser/terminalLinkManager';
-import { ITerminalCapabilityImplMap, ITerminalCapabilityStore, TerminalCapability } from 'vs/platform/terminal/common/capabilities/capabilities';
 import { ITerminalConfiguration, ITerminalProcessManager } from 'vs/workbench/contrib/terminal/common/terminal';
 import { TestViewDescriptorService } from 'vs/workbench/contrib/terminal/test/browser/xterm/xtermTerminal.test';
+import { IDetectedLinks, TerminalLinkManager } from 'vs/workbench/contrib/terminalContrib/links/browser/terminalLinkManager';
+import { TerminalLinkResolver } from 'vs/workbench/contrib/terminalContrib/links/browser/terminalLinkResolver';
 import { TestStorageService } from 'vs/workbench/test/common/workbenchTestServices';
 import { ILink, Terminal } from 'xterm';
-import { TerminalLinkResolver } from 'vs/workbench/contrib/terminalContrib/links/browser/terminalLinkResolver';
 
 const defaultTerminalConfig: Partial<ITerminalConfiguration> = {
 	fontFamily: 'monospace',
@@ -53,7 +53,7 @@ class TestLinkManager extends TerminalLinkManager {
 	}
 }
 
-suite('TerminalLinkManager', () => {
+describe('TerminalLinkManager', () => {
 	let instantiationService: TestInstantiationService;
 	let configurationService: TestConfigurationService;
 	let themeService: TestThemeService;
@@ -61,7 +61,7 @@ suite('TerminalLinkManager', () => {
 	let xterm: Terminal;
 	let linkManager: TestLinkManager;
 
-	setup(() => {
+	beforeEach(() => {
 		configurationService = new TestConfigurationService({
 			editor: {
 				fastScrollSensitivity: 2,
@@ -94,7 +94,7 @@ suite('TerminalLinkManager', () => {
 		} as Partial<ITerminalCapabilityStore> as any, instantiationService.createInstance(TerminalLinkResolver));
 	});
 
-	suite('getLinks and open recent link', () => {
+	describe('getLinks and open recent link', () => {
 		test('should return no links', async () => {
 			const links = await linkManager.getLinks();
 			equals(links.webLinks, []);

@@ -22,10 +22,10 @@ import { createTextModel } from 'vs/editor/test/common/testTextModel';
 import { IAudioCueService } from 'vs/platform/audioCues/browser/audioCueService';
 import { ServiceCollection } from 'vs/platform/instantiation/common/serviceCollection';
 
-suite('Inline Completions', () => {
+describe('Inline Completions', () => {
 	ensureNoDisposablesAreLeakedInTestSuite();
 
-	suite('inlineCompletionToGhostText', () => {
+	describe('inlineCompletionToGhostText', () => {
 
 		function getOutput(text: string, suggestion: string): unknown {
 			const rangeStartOffset = text.indexOf('[');

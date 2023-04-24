@@ -85,7 +85,7 @@ export class TestDecorationProvider {
 	}
 }
 
-suite('Folding Model', () => {
+describe('Folding Model', () => {
 	function r(startLineNumber: number, endLineNumber: number, isCollapsed: boolean = false): ExpectedRegion {
 		return { startLineNumber, endLineNumber, isCollapsed };
 	}

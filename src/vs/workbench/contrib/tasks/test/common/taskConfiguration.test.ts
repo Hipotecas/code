@@ -2,24 +2,24 @@
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-import { URI } from 'vs/base/common/uri';
 import * as assert from 'assert';
 import Severity from 'vs/base/common/severity';
+import { URI } from 'vs/base/common/uri';
 import * as UUID from 'vs/base/common/uuid';
 
-import * as Types from 'vs/base/common/types';
-import * as Platform from 'vs/base/common/platform';
 import { ValidationStatus } from 'vs/base/common/parsers';
-import { ProblemMatcher, FileLocationKind, IProblemPattern, ApplyToKind, INamedProblemMatcher } from 'vs/workbench/contrib/tasks/common/problemMatcher';
-import { WorkspaceFolder, IWorkspace } from 'vs/platform/workspace/common/workspace';
+import * as Platform from 'vs/base/common/platform';
+import * as Types from 'vs/base/common/types';
+import { IWorkspace, WorkspaceFolder } from 'vs/platform/workspace/common/workspace';
+import { ApplyToKind, FileLocationKind, INamedProblemMatcher, IProblemPattern, ProblemMatcher } from 'vs/workbench/contrib/tasks/common/problemMatcher';
 
-import * as Tasks from 'vs/workbench/contrib/tasks/common/tasks';
-import { parse, IParseResult, IProblemReporter, IExternalTaskRunnerConfiguration, ICustomTask, TaskConfigSource, IParseContext, ProblemMatcherConverter, IGlobals, ITaskParseResult, UUIDMap, TaskParser } from 'vs/workbench/contrib/tasks/common/taskConfiguration';
-import { MockContextKeyService } from 'vs/platform/keybinding/test/common/mockKeybindingService';
 import { IContext } from 'vs/platform/contextkey/common/contextkey';
-import { Workspace } from 'vs/platform/workspace/test/common/testWorkspace';
 import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
+import { MockContextKeyService } from 'vs/platform/keybinding/test/common/mockKeybindingService';
+import { Workspace } from 'vs/platform/workspace/test/common/testWorkspace';
+import { ICustomTask, IExternalTaskRunnerConfiguration, IGlobals, IParseContext, IParseResult, IProblemReporter, ITaskParseResult, ProblemMatcherConverter, TaskConfigSource, TaskParser, UUIDMap, parse } from 'vs/workbench/contrib/tasks/common/taskConfiguration';
 import { ITaskDefinitionRegistry } from 'vs/workbench/contrib/tasks/common/taskDefinitionRegistry';
+import * as Tasks from 'vs/workbench/contrib/tasks/common/tasks';
 
 const workspaceFolder: WorkspaceFolder = new WorkspaceFolder({
 	uri: URI.file('/workspace/folderOne'),
@@ -597,7 +597,7 @@ function assertProblemPattern(actual: IProblemPattern, expected: IProblemPattern
 	assert.strictEqual(actual.loop, expected.loop);
 }
 
-suite('Tasks version 0.1.0', () => {
+describe('Tasks version 0.1.0', () => {
 	test('tasks: all default', () => {
 		const builder = new ConfigurationBuilder();
 		builder.task('tsc', 'tsc').
@@ -1496,7 +1496,7 @@ suite('Tasks version 0.1.0', () => {
 	});
 });
 
-suite('Tasks version 2.0.0', () => {
+describe('Tasks version 2.0.0', () => {
 	test.skip('Build workspace task', () => {
 		const external: IExternalTaskRunnerConfiguration = {
 			version: '2.0.0',
@@ -1676,7 +1676,7 @@ suite('Tasks version 2.0.0', () => {
 	});
 });
 
-suite('Bugs / regression tests', () => {
+describe('Bugs / regression tests', () => {
 	(Platform.isLinux ? test.skip : test)('Bug 19548', () => {
 		const external: IExternalTaskRunnerConfiguration = {
 			version: '0.1.0',
@@ -1783,7 +1783,7 @@ class TestTaskDefinitionRegistry implements Partial<ITaskDefinitionRegistry> {
 	}
 }
 
-suite('Task configuration conversions', () => {
+describe('Task configuration conversions', () => {
 	const globals = {} as IGlobals;
 	const taskConfigSource = {} as TaskConfigSource;
 	const TaskDefinitionRegistry = new TestTaskDefinitionRegistry();
@@ -1791,7 +1791,7 @@ suite('Task configuration conversions', () => {
 	let parseContext: IParseContext;
 	let namedProblemMatcher: INamedProblemMatcher;
 	let problemReporter: ProblemReporter;
-	setup(() => {
+	beforeEach(() => {
 		instantiationService = new TestInstantiationService();
 		namedProblemMatcher = instantiationService.createInstance(TestNamedProblemMatcher);
 		namedProblemMatcher.name = 'real';
@@ -1802,7 +1802,7 @@ suite('Task configuration conversions', () => {
 		parseContext.namedProblemMatchers = { 'real': namedProblemMatcher };
 		parseContext.uuidMap = new UUIDMap();
 	});
-	suite('ProblemMatcherConverter.from', () => {
+	describe('ProblemMatcherConverter.from', () => {
 		test('returns [] and an error for an unknown problem matcher', () => {
 			const result = (ProblemMatcherConverter.from('$fake', parseContext));
 			assert.deepEqual(result.value, []);
@@ -1820,9 +1820,9 @@ suite('Task configuration conversions', () => {
 			assert.deepEqual(result.value, [{ "label": "real label", "applyTo": ApplyToKind.closedDocuments }]);
 		});
 	});
-	suite('TaskParser.from', () => {
-		suite('CustomTask', () => {
-			suite('incomplete config reports an appropriate error for missing', () => {
+	describe('TaskParser.from', () => {
+		describe('CustomTask', () => {
+			describe('incomplete config reports an appropriate error for missing', () => {
 				test('name', () => {
 					const result = TaskParser.from([{} as ICustomTask], globals, parseContext, taskConfigSource);
 					assertTaskParseResult(result, undefined, problemReporter, 'Error: a task must provide a label property');
@@ -1841,7 +1841,7 @@ suite('Task configuration conversions', () => {
 				assertTaskParseResult(result, { custom: expected }, problemReporter, undefined);
 			});
 		});
-		suite('ConfiguredTask', () => {
+		describe('ConfiguredTask', () => {
 			test('returns expected result', () => {
 				const expected = [{ taskName: 'task', command: 'echo test', type: 'any', label: 'task' }, { taskName: 'task 2', command: 'echo test', type: 'any', label: 'task 2' }];
 				TaskDefinitionRegistry.set({ extensionId: 'registered', taskType: 'any', properties: {} } as Tasks.ITaskDefinition);

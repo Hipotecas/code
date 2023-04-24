@@ -7,7 +7,7 @@ import * as assert from 'assert';
 import { prepareCommand } from 'vs/workbench/contrib/debug/node/terminals';
 
 
-suite('Debug - prepareCommand', () => {
+describe('Debug - prepareCommand', () => {
 	test('bash', () => {
 		assert.strictEqual(
 			prepareCommand('bash', ['{$} ('], false).trim(),

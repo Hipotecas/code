@@ -24,7 +24,7 @@ flakySuite('StateService', () => {
 	let logService: ILogService;
 	let diskFileSystemProvider: DiskFileSystemProvider;
 
-	setup(() => {
+	beforeEach(() => {
 		testDir = getRandomTestPath(tmpdir(), 'vsctests', 'statemainservice');
 
 		logService = new NullLogService();
@@ -36,7 +36,7 @@ flakySuite('StateService', () => {
 		return Promises.mkdir(testDir, { recursive: true });
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		fileService.dispose();
 		diskFileSystemProvider.dispose();
 

@@ -4,13 +4,13 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { IBuffer, Terminal } from 'xterm';
 import { SinonStub, stub, useFakeTimers } from 'sinon';
 import { Emitter } from 'vs/base/common/event';
+import { ITelemetryService } from 'vs/platform/telemetry/common/telemetry';
+import { TerminalConfigHelper } from 'vs/workbench/contrib/terminal/browser/terminalConfigHelper';
 import { CharPredictState, IPrediction, PredictionStats, TypeAheadAddon } from 'vs/workbench/contrib/terminal/browser/xterm/terminalTypeAheadAddon';
 import { DEFAULT_LOCAL_ECHO_EXCLUDE, IBeforeProcessDataEvent, ITerminalConfiguration, ITerminalProcessManager } from 'vs/workbench/contrib/terminal/common/terminal';
-import { TerminalConfigHelper } from 'vs/workbench/contrib/terminal/browser/terminalConfigHelper';
-import { ITelemetryService } from 'vs/platform/telemetry/common/telemetry';
+import { IBuffer, Terminal } from 'xterm';
 
 const CSI = `\x1b[`;
 
@@ -19,14 +19,14 @@ const enum CursorMoveDirection {
 	Forwards = 'C',
 }
 
-suite('Workbench - Terminal Typeahead', () => {
-	suite('PredictionStats', () => {
+describe('Workbench - Terminal Typeahead', () => {
+	describe('PredictionStats', () => {
 		let stats: PredictionStats;
 		const add = new Emitter<IPrediction>();
 		const succeed = new Emitter<IPrediction>();
 		const fail = new Emitter<IPrediction>();
 
-		setup(() => {
+		beforeEach(() => {
 			stats = new PredictionStats({
 				onPredictionAdded: add.event,
 				onPredictionSucceeded: succeed.event,
@@ -73,7 +73,7 @@ suite('Workbench - Terminal Typeahead', () => {
 		});
 	});
 
-	suite('timeline', () => {
+	describe('timeline', () => {
 		const onBeforeProcessData = new Emitter<IBeforeProcessDataEvent>();
 		const onConfigChanged = new Emitter<void>();
 		let publicLog: SinonStub;
@@ -94,7 +94,7 @@ suite('Workbench - Terminal Typeahead', () => {
 			assert.strictEqual(JSON.stringify(evt.data), JSON.stringify(output));
 		};
 
-		setup(() => {
+		beforeEach(() => {
 			config = upcastPartial<ITerminalConfiguration>({
 				localEchoStyle: 'italic',
 				localEchoLatencyThreshold: 0,
@@ -109,7 +109,7 @@ suite('Workbench - Terminal Typeahead', () => {
 			addon.unlockMakingPredictions();
 		});
 
-		teardown(() => {
+		afterEach(() => {
 			addon.dispose();
 		});
 

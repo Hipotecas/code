@@ -4,36 +4,36 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { URI } from 'vs/base/common/uri';
-import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
-import { workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
-import { IDialogService, IFileDialogService, IOpenDialogOptions, ISaveDialogOptions } from 'vs/platform/dialogs/common/dialogs';
+import { DisposableStore } from 'vs/base/common/lifecycle';
 import { Schemas } from 'vs/base/common/network';
-import { BrowserWorkspaceEditingService } from 'vs/workbench/services/workspaces/browser/workspaceEditingService';
-import { IWorkspaceEditingService } from 'vs/workbench/services/workspaces/common/workspaceEditing';
-import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
-import { IConfigurationService } from 'vs/platform/configuration/common/configuration';
-import { IPathService } from 'vs/workbench/services/path/common/pathService';
-import { FileDialogService } from 'vs/workbench/services/dialogs/electron-sandbox/fileDialogService';
-import { IWorkbenchEnvironmentService } from 'vs/workbench/services/environment/common/environmentService';
+import { URI } from 'vs/base/common/uri';
 import { mock } from 'vs/base/test/common/mock';
-import { BrowserWorkbenchEnvironmentService } from 'vs/workbench/services/environment/browser/environmentService';
+import { ICodeEditorService } from 'vs/editor/browser/services/codeEditorService';
 import { ILanguageService } from 'vs/editor/common/languages/language';
+import { ICommandService } from 'vs/platform/commands/common/commands';
+import { IConfigurationService } from 'vs/platform/configuration/common/configuration';
+import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
+import { IDialogService, IFileDialogService, IOpenDialogOptions, ISaveDialogOptions } from 'vs/platform/dialogs/common/dialogs';
 import { IFileService } from 'vs/platform/files/common/files';
 import { IInstantiationService } from 'vs/platform/instantiation/common/instantiation';
+import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
 import { ILabelService } from 'vs/platform/label/common/label';
+import { ILogService } from 'vs/platform/log/common/log';
 import { INativeHostService } from 'vs/platform/native/common/native';
 import { IOpenerService } from 'vs/platform/opener/common/opener';
 import { IWorkspaceContextService } from 'vs/platform/workspace/common/workspace';
 import { IWorkspacesService } from 'vs/platform/workspaces/common/workspaces';
+import { ISimpleFileDialog } from 'vs/workbench/services/dialogs/browser/simpleFileDialog';
+import { FileDialogService } from 'vs/workbench/services/dialogs/electron-sandbox/fileDialogService';
+import { IEditorService } from 'vs/workbench/services/editor/common/editorService';
+import { BrowserWorkbenchEnvironmentService } from 'vs/workbench/services/environment/browser/environmentService';
+import { IWorkbenchEnvironmentService } from 'vs/workbench/services/environment/common/environmentService';
 import { IHistoryService } from 'vs/workbench/services/history/common/history';
 import { IHostService } from 'vs/workbench/services/host/browser/host';
-import { ISimpleFileDialog } from 'vs/workbench/services/dialogs/browser/simpleFileDialog';
-import { ICommandService } from 'vs/platform/commands/common/commands';
-import { ICodeEditorService } from 'vs/editor/browser/services/codeEditorService';
-import { IEditorService } from 'vs/workbench/services/editor/common/editorService';
-import { DisposableStore } from 'vs/base/common/lifecycle';
-import { ILogService } from 'vs/platform/log/common/log';
+import { IPathService } from 'vs/workbench/services/path/common/pathService';
+import { BrowserWorkspaceEditingService } from 'vs/workbench/services/workspaces/browser/workspaceEditingService';
+import { IWorkspaceEditingService } from 'vs/workbench/services/workspaces/common/workspaceEditing';
+import { workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
 
 class TestFileDialogService extends FileDialogService {
 	constructor(
@@ -70,13 +70,13 @@ class TestFileDialogService extends FileDialogService {
 	}
 }
 
-suite('FileDialogService', function () {
+describe('FileDialogService', function () {
 
 	let disposables: DisposableStore;
 	let instantiationService: TestInstantiationService;
 	const testFile: URI = URI.file('/test/file');
 
-	setup(async function () {
+	beforeEach(async function () {
 		disposables = new DisposableStore();
 		instantiationService = <TestInstantiationService>workbenchInstantiationService(undefined, disposables);
 		const configurationService = new TestConfigurationService();
@@ -85,7 +85,7 @@ suite('FileDialogService', function () {
 
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		disposables.dispose();
 	});
 

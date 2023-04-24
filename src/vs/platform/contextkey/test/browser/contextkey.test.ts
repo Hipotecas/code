@@ -15,7 +15,7 @@ import { ServiceCollection } from 'vs/platform/instantiation/common/serviceColle
 import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
 import { ITelemetryService } from 'vs/platform/telemetry/common/telemetry';
 
-suite('ContextKeyService', () => {
+describe('ContextKeyService', () => {
 	test('updateParent', () => {
 		const root = new ContextKeyService(new TestConfigurationService());
 		const parent1 = root.createScoped(document.createElement('div'));

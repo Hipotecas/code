@@ -5,7 +5,7 @@
 
 import { deepStrictEqual, ok, strictEqual } from 'assert';
 import { OperatingSystem } from 'vs/base/common/platform';
-import { detectLinks, detectLinkSuffixes, getLinkSuffix, IParsedLink, removeLinkSuffix } from 'vs/workbench/contrib/terminalContrib/links/browser/terminalLinkParsing';
+import { IParsedLink, detectLinkSuffixes, detectLinks, getLinkSuffix, removeLinkSuffix } from 'vs/workbench/contrib/terminalContrib/links/browser/terminalLinkParsing';
 
 interface ITestLink {
 	link: string;
@@ -129,8 +129,8 @@ const testLinks: ITestLink[] = [
 ];
 const testLinksWithSuffix = testLinks.filter(e => !!e.suffix);
 
-suite('TerminalLinkParsing', () => {
-	suite('removeLinkSuffix', () => {
+describe('TerminalLinkParsing', () => {
+	describe('removeLinkSuffix', () => {
 		for (const testLink of testLinks) {
 			test('`' + testLink.link + '`', () => {
 				deepStrictEqual(
@@ -140,7 +140,7 @@ suite('TerminalLinkParsing', () => {
 			});
 		}
 	});
-	suite('getLinkSuffix', () => {
+	describe('getLinkSuffix', () => {
 		for (const testLink of testLinks) {
 			test('`' + testLink.link + '`', () => {
 				deepStrictEqual(
@@ -157,7 +157,7 @@ suite('TerminalLinkParsing', () => {
 			});
 		}
 	});
-	suite('detectLinkSuffixes', () => {
+	describe('detectLinkSuffixes', () => {
 		for (const testLink of testLinks) {
 			test('`' + testLink.link + '`', () => {
 				deepStrictEqual(
@@ -206,7 +206,7 @@ suite('TerminalLinkParsing', () => {
 			);
 		});
 	});
-	suite('detectLinks', () => {
+	describe('detectLinks', () => {
 		test('foo(1, 2) bar[3, 4] "baz" on line 5', () => {
 			deepStrictEqual(
 				detectLinks('foo(1, 2) bar[3, 4] "baz" on line 5', OperatingSystem.Linux),
@@ -350,7 +350,7 @@ suite('TerminalLinkParsing', () => {
 			);
 		});
 
-		suite('"|"', () => {
+		describe('"|"', () => {
 			test('should exclude pipe characters from link paths', () => {
 				deepStrictEqual(
 					detectLinks('|C:\\Github\\microsoft\\vscode|', OperatingSystem.Windows),
@@ -390,7 +390,7 @@ suite('TerminalLinkParsing', () => {
 			});
 		});
 
-		suite('"<>"', () => {
+		describe('"<>"', () => {
 			for (const os of operatingSystems) {
 				test(`should exclude bracket characters from link paths ${osLabel[os]}`, () => {
 					deepStrictEqual(
@@ -465,7 +465,7 @@ suite('TerminalLinkParsing', () => {
 			}
 		});
 
-		suite('should detect file names in git diffs', () => {
+		describe('should detect file names in git diffs', () => {
 			test('--- a/foo/bar', () => {
 				deepStrictEqual(
 					detectLinks('--- a/foo/bar', OperatingSystem.Linux),
@@ -521,7 +521,7 @@ suite('TerminalLinkParsing', () => {
 			});
 		});
 
-		suite('should detect 3 suffix links on a single line', () => {
+		describe('should detect 3 suffix links on a single line', () => {
 			for (let i = 0; i < testLinksWithSuffix.length - 2; i++) {
 				const link1 = testLinksWithSuffix[i];
 				const link2 = testLinksWithSuffix[i + 1];

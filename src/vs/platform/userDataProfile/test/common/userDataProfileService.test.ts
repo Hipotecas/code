@@ -4,17 +4,17 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { FileService } from 'vs/platform/files/common/fileService';
-import { NullLogService } from 'vs/platform/log/common/log';
-import { Schemas } from 'vs/base/common/network';
-import { URI } from 'vs/base/common/uri';
-import { joinPath } from 'vs/base/common/resources';
 import { DisposableStore } from 'vs/base/common/lifecycle';
-import { InMemoryFileSystemProvider } from 'vs/platform/files/common/inMemoryFilesystemProvider';
+import { Schemas } from 'vs/base/common/network';
+import { joinPath } from 'vs/base/common/resources';
+import { URI } from 'vs/base/common/uri';
 import { AbstractNativeEnvironmentService } from 'vs/platform/environment/common/environmentService';
+import { FileService } from 'vs/platform/files/common/fileService';
+import { InMemoryFileSystemProvider } from 'vs/platform/files/common/inMemoryFilesystemProvider';
+import { NullLogService } from 'vs/platform/log/common/log';
 import product from 'vs/platform/product/common/product';
-import { InMemoryUserDataProfilesService, UserDataProfilesService } from 'vs/platform/userDataProfile/common/userDataProfile';
 import { UriIdentityService } from 'vs/platform/uriIdentity/common/uriIdentityService';
+import { InMemoryUserDataProfilesService, UserDataProfilesService } from 'vs/platform/userDataProfile/common/userDataProfile';
 
 const ROOT = URI.file('tests').with({ scheme: 'vscode-tests' });
 
@@ -26,13 +26,13 @@ class TestEnvironmentService extends AbstractNativeEnvironmentService {
 	override get cacheHome() { return this.userRoamingDataHome; }
 }
 
-suite('UserDataProfileService (Common)', () => {
+describe('UserDataProfileService (Common)', () => {
 
 	const disposables = new DisposableStore();
 	let testObject: UserDataProfilesService;
 	let environmentService: TestEnvironmentService;
 
-	setup(async () => {
+	beforeEach(async () => {
 		const logService = new NullLogService();
 		const fileService = disposables.add(new FileService(logService));
 		const fileSystemProvider = disposables.add(new InMemoryFileSystemProvider());
@@ -43,7 +43,7 @@ suite('UserDataProfileService (Common)', () => {
 		testObject = new InMemoryUserDataProfilesService(environmentService, fileService, new UriIdentityService(fileService), logService);
 	});
 
-	teardown(() => disposables.clear());
+	afterEach(() => disposables.clear());
 
 	test('default profile', () => {
 		assert.strictEqual(testObject.defaultProfile.isDefault, true);

@@ -4,23 +4,23 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { IInstantiationService } from 'vs/platform/instantiation/common/instantiation';
-import { TextFileEditorModel } from 'vs/workbench/services/textfile/common/textFileEditorModel';
-import { EncodingMode, TextFileEditorModelState, snapshotToString, isTextFileEditorModel, ITextFileEditorModelSaveEvent } from 'vs/workbench/services/textfile/common/textfiles';
-import { createFileEditorInput, workbenchInstantiationService, TestServiceAccessor, TestReadonlyTextFileEditorModel, getLastResolvedFileStat } from 'vs/workbench/test/browser/workbenchTestServices';
-import { toResource } from 'vs/base/test/common/utils';
-import { TextFileEditorModelManager } from 'vs/workbench/services/textfile/common/textFileEditorModelManager';
-import { FileOperationResult, FileOperationError } from 'vs/platform/files/common/files';
 import { DeferredPromise, timeout } from 'vs/base/common/async';
-import { assertIsDefined } from 'vs/base/common/types';
-import { createTextBufferFactory } from 'vs/editor/common/model/textModel';
 import { DisposableStore } from 'vs/base/common/lifecycle';
-import { SaveReason, SaveSourceRegistry } from 'vs/workbench/common/editor';
-import { isEqual } from 'vs/base/common/resources';
-import { UTF16be } from 'vs/workbench/services/textfile/common/encoding';
 import { isWeb } from 'vs/base/common/platform';
+import { isEqual } from 'vs/base/common/resources';
+import { assertIsDefined } from 'vs/base/common/types';
+import { toResource } from 'vs/base/test/common/utils';
+import { createTextBufferFactory } from 'vs/editor/common/model/textModel';
+import { FileOperationError, FileOperationResult } from 'vs/platform/files/common/files';
+import { IInstantiationService } from 'vs/platform/instantiation/common/instantiation';
+import { SaveReason, SaveSourceRegistry } from 'vs/workbench/common/editor';
+import { UTF16be } from 'vs/workbench/services/textfile/common/encoding';
+import { TextFileEditorModel } from 'vs/workbench/services/textfile/common/textFileEditorModel';
+import { TextFileEditorModelManager } from 'vs/workbench/services/textfile/common/textFileEditorModelManager';
+import { EncodingMode, ITextFileEditorModelSaveEvent, TextFileEditorModelState, isTextFileEditorModel, snapshotToString } from 'vs/workbench/services/textfile/common/textfiles';
+import { TestReadonlyTextFileEditorModel, TestServiceAccessor, createFileEditorInput, getLastResolvedFileStat, workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
 
-suite('Files - TextFileEditorModel', () => {
+describe('Files - TextFileEditorModel', () => {
 
 	function getLastModifiedTime(model: TextFileEditorModel): number {
 		const stat = getLastResolvedFileStat(model);
@@ -33,14 +33,14 @@ suite('Files - TextFileEditorModel', () => {
 	let accessor: TestServiceAccessor;
 	let content: string;
 
-	setup(() => {
+	beforeEach(() => {
 		disposables = new DisposableStore();
 		instantiationService = workbenchInstantiationService(undefined, disposables);
 		accessor = instantiationService.createInstance(TestServiceAccessor);
 		content = accessor.fileService.getContent();
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		(<TextFileEditorModelManager>accessor.textFileService.files).dispose();
 		accessor.fileService.setContent(content);
 		disposables.dispose();

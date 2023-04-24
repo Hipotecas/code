@@ -37,7 +37,7 @@ function withSmartSplice(fn: (options: IIndexTreeModelSpliceOptions<number, any>
 	fn({ diffIdentityProvider });
 }
 
-suite('IndexTreeModel', () => {
+describe('IndexTreeModel', () => {
 
 	test('ctor', () => {
 		const list: ITreeNode<number>[] = [];
@@ -795,7 +795,7 @@ suite('IndexTreeModel', () => {
 		assert.deepStrictEqual(list.length, 10);
 	});
 
-	suite('getNodeLocation', () => {
+	describe('getNodeLocation', () => {
 
 		test('simple', () => {
 			const list: IIndexTreeNode<number>[] = [];

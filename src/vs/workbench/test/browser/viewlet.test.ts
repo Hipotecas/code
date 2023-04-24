@@ -4,12 +4,12 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { Registry } from 'vs/platform/registry/common/platform';
-import { PaneCompositeDescriptor, Extensions, PaneCompositeRegistry, PaneComposite } from 'vs/workbench/browser/panecomposite';
-import { isFunction } from 'vs/base/common/types';
 import { IBoundarySashes } from 'vs/base/browser/ui/sash/sash';
+import { isFunction } from 'vs/base/common/types';
+import { Registry } from 'vs/platform/registry/common/platform';
+import { Extensions, PaneComposite, PaneCompositeDescriptor, PaneCompositeRegistry } from 'vs/workbench/browser/panecomposite';
 
-suite('Viewlets', () => {
+describe('Viewlets', () => {
 
 	class TestViewlet extends PaneComposite {
 

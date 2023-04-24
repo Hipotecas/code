@@ -4,21 +4,21 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { URI } from 'vs/base/common/uri';
-import { IInstantiationService } from 'vs/platform/instantiation/common/instantiation';
-import { workbenchInstantiationService, TestServiceAccessor, TestWillShutdownEvent } from 'vs/workbench/test/browser/workbenchTestServices';
-import { StoredFileWorkingCopyManager, IStoredFileWorkingCopyManager, IStoredFileWorkingCopySaveEvent } from 'vs/workbench/services/workingCopy/common/storedFileWorkingCopyManager';
-import { IStoredFileWorkingCopy, IStoredFileWorkingCopyModel } from 'vs/workbench/services/workingCopy/common/storedFileWorkingCopy';
-import { bufferToStream, VSBuffer } from 'vs/base/common/buffer';
-import { FileChangesEvent, FileChangeType, FileOperationError, FileOperationResult } from 'vs/platform/files/common/files';
 import { timeout } from 'vs/base/common/async';
-import { TestStoredFileWorkingCopyModel, TestStoredFileWorkingCopyModelFactory } from 'vs/workbench/services/workingCopy/test/browser/storedFileWorkingCopy.test';
+import { VSBuffer, bufferToStream } from 'vs/base/common/buffer';
 import { CancellationToken } from 'vs/base/common/cancellation';
-import { InMemoryFileSystemProvider } from 'vs/platform/files/common/inMemoryFilesystemProvider';
 import { DisposableStore } from 'vs/base/common/lifecycle';
 import { isWeb } from 'vs/base/common/platform';
+import { URI } from 'vs/base/common/uri';
+import { FileChangeType, FileChangesEvent, FileOperationError, FileOperationResult } from 'vs/platform/files/common/files';
+import { InMemoryFileSystemProvider } from 'vs/platform/files/common/inMemoryFilesystemProvider';
+import { IInstantiationService } from 'vs/platform/instantiation/common/instantiation';
+import { IStoredFileWorkingCopy, IStoredFileWorkingCopyModel } from 'vs/workbench/services/workingCopy/common/storedFileWorkingCopy';
+import { IStoredFileWorkingCopyManager, IStoredFileWorkingCopySaveEvent, StoredFileWorkingCopyManager } from 'vs/workbench/services/workingCopy/common/storedFileWorkingCopyManager';
+import { TestStoredFileWorkingCopyModel, TestStoredFileWorkingCopyModelFactory } from 'vs/workbench/services/workingCopy/test/browser/storedFileWorkingCopy.test';
+import { TestServiceAccessor, TestWillShutdownEvent, workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
 
-suite('StoredFileWorkingCopyManager', () => {
+describe('StoredFileWorkingCopyManager', () => {
 
 	let disposables: DisposableStore;
 	let instantiationService: IInstantiationService;
@@ -26,7 +26,7 @@ suite('StoredFileWorkingCopyManager', () => {
 
 	let manager: IStoredFileWorkingCopyManager<TestStoredFileWorkingCopyModel>;
 
-	setup(() => {
+	beforeEach(() => {
 		disposables = new DisposableStore();
 		instantiationService = workbenchInstantiationService(undefined, disposables);
 		accessor = instantiationService.createInstance(TestServiceAccessor);
@@ -41,7 +41,7 @@ suite('StoredFileWorkingCopyManager', () => {
 		);
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		manager.dispose();
 		disposables.dispose();
 	});

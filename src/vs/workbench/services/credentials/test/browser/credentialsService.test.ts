@@ -9,19 +9,19 @@ import { BrowserCredentialsService } from 'vs/workbench/services/credentials/bro
 import { TestEnvironmentService, TestRemoteAgentService } from 'vs/workbench/test/browser/workbenchTestServices';
 import { TestProductService } from 'vs/workbench/test/common/workbenchTestServices';
 
-suite('CredentialsService - web', () => {
+describe('CredentialsService - web', () => {
 	const serviceId1 = 'test.credentialsService1';
 	const serviceId2 = 'test.credentialsService2';
 	const disposables = new DisposableStore();
 	let credentialsService: BrowserCredentialsService;
-	setup(async () => {
+	beforeEach(async () => {
 		credentialsService = disposables.add(new BrowserCredentialsService(TestEnvironmentService, new TestRemoteAgentService(), TestProductService));
 		await credentialsService.setPassword(serviceId1, 'me1', '1');
 		await credentialsService.setPassword(serviceId1, 'me2', '2');
 		await credentialsService.setPassword(serviceId2, 'me3', '3');
 	});
 
-	teardown(() => disposables.clear());
+	afterEach(() => disposables.clear());
 
 	test('Gets correct values for service', async () => {
 		const credentials = await credentialsService.findCredentials(serviceId1);

@@ -6,7 +6,7 @@
 import * as assert from 'assert';
 import { removeAccents } from 'vs/base/common/normalization';
 
-suite('Normalization', () => {
+describe('Normalization', () => {
 
 	test('removeAccents', function () {
 		assert.strictEqual(removeAccents('joào'), 'joao');

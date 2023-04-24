@@ -3,18 +3,18 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 import * as assert from 'assert';
-import { Registry } from 'vs/platform/registry/common/platform';
-import { StandaloneConfigurationModelParser, Configuration } from 'vs/workbench/services/configuration/common/configurationModels';
-import { ConfigurationModelParser, ConfigurationModel, ConfigurationParseOptions } from 'vs/platform/configuration/common/configurationModels';
-import { IConfigurationRegistry, Extensions as ConfigurationExtensions, ConfigurationScope } from 'vs/platform/configuration/common/configurationRegistry';
 import { ResourceMap } from 'vs/base/common/map';
-import { WorkspaceFolder } from 'vs/platform/workspace/common/workspace';
 import { URI } from 'vs/base/common/uri';
+import { ConfigurationModel, ConfigurationModelParser, ConfigurationParseOptions } from 'vs/platform/configuration/common/configurationModels';
+import { Extensions as ConfigurationExtensions, ConfigurationScope, IConfigurationRegistry } from 'vs/platform/configuration/common/configurationRegistry';
+import { Registry } from 'vs/platform/registry/common/platform';
+import { WorkspaceFolder } from 'vs/platform/workspace/common/workspace';
 import { Workspace } from 'vs/platform/workspace/test/common/testWorkspace';
+import { Configuration, StandaloneConfigurationModelParser } from 'vs/workbench/services/configuration/common/configurationModels';
 
-suite('FolderSettingsModelParser', () => {
+describe('FolderSettingsModelParser', () => {
 
-	suiteSetup(() => {
+	describeSetup(() => {
 		const configurationRegistry = Registry.as<IConfigurationRegistry>(ConfigurationExtensions.Configuration);
 		configurationRegistry.registerConfiguration({
 			'id': 'FolderSettingsModelParser_1',
@@ -123,7 +123,7 @@ suite('FolderSettingsModelParser', () => {
 
 });
 
-suite('StandaloneConfigurationModelParser', () => {
+describe('StandaloneConfigurationModelParser', () => {
 
 	test('parse tasks stand alone configuration model', () => {
 		const testObject = new StandaloneConfigurationModelParser('tasks', 'tasks');
@@ -139,7 +139,7 @@ suite('StandaloneConfigurationModelParser', () => {
 
 });
 
-suite('Workspace Configuration', () => {
+describe('Workspace Configuration', () => {
 
 	const defaultConfigurationModel = toConfigurationModel({
 		'editor.lineNumbers': 'on',

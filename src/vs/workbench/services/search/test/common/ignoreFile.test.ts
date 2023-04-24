@@ -61,7 +61,7 @@ function assertNoIgnoreMatch(ignoreFile: string, ignoreFileLocation: string, inp
 	runWithPrefix('/someFolder');
 }
 
-suite('Parsing .gitignore files', () => {
+describe('Parsing .gitignore files', () => {
 
 	test('paths with trailing slashes do not match files', () => {
 		const i = 'node_modules/\n';

@@ -5,13 +5,13 @@
 
 import { deepStrictEqual, strictEqual } from 'assert';
 import { IStringDictionary } from 'vs/base/common/collections';
-import { isWindows, OperatingSystem, Platform } from 'vs/base/common/platform';
+import { OperatingSystem, Platform, isWindows } from 'vs/base/common/platform';
 import { URI as Uri } from 'vs/base/common/uri';
-import { addTerminalEnvironmentKeys, createTerminalEnvironment, getCwd, getDefaultShell, getLangEnvVariable, mergeEnvironments, preparePathForShell, shouldSetLangEnvVariable } from 'vs/workbench/contrib/terminal/common/terminalEnvironment';
 import { PosixShellType, WindowsShellType } from 'vs/platform/terminal/common/terminal';
+import { addTerminalEnvironmentKeys, createTerminalEnvironment, getCwd, getDefaultShell, getLangEnvVariable, mergeEnvironments, preparePathForShell, shouldSetLangEnvVariable } from 'vs/workbench/contrib/terminal/common/terminalEnvironment';
 
-suite('Workbench - TerminalEnvironment', () => {
-	suite('addTerminalEnvironmentKeys', () => {
+describe('Workbench - TerminalEnvironment', () => {
+	describe('addTerminalEnvironmentKeys', () => {
 		test('should set expected variables', () => {
 			const env: { [key: string]: any } = {};
 			addTerminalEnvironmentKeys(env, '1.2.3', 'en', 'on');
@@ -42,7 +42,7 @@ suite('Workbench - TerminalEnvironment', () => {
 		});
 	});
 
-	suite('shouldSetLangEnvVariable', () => {
+	describe('shouldSetLangEnvVariable', () => {
 		test('auto', () => {
 			strictEqual(shouldSetLangEnvVariable({}, 'auto'), true);
 			strictEqual(shouldSetLangEnvVariable({ LANG: 'en-US' }, 'auto'), true);
@@ -66,7 +66,7 @@ suite('Workbench - TerminalEnvironment', () => {
 		});
 	});
 
-	suite('getLangEnvVariable', () => {
+	describe('getLangEnvVariable', () => {
 		test('should fallback to en_US when no locale is provided', () => {
 			strictEqual(getLangEnvVariable(undefined), 'en_US.UTF-8');
 			strictEqual(getLangEnvVariable(''), 'en_US.UTF-8');
@@ -118,7 +118,7 @@ suite('Workbench - TerminalEnvironment', () => {
 		});
 	});
 
-	suite('mergeEnvironments', () => {
+	describe('mergeEnvironments', () => {
 		test('should add keys', () => {
 			const parent = {
 				a: 'b'
@@ -175,7 +175,7 @@ suite('Workbench - TerminalEnvironment', () => {
 		});
 	});
 
-	suite('getCwd', () => {
+	describe('getCwd', () => {
 		// This helper checks the paths in a cross-platform friendly manner
 		function assertPathsMatch(a: string, b: string): void {
 			strictEqual(Uri.file(a).fsPath, Uri.file(b).fsPath);
@@ -210,7 +210,7 @@ suite('Workbench - TerminalEnvironment', () => {
 		});
 	});
 
-	suite('getDefaultShell', () => {
+	describe('getDefaultShell', () => {
 		test('should change Sysnative to System32 in non-WoW64 systems', async () => {
 			const shell = await getDefaultShell(key => {
 				return ({ 'terminal.integrated.shell.windows': 'C:\\Windows\\Sysnative\\cmd.exe' } as any)[key];
@@ -249,7 +249,7 @@ suite('Workbench - TerminalEnvironment', () => {
 			strictEqual(shell3, 'automationShell', 'automationShell was true and specified in settings');
 		});
 	});
-	suite('preparePathForShell', () => {
+	describe('preparePathForShell', () => {
 		const wslPathBackend = {
 			getWslPath: async (original: string, direction: 'unix-to-win' | 'win-to-unix') => {
 				if (direction === 'unix-to-win') {
@@ -268,7 +268,7 @@ suite('Workbench - TerminalEnvironment', () => {
 				return `/mnt/${groups.drive.toLowerCase()}/${groups.path.replace(/\\/g, '/')}`;
 			}
 		};
-		suite('Windows frontend, Windows backend', () => {
+		describe('Windows frontend, Windows backend', () => {
 			test('Command Prompt', async () => {
 				strictEqual(await preparePathForShell('c:\\foo\\bar', 'cmd', 'cmd', WindowsShellType.CommandPrompt, wslPathBackend, OperatingSystem.Windows, true), `c:\\foo\\bar`);
 				strictEqual(await preparePathForShell('c:\\foo\\bar\'baz', 'cmd', 'cmd', WindowsShellType.CommandPrompt, wslPathBackend, OperatingSystem.Windows, true), `c:\\foo\\bar'baz`);
@@ -287,14 +287,14 @@ suite('Workbench - TerminalEnvironment', () => {
 				strictEqual(await preparePathForShell('c:\\foo\\bar', 'bash', 'bash', WindowsShellType.Wsl, wslPathBackend, OperatingSystem.Windows, true), '/mnt/c/foo/bar');
 			});
 		});
-		suite('Windows frontend, Linux backend', () => {
+		describe('Windows frontend, Linux backend', () => {
 			test('Bash', async () => {
 				strictEqual(await preparePathForShell('/foo/bar', 'bash', 'bash', PosixShellType.Bash, wslPathBackend, OperatingSystem.Linux, true), `'/foo/bar'`);
 				strictEqual(await preparePathForShell('/foo/bar\'baz', 'bash', 'bash', PosixShellType.Bash, wslPathBackend, OperatingSystem.Linux, true), `'/foo/barbaz'`);
 				strictEqual(await preparePathForShell('/foo/bar$(echo evil)baz', 'bash', 'bash', PosixShellType.Bash, wslPathBackend, OperatingSystem.Linux, true), `'/foo/bar(echo evil)baz'`);
 			});
 		});
-		suite('Linux frontend, Windows backend', () => {
+		describe('Linux frontend, Windows backend', () => {
 			test('Command Prompt', async () => {
 				strictEqual(await preparePathForShell('c:\\foo\\bar', 'cmd', 'cmd', WindowsShellType.CommandPrompt, wslPathBackend, OperatingSystem.Windows, false), `c:\\foo\\bar`);
 				strictEqual(await preparePathForShell('c:\\foo\\bar\'baz', 'cmd', 'cmd', WindowsShellType.CommandPrompt, wslPathBackend, OperatingSystem.Windows, false), `c:\\foo\\bar'baz`);
@@ -313,7 +313,7 @@ suite('Workbench - TerminalEnvironment', () => {
 				strictEqual(await preparePathForShell('c:\\foo\\bar', 'bash', 'bash', WindowsShellType.Wsl, wslPathBackend, OperatingSystem.Windows, false), '/mnt/c/foo/bar');
 			});
 		});
-		suite('Linux frontend, Linux backend', () => {
+		describe('Linux frontend, Linux backend', () => {
 			test('Bash', async () => {
 				strictEqual(await preparePathForShell('/foo/bar', 'bash', 'bash', PosixShellType.Bash, wslPathBackend, OperatingSystem.Linux, false), `'/foo/bar'`);
 				strictEqual(await preparePathForShell('/foo/bar\'baz', 'bash', 'bash', PosixShellType.Bash, wslPathBackend, OperatingSystem.Linux, false), `'/foo/barbaz'`);
@@ -321,7 +321,7 @@ suite('Workbench - TerminalEnvironment', () => {
 			});
 		});
 	});
-	suite('createTerminalEnvironment', () => {
+	describe('createTerminalEnvironment', () => {
 		const commonVariables = {
 			COLORTERM: 'truecolor',
 			TERM_PROGRAM: 'vscode'

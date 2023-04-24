@@ -4,20 +4,20 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { Selection } from 'vs/editor/common/core/selection';
+import { DisposableStore } from 'vs/base/common/lifecycle';
 import { Range } from 'vs/editor/common/core/range';
+import { Selection } from 'vs/editor/common/core/selection';
+import { MetadataConsts, StandardTokenType } from 'vs/editor/common/encodedTokenAttributes';
+import { EncodedTokenizationResult, IState, TokenizationRegistry } from 'vs/editor/common/languages';
+import { ILanguageService } from 'vs/editor/common/languages/language';
+import { ILanguageConfigurationService } from 'vs/editor/common/languages/languageConfigurationRegistry';
+import { NullState } from 'vs/editor/common/languages/nullTokenize';
 import { AutoIndentOnPaste, IndentationToSpacesCommand, IndentationToTabsCommand } from 'vs/editor/contrib/indentation/browser/indentation';
-import { testCommand } from 'vs/editor/test/browser/testCommand';
 import { withTestCodeEditor } from 'vs/editor/test/browser/testCodeEditor';
+import { testCommand } from 'vs/editor/test/browser/testCommand';
 import { javascriptIndentationRules } from 'vs/editor/test/common/modes/supports/javascriptIndentationRules';
 import { javascriptOnEnterRules } from 'vs/editor/test/common/modes/supports/javascriptOnEnterRules';
-import { DisposableStore } from 'vs/base/common/lifecycle';
-import { ILanguageConfigurationService } from 'vs/editor/common/languages/languageConfigurationRegistry';
-import { ILanguageService } from 'vs/editor/common/languages/language';
-import { EncodedTokenizationResult, IState, TokenizationRegistry } from 'vs/editor/common/languages';
-import { MetadataConsts, StandardTokenType } from 'vs/editor/common/encodedTokenAttributes';
 import { createTextModel } from 'vs/editor/test/common/testTextModel';
-import { NullState } from 'vs/editor/common/languages/nullTokenize';
 
 function testIndentationToSpacesCommand(lines: string[], selection: Selection, tabSize: number, expectedLines: string[], expectedSelection: Selection): void {
 	testCommand(lines, null, selection, (accessor, sel) => new IndentationToSpacesCommand(sel, tabSize), expectedLines, expectedSelection);
@@ -27,7 +27,7 @@ function testIndentationToTabsCommand(lines: string[], selection: Selection, tab
 	testCommand(lines, null, selection, (accessor, sel) => new IndentationToTabsCommand(sel, tabSize), expectedLines, expectedSelection);
 }
 
-suite('Editor Contrib - Indentation to Spaces', () => {
+describe('Editor Contrib - Indentation to Spaces', () => {
 
 	test('single tabs only at start of line', function () {
 		testIndentationToSpacesCommand(
@@ -114,7 +114,7 @@ suite('Editor Contrib - Indentation to Spaces', () => {
 	});
 });
 
-suite('Editor Contrib - Indentation to Tabs', () => {
+describe('Editor Contrib - Indentation to Tabs', () => {
 
 	test('spaces only at start of line', function () {
 		testIndentationToTabsCommand(
@@ -197,14 +197,14 @@ suite('Editor Contrib - Indentation to Tabs', () => {
 	});
 });
 
-suite('Editor Contrib - Auto Indent On Paste', () => {
+describe('Editor Contrib - Auto Indent On Paste', () => {
 	let disposables: DisposableStore;
 
-	setup(() => {
+	beforeEach(() => {
 		disposables = new DisposableStore();
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		disposables.dispose();
 	});
 
@@ -266,14 +266,14 @@ suite('Editor Contrib - Auto Indent On Paste', () => {
 	});
 });
 
-suite('Editor Contrib - Keep Indent On Paste', () => {
+describe('Editor Contrib - Keep Indent On Paste', () => {
 	let disposables: DisposableStore;
 
-	setup(() => {
+	beforeEach(() => {
 		disposables = new DisposableStore();
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		disposables.dispose();
 	});
 

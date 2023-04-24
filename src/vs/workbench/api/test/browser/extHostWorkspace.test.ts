@@ -6,25 +6,25 @@
 import * as assert from 'assert';
 import { CancellationToken } from 'vs/base/common/cancellation';
 import { basename } from 'vs/base/common/path';
+import { isLinux, isWindows } from 'vs/base/common/platform';
 import { URI, UriComponents } from 'vs/base/common/uri';
+import { mock } from 'vs/base/test/common/mock';
 import { ExtensionIdentifier } from 'vs/platform/extensions/common/extensions';
+import { FileSystemProviderCapabilities } from 'vs/platform/files/common/files';
 import { ILogService, NullLogService } from 'vs/platform/log/common/log';
 import { IWorkspaceFolderData } from 'vs/platform/workspace/common/workspace';
 import { MainThreadWorkspace } from 'vs/workbench/api/browser/mainThreadWorkspace';
-import { IMainContext, IWorkspaceData, MainContext, ITextSearchComplete } from 'vs/workbench/api/common/extHost.protocol';
-import { RelativePattern } from 'vs/workbench/api/common/extHostTypes';
-import { ExtHostWorkspace } from 'vs/workbench/api/common/extHostWorkspace';
-import { mock } from 'vs/base/test/common/mock';
-import { TestRPCProtocol } from 'vs/workbench/api/test/common/testRPCProtocol';
-import { ExtHostRpcService } from 'vs/workbench/api/common/extHostRpcService';
+import { IMainContext, ITextSearchComplete, IWorkspaceData, MainContext } from 'vs/workbench/api/common/extHost.protocol';
+import { IExtHostFileSystemInfo } from 'vs/workbench/api/common/extHostFileSystemInfo';
 import { IExtHostInitDataService } from 'vs/workbench/api/common/extHostInitDataService';
+import { ExtHostRpcService } from 'vs/workbench/api/common/extHostRpcService';
+import { RelativePattern } from 'vs/workbench/api/common/extHostTypes';
+import { IURITransformerService } from 'vs/workbench/api/common/extHostUriTransformerService';
+import { ExtHostWorkspace } from 'vs/workbench/api/common/extHostWorkspace';
+import { TestRPCProtocol } from 'vs/workbench/api/test/common/testRPCProtocol';
+import { nullExtensionDescription as extensionDescriptor } from 'vs/workbench/services/extensions/common/extensions';
 import { ITextQueryBuilderOptions } from 'vs/workbench/services/search/common/queryBuilder';
 import { IPatternInfo } from 'vs/workbench/services/search/common/search';
-import { isLinux, isWindows } from 'vs/base/common/platform';
-import { IExtHostFileSystemInfo } from 'vs/workbench/api/common/extHostFileSystemInfo';
-import { FileSystemProviderCapabilities } from 'vs/platform/files/common/files';
-import { nullExtensionDescription as extensionDescriptor } from 'vs/workbench/services/extensions/common/extensions';
-import { IURITransformerService } from 'vs/workbench/api/common/extHostUriTransformerService';
 
 function createExtHostWorkspace(mainContext: IMainContext, data: IWorkspaceData, logService: ILogService): ExtHostWorkspace {
 	const result = new ExtHostWorkspace(
@@ -38,7 +38,7 @@ function createExtHostWorkspace(mainContext: IMainContext, data: IWorkspaceData,
 	return result;
 }
 
-suite('ExtHostWorkspace', function () {
+describe('ExtHostWorkspace', function () {
 
 	function assertAsRelativePath(workspace: ExtHostWorkspace, input: string, expected: string, includeWorkspace?: boolean) {
 		const actual = workspace.getRelativePath(input, includeWorkspace);

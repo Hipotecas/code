@@ -13,7 +13,7 @@ import { TestFileService } from 'vs/workbench/test/browser/workbenchTestServices
 import { TestExtensionService } from 'vs/workbench/test/common/workbenchTestServices';
 
 
-suite('Getting Started Markdown Renderer', () => {
+describe('Getting Started Markdown Renderer', () => {
 	test('renders theme picker markdown with images', async () => {
 		const fileService = new TestFileService();
 		const languageService = new LanguageService();

@@ -8,14 +8,14 @@ import { Disposable, DisposableStore, dispose } from 'vs/base/common/lifecycle';
 import { EditOperation } from 'vs/editor/common/core/editOperation';
 import { Position } from 'vs/editor/common/core/position';
 import { Range } from 'vs/editor/common/core/range';
-import { TextModel } from 'vs/editor/common/model/textModel';
-import { InternalModelContentChangeEvent, ModelRawContentChangedEvent, ModelRawFlush, ModelRawLineChanged, ModelRawLinesDeleted, ModelRawLinesInserted } from 'vs/editor/common/textModelEvents';
-import { EncodedTokenizationResult, IState, TokenizationRegistry } from 'vs/editor/common/languages';
 import { MetadataConsts } from 'vs/editor/common/encodedTokenAttributes';
+import { EncodedTokenizationResult, IState, TokenizationRegistry } from 'vs/editor/common/languages';
+import { ILanguageService } from 'vs/editor/common/languages/language';
 import { ILanguageConfigurationService } from 'vs/editor/common/languages/languageConfigurationRegistry';
 import { NullState } from 'vs/editor/common/languages/nullTokenize';
+import { TextModel } from 'vs/editor/common/model/textModel';
+import { InternalModelContentChangeEvent, ModelRawContentChangedEvent, ModelRawFlush, ModelRawLineChanged, ModelRawLinesDeleted, ModelRawLinesInserted } from 'vs/editor/common/textModelEvents';
 import { createModelServices, createTextModel, instantiateTextModel } from 'vs/editor/test/common/testTextModel';
-import { ILanguageService } from 'vs/editor/common/languages/language';
 
 // --------- utils
 
@@ -25,11 +25,11 @@ const LINE3 = '    Third Line';
 const LINE4 = '';
 const LINE5 = '1';
 
-suite('Editor Model - Model', () => {
+describe('Editor Model - Model', () => {
 
 	let thisModel: TextModel;
 
-	setup(() => {
+	beforeEach(() => {
 		const text =
 			LINE1 + '\r\n' +
 			LINE2 + '\n' +
@@ -39,7 +39,7 @@ suite('Editor Model - Model', () => {
 		thisModel = createTextModel(text);
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		thisModel.dispose();
 	});
 
@@ -339,11 +339,11 @@ suite('Editor Model - Model', () => {
 
 
 // --------- Special Unicode LINE SEPARATOR character
-suite('Editor Model - Model Line Separators', () => {
+describe('Editor Model - Model Line Separators', () => {
 
 	let thisModel: TextModel;
 
-	setup(() => {
+	beforeEach(() => {
 		const text =
 			LINE1 + '\u2028' +
 			LINE2 + '\n' +
@@ -353,7 +353,7 @@ suite('Editor Model - Model Line Separators', () => {
 		thisModel = createTextModel(text);
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		thisModel.dispose();
 	});
 
@@ -376,7 +376,7 @@ suite('Editor Model - Model Line Separators', () => {
 
 // --------- Words
 
-suite('Editor Model - Words', () => {
+describe('Editor Model - Words', () => {
 
 	const OUTER_LANGUAGE_ID = 'outerMode';
 	const INNER_LANGUAGE_ID = 'innerMode';
@@ -436,11 +436,11 @@ suite('Editor Model - Words', () => {
 
 	let disposables: Disposable[] = [];
 
-	setup(() => {
+	beforeEach(() => {
 		disposables = [];
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		dispose(disposables);
 		disposables = [];
 	});

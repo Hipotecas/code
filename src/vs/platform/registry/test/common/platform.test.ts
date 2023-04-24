@@ -7,7 +7,7 @@ import * as assert from 'assert';
 import { isFunction } from 'vs/base/common/types';
 import { Registry } from 'vs/platform/registry/common/platform';
 
-suite('Platform / Registry', () => {
+describe('Platform / Registry', () => {
 
 	test('registry - api', function () {
 		assert.ok(isFunction(Registry.add));

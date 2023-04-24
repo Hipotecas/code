@@ -9,7 +9,7 @@ import { SkipList } from 'vs/base/common/skipList';
 import { StopWatch } from 'vs/base/common/stopwatch';
 
 
-suite('SkipList', function () {
+describe('SkipList', function () {
 
 	function assertValues<V>(list: SkipList<any, V>, expected: V[]) {
 		assert.strictEqual(list.size, expected.length);

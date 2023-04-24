@@ -9,7 +9,7 @@ import { Position } from 'vs/editor/common/core/position';
 import { createTextModel } from 'vs/editor/test/common/testTextModel';
 import { TextModelProjection } from 'vs/workbench/contrib/mergeEditor/browser/model/textModelProjection';
 
-suite('TextModelProjection', () => {
+describe('TextModelProjection', () => {
 	ensureNoDisposablesAreLeakedInTestSuite();
 
 	test('Basic', () => {

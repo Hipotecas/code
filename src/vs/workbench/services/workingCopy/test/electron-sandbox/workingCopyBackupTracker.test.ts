@@ -4,48 +4,48 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { isMacintosh, isWindows } from 'vs/base/common/platform';
-import { join } from 'vs/base/common/path';
-import { URI } from 'vs/base/common/uri';
-import { hash } from 'vs/base/common/hash';
-import { NativeWorkingCopyBackupTracker } from 'vs/workbench/services/workingCopy/electron-sandbox/workingCopyBackupTracker';
-import { TextFileEditorModelManager } from 'vs/workbench/services/textfile/common/textFileEditorModelManager';
-import { IEditorService } from 'vs/workbench/services/editor/common/editorService';
-import { EditorPart } from 'vs/workbench/browser/parts/editor/editorPart';
-import { IEditorGroupsService } from 'vs/workbench/services/editor/common/editorGroupsService';
-import { EditorService } from 'vs/workbench/services/editor/browser/editorService';
-import { IWorkingCopyBackupService } from 'vs/workbench/services/workingCopy/common/workingCopyBackup';
-import { DisposableStore } from 'vs/base/common/lifecycle';
-import { toResource } from 'vs/base/test/common/utils';
-import { IFilesConfigurationService } from 'vs/workbench/services/filesConfiguration/common/filesConfigurationService';
-import { IWorkingCopyService } from 'vs/workbench/services/workingCopy/common/workingCopyService';
-import { ILogService } from 'vs/platform/log/common/log';
-import { HotExitConfiguration } from 'vs/platform/files/common/files';
-import { ShutdownReason, ILifecycleService } from 'vs/workbench/services/lifecycle/common/lifecycle';
-import { IFileDialogService, ConfirmResult, IDialogService } from 'vs/platform/dialogs/common/dialogs';
-import { IWorkspaceContextService } from 'vs/platform/workspace/common/workspace';
-import { INativeHostService } from 'vs/platform/native/common/native';
-import { IInstantiationService } from 'vs/platform/instantiation/common/instantiation';
-import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
-import { IConfigurationService } from 'vs/platform/configuration/common/configuration';
-import { createEditorPart, registerTestFileEditor, TestBeforeShutdownEvent, TestFilesConfigurationService } from 'vs/workbench/test/browser/workbenchTestServices';
-import { MockContextKeyService } from 'vs/platform/keybinding/test/common/mockKeybindingService';
-import { IContextKeyService } from 'vs/platform/contextkey/common/contextkey';
-import { IEnvironmentService } from 'vs/platform/environment/common/environment';
-import { TestWorkspace, Workspace } from 'vs/platform/workspace/test/common/testWorkspace';
-import { IProgressService } from 'vs/platform/progress/common/progress';
-import { IWorkingCopyEditorService } from 'vs/workbench/services/workingCopy/common/workingCopyEditorService';
-import { TestContextService, TestWorkingCopy } from 'vs/workbench/test/common/workbenchTestServices';
-import { CancellationToken } from 'vs/base/common/cancellation';
-import { IWorkingCopyBackup } from 'vs/workbench/services/workingCopy/common/workingCopy';
-import { Event, Emitter } from 'vs/base/common/event';
-import { generateUuid } from 'vs/base/common/uuid';
-import { Schemas } from 'vs/base/common/network';
-import { joinPath } from 'vs/base/common/resources';
 import { VSBuffer } from 'vs/base/common/buffer';
+import { CancellationToken } from 'vs/base/common/cancellation';
+import { Emitter, Event } from 'vs/base/common/event';
+import { hash } from 'vs/base/common/hash';
+import { DisposableStore } from 'vs/base/common/lifecycle';
+import { Schemas } from 'vs/base/common/network';
+import { join } from 'vs/base/common/path';
+import { isMacintosh, isWindows } from 'vs/base/common/platform';
+import { joinPath } from 'vs/base/common/resources';
+import { URI } from 'vs/base/common/uri';
+import { generateUuid } from 'vs/base/common/uuid';
+import { toResource } from 'vs/base/test/common/utils';
+import { IConfigurationService } from 'vs/platform/configuration/common/configuration';
+import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
+import { IContextKeyService } from 'vs/platform/contextkey/common/contextkey';
+import { ConfirmResult, IDialogService, IFileDialogService } from 'vs/platform/dialogs/common/dialogs';
+import { IEnvironmentService } from 'vs/platform/environment/common/environment';
+import { HotExitConfiguration } from 'vs/platform/files/common/files';
+import { IInstantiationService } from 'vs/platform/instantiation/common/instantiation';
+import { MockContextKeyService } from 'vs/platform/keybinding/test/common/mockKeybindingService';
+import { ILogService } from 'vs/platform/log/common/log';
+import { INativeHostService } from 'vs/platform/native/common/native';
+import { IProgressService } from 'vs/platform/progress/common/progress';
+import { IWorkspaceContextService } from 'vs/platform/workspace/common/workspace';
+import { TestWorkspace, Workspace } from 'vs/platform/workspace/test/common/testWorkspace';
+import { EditorPart } from 'vs/workbench/browser/parts/editor/editorPart';
+import { EditorService } from 'vs/workbench/services/editor/browser/editorService';
+import { IEditorGroupsService } from 'vs/workbench/services/editor/common/editorGroupsService';
+import { IEditorService } from 'vs/workbench/services/editor/common/editorService';
+import { IFilesConfigurationService } from 'vs/workbench/services/filesConfiguration/common/filesConfigurationService';
+import { ILifecycleService, ShutdownReason } from 'vs/workbench/services/lifecycle/common/lifecycle';
+import { TextFileEditorModelManager } from 'vs/workbench/services/textfile/common/textFileEditorModelManager';
+import { IWorkingCopyBackup } from 'vs/workbench/services/workingCopy/common/workingCopy';
+import { IWorkingCopyBackupService } from 'vs/workbench/services/workingCopy/common/workingCopyBackup';
+import { IWorkingCopyEditorService } from 'vs/workbench/services/workingCopy/common/workingCopyEditorService';
+import { IWorkingCopyService } from 'vs/workbench/services/workingCopy/common/workingCopyService';
+import { NativeWorkingCopyBackupTracker } from 'vs/workbench/services/workingCopy/electron-sandbox/workingCopyBackupTracker';
+import { TestBeforeShutdownEvent, TestFilesConfigurationService, createEditorPart, registerTestFileEditor } from 'vs/workbench/test/browser/workbenchTestServices';
+import { TestContextService, TestWorkingCopy } from 'vs/workbench/test/common/workbenchTestServices';
 import { TestServiceAccessor, workbenchInstantiationService } from 'vs/workbench/test/electron-sandbox/workbenchTestServices';
 
-suite('WorkingCopyBackupTracker (native)', function () {
+describe('WorkingCopyBackupTracker (native)', function () {
 
 	class TestWorkingCopyBackupTracker extends NativeWorkingCopyBackupTracker {
 
@@ -114,7 +114,7 @@ suite('WorkingCopyBackupTracker (native)', function () {
 	let accessor: TestServiceAccessor;
 	let disposables: DisposableStore;
 
-	setup(async () => {
+	beforeEach(async () => {
 		disposables = new DisposableStore();
 
 		testDir = URI.file(join(generateUuid(), 'vsctests', 'workingcopybackuptracker')).with({ scheme: Schemas.inMemory });
@@ -136,7 +136,7 @@ suite('WorkingCopyBackupTracker (native)', function () {
 		return accessor.fileService.writeFile(workspacesJsonPath, VSBuffer.fromString(''));
 	});
 
-	teardown(async () => {
+	afterEach(async () => {
 		disposables.dispose();
 	});
 
@@ -416,8 +416,8 @@ suite('WorkingCopyBackupTracker (native)', function () {
 		await cleanup();
 	});
 
-	suite('Hot Exit', () => {
-		suite('"onExit" setting', () => {
+	describe('Hot Exit', () => {
+		describe('"onExit" setting', () => {
 			test('should hot exit on non-Mac (reason: CLOSE, windows: single, workspace)', function () {
 				return hotExitTest.call(this, HotExitConfiguration.ON_EXIT, ShutdownReason.CLOSE, false, true, !!isMacintosh);
 			});
@@ -468,7 +468,7 @@ suite('WorkingCopyBackupTracker (native)', function () {
 			});
 		});
 
-		suite('"onExitAndWindowClose" setting', () => {
+		describe('"onExitAndWindowClose" setting', () => {
 			test('should hot exit (reason: CLOSE, windows: single, workspace)', function () {
 				return hotExitTest.call(this, HotExitConfiguration.ON_EXIT_AND_WINDOW_CLOSE, ShutdownReason.CLOSE, false, true, false);
 			});

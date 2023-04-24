@@ -8,7 +8,7 @@ import { MouseWheelClassifier } from 'vs/base/browser/ui/scrollbar/scrollableEle
 
 export type IMouseWheelEvent = [number, number, number];
 
-suite('MouseWheelClassifier', () => {
+describe('MouseWheelClassifier', () => {
 
 	test('OSX - Apple Magic Mouse', () => {
 		const testData: IMouseWheelEvent[] = [

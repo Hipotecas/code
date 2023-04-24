@@ -16,11 +16,11 @@ import { ExtensionHostKind } from 'vs/workbench/services/extensions/common/exten
 import { mock } from 'vs/workbench/test/common/workbenchTestServices';
 
 
-suite('MainThreadDiagnostics', function () {
+describe('MainThreadDiagnostics', function () {
 
 	let markerService: MarkerService;
 
-	setup(function () {
+	beforeEach(function () {
 		markerService = new MarkerService();
 	});
 

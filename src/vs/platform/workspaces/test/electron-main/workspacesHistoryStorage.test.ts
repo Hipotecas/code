@@ -11,7 +11,7 @@ import { NullLogService } from 'vs/platform/log/common/log';
 import { IWorkspaceIdentifier } from 'vs/platform/workspace/common/workspace';
 import { IRecentFolder, IRecentlyOpened, IRecentWorkspace, isRecentFolder, restoreRecentlyOpened, toStoreData } from 'vs/platform/workspaces/common/workspaces';
 
-suite('History Storage', () => {
+describe('History Storage', () => {
 
 	function toWorkspace(uri: URI): IWorkspaceIdentifier {
 		return {

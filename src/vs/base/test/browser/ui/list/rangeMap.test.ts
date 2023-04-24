@@ -7,10 +7,10 @@ import * as assert from 'assert';
 import { consolidate, groupIntersect, RangeMap } from 'vs/base/browser/ui/list/rangeMap';
 import { Range } from 'vs/base/common/range';
 
-suite('RangeMap', () => {
+describe('RangeMap', () => {
 	let rangeMap: RangeMap;
 
-	setup(() => {
+	beforeEach(() => {
 		rangeMap = new RangeMap();
 	});
 
@@ -263,7 +263,7 @@ suite('RangeMap', () => {
 		assert.strictEqual(rangeMap.size, 28);
 	});
 
-	suite('indexAt, positionAt', () => {
+	describe('indexAt, positionAt', () => {
 		test('empty', () => {
 			assert.strictEqual(rangeMap.indexAt(0), 0);
 			assert.strictEqual(rangeMap.indexAt(10), 0);

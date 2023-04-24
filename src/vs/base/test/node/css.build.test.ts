@@ -6,7 +6,7 @@
 import * as assert from 'assert';
 import { CSSPluginUtilities, rewriteUrls } from 'vs/css.build';
 
-suite('CSSPlugin', () => {
+describe('CSSPlugin', () => {
 
 	test('Utilities.pathOf', () => {
 		assert.strictEqual(CSSPluginUtilities.pathOf(''), '');

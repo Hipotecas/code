@@ -4,17 +4,17 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { getMapForWordSeparators } from 'vs/editor/common/core/wordCharacterClassifier';
 import { Position } from 'vs/editor/common/core/position';
 import { Range } from 'vs/editor/common/core/range';
+import { getMapForWordSeparators } from 'vs/editor/common/core/wordCharacterClassifier';
+import { USUAL_WORD_SEPARATORS } from 'vs/editor/common/core/wordHelper';
 import { EndOfLineSequence, FindMatch, SearchData } from 'vs/editor/common/model';
 import { TextModel } from 'vs/editor/common/model/textModel';
 import { SearchParams, TextModelSearch, isMultilineRegexSource } from 'vs/editor/common/model/textModelSearch';
-import { USUAL_WORD_SEPARATORS } from 'vs/editor/common/core/wordHelper';
 import { createTextModel } from 'vs/editor/test/common/testTextModel';
 
 // --------- Find
-suite('TextModelSearch', () => {
+describe('TextModelSearch', () => {
 
 	const usualWordSeparators = getMapForWordSeparators(USUAL_WORD_SEPARATORS);
 
@@ -737,18 +737,18 @@ suite('TextModelSearch', () => {
 	});
 
 	test('isMultilineRegexSource', () => {
-		assert(!isMultilineRegexSource('foo'));
-		assert(!isMultilineRegexSource(''));
-		assert(!isMultilineRegexSource('foo\\sbar'));
-		assert(!isMultilineRegexSource('\\\\notnewline'));
+		expect(!isMultilineRegexSource('foo')).toBe(true);
+		expect(!isMultilineRegexSource('')).toBe(true);
+		expect(!isMultilineRegexSource('foo\\sbar')).toBe(true);
+		expect(!isMultilineRegexSource('\\\\notnewline')).toBe(true);
 
-		assert(isMultilineRegexSource('foo\\nbar'));
-		assert(isMultilineRegexSource('foo\\nbar\\s'));
-		assert(isMultilineRegexSource('foo\\r\\n'));
-		assert(isMultilineRegexSource('\\n'));
-		assert(isMultilineRegexSource('foo\\W'));
-		assert(isMultilineRegexSource('foo\n'));
-		assert(isMultilineRegexSource('foo\r\n'));
+		expect(isMultilineRegexSource('foo\\nbar')).toBe(true);
+		expect(isMultilineRegexSource('foo\\nbar\\s')).toBe(true);
+		expect(isMultilineRegexSource('foo\\r\\n')).toBe(true);
+		expect(isMultilineRegexSource('\\n')).toBe(true);
+		expect(isMultilineRegexSource('foo\\W')).toBe(true);
+		expect(isMultilineRegexSource('foo\n')).toBe(true);
+		expect(isMultilineRegexSource('foo\r\n')).toBe(true);
 	});
 
 	test('issue #74715. \\d* finds empty string and stops searching.', () => {

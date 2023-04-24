@@ -13,12 +13,12 @@ import { assertLinkHelper } from 'vs/workbench/contrib/terminalContrib/links/tes
 import { TestProductService } from 'vs/workbench/test/common/workbenchTestServices';
 import { Terminal } from 'xterm';
 
-suite('Workbench - TerminalWordLinkDetector', () => {
+describe('Workbench - TerminalWordLinkDetector', () => {
 	let configurationService: TestConfigurationService;
 	let detector: TerminalWordLinkDetector;
 	let xterm: Terminal;
 
-	setup(async () => {
+	beforeEach(async () => {
 		const instantiationService = new TestInstantiationService();
 		configurationService = new TestConfigurationService();
 		await configurationService.setUserConfiguration('terminal', { integrated: { wordSeparators: '' } });
@@ -37,7 +37,7 @@ suite('Workbench - TerminalWordLinkDetector', () => {
 		await assertLinkHelper(text, expected, detector, TerminalBuiltinLinkType.Search);
 	}
 
-	suite('should link words as defined by wordSeparators', () => {
+	describe('should link words as defined by wordSeparators', () => {
 		test('" ()[]"', async () => {
 			await configurationService.setUserConfiguration('terminal', { integrated: { wordSeparators: ' ()[]' } });
 			configurationService.onDidChangeConfigurationEmitter.fire({ affectsConfiguration: () => true } as any);

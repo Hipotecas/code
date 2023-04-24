@@ -4,20 +4,20 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { URI as uri } from 'vs/base/common/uri';
-import { DebugModel, Breakpoint } from 'vs/workbench/contrib/debug/common/debugModel';
-import { getExpandedBodySize, getBreakpointMessageAndIcon } from 'vs/workbench/contrib/debug/browser/breakpointsView';
-import { DisposableStore, dispose } from 'vs/base/common/lifecycle';
-import { Range } from 'vs/editor/common/core/range';
-import { IBreakpointData, IBreakpointUpdateData, IDebugService, State } from 'vs/workbench/contrib/debug/common/debug';
-import { createBreakpointDecorations } from 'vs/workbench/contrib/debug/browser/breakpointEditorContribution';
-import { OverviewRulerLane } from 'vs/editor/common/model';
 import { MarkdownString } from 'vs/base/common/htmlContent';
-import { createTextModel } from 'vs/editor/test/common/testTextModel';
-import { createTestSession } from 'vs/workbench/contrib/debug/test/browser/callStack.test';
-import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
+import { DisposableStore, dispose } from 'vs/base/common/lifecycle';
+import { URI as uri } from 'vs/base/common/uri';
+import { Range } from 'vs/editor/common/core/range';
 import { ILanguageService } from 'vs/editor/common/languages/language';
+import { OverviewRulerLane } from 'vs/editor/common/model';
 import { LanguageService } from 'vs/editor/common/services/languageService';
+import { createTextModel } from 'vs/editor/test/common/testTextModel';
+import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
+import { createBreakpointDecorations } from 'vs/workbench/contrib/debug/browser/breakpointEditorContribution';
+import { getBreakpointMessageAndIcon, getExpandedBodySize } from 'vs/workbench/contrib/debug/browser/breakpointsView';
+import { IBreakpointData, IBreakpointUpdateData, IDebugService, State } from 'vs/workbench/contrib/debug/common/debug';
+import { Breakpoint, DebugModel } from 'vs/workbench/contrib/debug/common/debugModel';
+import { createTestSession } from 'vs/workbench/contrib/debug/test/browser/callStack.test';
 import { createMockDebugModel } from 'vs/workbench/contrib/debug/test/browser/mockDebugModel';
 import { MockDebugService } from 'vs/workbench/contrib/debug/test/common/mockDebug';
 
@@ -41,15 +41,15 @@ function addBreakpointsAndCheckEvents(model: DebugModel, uri: uri, data: IBreakp
 	assert.strictEqual(eventCount, 1);
 }
 
-suite('Debug - Breakpoints', () => {
+describe('Debug - Breakpoints', () => {
 	let model: DebugModel;
 	const disposables = new DisposableStore();
 
-	setup(() => {
+	beforeEach(() => {
 		model = createMockDebugModel();
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		disposables.clear();
 	});
 

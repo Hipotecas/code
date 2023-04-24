@@ -14,7 +14,7 @@ import { ITestCodeEditor, withTestCodeEditor } from 'vs/editor/test/browser/test
 import { ServiceCollection } from 'vs/platform/instantiation/common/serviceCollection';
 import { IStorageService } from 'vs/platform/storage/common/storage';
 
-suite('Multicursor', () => {
+describe('Multicursor', () => {
 
 
 	test('issue #26393: Multiple cursors + Word wrap', () => {
@@ -81,7 +81,7 @@ function fromRange(rng: Range): number[] {
 	return [rng.startLineNumber, rng.startColumn, rng.endLineNumber, rng.endColumn];
 }
 
-suite('Multicursor selection', () => {
+describe('Multicursor selection', () => {
 	const queryState: { [key: string]: any } = {};
 	const serviceCollection = new ServiceCollection();
 	serviceCollection.set(IStorageService, {
@@ -516,7 +516,7 @@ suite('Multicursor selection', () => {
 		});
 	});
 
-	suite('Find state disassociation', () => {
+	describe('Find state disassociation', () => {
 
 		const text = [
 			'app',

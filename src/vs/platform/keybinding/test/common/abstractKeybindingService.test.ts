@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 import * as assert from 'assert';
 import { KeyChord, KeyCode, KeyMod } from 'vs/base/common/keyCodes';
-import { createSimpleKeybinding, ResolvedKeybinding, KeyCodeChord, Keybinding } from 'vs/base/common/keybindings';
+import { KeyCodeChord, Keybinding, ResolvedKeybinding, createSimpleKeybinding } from 'vs/base/common/keybindings';
 import { Disposable } from 'vs/base/common/lifecycle';
 import { OS } from 'vs/base/common/platform';
 import Severity from 'vs/base/common/severity';
@@ -28,7 +28,7 @@ function createContext(ctx: any) {
 	};
 }
 
-suite('AbstractKeybindingService', () => {
+describe('AbstractKeybindingService', () => {
 
 	class TestKeybindingService extends AbstractKeybindingService {
 		private _resolver: KeybindingResolver;
@@ -104,7 +104,7 @@ suite('AbstractKeybindingService', () => {
 	let statusMessageCalls: string[] | null = null;
 	let statusMessageCallsDisposed: string[] | null = null;
 
-	setup(() => {
+	beforeEach(() => {
 		executeCommandCalls = [];
 		showMessageCalls = [];
 		statusMessageCalls = [];
@@ -181,7 +181,7 @@ suite('AbstractKeybindingService', () => {
 		};
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		currentContextValue = null;
 		executeCommandCalls = null!;
 		showMessageCalls = null!;

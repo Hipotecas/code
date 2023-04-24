@@ -5,7 +5,7 @@
 import * as assert from 'assert';
 import { CommandsRegistry } from 'vs/platform/commands/common/commands';
 
-suite('Command Tests', function () {
+describe('Command Tests', function () {
 
 	test('register command - no handler', function () {
 		assert.throws(() => CommandsRegistry.registerCommand('foo', null!));

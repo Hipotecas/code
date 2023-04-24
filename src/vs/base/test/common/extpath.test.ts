@@ -8,7 +8,7 @@ import { CharCode } from 'vs/base/common/charCode';
 import * as extpath from 'vs/base/common/extpath';
 import { isWindows } from 'vs/base/common/platform';
 
-suite('Paths', () => {
+describe('Paths', () => {
 
 	test('toForwardSlashes', () => {
 		assert.strictEqual(extpath.toSlashes('\\\\server\\share\\some\\path'), '//server/share/some/path');

@@ -5,7 +5,7 @@
 import * as assert from 'assert';
 import * as arrays from 'vs/base/common/arrays';
 
-suite('Arrays', () => {
+describe('Arrays', () => {
 
 	test('removeFastWithoutKeepingOrder', () => {
 		const array = [1, 4, 5, 7, 55, 59, 60, 61, 64, 69];
@@ -395,8 +395,8 @@ suite('Arrays', () => {
 		);
 	});
 
-	suite('ArrayQueue', () => {
-		suite('takeWhile/takeFromEndWhile', () => {
+	describe('ArrayQueue', () => {
+		describe('takeWhile/takeFromEndWhile', () => {
 			test('TakeWhile 1', () => {
 				const queue1 = new arrays.ArrayQueue([9, 8, 1, 7, 6]);
 				assert.deepStrictEqual(queue1.takeWhile(x => x > 5), [9, 8]);
@@ -412,7 +412,7 @@ suite('Arrays', () => {
 			});
 		});
 
-		suite('takeWhile/takeFromEndWhile monotonous', () => {
+		describe('takeWhile/takeFromEndWhile monotonous', () => {
 			function testMonotonous(array: number[], predicate: (a: number) => boolean) {
 				function normalize(arr: number[]): number[] | null {
 					if (arr.length === 0) {

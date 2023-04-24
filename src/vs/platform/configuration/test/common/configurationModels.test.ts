@@ -9,7 +9,7 @@ import { Configuration, ConfigurationChangeEvent, ConfigurationModel, Configurat
 import { WorkspaceFolder } from 'vs/platform/workspace/common/workspace';
 import { Workspace } from 'vs/platform/workspace/test/common/testWorkspace';
 
-suite('ConfigurationModelParser', () => {
+describe('ConfigurationModelParser', () => {
 
 	test('parse configuration model with single override identifier', () => {
 		const testObject = new ConfigurationModelParser('');
@@ -38,7 +38,7 @@ suite('ConfigurationModelParser', () => {
 
 });
 
-suite('ConfigurationModel', () => {
+describe('ConfigurationModel', () => {
 
 	test('setValue for a key that has no sections and not defined', () => {
 		const testObject = new ConfigurationModel({ 'a': { 'b': 1 } }, ['a.b']);
@@ -353,7 +353,7 @@ suite('ConfigurationModel', () => {
 
 });
 
-suite('CustomConfigurationModel', () => {
+describe('CustomConfigurationModel', () => {
 
 	test('simple merge using models', () => {
 		const base = new ConfigurationModelParser('base');
@@ -461,7 +461,7 @@ suite('CustomConfigurationModel', () => {
 
 });
 
-suite('Configuration', () => {
+describe('Configuration', () => {
 
 	test('Test inspect for overrideIdentifiers', () => {
 		const defaultConfigurationModel = parseConfigurationModel({ '[l1]': { 'a': 1 }, '[l2]': { 'b': 1 } });
@@ -622,7 +622,7 @@ suite('Configuration', () => {
 
 });
 
-suite('ConfigurationChangeEvent', () => {
+describe('ConfigurationChangeEvent', () => {
 
 	test('changeEvent affecting keys with new configuration', () => {
 		const configuration = new Configuration(new ConfigurationModel(), new ConfigurationModel(), new ConfigurationModel(), new ConfigurationModel());

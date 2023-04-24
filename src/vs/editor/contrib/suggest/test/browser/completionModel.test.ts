@@ -7,7 +7,7 @@ import { EditorOptions, InternalSuggestOptions } from 'vs/editor/common/config/e
 import { IPosition } from 'vs/editor/common/core/position';
 import * as languages from 'vs/editor/common/languages';
 import { CompletionModel } from 'vs/editor/contrib/suggest/browser/completionModel';
-import { CompletionItem, getSuggestionComparator, SnippetSortOrder } from 'vs/editor/contrib/suggest/browser/suggest';
+import { CompletionItem, SnippetSortOrder, getSuggestionComparator } from 'vs/editor/contrib/suggest/browser/suggest';
 import { WordDistance } from 'vs/editor/contrib/suggest/browser/wordDistance';
 
 export function createSuggestItem(label: string | languages.CompletionItemLabel, overwriteBefore: number, kind = languages.CompletionItemKind.Property, incomplete: boolean = false, position: IPosition = { lineNumber: 1, column: 1 }, sortText?: string, filterText?: string): CompletionItem {
@@ -31,7 +31,7 @@ export function createSuggestItem(label: string | languages.CompletionItemLabel,
 
 	return new CompletionItem(position, suggestion, container, provider);
 }
-suite('CompletionModel', function () {
+describe('CompletionModel', function () {
 
 	const defaultOptions = <InternalSuggestOptions>{
 		insertMode: 'insert',
@@ -70,7 +70,7 @@ suite('CompletionModel', function () {
 
 	let model: CompletionModel;
 
-	setup(function () {
+	beforeEach(function () {
 
 		model = new CompletionModel([
 			createSuggestItem('foo', 3),

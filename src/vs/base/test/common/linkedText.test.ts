@@ -6,7 +6,7 @@
 import * as assert from 'assert';
 import { parseLinkedText } from 'vs/base/common/linkedText';
 
-suite('LinkedText', () => {
+describe('LinkedText', () => {
 	test('parses correctly', () => {
 		assert.deepStrictEqual(parseLinkedText('').nodes, []);
 		assert.deepStrictEqual(parseLinkedText('hello').nodes, ['hello']);

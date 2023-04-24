@@ -4,24 +4,24 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { DebugModel, StackFrame, Thread } from 'vs/workbench/contrib/debug/common/debugModel';
 import * as sinon from 'sinon';
-import { createMockDebugModel, mockUriIdentityService } from 'vs/workbench/contrib/debug/test/browser/mockDebugModel';
-import { Source } from 'vs/workbench/contrib/debug/common/debugSource';
-import { DebugSession } from 'vs/workbench/contrib/debug/browser/debugSession';
-import { Range } from 'vs/editor/common/core/range';
-import { IDebugSessionOptions, State, IDebugService } from 'vs/workbench/contrib/debug/common/debug';
-import { createDecorationsForStackFrame } from 'vs/workbench/contrib/debug/browser/callStackEditorContribution';
-import { Constants } from 'vs/base/common/uint';
-import { getContext, getContextForContributedActions, getSpecificSourceName } from 'vs/workbench/contrib/debug/browser/callStackView';
-import { getStackFrameThreadAndSessionToFocus } from 'vs/workbench/contrib/debug/browser/debugService';
-import { generateUuid } from 'vs/base/common/uuid';
-import { debugStackframe, debugStackframeFocused } from 'vs/workbench/contrib/debug/browser/debugIcons';
 import { ThemeIcon } from 'vs/base/common/themables';
+import { Constants } from 'vs/base/common/uint';
+import { generateUuid } from 'vs/base/common/uuid';
+import { Range } from 'vs/editor/common/core/range';
 import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
 import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
-import { MockRawSession } from 'vs/workbench/contrib/debug/test/common/mockDebug';
 import { NullLogService } from 'vs/platform/log/common/log';
+import { createDecorationsForStackFrame } from 'vs/workbench/contrib/debug/browser/callStackEditorContribution';
+import { getContext, getContextForContributedActions, getSpecificSourceName } from 'vs/workbench/contrib/debug/browser/callStackView';
+import { debugStackframe, debugStackframeFocused } from 'vs/workbench/contrib/debug/browser/debugIcons';
+import { getStackFrameThreadAndSessionToFocus } from 'vs/workbench/contrib/debug/browser/debugService';
+import { DebugSession } from 'vs/workbench/contrib/debug/browser/debugSession';
+import { IDebugService, IDebugSessionOptions, State } from 'vs/workbench/contrib/debug/common/debug';
+import { DebugModel, StackFrame, Thread } from 'vs/workbench/contrib/debug/common/debugModel';
+import { Source } from 'vs/workbench/contrib/debug/common/debugSource';
+import { createMockDebugModel, mockUriIdentityService } from 'vs/workbench/contrib/debug/test/browser/mockDebugModel';
+import { MockRawSession } from 'vs/workbench/contrib/debug/test/common/mockDebug';
 
 const mockWorkspaceContextService = {
 	getWorkspace: () => {
@@ -67,11 +67,11 @@ function createTwoStackFrames(session: DebugSession): { firstStackFrame: StackFr
 	return { firstStackFrame, secondStackFrame };
 }
 
-suite('Debug - CallStack', () => {
+describe('Debug - CallStack', () => {
 	let model: DebugModel;
 	let mockRawSession: MockRawSession;
 
-	setup(() => {
+	beforeEach(() => {
 		model = createMockDebugModel();
 		mockRawSession = new MockRawSession();
 	});

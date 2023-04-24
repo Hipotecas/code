@@ -13,7 +13,7 @@ import { Searcher, createFindMatch, isValidMatch } from 'vs/editor/common/model/
 // const lfRegex = new RegExp(/\r\n|\r|\n/g);
 const AverageBufferSize = 65535;
 
-function createUintArray(arr: number[]): Uint32Array | Uint16Array {
+export function createUintArray(arr: number[]): Uint32Array | Uint16Array {
 	let r;
 	if (arr[arr.length - 1] < 65536) {
 		r = new Uint16Array(arr.length);

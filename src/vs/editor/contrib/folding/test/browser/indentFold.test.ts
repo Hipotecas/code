@@ -11,7 +11,7 @@ interface IndentRange {
 	end: number;
 }
 
-suite('Indentation Folding', () => {
+describe('Indentation Folding', () => {
 	function r(start: number, end: number): IndentRange {
 		return { start, end };
 	}

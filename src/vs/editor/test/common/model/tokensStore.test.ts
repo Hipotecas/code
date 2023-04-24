@@ -4,20 +4,20 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
+import { DisposableStore } from 'vs/base/common/lifecycle';
+import { ISingleEditOperation } from 'vs/editor/common/core/editOperation';
+import { Position } from 'vs/editor/common/core/position';
+import { Range } from 'vs/editor/common/core/range';
+import { ColorId, FontStyle, MetadataConsts, TokenMetadata } from 'vs/editor/common/encodedTokenAttributes';
+import { ILanguageConfigurationService, LanguageConfigurationService } from 'vs/editor/common/languages/languageConfigurationRegistry';
+import { TextModel } from 'vs/editor/common/model/textModel';
+import { LanguageIdCodec } from 'vs/editor/common/services/languagesRegistry';
+import { LineTokens } from 'vs/editor/common/tokens/lineTokens';
 import { SparseMultilineTokens } from 'vs/editor/common/tokens/sparseMultilineTokens';
 import { SparseTokensStore } from 'vs/editor/common/tokens/sparseTokensStore';
-import { Range } from 'vs/editor/common/core/range';
-import { Position } from 'vs/editor/common/core/position';
-import { TextModel } from 'vs/editor/common/model/textModel';
-import { FontStyle, ColorId, MetadataConsts, TokenMetadata } from 'vs/editor/common/encodedTokenAttributes';
 import { createModelServices, createTextModel, instantiateTextModel } from 'vs/editor/test/common/testTextModel';
-import { LineTokens } from 'vs/editor/common/tokens/lineTokens';
-import { LanguageIdCodec } from 'vs/editor/common/services/languagesRegistry';
-import { ISingleEditOperation } from 'vs/editor/common/core/editOperation';
-import { DisposableStore } from 'vs/base/common/lifecycle';
-import { ILanguageConfigurationService, LanguageConfigurationService } from 'vs/editor/common/languages/languageConfigurationRegistry';
 
-suite('TokensStore', () => {
+describe('TokensStore', () => {
 
 	const SEMANTIC_COLOR = 5 as ColorId;
 

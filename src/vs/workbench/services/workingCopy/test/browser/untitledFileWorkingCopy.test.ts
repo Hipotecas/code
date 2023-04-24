@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { VSBufferReadableStream, newWriteableBufferStream, VSBuffer, streamToBuffer, bufferToStream, readableToBuffer, VSBufferReadable } from 'vs/base/common/buffer';
+import { VSBuffer, VSBufferReadable, VSBufferReadableStream, bufferToStream, newWriteableBufferStream, readableToBuffer, streamToBuffer } from 'vs/base/common/buffer';
 import { CancellationToken } from 'vs/base/common/cancellation';
 import { Emitter } from 'vs/base/common/event';
 import { Disposable, DisposableStore } from 'vs/base/common/lifecycle';
@@ -86,7 +86,7 @@ export class TestUntitledFileWorkingCopyModelFactory implements IUntitledFileWor
 	}
 }
 
-suite('UntitledFileWorkingCopy', () => {
+describe('UntitledFileWorkingCopy', () => {
 
 	const factory = new TestUntitledFileWorkingCopyModelFactory();
 
@@ -111,7 +111,7 @@ suite('UntitledFileWorkingCopy', () => {
 		);
 	}
 
-	setup(() => {
+	beforeEach(() => {
 		disposables = new DisposableStore();
 		instantiationService = workbenchInstantiationService(undefined, disposables);
 		accessor = instantiationService.createInstance(TestServiceAccessor);
@@ -119,7 +119,7 @@ suite('UntitledFileWorkingCopy', () => {
 		workingCopy = createWorkingCopy();
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		workingCopy.dispose();
 		disposables.dispose();
 	});

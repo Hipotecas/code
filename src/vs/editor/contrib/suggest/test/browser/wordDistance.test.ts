@@ -8,31 +8,31 @@ import { Event } from 'vs/base/common/event';
 import { DisposableStore } from 'vs/base/common/lifecycle';
 import { URI } from 'vs/base/common/uri';
 import { mock } from 'vs/base/test/common/mock';
+import { EditorWorkerService } from 'vs/editor/browser/services/editorWorkerService';
 import { IPosition } from 'vs/editor/common/core/position';
 import { IRange } from 'vs/editor/common/core/range';
 import { DEFAULT_WORD_REGEXP } from 'vs/editor/common/core/wordHelper';
 import * as languages from 'vs/editor/common/languages';
+import { ILanguageService } from 'vs/editor/common/languages/language';
 import { ILanguageConfigurationService } from 'vs/editor/common/languages/languageConfigurationRegistry';
 import { EditorSimpleWorker } from 'vs/editor/common/services/editorSimpleWorker';
-import { EditorWorkerService } from 'vs/editor/browser/services/editorWorkerService';
 import { IEditorWorkerHost } from 'vs/editor/common/services/editorWorkerHost';
+import { LanguageFeaturesService } from 'vs/editor/common/services/languageFeaturesService';
 import { IModelService } from 'vs/editor/common/services/model';
 import { ITextResourceConfigurationService } from 'vs/editor/common/services/textResourceConfiguration';
 import { CompletionItem } from 'vs/editor/contrib/suggest/browser/suggest';
 import { WordDistance } from 'vs/editor/contrib/suggest/browser/wordDistance';
 import { createCodeEditorServices, instantiateTestCodeEditor } from 'vs/editor/test/browser/testCodeEditor';
-import { instantiateTextModel } from 'vs/editor/test/common/testTextModel';
 import { TestLanguageConfigurationService } from 'vs/editor/test/common/modes/testLanguageConfigurationService';
+import { instantiateTextModel } from 'vs/editor/test/common/testTextModel';
 import { NullLogService } from 'vs/platform/log/common/log';
-import { LanguageFeaturesService } from 'vs/editor/common/services/languageFeaturesService';
-import { ILanguageService } from 'vs/editor/common/languages/language';
 
-suite('suggest, word distance', function () {
+describe('suggest, word distance', function () {
 
 	let distance: WordDistance;
 	const disposables = new DisposableStore();
 
-	setup(async function () {
+	beforeEach(async function () {
 		const languageId = 'bracketMode';
 
 		disposables.clear();
@@ -84,7 +84,7 @@ suite('suggest, word distance', function () {
 		disposables.add(service);
 	});
 
-	teardown(function () {
+	afterEach(function () {
 		disposables.clear();
 	});
 

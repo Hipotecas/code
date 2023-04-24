@@ -4,12 +4,12 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
+import { isLinux, isMacintosh, isWindows } from 'vs/base/common/platform';
 import { URI } from 'vs/base/common/uri';
-import { isMacintosh, isLinux, isWindows } from 'vs/base/common/platform';
 import { OutputLinkComputer } from 'vs/workbench/contrib/output/common/outputLinkComputer';
 import { TestContextService } from 'vs/workbench/test/common/workbenchTestServices';
 
-suite('OutputLinkProvider', () => {
+describe('OutputLinkProvider', () => {
 
 	function toOSPath(p: string): string {
 		if (isMacintosh || isLinux) {

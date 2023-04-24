@@ -1,18 +1,14 @@
-/*---------------------------------------------------------------------------------------------
- *  Copyright (c) Microsoft Corporation. All rights reserved.
- *  Licensed under the MIT License. See License.txt in the project root for license information.
- *--------------------------------------------------------------------------------------------*/
-
+// @vitest-environment node
 import * as assert from 'assert';
-import { LineTokens } from 'vs/editor/common/tokens/lineTokens';
 import { Range } from 'vs/editor/common/core/range';
-import { computeIndentLevel } from 'vs/editor/common/model/utils';
 import { MetadataConsts } from 'vs/editor/common/encodedTokenAttributes';
+import { EncodedTokenizationResult, IBackgroundTokenizationStore, IBackgroundTokenizer, IState, ITokenizationSupport, TokenizationRegistry, TokenizationResult } from 'vs/editor/common/languages';
+import { ITextModel } from 'vs/editor/common/model';
+import { computeIndentLevel } from 'vs/editor/common/model/utils';
+import { ContiguousMultilineTokensBuilder } from 'vs/editor/common/tokens/contiguousMultilineTokensBuilder';
+import { LineTokens } from 'vs/editor/common/tokens/lineTokens';
 import { TestLineToken, TestLineTokenFactory } from 'vs/editor/test/common/core/testLineToken';
 import { createTextModel } from 'vs/editor/test/common/testTextModel';
-import { ITokenizationSupport, TokenizationRegistry, IState, IBackgroundTokenizationStore, EncodedTokenizationResult, TokenizationResult, IBackgroundTokenizer } from 'vs/editor/common/languages';
-import { ITextModel } from 'vs/editor/common/model';
-import { ContiguousMultilineTokensBuilder } from 'vs/editor/common/tokens/contiguousMultilineTokensBuilder';
 
 interface ILineEdit {
 	startColumn: number;
@@ -45,10 +41,11 @@ function assertLineTokens(__actual: LineTokens, _expected: TestToken[]): void {
 	assert.deepStrictEqual(actual, expected.map(decode));
 }
 
-suite('ModelLine - getIndentLevel', () => {
+describe('ModelLine - getIndentLevel', () => {
 	function assertIndentLevel(text: string, expected: number, tabSize: number = 4): void {
 		const actual = computeIndentLevel(text, tabSize);
 		assert.strictEqual(actual, expected, text);
+    expect(actual, text).toStrictEqual(expected)
 	}
 
 	test('getIndentLevel', () => {
@@ -146,7 +143,7 @@ class LineState implements IState {
 	}
 }
 
-suite('ModelLinesTokens', () => {
+describe('ModelLinesTokens', () => {
 
 	interface IBufferLineState {
 		text: string;

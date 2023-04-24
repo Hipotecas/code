@@ -4,14 +4,14 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { deepStrictEqual, strictEqual } from 'assert';
-import { EnvironmentVariableMutatorType } from 'vs/platform/terminal/common/environmentVariable';
 import { IProcessEnvironment, isWindows } from 'vs/base/common/platform';
+import { URI } from 'vs/base/common/uri';
+import { EnvironmentVariableMutatorType } from 'vs/platform/terminal/common/environmentVariable';
 import { MergedEnvironmentVariableCollection } from 'vs/platform/terminal/common/environmentVariableCollection';
 import { deserializeEnvironmentDescriptionMap, deserializeEnvironmentVariableCollection } from 'vs/platform/terminal/common/environmentVariableShared';
-import { URI } from 'vs/base/common/uri';
 
-suite('EnvironmentVariable - MergedEnvironmentVariableCollection', () => {
-	suite('ctor', () => {
+describe('EnvironmentVariable - MergedEnvironmentVariableCollection', () => {
+	describe('ctor', () => {
 		test('Should keep entries that come after a Prepend or Append type mutators', () => {
 			const merged = new MergedEnvironmentVariableCollection(new Map([
 				['ext1', {
@@ -186,7 +186,7 @@ suite('EnvironmentVariable - MergedEnvironmentVariableCollection', () => {
 		});
 	});
 
-	suite('applyToProcessEnvironment', () => {
+	describe('applyToProcessEnvironment', () => {
 		test('should apply the collection to an environment', async () => {
 			const merged = new MergedEnvironmentVariableCollection(new Map([
 				['ext', {
@@ -289,7 +289,7 @@ suite('EnvironmentVariable - MergedEnvironmentVariableCollection', () => {
 		});
 	});
 
-	suite('diff', () => {
+	describe('diff', () => {
 		test('should return undefined when collectinos are the same', () => {
 			const merged1 = new MergedEnvironmentVariableCollection(new Map([
 				['ext1', {

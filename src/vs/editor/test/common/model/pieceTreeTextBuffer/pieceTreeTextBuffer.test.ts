@@ -4,16 +4,16 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { WordCharacterClassifier } from 'vs/editor/common/core/wordCharacterClassifier';
+import { splitLines } from 'vs/base/common/strings';
 import { Position } from 'vs/editor/common/core/position';
 import { Range } from 'vs/editor/common/core/range';
+import { WordCharacterClassifier } from 'vs/editor/common/core/wordCharacterClassifier';
 import { DefaultEndOfLine, ITextSnapshot, SearchData } from 'vs/editor/common/model';
 import { PieceTreeBase } from 'vs/editor/common/model/pieceTreeTextBuffer/pieceTreeBase';
 import { PieceTreeTextBuffer } from 'vs/editor/common/model/pieceTreeTextBuffer/pieceTreeTextBuffer';
 import { PieceTreeTextBufferBuilder } from 'vs/editor/common/model/pieceTreeTextBuffer/pieceTreeTextBufferBuilder';
 import { NodeColor, SENTINEL, TreeNode } from 'vs/editor/common/model/pieceTreeTextBuffer/rbTreeBase';
 import { createTextModel } from 'vs/editor/test/common/testTextModel';
-import { splitLines } from 'vs/base/common/strings';
 
 const alphabet = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ\r\n';
 
@@ -161,12 +161,12 @@ function createTextBuffer(val: string[], normalizeEOL: boolean = true): PieceTre
 }
 
 function assertTreeInvariants(T: PieceTreeBase): void {
-	assert(SENTINEL.color === NodeColor.Black);
-	assert(SENTINEL.parent === SENTINEL);
-	assert(SENTINEL.left === SENTINEL);
-	assert(SENTINEL.right === SENTINEL);
-	assert(SENTINEL.size_left === 0);
-	assert(SENTINEL.lf_left === 0);
+	expect(SENTINEL.color).toEqual(NodeColor.Black)
+  expect(SENTINEL.parent).toEqual(SENTINEL)
+  expect(SENTINEL.left).toEqual(SENTINEL)
+  expect(SENTINEL.right).toEqual(SENTINEL)
+  expect(SENTINEL.lf_left).toEqual(0)
+  expect(SENTINEL.size_left).toEqual(0)
 	assertValidTree(T);
 }
 
@@ -175,7 +175,7 @@ function depth(n: TreeNode): number {
 		// The leafs are black
 		return 1;
 	}
-	assert(depth(n.left) === depth(n.right));
+  expect(depth(n.left)).toBe(depth(n.right))
 	return (n.color === NodeColor.Black ? 1 : 0) + depth(n.left);
 }
 
@@ -187,14 +187,14 @@ function assertValidNode(n: TreeNode): { size: number; lf_cnt: number } {
 	const l = n.left;
 	const r = n.right;
 
-	if (n.color === NodeColor.Red) {
-		assert(l.color === NodeColor.Black);
-		assert(r.color === NodeColor.Black);
-	}
+  if (n.color === NodeColor.Red) {
+    expect(l.color).toEqual(NodeColor.Black)
+    expect(r.color).toEqual(NodeColor.Black)
+  }
 
-	const actualLeft = assertValidNode(l);
-	assert(actualLeft.lf_cnt === n.lf_left);
-	assert(actualLeft.size === n.size_left);
+  const actualLeft = assertValidNode(l)
+  expect(actualLeft?.lf_cnt).toEqual(n.lf_left)
+  expect(actualLeft?.size).toEqual(n.size_left)
 	const actualRight = assertValidNode(r);
 
 	return { size: n.size_left + n.piece.length + actualRight.size, lf_cnt: n.lf_left + n.piece.lineFeedCnt + actualRight.lf_cnt };
@@ -204,14 +204,14 @@ function assertValidTree(T: PieceTreeBase): void {
 	if (T.root === SENTINEL) {
 		return;
 	}
-	assert(T.root.color === NodeColor.Black);
-	assert(depth(T.root.left) === depth(T.root.right));
+  expect(T.root.color).toEqual(NodeColor.Black)
+  expect(depth(T.root.left)).toEqual(depth(T.root.right))
 	assertValidNode(T.root);
 }
 
 //#endregion
 
-suite('inserts and deletes', () => {
+describe('inserts and deletes', () => {
 	test('basic insert/delete', () => {
 		const pieceTable = createTextBuffer([
 			'This is a document with some text.'
@@ -543,7 +543,7 @@ suite('inserts and deletes', () => {
 	});
 });
 
-suite('prefix sum for line feed', () => {
+describe('prefix sum for line feed', () => {
 	test('basic', () => {
 		const pieceTable = createTextBuffer(['1\n2\n3\n4']);
 
@@ -771,7 +771,7 @@ suite('prefix sum for line feed', () => {
 	});
 });
 
-suite('offset 2 position', () => {
+describe('offset 2 position', () => {
 	test('random tests bug 1', () => {
 		let str = '';
 		const pieceTable = createTextBuffer(['']);
@@ -795,7 +795,7 @@ suite('offset 2 position', () => {
 	});
 });
 
-suite('get text in range', () => {
+describe('get text in range', () => {
 	test('getContentInRange', () => {
 		const pieceTable = createTextBuffer(['a\nb\nc\nde']);
 		pieceTable.insert(8, 'fh\ni\njk');
@@ -966,7 +966,7 @@ suite('get text in range', () => {
 	});
 });
 
-suite('CRLF', () => {
+describe('CRLF', () => {
 	test('delete CR in CRLF 1', () => {
 		const pieceTable = createTextBuffer([''], false);
 		pieceTable.insert(0, 'a\r\nb');
@@ -1180,7 +1180,7 @@ suite('CRLF', () => {
 	});
 });
 
-suite('centralized lineStarts with CRLF', () => {
+describe('centralized lineStarts with CRLF', () => {
 	test('delete CR in CRLF 1', () => {
 		const pieceTable = createTextBuffer(['a\r\nb'], false);
 		pieceTable.delete(2, 2);
@@ -1442,7 +1442,7 @@ suite('centralized lineStarts with CRLF', () => {
 	});
 });
 
-suite('random is unsupervised', () => {
+describe('random is unsupervised', () => {
 	test('splitting large change buffer', function () {
 		const pieceTable = createTextBuffer([''], false);
 		let str = '';
@@ -1476,7 +1476,6 @@ suite('random is unsupervised', () => {
 	});
 
 	test('random insert delete', function () {
-		this.timeout(500000);
 		let str = '';
 		const pieceTable = createTextBuffer([str], false);
 
@@ -1514,7 +1513,6 @@ suite('random is unsupervised', () => {
 	});
 
 	test('random chunks', function () {
-		this.timeout(500000);
 		const chunks: string[] = [];
 		for (let i = 0; i < 5; i++) {
 			chunks.push(randomStr(1000));
@@ -1549,7 +1547,6 @@ suite('random is unsupervised', () => {
 	});
 
 	test('random chunks 2', function () {
-		this.timeout(500000);
 		const chunks: string[] = [];
 		chunks.push(randomStr(1000));
 
@@ -1583,30 +1580,34 @@ suite('random is unsupervised', () => {
 	});
 });
 
-suite('buffer api', () => {
+describe('buffer api', () => {
 	test('equal', () => {
 		const a = createTextBuffer(['abc']);
 		const b = createTextBuffer(['ab', 'c']);
 		const c = createTextBuffer(['abd']);
 		const d = createTextBuffer(['abcd']);
 
-		assert(a.equal(b));
-		assert(!a.equal(c));
-		assert(!a.equal(d));
+
+    expect(a.equal(b)).toBe(true)
+
+    expect(a.equal(c)).not.toBe(true)
+
+    expect(a.equal(d)).not.toBe(true)
 	});
 
 	test('equal 2, empty buffer', () => {
 		const a = createTextBuffer(['']);
 		const b = createTextBuffer(['']);
 
-		assert(a.equal(b));
+
+    expect(a.equal(b)).toBe(true)
 	});
 
 	test('equal 3, empty buffer', () => {
 		const a = createTextBuffer(['a']);
 		const b = createTextBuffer(['']);
 
-		assert(!a.equal(b));
+    expect(a.equal(b)).not.toBe(true)
 	});
 
 	test('getLineCharCode - issue #45735', () => {
@@ -1641,7 +1642,7 @@ suite('buffer api', () => {
 	});
 });
 
-suite('search offset cache', () => {
+describe('search offset cache', () => {
 	test('render white space exception', () => {
 		const pieceTable = createTextBuffer(['class Name{\n\t\n\t\t\tget() {\n\n\t\t\t}\n\t\t}']);
 		let str = 'class Name{\n\t\n\t\t\tget() {\n\n\t\t\t}\n\t\t}';
@@ -1695,7 +1696,7 @@ suite('search offset cache', () => {
 		str = str.substring(0, 15) + str.substring(15 + 2);
 
 		const content = pieceTable.getLinesRawContent();
-		assert(content === str);
+    expect(content === str).toBe(true)
 	});
 
 	test('Line breaks replacement is not necessary when EOL is normalized', () => {
@@ -1759,7 +1760,7 @@ function getValueInSnapshot(snapshot: ITextSnapshot) {
 
 	return ret;
 }
-suite('snapshot', () => {
+describe('snapshot', () => {
 	test('bug #45564, piece tree pieces should be immutable', () => {
 		const model = createTextModel('\n');
 		model.applyEdits([
@@ -1856,7 +1857,7 @@ suite('snapshot', () => {
 	});
 });
 
-suite('chunk based search', () => {
+describe('chunk based search', () => {
 	test('#45892. For some cases, the buffer is empty but we still try to search', () => {
 		const pieceTree = createTextBuffer(['']);
 		pieceTree.delete(0, 1);

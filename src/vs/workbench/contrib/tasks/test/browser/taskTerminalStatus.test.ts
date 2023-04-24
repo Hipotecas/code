@@ -59,7 +59,7 @@ class TestProblemCollector implements Partial<AbstractProblemCollector> {
 	readonly onDidRequestInvalidateLastMarker = this._onDidRequestInvalidateLastMarker.event;
 }
 
-suite('Task Terminal Status', () => {
+describe('Task Terminal Status', () => {
 	let instantiationService: TestInstantiationService;
 	let taskService: TestTaskService;
 	let taskTerminalStatus: TaskTerminalStatus;
@@ -67,7 +67,7 @@ suite('Task Terminal Status', () => {
 	let testTask: Task;
 	let problemCollector: AbstractProblemCollector;
 	let audioCueService: TestAudioCueService;
-	setup(() => {
+	beforeEach(() => {
 		instantiationService = new TestInstantiationService();
 		taskService = new TestTaskService();
 		audioCueService = new TestAudioCueService();

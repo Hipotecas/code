@@ -4,17 +4,17 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { Emitter } from 'vs/base/common/event';
-import { toResource } from 'vs/base/test/common/utils';
-import { TestFileService } from 'vs/workbench/test/browser/workbenchTestServices';
-import { ExplorerItem } from 'vs/workbench/contrib/files/common/explorerModel';
-import { getContext } from 'vs/workbench/contrib/files/browser/views/explorerView';
-import { listInvalidItemForeground } from 'vs/platform/theme/common/colorRegistry';
-import { CompressedNavigationController } from 'vs/workbench/contrib/files/browser/views/explorerViewer';
 import * as dom from 'vs/base/browser/dom';
+import { Emitter } from 'vs/base/common/event';
 import { DisposableStore } from 'vs/base/common/lifecycle';
-import { provideDecorations } from 'vs/workbench/contrib/files/browser/views/explorerDecorationsProvider';
+import { toResource } from 'vs/base/test/common/utils';
 import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
+import { listInvalidItemForeground } from 'vs/platform/theme/common/colorRegistry';
+import { provideDecorations } from 'vs/workbench/contrib/files/browser/views/explorerDecorationsProvider';
+import { getContext } from 'vs/workbench/contrib/files/browser/views/explorerView';
+import { CompressedNavigationController } from 'vs/workbench/contrib/files/browser/views/explorerViewer';
+import { ExplorerItem } from 'vs/workbench/contrib/files/common/explorerModel';
+import { TestFileService } from 'vs/workbench/test/browser/workbenchTestServices';
 const $ = dom.$;
 
 const fileService = new TestFileService();
@@ -24,7 +24,7 @@ function createStat(this: any, path: string, name: string, isFolder: boolean, ha
 	return new ExplorerItem(toResource.call(this, path), fileService, configService, undefined, isFolder, isSymLink, false, name, mtime, isUnknown);
 }
 
-suite('Files - ExplorerView', () => {
+describe('Files - ExplorerView', () => {
 
 	test('getContext', async function () {
 		const d = new Date().getTime();

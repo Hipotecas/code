@@ -6,7 +6,7 @@
 import * as assert from 'assert';
 import * as processes from 'vs/base/common/processes';
 
-suite('Processes', () => {
+describe('Processes', () => {
 	test('sanitizeProcessEnvironment', () => {
 		const env = {
 			FOO: 'bar',

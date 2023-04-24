@@ -10,7 +10,7 @@ import { getSelectionSearchString } from 'vs/editor/contrib/find/browser/findCon
 import { withTestCodeEditor } from 'vs/editor/test/browser/testCodeEditor';
 
 
-suite('Find', () => {
+describe('Find', () => {
 
 	test('search string at position', () => {
 		withTestCodeEditor([

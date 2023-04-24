@@ -42,7 +42,7 @@ namespace Samples {
 	}
 }
 
-suite('Event utils dispose', function () {
+describe('Event utils dispose', function () {
 
 	let tracker = new DisposableTracker();
 
@@ -62,12 +62,12 @@ suite('Event utils dispose', function () {
 
 	}
 
-	setup(() => {
+	beforeEach(() => {
 		tracker = new DisposableTracker();
 		setDisposableTracker(tracker);
 	});
 
-	teardown(function () {
+	afterEach(function () {
 		setDisposableTracker(null);
 	});
 
@@ -106,11 +106,11 @@ suite('Event utils dispose', function () {
 	});
 });
 
-suite('Event', function () {
+describe('Event', function () {
 
 	const counter = new Samples.EventCounter();
 
-	setup(() => counter.reset());
+	beforeEach(() => counter.reset());
 
 	test('Emitter plain', function () {
 
@@ -354,7 +354,7 @@ suite('Event', function () {
 	});
 });
 
-suite('AsyncEmitter', function () {
+describe('AsyncEmitter', function () {
 
 	test('event has waitUntil-function', async function () {
 
@@ -469,7 +469,7 @@ suite('AsyncEmitter', function () {
 	});
 });
 
-suite('PausableEmitter', function () {
+describe('PausableEmitter', function () {
 
 	test('basic', function () {
 		const data: number[] = [];
@@ -607,7 +607,7 @@ suite('PausableEmitter', function () {
 
 });
 
-suite('Event utils - ensureNoDisposablesAreLeakedInTestSuite', function () {
+describe('Event utils - ensureNoDisposablesAreLeakedInTestSuite', function () {
 	ensureNoDisposablesAreLeakedInTestSuite();
 
 	test('fromObservable', function () {
@@ -634,9 +634,9 @@ suite('Event utils - ensureNoDisposablesAreLeakedInTestSuite', function () {
 	});
 });
 
-suite('Event utils', () => {
+describe('Event utils', () => {
 
-	suite('EventBufferer', () => {
+	describe('EventBufferer', () => {
 
 		test('should not buffer when not wrapped', () => {
 			const bufferer = new EventBufferer();
@@ -710,7 +710,7 @@ suite('Event utils', () => {
 		});
 	});
 
-	suite('buffer', () => {
+	describe('buffer', () => {
 
 		test('should buffer events', () => {
 			const result: number[] = [];
@@ -772,7 +772,7 @@ suite('Event utils', () => {
 		});
 	});
 
-	suite('EventMultiplexer', () => {
+	describe('EventMultiplexer', () => {
 
 		test('works', () => {
 			const result: number[] = [];
@@ -982,7 +982,7 @@ suite('Event utils', () => {
 		listener.dispose(); // should not crash
 	});
 
-	suite('Relay', () => {
+	describe('Relay', () => {
 		test('should input work', () => {
 			const e1 = new Emitter<number>();
 			const e2 = new Emitter<number>();
@@ -1068,7 +1068,7 @@ suite('Event utils', () => {
 		]);
 	});
 
-	suite('accumulate', () => {
+	describe('accumulate', () => {
 		test('should not fire after a listener is disposed with undefined or []', async () => {
 			const eventEmitter = new Emitter<number>();
 			const event = eventEmitter.event;
@@ -1131,7 +1131,7 @@ suite('Event utils', () => {
 		});
 	});
 
-	suite('debounce', () => {
+	describe('debounce', () => {
 		test('simple', function (done: () => void) {
 			const doc = new Samples.Document3();
 

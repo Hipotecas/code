@@ -4,22 +4,22 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { DecorationsService } from 'vs/workbench/services/decorations/browser/decorationsService';
-import { IDecorationsProvider, IDecorationData } from 'vs/workbench/services/decorations/common/decorations';
-import { URI } from 'vs/base/common/uri';
-import { Event, Emitter } from 'vs/base/common/event';
-import * as resources from 'vs/base/common/resources';
 import { CancellationToken } from 'vs/base/common/cancellation';
+import { Emitter, Event } from 'vs/base/common/event';
+import * as resources from 'vs/base/common/resources';
+import { URI } from 'vs/base/common/uri';
 import { mock } from 'vs/base/test/common/mock';
-import { IUriIdentityService } from 'vs/platform/uriIdentity/common/uriIdentity';
-import { TestThemeService } from 'vs/platform/theme/test/common/testThemeService';
 import { runWithFakedTimers } from 'vs/base/test/common/timeTravelScheduler';
+import { TestThemeService } from 'vs/platform/theme/test/common/testThemeService';
+import { IUriIdentityService } from 'vs/platform/uriIdentity/common/uriIdentity';
+import { DecorationsService } from 'vs/workbench/services/decorations/browser/decorationsService';
+import { IDecorationData, IDecorationsProvider } from 'vs/workbench/services/decorations/common/decorations';
 
-suite('DecorationsService', function () {
+describe('DecorationsService', function () {
 
 	let service: DecorationsService;
 
-	setup(function () {
+	beforeEach(function () {
 		service?.dispose();
 		service = new DecorationsService(
 			new class extends mock<IUriIdentityService>() {

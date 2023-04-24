@@ -5,10 +5,10 @@
 import * as assert from 'assert';
 import { Graph } from 'vs/platform/instantiation/common/graph';
 
-suite('Graph', () => {
+describe('Graph', () => {
 	let graph: Graph<string>;
 
-	setup(() => {
+	beforeEach(() => {
 		graph = new Graph<string>(s => s);
 	});
 

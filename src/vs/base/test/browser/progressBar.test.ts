@@ -3,29 +3,28 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import * as assert from 'assert';
 import { ProgressBar } from 'vs/base/browser/ui/progressbar/progressbar';
 
-suite('ProgressBar', () => {
+describe('ProgressBar', () => {
 	let fixture: HTMLElement;
 
-	setup(() => {
+	beforeEach(() => {
 		fixture = document.createElement('div');
 		document.body.appendChild(fixture);
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		document.body.removeChild(fixture);
 	});
 
 	test('Progress Bar', function () {
 		const bar = new ProgressBar(fixture);
-		assert(bar.infinite());
-		assert(bar.total(100));
-		assert(bar.worked(50));
-		assert(bar.setWorked(70));
-		assert(bar.worked(30));
-		assert(bar.done());
+		expect(bar.infinite()).toBeTruthy()
+		expect(bar.total(100)).toBeTruthy()
+		expect(bar.worked(50)).toBeTruthy()
+		expect(bar.setWorked(70)).toBeTruthy()
+		expect(bar.worked(30)).toBeTruthy()
+		expect(bar.done()).toBeTruthy()
 
 		bar.dispose();
 	});

@@ -4,27 +4,27 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { workbenchInstantiationService, TestServiceAccessor, ITestTextFileEditorModelManager } from 'vs/workbench/test/browser/workbenchTestServices';
+import { DisposableStore } from 'vs/base/common/lifecycle';
 import { toResource } from 'vs/base/test/common/utils';
+import { FileOperation } from 'vs/platform/files/common/files';
 import { IInstantiationService } from 'vs/platform/instantiation/common/instantiation';
 import { TextFileEditorModel } from 'vs/workbench/services/textfile/common/textFileEditorModel';
-import { FileOperation } from 'vs/platform/files/common/files';
-import { DisposableStore } from 'vs/base/common/lifecycle';
+import { ITestTextFileEditorModelManager, TestServiceAccessor, workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
 
-suite('Files - TextFileService', () => {
+describe('Files - TextFileService', () => {
 
 	let disposables: DisposableStore;
 	let instantiationService: IInstantiationService;
 	let model: TextFileEditorModel;
 	let accessor: TestServiceAccessor;
 
-	setup(() => {
+	beforeEach(() => {
 		disposables = new DisposableStore();
 		instantiationService = workbenchInstantiationService(undefined, disposables);
 		accessor = instantiationService.createInstance(TestServiceAccessor);
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		model?.dispose();
 		(<ITestTextFileEditorModelManager>accessor.textFileService.files).dispose();
 		disposables.dispose();

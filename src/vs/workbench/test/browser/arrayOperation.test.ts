@@ -6,7 +6,7 @@
 import * as assert from 'assert';
 import { ArrayEdit, MonotonousIndexTransformer, SingleArrayEdit } from 'vs/workbench/services/textMate/browser/arrayOperation';
 
-suite('array operation', () => {
+describe('array operation', () => {
 	function seq(start: number, end: number) {
 		const result: number[] = [];
 		for (let i = start; i < end; i++) {

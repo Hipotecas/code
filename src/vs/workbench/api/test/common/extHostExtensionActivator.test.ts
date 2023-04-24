@@ -12,7 +12,7 @@ import { ActivatedExtension, EmptyExtension, ExtensionActivationTimes, Extension
 import { ExtensionDescriptionRegistry, basicActivationEventsReader } from 'vs/workbench/services/extensions/common/extensionDescriptionRegistry';
 import { ExtensionActivationReason, MissingExtensionDependency } from 'vs/workbench/services/extensions/common/extensions';
 
-suite('ExtensionsActivator', () => {
+describe('ExtensionsActivator', () => {
 
 	const idA = new ExtensionIdentifier(`a`);
 	const idB = new ExtensionIdentifier(`b`);

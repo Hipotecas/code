@@ -4,11 +4,11 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { IViewLineTokens, LineTokens } from 'vs/editor/common/tokens/lineTokens';
 import { MetadataConsts } from 'vs/editor/common/encodedTokenAttributes';
 import { LanguageIdCodec } from 'vs/editor/common/services/languagesRegistry';
+import { IViewLineTokens, LineTokens } from 'vs/editor/common/tokens/lineTokens';
 
-suite('LineTokens', () => {
+describe('LineTokens', () => {
 
 	interface ILineToken {
 		startIndex: number;
@@ -57,7 +57,7 @@ suite('LineTokens', () => {
 
 	test('withInserted 1', () => {
 		const lineTokens = createTestLineTokens();
-		assert.strictEqual(renderLineTokens(lineTokens), 'Hello (32768)world, (65536)this (98304)is (131072)a (163840)lovely (196608)day(229376)');
+		expect(renderLineTokens(lineTokens)).toStrictEqual('Hello (32768)world, (65536)this (98304)is (131072)a (163840)lovely (196608)day(229376)')
 
 		const lineTokens2 = lineTokens.withInserted([
 			{ offset: 0, text: '1', tokenMetadata: 0, },
@@ -65,12 +65,12 @@ suite('LineTokens', () => {
 			{ offset: 9, text: '3', tokenMetadata: 0, },
 		]);
 
-		assert.strictEqual(renderLineTokens(lineTokens2), '1(0)Hello (32768)2(0)wor(65536)3(0)ld, (65536)this (98304)is (131072)a (163840)lovely (196608)day(229376)');
+		expect(renderLineTokens(lineTokens2)).toStrictEqual('1(0)Hello (32768)2(0)wor(65536)3(0)ld, (65536)this (98304)is (131072)a (163840)lovely (196608)day(229376)')
 	});
 
 	test('withInserted (tokens at the same position)', () => {
 		const lineTokens = createTestLineTokens();
-		assert.strictEqual(renderLineTokens(lineTokens), 'Hello (32768)world, (65536)this (98304)is (131072)a (163840)lovely (196608)day(229376)');
+		expect(renderLineTokens(lineTokens)).toStrictEqual('Hello (32768)world, (65536)this (98304)is (131072)a (163840)lovely (196608)day(229376)')
 
 		const lineTokens2 = lineTokens.withInserted([
 			{ offset: 0, text: '1', tokenMetadata: 0, },
@@ -78,82 +78,81 @@ suite('LineTokens', () => {
 			{ offset: 0, text: '3', tokenMetadata: 0, },
 		]);
 
-		assert.strictEqual(renderLineTokens(lineTokens2), '1(0)2(0)3(0)Hello (32768)world, (65536)this (98304)is (131072)a (163840)lovely (196608)day(229376)');
+    expect(renderLineTokens(lineTokens2)).toStrictEqual('1(0)2(0)3(0)Hello (32768)world, (65536)this (98304)is (131072)a (163840)lovely (196608)day(229376)')
 	});
 
 	test('withInserted (tokens at the end)', () => {
 		const lineTokens = createTestLineTokens();
-		assert.strictEqual(renderLineTokens(lineTokens), 'Hello (32768)world, (65536)this (98304)is (131072)a (163840)lovely (196608)day(229376)');
-
+    expect(renderLineTokens(lineTokens)).toStrictEqual('Hello (32768)world, (65536)this (98304)is (131072)a (163840)lovely (196608)day(229376)')
 		const lineTokens2 = lineTokens.withInserted([
 			{ offset: 'Hello world, this is a lovely day'.length - 1, text: '1', tokenMetadata: 0, },
 			{ offset: 'Hello world, this is a lovely day'.length, text: '2', tokenMetadata: 0, },
 		]);
 
-		assert.strictEqual(renderLineTokens(lineTokens2), 'Hello (32768)world, (65536)this (98304)is (131072)a (163840)lovely (196608)da(229376)1(0)y(229376)2(0)');
+		expect(renderLineTokens(lineTokens2), 'Hello (32768)world, (65536)this (98304)is (131072)a (163840)lovely (196608)da(229376)1(0)y(229376)2(0)')
 	});
 
 	test('basics', () => {
 		const lineTokens = createTestLineTokens();
 
-		assert.strictEqual(lineTokens.getLineContent(), 'Hello world, this is a lovely day');
-		assert.strictEqual(lineTokens.getLineContent().length, 33);
-		assert.strictEqual(lineTokens.getCount(), 7);
+		expect(lineTokens.getLineContent(), 'Hello world).toStrictEqual(this is a lovely day')
+		expect(lineTokens.getLineContent().length).toStrictEqual(33)
+		expect(lineTokens.getCount()).toStrictEqual(7)
 
-		assert.strictEqual(lineTokens.getStartOffset(0), 0);
-		assert.strictEqual(lineTokens.getEndOffset(0), 6);
-		assert.strictEqual(lineTokens.getStartOffset(1), 6);
-		assert.strictEqual(lineTokens.getEndOffset(1), 13);
-		assert.strictEqual(lineTokens.getStartOffset(2), 13);
-		assert.strictEqual(lineTokens.getEndOffset(2), 18);
-		assert.strictEqual(lineTokens.getStartOffset(3), 18);
-		assert.strictEqual(lineTokens.getEndOffset(3), 21);
-		assert.strictEqual(lineTokens.getStartOffset(4), 21);
-		assert.strictEqual(lineTokens.getEndOffset(4), 23);
-		assert.strictEqual(lineTokens.getStartOffset(5), 23);
-		assert.strictEqual(lineTokens.getEndOffset(5), 30);
-		assert.strictEqual(lineTokens.getStartOffset(6), 30);
-		assert.strictEqual(lineTokens.getEndOffset(6), 33);
+		expect(lineTokens.getStartOffset(0)).toStrictEqual(0)
+		expect(lineTokens.getEndOffset(0)).toStrictEqual(6)
+		expect(lineTokens.getStartOffset(1)).toStrictEqual(6)
+		expect(lineTokens.getEndOffset(1)).toStrictEqual(13)
+		expect(lineTokens.getStartOffset(2)).toStrictEqual(13)
+		expect(lineTokens.getEndOffset(2)).toStrictEqual(18)
+		expect(lineTokens.getStartOffset(3)).toStrictEqual(18)
+		expect(lineTokens.getEndOffset(3)).toStrictEqual(21)
+		expect(lineTokens.getStartOffset(4)).toStrictEqual(21)
+		expect(lineTokens.getEndOffset(4)).toStrictEqual(23)
+		expect(lineTokens.getStartOffset(5)).toStrictEqual(23)
+		expect(lineTokens.getEndOffset(5)).toStrictEqual(30)
+		expect(lineTokens.getStartOffset(6)).toStrictEqual(30)
+		expect(lineTokens.getEndOffset(6)).toStrictEqual(33)
 	});
 
 	test('findToken', () => {
 		const lineTokens = createTestLineTokens();
 
-		assert.strictEqual(lineTokens.findTokenIndexAtOffset(0), 0);
-		assert.strictEqual(lineTokens.findTokenIndexAtOffset(1), 0);
-		assert.strictEqual(lineTokens.findTokenIndexAtOffset(2), 0);
-		assert.strictEqual(lineTokens.findTokenIndexAtOffset(3), 0);
-		assert.strictEqual(lineTokens.findTokenIndexAtOffset(4), 0);
-		assert.strictEqual(lineTokens.findTokenIndexAtOffset(5), 0);
-		assert.strictEqual(lineTokens.findTokenIndexAtOffset(6), 1);
-		assert.strictEqual(lineTokens.findTokenIndexAtOffset(7), 1);
-		assert.strictEqual(lineTokens.findTokenIndexAtOffset(8), 1);
-		assert.strictEqual(lineTokens.findTokenIndexAtOffset(9), 1);
-		assert.strictEqual(lineTokens.findTokenIndexAtOffset(10), 1);
-		assert.strictEqual(lineTokens.findTokenIndexAtOffset(11), 1);
-		assert.strictEqual(lineTokens.findTokenIndexAtOffset(12), 1);
-		assert.strictEqual(lineTokens.findTokenIndexAtOffset(13), 2);
-		assert.strictEqual(lineTokens.findTokenIndexAtOffset(14), 2);
-		assert.strictEqual(lineTokens.findTokenIndexAtOffset(15), 2);
-		assert.strictEqual(lineTokens.findTokenIndexAtOffset(16), 2);
-		assert.strictEqual(lineTokens.findTokenIndexAtOffset(17), 2);
-		assert.strictEqual(lineTokens.findTokenIndexAtOffset(18), 3);
-		assert.strictEqual(lineTokens.findTokenIndexAtOffset(19), 3);
-		assert.strictEqual(lineTokens.findTokenIndexAtOffset(20), 3);
-		assert.strictEqual(lineTokens.findTokenIndexAtOffset(21), 4);
-		assert.strictEqual(lineTokens.findTokenIndexAtOffset(22), 4);
-		assert.strictEqual(lineTokens.findTokenIndexAtOffset(23), 5);
-		assert.strictEqual(lineTokens.findTokenIndexAtOffset(24), 5);
-		assert.strictEqual(lineTokens.findTokenIndexAtOffset(25), 5);
-		assert.strictEqual(lineTokens.findTokenIndexAtOffset(26), 5);
-		assert.strictEqual(lineTokens.findTokenIndexAtOffset(27), 5);
-		assert.strictEqual(lineTokens.findTokenIndexAtOffset(28), 5);
-		assert.strictEqual(lineTokens.findTokenIndexAtOffset(29), 5);
-		assert.strictEqual(lineTokens.findTokenIndexAtOffset(30), 6);
-		assert.strictEqual(lineTokens.findTokenIndexAtOffset(31), 6);
-		assert.strictEqual(lineTokens.findTokenIndexAtOffset(32), 6);
-		assert.strictEqual(lineTokens.findTokenIndexAtOffset(33), 6);
-		assert.strictEqual(lineTokens.findTokenIndexAtOffset(34), 6);
+		expect(lineTokens.findTokenIndexAtOffset(0)).toStrictEqual(0)
+		expect(lineTokens.findTokenIndexAtOffset(1)).toStrictEqual(0)
+		expect(lineTokens.findTokenIndexAtOffset(2)).toStrictEqual(0)
+		expect(lineTokens.findTokenIndexAtOffset(3)).toStrictEqual(0)
+		expect(lineTokens.findTokenIndexAtOffset(4)).toStrictEqual(0)
+		expect(lineTokens.findTokenIndexAtOffset(5)).toStrictEqual(0)
+		expect(lineTokens.findTokenIndexAtOffset(6)).toStrictEqual(1)
+		expect(lineTokens.findTokenIndexAtOffset(7)).toStrictEqual(1)
+		expect(lineTokens.findTokenIndexAtOffset(8)).toStrictEqual(1)
+		expect(lineTokens.findTokenIndexAtOffset(9)).toStrictEqual(1)
+		expect(lineTokens.findTokenIndexAtOffset(10)).toStrictEqual(1)
+		expect(lineTokens.findTokenIndexAtOffset(11)).toStrictEqual(1)
+		expect(lineTokens.findTokenIndexAtOffset(12)).toStrictEqual(1)
+		expect(lineTokens.findTokenIndexAtOffset(13)).toStrictEqual(2)
+		expect(lineTokens.findTokenIndexAtOffset(14)).toStrictEqual(2)
+		expect(lineTokens.findTokenIndexAtOffset(15)).toStrictEqual(2)
+		expect(lineTokens.findTokenIndexAtOffset(16)).toStrictEqual(2)
+		expect(lineTokens.findTokenIndexAtOffset(17)).toStrictEqual(2)
+		expect(lineTokens.findTokenIndexAtOffset(18)).toStrictEqual(3)
+		expect(lineTokens.findTokenIndexAtOffset(19)).toStrictEqual(3)
+		expect(lineTokens.findTokenIndexAtOffset(20)).toStrictEqual(3)
+		expect(lineTokens.findTokenIndexAtOffset(21)).toStrictEqual(4)
+		expect(lineTokens.findTokenIndexAtOffset(22)).toStrictEqual(4)
+		expect(lineTokens.findTokenIndexAtOffset(23)).toStrictEqual(5)
+		expect(lineTokens.findTokenIndexAtOffset(24)).toStrictEqual(5)
+		expect(lineTokens.findTokenIndexAtOffset(25)).toStrictEqual(5)
+		expect(lineTokens.findTokenIndexAtOffset(26)).toStrictEqual(5)
+		expect(lineTokens.findTokenIndexAtOffset(27)).toStrictEqual(5)
+		expect(lineTokens.findTokenIndexAtOffset(28)).toStrictEqual(5)
+		expect(lineTokens.findTokenIndexAtOffset(29)).toStrictEqual(5)
+		expect(lineTokens.findTokenIndexAtOffset(30)).toStrictEqual(6)
+		expect(lineTokens.findTokenIndexAtOffset(31)).toStrictEqual(6)
+		expect(lineTokens.findTokenIndexAtOffset(32)).toStrictEqual(6)
+		expect(lineTokens.findTokenIndexAtOffset(33)).toStrictEqual(6)
+		expect(lineTokens.findTokenIndexAtOffset(34)).toStrictEqual(6)
 	});
 
 	interface ITestViewLineToken {
@@ -170,6 +169,7 @@ suite('LineTokens', () => {
 			};
 		}
 		assert.deepStrictEqual(actual, expected);
+    expect(actual).toStrictEqual(expected)
 	}
 
 	test('inflate', () => {

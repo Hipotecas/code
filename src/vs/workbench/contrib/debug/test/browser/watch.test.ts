@@ -4,7 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { Expression, DebugModel } from 'vs/workbench/contrib/debug/common/debugModel';
+import { DebugModel, Expression } from 'vs/workbench/contrib/debug/common/debugModel';
 import { createMockDebugModel } from 'vs/workbench/contrib/debug/test/browser/mockDebugModel';
 
 // Expressions
@@ -18,11 +18,11 @@ function assertWatchExpressions(watchExpressions: Expression[], expectedName: st
 	});
 }
 
-suite('Debug - Watch', () => {
+describe('Debug - Watch', () => {
 
 	let model: DebugModel;
 
-	setup(() => {
+	beforeEach(() => {
 		model = createMockDebugModel();
 	});
 

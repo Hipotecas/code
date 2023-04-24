@@ -7,7 +7,7 @@ import * as assert from 'assert';
 import { URI } from 'vs/base/common/uri';
 import { LanguagesRegistry } from 'vs/editor/common/services/languagesRegistry';
 
-suite('LanguagesRegistry', () => {
+describe('LanguagesRegistry', () => {
 
 	test('output language does not have a name', () => {
 		const registry = new LanguagesRegistry(false);

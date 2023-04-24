@@ -8,8 +8,8 @@ import { Codicon } from 'vs/base/common/codicons';
 import { ITerminalProfile } from 'vs/platform/terminal/common/terminal';
 import { createProfileSchemaEnums } from 'vs/platform/terminal/common/terminalProfiles';
 
-suite('terminalProfiles', () => {
-	suite('createProfileSchemaEnums', () => {
+describe('terminalProfiles', () => {
+	describe('createProfileSchemaEnums', () => {
 		test('should return an empty array when there are no profiles', () => {
 			deepStrictEqual(createProfileSchemaEnums([]), {
 				values: [

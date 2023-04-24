@@ -27,7 +27,7 @@ class TestFoldingRangeProvider implements FoldingRangeProvider {
 	}
 }
 
-suite('Syntax folding', () => {
+describe('Syntax folding', () => {
 	function r(start: number, end: number): IndentRange {
 		return { start, end };
 	}

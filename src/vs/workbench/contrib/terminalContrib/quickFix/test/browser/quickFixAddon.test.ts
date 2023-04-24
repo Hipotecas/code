@@ -5,39 +5,39 @@
 
 import { strictEqual } from 'assert';
 import { IAction } from 'vs/base/common/actions';
+import { Emitter } from 'vs/base/common/event';
 import { isWindows } from 'vs/base/common/platform';
+import { URI } from 'vs/base/common/uri';
+import { OpenerService } from 'vs/editor/browser/services/openerService';
 import { IConfigurationService } from 'vs/platform/configuration/common/configuration';
 import { TestConfigurationService } from 'vs/platform/configuration/test/common/testConfigurationService';
 import { ContextMenuService } from 'vs/platform/contextview/browser/contextMenuService';
 import { IContextMenuService } from 'vs/platform/contextview/browser/contextView';
 import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
+import { ILabelService } from 'vs/platform/label/common/label';
 import { ILogService, NullLogService } from 'vs/platform/log/common/log';
+import { IOpenerService } from 'vs/platform/opener/common/opener';
+import { IStorageService } from 'vs/platform/storage/common/storage';
 import { ITerminalCommand, TerminalCapability } from 'vs/platform/terminal/common/capabilities/capabilities';
 import { CommandDetectionCapability } from 'vs/platform/terminal/common/capabilities/commandDetectionCapability';
 import { TerminalCapabilityStore } from 'vs/platform/terminal/common/capabilities/terminalCapabilityStore';
-import { ITerminalInstance } from 'vs/workbench/contrib/terminal/browser/terminal';
-import { gitSimilar, freePort, FreePortOutputRegex, gitCreatePr, GitCreatePrOutputRegex, GitPushOutputRegex, gitPushSetUpstream, GitSimilarOutputRegex, gitTwoDashes, GitTwoDashesRegex, pwshUnixCommandNotFoundError, PwshUnixCommandNotFoundErrorOutputRegex, pwshGeneralError, PwshGeneralErrorOutputRegex } from 'vs/workbench/contrib/terminalContrib/quickFix/browser/terminalQuickFixBuiltinActions';
-import { TerminalQuickFixAddon, getQuickFixesForCommand } from 'vs/workbench/contrib/terminalContrib/quickFix/browser/quickFixAddon';
-import { URI } from 'vs/base/common/uri';
-import { Terminal } from 'xterm';
-import { Emitter } from 'vs/base/common/event';
-import { LabelService } from 'vs/workbench/services/label/common/labelService';
-import { ILabelService } from 'vs/platform/label/common/label';
-import { OpenerService } from 'vs/editor/browser/services/openerService';
-import { IOpenerService } from 'vs/platform/opener/common/opener';
-import { IStorageService } from 'vs/platform/storage/common/storage';
-import { TestStorageService } from 'vs/workbench/test/common/workbenchTestServices';
-import { ITerminalQuickFixService } from 'vs/workbench/contrib/terminalContrib/quickFix/browser/quickFix';
 import { ITerminalOutputMatcher } from 'vs/platform/terminal/common/terminal';
+import { ITerminalInstance } from 'vs/workbench/contrib/terminal/browser/terminal';
+import { ITerminalQuickFixService } from 'vs/workbench/contrib/terminalContrib/quickFix/browser/quickFix';
+import { TerminalQuickFixAddon, getQuickFixesForCommand } from 'vs/workbench/contrib/terminalContrib/quickFix/browser/quickFixAddon';
+import { FreePortOutputRegex, GitCreatePrOutputRegex, GitPushOutputRegex, GitSimilarOutputRegex, GitTwoDashesRegex, PwshGeneralErrorOutputRegex, PwshUnixCommandNotFoundErrorOutputRegex, freePort, gitCreatePr, gitPushSetUpstream, gitSimilar, gitTwoDashes, pwshGeneralError, pwshUnixCommandNotFoundError } from 'vs/workbench/contrib/terminalContrib/quickFix/browser/terminalQuickFixBuiltinActions';
+import { LabelService } from 'vs/workbench/services/label/common/labelService';
+import { TestStorageService } from 'vs/workbench/test/common/workbenchTestServices';
+import { Terminal } from 'xterm';
 
-suite('QuickFixAddon', () => {
+describe('QuickFixAddon', () => {
 	let quickFixAddon: TerminalQuickFixAddon;
 	let terminalInstance: Pick<ITerminalInstance, 'freePortKillProcess'>;
 	let commandDetection: CommandDetectionCapability;
 	let openerService: OpenerService;
 	let labelService: LabelService;
 	let terminal: Terminal;
-	setup(() => {
+	beforeEach(() => {
 		const instantiationService = new TestInstantiationService();
 		terminal = new Terminal({
 			allowProposedApi: true,
@@ -66,8 +66,8 @@ suite('QuickFixAddon', () => {
 		quickFixAddon = instantiationService.createInstance(TerminalQuickFixAddon, [], capabilities);
 		terminal.loadAddon(quickFixAddon);
 	});
-	suite('registerCommandFinishedListener & getMatchActions', () => {
-		suite('gitSimilarCommand', async () => {
+	describe('registerCommandFinishedListener & getMatchActions', () => {
+		describe('gitSimilarCommand', async () => {
 			const expectedMap = new Map();
 			const command = `git sttatus`;
 			let output = `git: 'sttatus' is not a git command. See 'git --help'.
@@ -83,12 +83,12 @@ suite('QuickFixAddon', () => {
 				command: 'git status'
 			}];
 			const outputLines = output.split('\n');
-			setup(() => {
+			beforeEach(() => {
 				const command = gitSimilar();
 				expectedMap.set(command.commandLineMatcher.toString(), [command]);
 				quickFixAddon.registerCommandFinishedListener(command);
 			});
-			suite('returns undefined when', () => {
+			describe('returns undefined when', () => {
 				test('output does not match', async () => {
 					strictEqual(await (getQuickFixesForCommand([], terminal, createCommand(command, `invalid output`, GitSimilarOutputRegex, exitCode, [`invalid output`]), expectedMap, openerService, labelService)), undefined);
 				});
@@ -96,7 +96,7 @@ suite('QuickFixAddon', () => {
 					strictEqual(await (getQuickFixesForCommand([], terminal, createCommand(`gt sttatus`, output, GitSimilarOutputRegex, exitCode, outputLines), expectedMap, openerService, labelService)), undefined);
 				});
 			});
-			suite('returns actions when', () => {
+			describe('returns actions when', () => {
 				test('expected unix exit code', async () => {
 					assertMatchOptions((await getQuickFixesForCommand([], terminal, createCommand(command, output, GitSimilarOutputRegex, exitCode, outputLines), expectedMap, openerService, labelService)), actions);
 				});
@@ -104,7 +104,7 @@ suite('QuickFixAddon', () => {
 					assertMatchOptions((await getQuickFixesForCommand([], terminal, createCommand(command, output, GitSimilarOutputRegex, 2, outputLines), expectedMap, openerService, labelService)), actions);
 				});
 			});
-			suite('returns match', () => {
+			describe('returns match', () => {
 				test('returns match', async () => {
 					assertMatchOptions((await getQuickFixesForCommand([], terminal, createCommand(command, output, GitSimilarOutputRegex, exitCode, outputLines), expectedMap, openerService, labelService)), actions);
 				});
@@ -143,7 +143,7 @@ suite('QuickFixAddon', () => {
 				});
 			});
 		});
-		suite('gitTwoDashes', async () => {
+		describe('gitTwoDashes', async () => {
 			const expectedMap = new Map();
 			const command = `git add . -all`;
 			const output = 'error: did you mean `--all` (with two dashes)?';
@@ -155,12 +155,12 @@ suite('QuickFixAddon', () => {
 				tooltip: 'Run: git add . --all',
 				command: 'git add . --all'
 			}];
-			setup(() => {
+			beforeEach(() => {
 				const command = gitTwoDashes();
 				expectedMap.set(command.commandLineMatcher.toString(), [command]);
 				quickFixAddon.registerCommandFinishedListener(command);
 			});
-			suite('returns undefined when', () => {
+			describe('returns undefined when', () => {
 				test('output does not match', async () => {
 					strictEqual((await getQuickFixesForCommand([], terminal, createCommand(command, `invalid output`, GitTwoDashesRegex, exitCode), expectedMap, openerService, labelService)), undefined);
 				});
@@ -168,7 +168,7 @@ suite('QuickFixAddon', () => {
 					strictEqual((await getQuickFixesForCommand([], terminal, createCommand(`gt sttatus`, output, GitTwoDashesRegex, exitCode), expectedMap, openerService, labelService)), undefined);
 				});
 			});
-			suite('returns actions when', () => {
+			describe('returns actions when', () => {
 				test('expected unix exit code', async () => {
 					assertMatchOptions((await getQuickFixesForCommand([], terminal, createCommand(command, output, GitTwoDashesRegex, exitCode), expectedMap, openerService, labelService)), actions);
 				});
@@ -178,7 +178,7 @@ suite('QuickFixAddon', () => {
 			});
 		});
 		if (!isWindows) {
-			suite('freePort', () => {
+			describe('freePort', () => {
 				const expectedMap = new Map();
 				const portCommand = `yarn start dev`;
 				const output = `yarn run v1.22.17
@@ -202,12 +202,12 @@ suite('QuickFixAddon', () => {
 					tooltip: 'Free port 3000',
 					enabled: true
 				}];
-				setup(() => {
+				beforeEach(() => {
 					const command = freePort(terminalInstance);
 					expectedMap.set(command.commandLineMatcher.toString(), [command]);
 					quickFixAddon.registerCommandFinishedListener(command);
 				});
-				suite('returns undefined when', () => {
+				describe('returns undefined when', () => {
 					test('output does not match', async () => {
 						strictEqual((await getQuickFixesForCommand([], terminal, createCommand(portCommand, `invalid output`, FreePortOutputRegex), expectedMap, openerService, labelService)), undefined);
 					});
@@ -218,7 +218,7 @@ suite('QuickFixAddon', () => {
 			});
 		}
 
-		suite('gitPushSetUpstream', () => {
+		describe('gitPushSetUpstream', () => {
 			const expectedMap = new Map();
 			const command = `git push`;
 			const output = `fatal: The current branch test22 has no upstream branch.
@@ -233,12 +233,12 @@ suite('QuickFixAddon', () => {
 				tooltip: 'Run: git push --set-upstream origin test22',
 				command: 'git push --set-upstream origin test22'
 			}];
-			setup(() => {
+			beforeEach(() => {
 				const command = gitPushSetUpstream();
 				expectedMap.set(command.commandLineMatcher.toString(), [command]);
 				quickFixAddon.registerCommandFinishedListener(command);
 			});
-			suite('returns undefined when', () => {
+			describe('returns undefined when', () => {
 				test('output does not match', async () => {
 					strictEqual((await getQuickFixesForCommand([], terminal, createCommand(command, `invalid output`, GitPushOutputRegex, exitCode), expectedMap, openerService, labelService)), undefined);
 				});
@@ -246,7 +246,7 @@ suite('QuickFixAddon', () => {
 					strictEqual((await getQuickFixesForCommand([], terminal, createCommand(`git status`, output, GitPushOutputRegex, exitCode), expectedMap, openerService, labelService)), undefined);
 				});
 			});
-			suite('returns actions when', () => {
+			describe('returns actions when', () => {
 				test('expected unix exit code', async () => {
 					assertMatchOptions((await getQuickFixesForCommand([], terminal, createCommand(command, output, GitPushOutputRegex, exitCode), expectedMap, openerService, labelService)), actions);
 				});
@@ -255,7 +255,7 @@ suite('QuickFixAddon', () => {
 				});
 			});
 		});
-		suite('gitCreatePr', () => {
+		describe('gitCreatePr', () => {
 			const expectedMap = new Map();
 			const command = `git push`;
 			const output = `Total 0 (delta 0), reused 0 (delta 0), pack-reused 0
@@ -274,12 +274,12 @@ suite('QuickFixAddon', () => {
 				tooltip: 'Open: https://github.com/meganrogge/xterm.js/pull/new/test22',
 				uri: URI.parse('https://github.com/meganrogge/xterm.js/pull/new/test22')
 			}];
-			setup(() => {
+			beforeEach(() => {
 				const command = gitCreatePr();
 				expectedMap.set(command.commandLineMatcher.toString(), [command]);
 				quickFixAddon.registerCommandFinishedListener(command);
 			});
-			suite('returns undefined when', () => {
+			describe('returns undefined when', () => {
 				test('output does not match', async () => {
 					strictEqual((await getQuickFixesForCommand([], terminal, createCommand(command, `invalid output`, GitCreatePrOutputRegex, exitCode), expectedMap, openerService, labelService)), undefined);
 				});
@@ -290,14 +290,14 @@ suite('QuickFixAddon', () => {
 					strictEqual((await getQuickFixesForCommand([], terminal, createCommand(command, output, GitCreatePrOutputRegex, 2), expectedMap, openerService, labelService)), undefined);
 				});
 			});
-			suite('returns actions when', () => {
+			describe('returns actions when', () => {
 				test('expected unix exit code', async () => {
 					assertMatchOptions((await getQuickFixesForCommand([], terminal, createCommand(command, output, GitCreatePrOutputRegex, exitCode), expectedMap, openerService, labelService)), actions);
 				});
 			});
 		});
 	});
-	suite('gitPush - multiple providers', () => {
+	describe('gitPush - multiple providers', () => {
 		const expectedMap = new Map();
 		const command = `git push`;
 		const output = `fatal: The current branch test22 has no upstream branch.
@@ -312,13 +312,13 @@ suite('QuickFixAddon', () => {
 			tooltip: 'Run: git push --set-upstream origin test22',
 			command: 'git push --set-upstream origin test22'
 		}];
-		setup(() => {
+		beforeEach(() => {
 			const pushCommand = gitPushSetUpstream();
 			const prCommand = gitCreatePr();
 			quickFixAddon.registerCommandFinishedListener(prCommand);
 			expectedMap.set(pushCommand.commandLineMatcher.toString(), [pushCommand, prCommand]);
 		});
-		suite('returns undefined when', () => {
+		describe('returns undefined when', () => {
 			test('output does not match', async () => {
 				strictEqual((await getQuickFixesForCommand([], terminal, createCommand(command, `invalid output`, GitPushOutputRegex, exitCode), expectedMap, openerService, labelService)), undefined);
 			});
@@ -326,7 +326,7 @@ suite('QuickFixAddon', () => {
 				strictEqual((await getQuickFixesForCommand([], terminal, createCommand(`git status`, output, GitPushOutputRegex, exitCode), expectedMap, openerService, labelService)), undefined);
 			});
 		});
-		suite('returns actions when', () => {
+		describe('returns actions when', () => {
 			test('expected unix exit code', async () => {
 				assertMatchOptions((await getQuickFixesForCommand([], terminal, createCommand(command, output, GitPushOutputRegex, exitCode), expectedMap, openerService, labelService)), actions);
 			});
@@ -335,8 +335,8 @@ suite('QuickFixAddon', () => {
 			});
 		});
 	});
-	suite('pwsh feedback providers', () => {
-		suite('General', () => {
+	describe('pwsh feedback providers', () => {
+		describe('General', () => {
 			const expectedMap = new Map();
 			const command = `not important`;
 			const output = [
@@ -374,7 +374,7 @@ suite('QuickFixAddon', () => {
 					command: command
 				};
 			});
-			setup(() => {
+			beforeEach(() => {
 				const pushCommand = pwshGeneralError();
 				quickFixAddon.registerCommandFinishedListener(pushCommand);
 				expectedMap.set(pushCommand.commandLineMatcher.toString(), [pushCommand]);
@@ -386,7 +386,7 @@ suite('QuickFixAddon', () => {
 				assertMatchOptions((await getQuickFixesForCommand([], terminal, createCommand(command, output, PwshGeneralErrorOutputRegex, exitCode), expectedMap, openerService, labelService)), actions);
 			});
 		});
-		suite('Unix cmd-not-found', () => {
+		describe('Unix cmd-not-found', () => {
 			const expectedMap = new Map();
 			const command = `not important`;
 			const output = [
@@ -418,7 +418,7 @@ suite('QuickFixAddon', () => {
 					command: command
 				};
 			});
-			setup(() => {
+			beforeEach(() => {
 				const pushCommand = pwshUnixCommandNotFoundError();
 				quickFixAddon.registerCommandFinishedListener(pushCommand);
 				expectedMap.set(pushCommand.commandLineMatcher.toString(), [pushCommand]);

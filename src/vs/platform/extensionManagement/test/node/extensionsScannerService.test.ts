@@ -53,12 +53,12 @@ class ExtensionsScannerService extends AbstractExtensionsScannerService implemen
 
 }
 
-suite('NativeExtensionsScanerService Test', () => {
+describe('NativeExtensionsScanerService Test', () => {
 
 	const disposables = new DisposableStore();
 	let instantiationService: TestInstantiationService;
 
-	setup(async () => {
+	beforeEach(async () => {
 		translations = {};
 		instantiationService = new TestInstantiationService();
 		const logService = new NullLogService();
@@ -86,7 +86,7 @@ suite('NativeExtensionsScanerService Test', () => {
 		await fileService.createFolder(userExtensionsLocation);
 	});
 
-	teardown(() => disposables.clear());
+	afterEach(() => disposables.clear());
 
 	test('scan system extension', async () => {
 		const manifest: Partial<IExtensionManifest> = anExtensionManifest({ 'name': 'name', 'publisher': 'pub' });
@@ -348,7 +348,7 @@ suite('NativeExtensionsScanerService Test', () => {
 	}
 });
 
-suite('ExtensionScannerInput', () => {
+describe('ExtensionScannerInput', () => {
 
 	test('compare inputs - location', () => {
 		const anInput = (location: URI, mtime: number | undefined) => new ExtensionScannerInput(location, mtime, undefined, undefined, false, undefined, ExtensionType.User, true, true, '1.1.1', undefined, undefined, true, undefined, {});

@@ -8,7 +8,7 @@ import { IssueReporterModel } from 'vs/code/electron-sandbox/issue/issueReporter
 import { IssueType } from 'vs/platform/issue/common/issue';
 import { normalizeGitHubUrl } from 'vs/platform/issue/common/issueReporterUtil';
 
-suite('IssueReporter', () => {
+describe('IssueReporter', () => {
 
 	test('sets defaults to include all data', () => {
 		const issueReporterModel = new IssueReporterModel();

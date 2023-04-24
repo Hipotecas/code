@@ -7,7 +7,7 @@ import * as assert from 'assert';
 import { buildReplaceStringWithCasePreserved } from 'vs/base/common/search';
 import { parseReplaceString, ReplacePattern, ReplacePiece } from 'vs/editor/contrib/find/browser/replacePattern';
 
-suite('Replace Pattern test', () => {
+describe('Replace Pattern test', () => {
 
 	test('parse replace string', () => {
 		const testParse = (input: string, expectedPieces: ReplacePiece[]) => {

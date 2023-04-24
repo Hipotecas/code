@@ -3,18 +3,18 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { NullExtensionService } from 'vs/workbench/services/extensions/common/extensions';
-import { stub } from 'sinon';
-import { NotebookRendererMessagingService } from 'vs/workbench/contrib/notebook/browser/services/notebookRendererMessagingServiceImpl';
 import * as assert from 'assert';
+import { stub } from 'sinon';
 import { timeout } from 'vs/base/common/async';
+import { NotebookRendererMessagingService } from 'vs/workbench/contrib/notebook/browser/services/notebookRendererMessagingServiceImpl';
+import { NullExtensionService } from 'vs/workbench/services/extensions/common/extensions';
 
-suite('NotebookRendererMessaging', () => {
+describe('NotebookRendererMessaging', () => {
 	let extService: NullExtensionService;
 	let m: NotebookRendererMessagingService;
 	let sent: unknown[] = [];
 
-	setup(() => {
+	beforeEach(() => {
 		sent = [];
 		extService = new NullExtensionService();
 		m = new NotebookRendererMessagingService(extService);

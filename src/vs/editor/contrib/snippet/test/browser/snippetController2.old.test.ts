@@ -31,7 +31,7 @@ class TestSnippetController extends SnippetController2 {
 	}
 }
 
-suite('SnippetController', () => {
+describe('SnippetController', () => {
 
 	function snippetTest(cb: (editor: ITestCodeEditor, template: string, snippetController: TestSnippetController) => void, lines?: string[]): void {
 

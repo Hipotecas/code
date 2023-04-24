@@ -14,7 +14,7 @@ async function eventsEqual(recorder: TerminalRecorder, expected: ReplayEntry[]) 
 	}
 }
 
-suite('TerminalRecorder', () => {
+describe('TerminalRecorder', () => {
 	test('should record dimensions', async () => {
 		const recorder = new TerminalRecorder(1, 2);
 		await eventsEqual(recorder, [

@@ -4,12 +4,12 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { EndOfLineSequence } from 'vs/editor/common/model';
-import { SingleModelEditStackData } from 'vs/editor/common/model/editStack';
 import { Selection } from 'vs/editor/common/core/selection';
 import { TextChange } from 'vs/editor/common/core/textChange';
+import { EndOfLineSequence } from 'vs/editor/common/model';
+import { SingleModelEditStackData } from 'vs/editor/common/model/editStack';
 
-suite('EditStack', () => {
+describe('EditStack', () => {
 
 	test('issue #118041: unicode character undo bug', () => {
 		const stackData = new SingleModelEditStackData(

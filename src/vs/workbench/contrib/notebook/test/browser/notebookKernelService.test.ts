@@ -4,22 +4,22 @@
  *--------------------------------------------------------------------------------------------*/
 
 import * as assert from 'assert';
-import { URI } from 'vs/base/common/uri';
-import { ExtensionIdentifier } from 'vs/platform/extensions/common/extensions';
-import { setupInstantiationService, withTestNotebook as _withTestNotebook } from 'vs/workbench/contrib/notebook/test/browser/testNotebookEditor';
 import { Emitter, Event } from 'vs/base/common/event';
-import { INotebookKernel, INotebookKernelService } from 'vs/workbench/contrib/notebook/common/notebookKernelService';
-import { NotebookKernelService } from 'vs/workbench/contrib/notebook/browser/services/notebookKernelServiceImpl';
-import { INotebookService } from 'vs/workbench/contrib/notebook/common/notebookService';
-import { mock } from 'vs/base/test/common/mock';
-import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
 import { DisposableStore } from 'vs/base/common/lifecycle';
-import { NotebookTextModel } from 'vs/workbench/contrib/notebook/common/model/notebookTextModel';
+import { URI } from 'vs/base/common/uri';
+import { mock } from 'vs/base/test/common/mock';
 import { PLAINTEXT_LANGUAGE_ID } from 'vs/editor/common/languages/modesRegistry';
 import { IMenu, IMenuService } from 'vs/platform/actions/common/actions';
+import { ExtensionIdentifier } from 'vs/platform/extensions/common/extensions';
+import { TestInstantiationService } from 'vs/platform/instantiation/test/common/instantiationServiceMock';
+import { NotebookKernelService } from 'vs/workbench/contrib/notebook/browser/services/notebookKernelServiceImpl';
+import { NotebookTextModel } from 'vs/workbench/contrib/notebook/common/model/notebookTextModel';
 import { TransientOptions } from 'vs/workbench/contrib/notebook/common/notebookCommon';
+import { INotebookKernel, INotebookKernelService } from 'vs/workbench/contrib/notebook/common/notebookKernelService';
+import { INotebookService } from 'vs/workbench/contrib/notebook/common/notebookService';
+import { setupInstantiationService } from 'vs/workbench/contrib/notebook/test/browser/testNotebookEditor';
 
-suite('NotebookKernelService', () => {
+describe('NotebookKernelService', () => {
 
 	let instantiationService: TestInstantiationService;
 	let kernelService: INotebookKernelService;
@@ -27,7 +27,7 @@ suite('NotebookKernelService', () => {
 
 	let onDidAddNotebookDocument: Emitter<NotebookTextModel>;
 
-	setup(function () {
+	beforeEach(function () {
 		disposables = new DisposableStore();
 
 		onDidAddNotebookDocument = new Emitter();
@@ -52,7 +52,7 @@ suite('NotebookKernelService', () => {
 		instantiationService.set(INotebookKernelService, kernelService);
 	});
 
-	teardown(() => {
+	afterEach(() => {
 		disposables.dispose();
 	});
 

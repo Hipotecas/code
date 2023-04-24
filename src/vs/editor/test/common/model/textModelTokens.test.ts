@@ -7,7 +7,7 @@ import * as assert from 'assert';
 import { OffsetRange } from 'vs/editor/common/core/offsetRange';
 import { RangePriorityQueueImpl } from 'vs/editor/common/model/textModelTokens';
 
-suite('RangePriorityQueueImpl', () => {
+describe('RangePriorityQueueImpl', () => {
 
 	test('addRange', () => {
 		const ranges: OffsetRange[] = [];
