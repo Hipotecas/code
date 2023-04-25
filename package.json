@@ -7,7 +7,10 @@
     "test": "vitest",
     "test:ui": "vitest --ui",
     "test:run": "vitest run",
-    "tsc": "tsc -p ./src/tsconfig.json"
+    "tsc": "tsc -p ./src/tsconfig.json",
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:preview": "vitepress preview docs"
   },
   "keywords": [],
   "author": "",
@@ -36,6 +39,7 @@
     "sinon-test": "^3.1.5",
     "typescript": "^5.0.3",
     "vite": "^4.3.1",
+    "vitepress": "1.0.0-alpha.74",
     "vitest": "^0.29.8",
     "webdriverio": "^8.8.4"
   },
@@ -48,5 +52,12 @@
     "xterm-addon-webgl": "^0.14.0",
     "yauzl": "^2.10.0",
     "yazl": "^2.5.1"
+  },
+  "pnpm": {
+    "peerDependencyRules": {
+      "ignoreMissing": [
+        "@algolia/client-search"
+      ]
+    }
   }
 }
