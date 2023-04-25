@@ -11,11 +11,11 @@ export function createSuite<T extends IStorageService>(params: { setup: () => Pr
 	let storageService: T;
 
 	beforeEach(async () => {
-		storageService = await params.beforeEach();
+		storageService = await params.setup();
 	});
 
 	afterEach(() => {
-		return params.afterEach(storageService);
+		params.teardown(storageService);
 	});
 
 	test('Get Data, Integer, Boolean (application)', () => {

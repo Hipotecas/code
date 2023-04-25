@@ -127,7 +127,7 @@ describe('Watcher Events Normalizer', () => {
 			assert.ok(event.contains(updated, FileChangeType.UPDATED));
 			assert.ok(event.contains(deleted, FileChangeType.DELETED));
 
-			done();
+
 		});
 
 		watch.report(raw);
@@ -168,7 +168,7 @@ describe('Watcher Events Normalizer', () => {
 				assert.ok(event.contains(addedFile, FileChangeType.ADDED));
 				assert.ok(event.contains(updatedFile, FileChangeType.UPDATED));
 
-				done();
+
 			});
 
 			watch.report(raw);
@@ -194,7 +194,7 @@ describe('Watcher Events Normalizer', () => {
 
 			assert.ok(event.contains(unrelated, FileChangeType.UPDATED));
 
-			done();
+
 		});
 
 		watch.report(raw);
@@ -220,7 +220,7 @@ describe('Watcher Events Normalizer', () => {
 			assert.ok(event.contains(deleted, FileChangeType.UPDATED));
 			assert.ok(event.contains(unrelated, FileChangeType.UPDATED));
 
-			done();
+
 		});
 
 		watch.report(raw);
@@ -247,7 +247,7 @@ describe('Watcher Events Normalizer', () => {
 			assert.ok(!event.contains(created, FileChangeType.UPDATED));
 			assert.ok(event.contains(unrelated, FileChangeType.UPDATED));
 
-			done();
+
 		});
 
 		watch.report(raw);
@@ -276,7 +276,7 @@ describe('Watcher Events Normalizer', () => {
 			assert.ok(!event.contains(updated, FileChangeType.UPDATED));
 			assert.ok(event.contains(unrelated, FileChangeType.UPDATED));
 
-			done();
+
 		});
 
 		watch.report(raw);
@@ -307,7 +307,7 @@ describe('Watcher Events Normalizer', () => {
 				}
 			}
 
-			done();
+
 		});
 
 		watch.report(raw);

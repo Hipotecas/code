@@ -25,7 +25,7 @@ import { TestThemeService } from 'vs/platform/theme/test/common/testThemeService
 import { RangeHighlightDecorations } from 'vs/workbench/browser/codeeditor';
 import { IEditorService } from 'vs/workbench/services/editor/common/editorService';
 import { TestEditorService, workbenchInstantiationService } from 'vs/workbench/test/browser/workbenchTestServices';
-
+// error
 describe('Editor - Range decorations', () => {
 
 	let disposables: DisposableStore;

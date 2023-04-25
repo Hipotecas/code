@@ -7,16 +7,16 @@ import { tmpdir } from 'os';
 import { join } from 'vs/base/common/path';
 import { checksum } from 'vs/base/node/crypto';
 import { Promises } from 'vs/base/node/pfs';
-import { flakySuite, getRandomTestPath } from 'vs/base/test/node/testUtils';
+import { getRandomTestPath } from 'vs/base/test/node/testUtils';
 
-flakySuite('Crypto', () => {
+describe('Crypto', () => {
 
 	let testDir: string;
 
 	beforeEach(function () {
 		testDir = getRandomTestPath(tmpdir(), 'vsctests', 'crypto');
 
-		return Promises.mkdir(testDir, { recursive: true });
+		Promises.mkdir(testDir, { recursive: true });
 	});
 
 	afterEach(function () {

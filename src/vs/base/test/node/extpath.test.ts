@@ -7,15 +7,15 @@ import * as assert from 'assert';
 import { tmpdir } from 'os';
 import { realcase, realcaseSync, realpath, realpathSync } from 'vs/base/node/extpath';
 import { Promises } from 'vs/base/node/pfs';
-import { flakySuite, getRandomTestPath } from 'vs/base/test/node/testUtils';
+import { getRandomTestPath } from 'vs/base/test/node/testUtils';
 
-flakySuite('Extpath', () => {
+describe('Extpath', () => {
 	let testDir: string;
 
 	beforeEach(() => {
 		testDir = getRandomTestPath(tmpdir(), 'vsctests', 'extpath');
 
-		return Promises.mkdir(testDir, { recursive: true });
+		Promises.mkdir(testDir, { recursive: true });
 	});
 
 	afterEach(() => {

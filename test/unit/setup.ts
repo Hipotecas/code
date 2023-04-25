@@ -1,4 +1,5 @@
-
+import 'whatwg-fetch'
+import 'fake-indexeddb/auto'
 import { vi } from "vitest";
 
 

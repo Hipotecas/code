@@ -3,16 +3,16 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { hookDomPurifyHrefAndSrcSanitizer, basicMarkupHtmlTags } from 'vs/base/browser/dom';
-import * as dompurify from 'vs/base/browser/dompurify/dompurify';
+import dompurify from 'dompurify';
+import { basicMarkupHtmlTags, hookDomPurifyHrefAndSrcSanitizer } from 'vs/base/browser/dom';
 import { allowedMarkdownAttr } from 'vs/base/browser/markdownRenderer';
 import { CancellationToken } from 'vs/base/common/cancellation';
 import { marked } from 'vs/base/common/marked/marked';
 import { Schemas } from 'vs/base/common/network';
+import { escape } from 'vs/base/common/strings';
 import { ILanguageService } from 'vs/editor/common/languages/language';
 import { tokenizeToString } from 'vs/editor/common/languages/textToHtmlTokenizer';
 import { IExtensionService } from 'vs/workbench/services/extensions/common/extensions';
-import { escape } from 'vs/base/common/strings';
 
 export const DEFAULT_MARKDOWN_STYLES = `
 body {

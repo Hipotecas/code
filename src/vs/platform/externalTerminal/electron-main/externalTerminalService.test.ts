@@ -4,6 +4,7 @@
  *--------------------------------------------------------------------------------------------*/
 
 import { deepStrictEqual, strictEqual } from 'assert';
+import { isWindows } from 'vs/base/common/platform';
 import { DEFAULT_TERMINAL_OSX, IExternalTerminalConfiguration } from 'vs/platform/externalTerminal/common/externalTerminal';
 import { LinuxExternalTerminalService, MacExternalTerminalService, WindowsExternalTerminalService } from 'vs/platform/externalTerminal/node/externalTerminalService';
 
@@ -27,7 +28,6 @@ describe('ExternalTerminalService', () => {
 				strictEqual(command, testShell, 'shell should equal expected');
 				strictEqual(args[args.length - 1], mockConfig.terminal.external.windowsExec);
 				strictEqual(opts.cwd, testCwd);
-				done();
 				return {
 					on: (evt: any) => evt
 				};
@@ -48,7 +48,6 @@ describe('ExternalTerminalService', () => {
 		const mockSpawner: any = {
 			spawn: (command: any, args: any, opts: any) => {
 				strictEqual(args[args.length - 1], WindowsExternalTerminalService.getDefaultTerminalWindows());
-				done();
 				return {
 					on: (evt: any) => evt
 				};
@@ -70,7 +69,6 @@ describe('ExternalTerminalService', () => {
 		const mockSpawner: any = {
 			spawn: (command: any, args: any, opts: any) => {
 				strictEqual(opts.cwd, 'C:/foo', 'cwd should be uppercase regardless of the case that\'s passed in');
-				done();
 				return {
 					on: (evt: any) => evt
 				};
@@ -85,14 +83,13 @@ describe('ExternalTerminalService', () => {
 		);
 	});
 
-	test(`WinTerminalService - cmder should be spawned differently`, done => {
+	test.runIf(isWindows)(`WinTerminalService - cmder should be spawned differently`, done => {
 		const testShell = 'cmd';
 		const testCwd = 'c:/foo';
 		const mockSpawner: any = {
 			spawn: (command: any, args: any, opts: any) => {
 				deepStrictEqual(args, ['C:/foo']);
 				strictEqual(opts, undefined);
-				done();
 				return { on: (evt: any) => evt };
 			}
 		};
@@ -111,7 +108,6 @@ describe('ExternalTerminalService', () => {
 		const mockSpawner: any = {
 			spawn: (command: any, args: any, opts: any) => {
 				strictEqual(opts.cwd, 'C:/foo');
-				done();
 				return { on: (evt: any) => evt };
 			}
 		};
@@ -129,7 +125,6 @@ describe('ExternalTerminalService', () => {
 		const mockSpawner: any = {
 			spawn: (command: any, args: any, opts: any) => {
 				strictEqual(args[1], mockConfig.terminal.external.osxExec);
-				done();
 				return {
 					on: (evt: any) => evt
 				};
@@ -148,7 +143,6 @@ describe('ExternalTerminalService', () => {
 		const mockSpawner: any = {
 			spawn: (command: any, args: any, opts: any) => {
 				strictEqual(args[1], DEFAULT_TERMINAL_OSX);
-				done();
 				return {
 					on: (evt: any) => evt
 				};
@@ -168,7 +162,7 @@ describe('ExternalTerminalService', () => {
 			spawn: (command: any, args: any, opts: any) => {
 				strictEqual(command, mockConfig.terminal.external.linuxExec);
 				strictEqual(opts.cwd, testCwd);
-				done();
+
 				return {
 					on: (evt: any) => evt
 				};
@@ -188,7 +182,6 @@ describe('ExternalTerminalService', () => {
 			const mockSpawner: any = {
 				spawn: (command: any, args: any, opts: any) => {
 					strictEqual(command, defaultTerminalLinux);
-					done();
 					return {
 						on: (evt: any) => evt
 					};

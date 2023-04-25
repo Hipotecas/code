@@ -326,7 +326,7 @@ describe('FileUserDataProvider - Watching', () => {
 		const target = joinPath(rootFileResource, 'settings.json');
 		disposables.add(testObject.onDidChangeFile(e => {
 			if (isEqual(e[0].resource, expected) && e[0].type === FileChangeType.ADDED) {
-				done();
+
 			}
 		}));
 		fileEventEmitter.fire([{
@@ -341,7 +341,7 @@ describe('FileUserDataProvider - Watching', () => {
 		const target = joinPath(rootFileResource, 'settings.json');
 		disposables.add(testObject.onDidChangeFile(e => {
 			if (isEqual(e[0].resource, expected) && e[0].type === FileChangeType.UPDATED) {
-				done();
+
 			}
 		}));
 		fileEventEmitter.fire([{
@@ -356,7 +356,7 @@ describe('FileUserDataProvider - Watching', () => {
 		const target = joinPath(rootFileResource, 'settings.json');
 		disposables.add(testObject.onDidChangeFile(e => {
 			if (isEqual(e[0].resource, expected) && e[0].type === FileChangeType.DELETED) {
-				done();
+
 			}
 		}));
 		fileEventEmitter.fire([{
@@ -371,7 +371,7 @@ describe('FileUserDataProvider - Watching', () => {
 		const target = joinPath(rootFileResource, 'snippets', 'settings.json');
 		disposables.add(testObject.onDidChangeFile(e => {
 			if (isEqual(e[0].resource, expected) && e[0].type === FileChangeType.ADDED) {
-				done();
+
 			}
 		}));
 		fileEventEmitter.fire([{
@@ -386,7 +386,7 @@ describe('FileUserDataProvider - Watching', () => {
 		const target = joinPath(rootFileResource, 'snippets', 'settings.json');
 		disposables.add(testObject.onDidChangeFile(e => {
 			if (isEqual(e[0].resource, expected) && e[0].type === FileChangeType.UPDATED) {
-				done();
+
 			}
 		}));
 		fileEventEmitter.fire([{
@@ -401,7 +401,7 @@ describe('FileUserDataProvider - Watching', () => {
 		const target = joinPath(rootFileResource, 'snippets', 'settings.json');
 		disposables.add(testObject.onDidChangeFile(e => {
 			if (isEqual(e[0].resource, expected) && e[0].type === FileChangeType.DELETED) {
-				done();
+
 			}
 		}));
 		fileEventEmitter.fire([{

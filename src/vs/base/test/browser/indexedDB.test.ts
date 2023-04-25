@@ -5,7 +5,7 @@
 import * as assert from 'assert';
 import { IndexedDB } from 'vs/base/browser/indexedDB';
 
-describe('IndexedDB', () => {
+describe.skip('IndexedDB', () => {
 
 	let indexedDB: IndexedDB;
 

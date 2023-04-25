@@ -519,6 +519,7 @@ describe('MarkdownRenderer', () => {
 
 				const completeTokens = marked.lexer(incomplete + delimiter);
 				assert.deepStrictEqual(newTokens, completeTokens);
+        expect(newTokens).toEqual(completeTokens)
 			});
 
 			test(`complete ${name}`, () => {

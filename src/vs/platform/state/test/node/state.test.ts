@@ -10,21 +10,21 @@ import { Schemas } from 'vs/base/common/network';
 import { join } from 'vs/base/common/path';
 import { URI } from 'vs/base/common/uri';
 import { Promises, writeFileSync } from 'vs/base/node/pfs';
-import { flakySuite, getRandomTestPath } from 'vs/base/test/node/testUtils';
+import { getRandomTestPath } from 'vs/base/test/node/testUtils';
 import { IFileService } from 'vs/platform/files/common/files';
 import { FileService } from 'vs/platform/files/common/fileService';
 import { DiskFileSystemProvider } from 'vs/platform/files/node/diskFileSystemProvider';
 import { ILogService, NullLogService } from 'vs/platform/log/common/log';
 import { FileStorage, SaveStrategy } from 'vs/platform/state/node/stateService';
 
-flakySuite('StateService', () => {
+describe('StateService', () => {
 
 	let testDir: string;
 	let fileService: IFileService;
 	let logService: ILogService;
 	let diskFileSystemProvider: DiskFileSystemProvider;
 
-	beforeEach(() => {
+	beforeAll(() => {
 		testDir = getRandomTestPath(tmpdir(), 'vsctests', 'statemainservice');
 
 		logService = new NullLogService();
@@ -33,10 +33,10 @@ flakySuite('StateService', () => {
 		diskFileSystemProvider = new DiskFileSystemProvider(logService);
 		fileService.registerProvider(Schemas.file, diskFileSystemProvider);
 
-		return Promises.mkdir(testDir, { recursive: true });
+		Promises.mkdir(testDir, { recursive: true });
 	});
 
-	afterEach(() => {
+	afterAll(() => {
 		fileService.dispose();
 		diskFileSystemProvider.dispose();
 

@@ -278,7 +278,6 @@ class FileAccessImpl {
 		if (URI.isUri(uriOrModule)) {
 			return uriOrModule;
 		}
-    console.log(moduleIdToUrl, 'moduleIdToUrl')
 		return URI.parse(moduleIdToUrl.toUrl(uriOrModule));
 	}
 }

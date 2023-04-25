@@ -2,7 +2,7 @@
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-
+// @vitest-environment node
 import * as assert from 'assert';
 import { timeout } from 'vs/base/common/async';
 import { newWriteableBufferStream, VSBuffer } from 'vs/base/common/buffer';
@@ -27,7 +27,7 @@ import { UserDataSyncClient, UserDataSyncTestServer } from 'vs/platform/userData
 describe('UserDataSyncStoreManagementService', () => {
 	const disposableStore = new DisposableStore();
 
-	afterEach(() => disposableStore.clear());
+	afterAll(() => disposableStore.clear());
 
 	test('test sync store is read from settings', async () => {
 		const client = disposableStore.add(new UserDataSyncClient(new UserDataSyncTestServer()));
@@ -74,7 +74,7 @@ describe('UserDataSyncStoreService', () => {
 
 	const disposableStore = new DisposableStore();
 
-	afterEach(() => disposableStore.clear());
+	afterAll(() => disposableStore.clear());
 
 	test('test read manifest for the first time', async () => {
 		// Setup the client

@@ -50,6 +50,6 @@ describe('Graph', () => {
 
 		const roots = graph.roots();
 		assert.strictEqual(roots.length, 2);
-		assert(['2', '4'].every(n => roots.some(node => node.data === n)));
+		expect(['2', '4'].every(n => roots.some(node => node.data === n))).toBe(true);
 	});
 });

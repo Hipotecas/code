@@ -2,7 +2,7 @@
  *  Copyright (c) Microsoft Corporation. All rights reserved.
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
-
+// @vitest-environment node
 import * as assert from 'assert';
 import * as fs from 'fs';
 import * as os from 'os';
@@ -10,10 +10,10 @@ import * as path from 'vs/base/common/path';
 import { isWindows } from 'vs/base/common/platform';
 import { URI } from 'vs/base/common/uri';
 import * as pfs from 'vs/base/node/pfs';
-import { flakySuite, getRandomTestPath } from 'vs/base/test/node/testUtils';
+import { getRandomTestPath } from 'vs/base/test/node/testUtils';
 import { getSingleFolderWorkspaceIdentifier, getWorkspaceIdentifier } from 'vs/platform/workspaces/node/workspaces';
 
-flakySuite('Workspaces', () => {
+describe('Workspaces', () => {
 
 	let testDir: string;
 
@@ -22,7 +22,7 @@ flakySuite('Workspaces', () => {
 	beforeEach(async () => {
 		testDir = getRandomTestPath(tmpDir, 'vsctests', 'workspacesmanagementmainservice');
 
-		return pfs.Promises.mkdir(testDir, { recursive: true });
+		pfs.Promises.mkdir(testDir, { recursive: true });
 	});
 
 	afterEach(() => {

@@ -15,7 +15,7 @@ function perfSuite(name: string, callback: () => void) {
 	}
 }
 
-perfSuite('Performance - fuzzyMatch', function () {
+describe('Performance - fuzzyMatch', function () {
 
 	// describeSetup(() => console.profile());
 	// describeTeardown(() => console.profileEnd());
@@ -47,7 +47,7 @@ perfSuite('Performance - fuzzyMatch', function () {
 });
 
 
-perfSuite('Performance - IFilter', function () {
+describe('Performance - IFilter', function () {
 
 	function perfTest(name: string, match: filters.IFilter) {
 		test(name, () => {

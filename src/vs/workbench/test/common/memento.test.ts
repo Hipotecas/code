@@ -35,7 +35,7 @@ describe('Memento', () => {
 
 		// Workspace
 		memento = myMemento.getMemento(StorageScope.WORKSPACE, StorageTarget.MACHINE);
-		assert(memento);
+		expect(memento).toBeTruthy();
 		memento.foo = 'Hello World';
 
 		myMemento.saveMemento();
@@ -102,7 +102,6 @@ describe('Memento', () => {
 
 		// Workspace
 		memento = myMemento.getMemento(StorageScope.WORKSPACE, StorageTarget.MACHINE);
-		assert(memento);
 		memento.foo = 'Hello World';
 
 		myMemento.saveMemento();
@@ -123,7 +122,6 @@ describe('Memento', () => {
 
 		// Workspace
 		memento = myMemento.getMemento(StorageScope.WORKSPACE, StorageTarget.MACHINE);
-		assert(memento);
 		memento.foo = 'World Hello';
 
 		myMemento.saveMemento();
@@ -170,11 +168,11 @@ describe('Memento', () => {
 
 		// Workspace
 		memento = myMemento.getMemento(StorageScope.WORKSPACE, StorageTarget.MACHINE);
-		assert(memento);
+
 		memento.foo = 'Hello World';
 
 		memento = myMemento2.getMemento(StorageScope.WORKSPACE, StorageTarget.MACHINE);
-		assert(memento);
+
 		memento.bar = 'Hello World';
 
 		myMemento.saveMemento();

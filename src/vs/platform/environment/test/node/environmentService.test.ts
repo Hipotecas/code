@@ -49,11 +49,11 @@ describe('EnvironmentService', () => {
 	// https://github.com/microsoft/vscode/issues/78440
 	test('careful with boolean file names', function () {
 		let actual = parseArgs(['-r', 'arg.txt'], OPTIONS);
-		assert(actual['reuse-window']);
+		expect(actual['reuse-window']).toBe(true);
 		assert.deepStrictEqual(actual._, ['arg.txt']);
 
 		actual = parseArgs(['-r', 'true.txt'], OPTIONS);
-		assert(actual['reuse-window']);
+		expect(actual['reuse-window']).toBe(true);
 		assert.deepStrictEqual(actual._, ['true.txt']);
 	});
 

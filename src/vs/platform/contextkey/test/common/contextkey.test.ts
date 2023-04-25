@@ -42,7 +42,7 @@ describe('ContextKeyExpr', () => {
 			ContextKeyExpr.and(ContextKeyExpr.equals('and.a', true)),
 			ContextKeyExpr.not('d2')
 		)!;
-		assert(a.equals(b), 'expressions should be equal');
+		expect(a.equals(b), 'expressions should be equal').toBe(true);
 	});
 
 	test('issue #134942: Equals in comparator expressions', () => {

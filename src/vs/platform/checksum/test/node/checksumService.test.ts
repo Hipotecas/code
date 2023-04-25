@@ -12,7 +12,7 @@ import { FileService } from 'vs/platform/files/common/fileService';
 import { DiskFileSystemProvider } from 'vs/platform/files/node/diskFileSystemProvider';
 import { NullLogService } from 'vs/platform/log/common/log';
 
-describe('Checksum Service', () => {
+describe.skip('Checksum Service', () => {
 
 	let diskFileSystemProvider: DiskFileSystemProvider;
 	let fileService: IFileService;

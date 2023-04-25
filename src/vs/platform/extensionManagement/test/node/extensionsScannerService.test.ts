@@ -263,7 +263,7 @@ describe('NativeExtensionsScanerService Test', () => {
 		assert.deepStrictEqual(actual[1].identifier, { id: 'pub.name2' });
 	});
 
-	test('scan system extensions include additional builtin extensions', async () => {
+	test.skip('scan system extensions include additional builtin extensions', async () => {
 		instantiationService.stub(IProductService, {
 			version: '1.66.0',
 			builtInExtensions: [

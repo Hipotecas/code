@@ -26,33 +26,33 @@ function checkPath(exePath: string) {
 	assert.strictEqual(pathCheckResult, true);
 }
 
-if (platform.isWindows) {
-	describe('PowerShell finder', () => {
 
-		test('Can find first available PowerShell', async () => {
-			const pwshExe = await getFirstAvailablePowerShellInstallation();
-			const exePath = pwshExe?.exePath;
-			assert.notStrictEqual(exePath, null);
-			assert.notStrictEqual(pwshExe?.displayName, null);
+describe.skipIf(!platform.isWindows)('PowerShell finder', () => {
 
-			checkPath(exePath!);
-		});
+  test('Can find first available PowerShell', async () => {
+    const pwshExe = await getFirstAvailablePowerShellInstallation();
+    const exePath = pwshExe?.exePath;
+    assert.notStrictEqual(exePath, null);
+    assert.notStrictEqual(pwshExe?.displayName, null);
 
-		test('Can enumerate PowerShells', async () => {
-			const pwshs = new Array<IPowerShellExeDetails>();
-			for await (const p of enumeratePowerShellInstallations()) {
-				pwshs.push(p);
-			}
+    checkPath(exePath!);
+  });
 
-			const powershellLog = 'Found these PowerShells:\n' + pwshs.map(p => `${p.displayName}: ${p.exePath}`).join('\n');
-			assert.strictEqual(pwshs.length >= 1, true, powershellLog);
+  test('Can enumerate PowerShells', async () => {
+    const pwshs = new Array<IPowerShellExeDetails>();
+    for await (const p of enumeratePowerShellInstallations()) {
+      pwshs.push(p);
+    }
 
-			for (const pwsh of pwshs) {
-				checkPath(pwsh.exePath);
-			}
+    const powershellLog = 'Found these PowerShells:\n' + pwshs.map(p => `${p.displayName}: ${p.exePath}`).join('\n');
+    assert.strictEqual(pwshs.length >= 1, true, powershellLog);
 
-			// The last one should always be Windows PowerShell.
-			assert.strictEqual(pwshs[pwshs.length - 1].displayName, 'Windows PowerShell', powershellLog);
-		});
-	});
-}
+    for (const pwsh of pwshs) {
+      checkPath(pwsh.exePath);
+    }
+
+    // The last one should always be Windows PowerShell.
+    assert.strictEqual(pwshs[pwshs.length - 1].displayName, 'Windows PowerShell', powershellLog);
+  });
+});
+
