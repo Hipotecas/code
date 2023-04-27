@@ -211,6 +211,7 @@ private _safeCreateAndCacheServiceInstance<T>(id: ServiceIdentifier<T>, desc: Sy
 
 ### _createAndCacheServiceInstance
 
+The function create and cache service instance based on the provided service identifier and descriptor. First It uses a graph data structure to check for cyclic dependencies. If it finds a cyclic dependency, it will throw an error. Then it will check all exists dependencies and if they need to create them first. All of the service dependencies will be added to the global graph if the global graph is set. And if it is a desripctor, it will push to the local stack. Second it will loop the stack to repeat check for this still being a service sync desciptor. That's because instantiating a dependency might have side-effect and recursively trigger instantiation so that some dependencies are now fullfulled already.
 
 
 ```ts
@@ -275,6 +276,91 @@ private _safeCreateAndCacheServiceInstance<T>(id: ServiceIdentifier<T>, desc: Sy
 			}
 		}
 		return <T>this._getServiceInstanceOrDescriptor(id);
+	}
+
+```
+
+### _createServiceInstance
+
+This function will create a new instance of the service. If the service doesn't support delayed instantiation, it will create a new instance of the service by [_createInstance](#createinstance). Otherwise, it will create a new instantiation service and return a proxy object that's backed by an idle value. That strategy is to instantiate services in our idle time or when actually needed but not when injected into a consumer.
+
+```ts
+private _createServiceInstance<T>(id: ServiceIdentifier<T>, ctor: any, args: any[] = [], supportsDelayedInstantiation: boolean, _trace: Trace): T {
+		if (!supportsDelayedInstantiation) {
+			// eager instantiation
+			return this._createInstance(ctor, args, _trace);
+
+		} else {
+			const child = new InstantiationService(undefined, this._strict, this, this._enableTracing);
+			child._globalGraphImplicitDependency = String(id);
+
+			// Return a proxy object that's backed by an idle value. That
+			// strategy is to instantiate services in our idle time or when actually
+			// needed but not when injected into a consumer
+
+			// return "empty events" when the service isn't instantiated yet
+			const earlyListeners = new Map<string, LinkedList<Parameters<Event<any>>>>();
+
+			const idle = new IdleValue<any>(() => {
+				const result = child._createInstance<T>(ctor, args, _trace);
+
+				// early listeners that we kept are now being subscribed to
+				// the real service
+				for (const [key, values] of earlyListeners) {
+					const candidate = <Event<any>>(<any>result)[key];
+					if (typeof candidate === 'function') {
+						for (const listener of values) {
+							candidate.apply(result, listener);
+						}
+					}
+				}
+				earlyListeners.clear();
+
+				return result;
+			});
+			return <T>new Proxy(Object.create(null), {
+				get(target: any, key: PropertyKey): any {
+
+					if (!idle.isInitialized) {
+						// looks like an event
+						if (typeof key === 'string' && (key.startsWith('onDid') || key.startsWith('onWill'))) {
+							let list = earlyListeners.get(key);
+							if (!list) {
+								list = new LinkedList();
+								earlyListeners.set(key, list);
+							}
+							const event: Event<any> = (callback, thisArg, disposables) => {
+								const rm = list!.push([callback, thisArg, disposables]);
+								return toDisposable(rm);
+							};
+							return event;
+						}
+					}
+
+					// value already exists
+					if (key in target) {
+						return target[key];
+					}
+
+					// create value
+					const obj = idle.value;
+					let prop = obj[key];
+					if (typeof prop !== 'function') {
+						return prop;
+					}
+					prop = prop.bind(obj);
+					target[key] = prop;
+					return prop;
+				},
+				set(_target: T, p: PropertyKey, value: any): boolean {
+					idle.value[p] = value;
+					return true;
+				},
+				getPrototypeOf(_target: T) {
+					return ctor.prototype;
+				}
+			});
+		}
 	}
 
 ```
