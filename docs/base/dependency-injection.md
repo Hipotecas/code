@@ -9,9 +9,9 @@ Dependency Injection is a software design pattern that allows us to develop loos
 
 Before that. You should know the typescript decorator, please read the article [Decorators](https://www.typescriptlang.org/docs/handbook/decorators.html) First.
 
-## Introduction
 
-### Dependency Service
+
+## Dependency Service
 
 I use the test code in VS Code to explain it [instantiationService.test.ts](https://github.com/microsoft/vscode/blob/main/src/vs/platform/instantiation/test/common/instantiationService.test.ts#L52).
 
@@ -108,7 +108,7 @@ DependentService['$di$dependencies'] = [
 ]
 ```
 
-### Service Collection
+## Service Collection
 
 Service Collection is used to store the service. it uses the `ServiceIdentifier` as the key, and the service as the value. The service can be a instance or a `SyncDescriptor`.
 
@@ -150,7 +150,7 @@ collection.set(IService1, new Service1());
 
 In vscode, some services are not dependent on other services, so they can be created by the `new` operator. Such as logging service(ILogService). When services are dependent on other services, which need to be encapsulated by `SyncDescriptor`. Such as the `IUndoRedoService` service.
 
-### SyncDescriptor
+## SyncDescriptor
 
 `SyncDescriptor` is used to store the service constructor, the static arguments and create the service instance immediately or delay the instantiation.
 
@@ -175,7 +175,7 @@ export class SyncDescriptor<T> {
 
 
 
-### Links
+## Links
 
 - [Dependency Injection](https://en.wikipedia.org/wiki/Dependency_injection)
 - [Inversion of Control Containers and the Dependency Injection pattern](https://martinfowler.com/articles/injection.html)

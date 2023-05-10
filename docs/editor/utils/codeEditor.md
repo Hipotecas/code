@@ -6,7 +6,7 @@
 
 I will introduce `testCodeEditor` and `testCommand` in this article, which is used to test the code editor and command. It supplys a set of functions to create collections to use in the code editor.
 
-### createCodeEditorServices
+## createCodeEditorServices
 
 This function create an instance of a `TestInstantiationService` by defining and setting up various using the provided `ServiceCollection`
 and adding them to a `DisposableStore`. The function takes two arguments - a `DisposableStore` to keep track of disposables, and an optional `ServiceCollection` that can be used to add or override services.
@@ -58,9 +58,9 @@ const defineInstance = <T>(id: ServiceIdentifier<T>, instance: T) => {
 ```
 
 
-### InstatiationService
+## InstatiationService
 
-#### invokeFunction
+### invokeFunction
 **invokeFunction** is to provide a way to call functions that require access to services prodived by the dependency injection container. It allows these services to be injected into the function without needing to explictly pass them as parameters.
 
 

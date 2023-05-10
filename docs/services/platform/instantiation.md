@@ -30,9 +30,7 @@ export interface IInstantiationService {
 }
 ```
 
-## Introduction
-
-### constructor
+## constructor
 
 The `InstantiationService` constructor takes a `ServiceCollection` as its first argument. This is a map of service identifiers to their implementations. It will set the `InstantiationService` as the `IInstantiationService` service in the collection. And it will take a graph to track the service dependencies when `_enableTracing` is true.
 
@@ -42,7 +40,7 @@ this._services.set(IInstantiationService, this);
 ```
 
 
-### createInstance
+## createInstance
 
 The `createInstance` can be called synchronously to create an instance of a class based on the provided descriptor. Alternatively, it can also take a constructor function and its non-service-related arguments to create an instance.
 
@@ -96,11 +94,11 @@ private _createInstance<T>(ctor: any, args: any[] = [], _trace: Trace): T {
 	}
 ```
 
-### invokeFunction
+## invokeFunction
 
 The `invokeFunction` function is used to provide a way to call functions that require access to services provided by the dependency injection container. It allows these services to be injected into the function without needing to explicitly pass them as parameters.
 
-### createChild
+## createChild
 
 The `createChild` function creates a child of this service which inherits all current services and adds/overwrites the given services which set this its parent.
 
@@ -110,7 +108,7 @@ createChild(services: ServiceCollection): IInstantiationService {
 }
 ```
 
-### _createInstance
+## _createInstance {#_createInstance}
 
 A private method that is used to create an instance of a class based on the provided descriptor. It will first get all the service dependencies of the constructor which was injected into the service and then create the instance. [_getOrCreateServiceInstance](#_getOrCreateServiceInstance) will get the current dependency from the service collection or create a new one if it doesn't exist. If the service doesn't exist and the instantiation service is in strict mode, it will throw an error.
 
@@ -152,13 +150,13 @@ private _createInstance<T>(ctor: any, args: any[] = [], _trace: Trace): T {
 	}
 ```
 
-### _getOrCreateServiceInstance
+## _getOrCreateServiceInstance {#_getOrCreateServiceInstance}
 
 The `_getOrCreateServiceInstance` function is used to get or create a service instance based on the provided service identifier.
 
 Optionally, it will add an edge to the global graph if the global graph and global graph implicit dependency are set (get by `String(id)`).
 
-Then it may get the service instance or descriptor from the service collection by [_getServiceInstanceOrDescriptor](#_getServiceInstanceOrDescriptor). If it is a descriptor, it will create a new instance of the service by using [_safeCreateAndCacheServiceInstance](#_safeCreateAndCacheServiceInstance). Otherwise, it will return the service instance.
+Then it may get the service instance or descriptor from the service collection by [_getServiceInstanceOrDescriptor](#getServiceInstanceOrDescriptor). If it is a descriptor, it will create a new instance of the service by using [_safeCreateAndCacheServiceInstance](#safeCreateAndCacheServiceInstance). Otherwise, it will return the service instance.
 
 ```ts
 protected _getOrCreateServiceInstance<T>(id: ServiceIdentifier<T>, _trace: Trace): T {
@@ -175,7 +173,7 @@ protected _getOrCreateServiceInstance<T>(id: ServiceIdentifier<T>, _trace: Trace
 }
 ```
 
-### _getServiceInstanceOrDescriptor
+## _getServiceInstanceOrDescriptor
 
 This will get the service instance or descriptor from the service collection. If it doesn't exist and the instantiation service has a parent, it will get the service instance or descriptor from the parent.
 Otherwise, it will return the service instance or descriptor.
@@ -192,7 +190,7 @@ private _getServiceInstanceOrDescriptor<T>(id: ServiceIdentifier<T>): T | SyncDe
 ```
 
 
-### _safeCreateAndCacheServiceInstance
+## _safeCreateAndCacheServiceInstance {#_safeCreateAndCacheServiceInstance}
 
 This function will check if the service is already being instantiated. If it is, it will throw an error. Otherwise, it will add the service identifier to the set and create a new instance of the service by using [_createAndCacheServiceInstance](#_createAndCacheServiceInstance). Finally delete it from the set list.
 
@@ -212,7 +210,7 @@ private _safeCreateAndCacheServiceInstance<T>(id: ServiceIdentifier<T>, desc: Sy
 
 ```
 
-### _createAndCacheServiceInstance
+## _createAndCacheServiceInstance {#_createAndCacheServiceInstance}
 
 The function create and cache service instance based on the provided service identifier and descriptor. First It uses a graph data structure to check for cyclic dependencies. If it finds a cyclic dependency, it will throw an error. Then it will check all exists dependencies and if they need to create them first. All of the service dependencies will be added to the global graph if the global graph is set. And if it is a desripctor, it will push to the local stack. Second it will loop the stack to repeat check for this still being a service sync desciptor. That's because instantiating a dependency might have side-effect and recursively trigger instantiation so that some dependencies are now fullfulled already.
 
@@ -283,9 +281,9 @@ The function create and cache service instance based on the provided service ide
 
 ```
 
-### _createServiceInstance
+## _createServiceInstance {#_createServiceInstance}
 
-This function will create a new instance of the service. If the service doesn't support delayed instantiation, it will create a new instance of the service by [_createInstance](#createinstance). Otherwise, it will create a new instantiation service and return a proxy object that's backed by an idle value. That strategy is to instantiate services in our idle time or when actually needed but not when injected into a consumer.
+This function will create a new instance of the service. If the service doesn't support delayed instantiation, it will create a new instance of the service by [_createInstance](#_createInstance). Otherwise, it will create a new instantiation service and return a proxy object that's backed by an idle value. That strategy is to instantiate services in our idle time or when actually needed but not when injected into a consumer.
 
 ```ts
 private _createServiceInstance<T>(id: ServiceIdentifier<T>, ctor: any, args: any[] = [], supportsDelayedInstantiation: boolean, _trace: Trace): T {
