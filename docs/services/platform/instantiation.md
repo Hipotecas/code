@@ -1,5 +1,5 @@
 
-# InstantiationService
+# Instantiation Service
 
 > Before reading this article, you should know same basic knowledge about [Dependency Injection](../../base/dependency-injection.md)
 
