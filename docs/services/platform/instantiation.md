@@ -30,6 +30,10 @@ export interface IInstantiationService {
 }
 ```
 
+## Code flow
+
+![instantiation](../../assets/createInstance.png)
+
 ## constructor
 
 The `InstantiationService` constructor takes a `ServiceCollection` as its first argument. This is a map of service identifiers to their implementations. It will set the `InstantiationService` as the `IInstantiationService` service in the collection. And it will take a graph to track the service dependencies when `_enableTracing` is true.
@@ -46,52 +50,52 @@ The `createInstance` can be called synchronously to create an instance of a clas
 
 ```ts
 createInstance<T>(descriptor: SyncDescriptor0<T>): T;
-	createInstance<Ctor extends new (...args: any[]) => any, R extends InstanceType<Ctor>>(ctor: Ctor, ...args: GetLeadingNonServiceArgs<ConstructorParameters<Ctor>>): R;
-	createInstance(ctorOrDescriptor: any | SyncDescriptor<any>, ...rest: any[]): any {
-		let _trace: Trace;
-		let result: any;
-		if (ctorOrDescriptor instanceof SyncDescriptor) {
-			_trace = Trace.traceCreation(this._enableTracing, ctorOrDescriptor.ctor);
-			result = this._createInstance(ctorOrDescriptor.ctor, ctorOrDescriptor.staticArguments.concat(rest), _trace);
-		} else {
-			_trace = Trace.traceCreation(this._enableTracing, ctorOrDescriptor);
-			result = this._createInstance(ctorOrDescriptor, rest, _trace);
-		}
-		_trace.stop();
-		return result;
-	}
+createInstance<Ctor extends new (...args: any[]) => any, R extends InstanceType<Ctor>>(ctor: Ctor, ...args: GetLeadingNonServiceArgs<ConstructorParameters<Ctor>>): R;
+createInstance(ctorOrDescriptor: any | SyncDescriptor<any>, ...rest: any[]): any {
+  let _trace: Trace;
+  let result: any;
+  if (ctorOrDescriptor instanceof SyncDescriptor) {
+    _trace = Trace.traceCreation(this._enableTracing, ctorOrDescriptor.ctor);
+    result = this._createInstance(ctorOrDescriptor.ctor, ctorOrDescriptor.staticArguments.concat(rest), _trace);
+  } else {
+    _trace = Trace.traceCreation(this._enableTracing, ctorOrDescriptor);
+    result = this._createInstance(ctorOrDescriptor, rest, _trace);
+  }
+  _trace.stop();
+  return result;
+}
 
 
 private _createInstance<T>(ctor: any, args: any[] = [], _trace: Trace): T {
-		// arguments defined by service decorators
-    // to get service dependencies injected into the constructor
-		const serviceDependencies = _util.getServiceDependencies(ctor).sort((a, b) => a.index - b.index);
-		const serviceArgs: any[] = [];
-		for (const dependency of serviceDependencies) {
-			const service = this._getOrCreateServiceInstance(dependency.id, _trace);
-			if (!service) {
-				this._throwIfStrict(`[createInstance] ${ctor.name} depends on UNKNOWN service ${dependency.id}.`, false);
-			}
-			serviceArgs.push(service);
-		}
+	// arguments defined by service decorators
+  // to get service dependencies injected into the constructor
+  const serviceDependencies = _util.getServiceDependencies(ctor).sort((a, b) => a.index - b.index);
+  const serviceArgs: any[] = [];
+  for (const dependency of serviceDependencies) {
+    const service = this._getOrCreateServiceInstance(dependency.id, _trace);
+    if (!service) {
+      this._throwIfStrict(`[createInstance] ${ctor.name} depends on UNKNOWN service ${dependency.id}.`, false);
+    }
+    serviceArgs.push(service);
+  }
 
-		const firstServiceArgPos = serviceDependencies.length > 0 ? serviceDependencies[0].index : args.length;
+  const firstServiceArgPos = serviceDependencies.length > 0 ? serviceDependencies[0].index : args.length;
 
-		// check for argument mismatches, adjust static args if needed
-		if (args.length !== firstServiceArgPos) {
-			console.trace(`[createInstance] First service dependency of ${ctor.name} at position ${firstServiceArgPos + 1} conflicts with ${args.length} static arguments`);
+  // check for argument mismatches, adjust static args if needed
+  if (args.length !== firstServiceArgPos) {
+    console.trace(`[createInstance] First service dependency of ${ctor.name} at position ${firstServiceArgPos + 1} conflicts with ${args.length} static arguments`);
 
-			const delta = firstServiceArgPos - args.length;
-			if (delta > 0) {
-				args = args.concat(new Array(delta));
-			} else {
-				args = args.slice(0, firstServiceArgPos);
-			}
-		}
+    const delta = firstServiceArgPos - args.length;
+    if (delta > 0) {
+      args = args.concat(new Array(delta));
+    } else {
+      args = args.slice(0, firstServiceArgPos);
+    }
+  }
 
-		// now create the instance
-		return Reflect.construct<any, T>(ctor, args.concat(serviceArgs));
-	}
+  // now create the instance
+  return Reflect.construct<any, T>(ctor, args.concat(serviceArgs));
+}
 ```
 
 ## invokeFunction
@@ -119,35 +123,34 @@ Finally, it will create the instance. when the constructor is called, the servic
 
 ```ts
 private _createInstance<T>(ctor: any, args: any[] = [], _trace: Trace): T {
+  // arguments defined by service decorators
+  const serviceDependencies = _util.getServiceDependencies(ctor).sort((a, b) => a.index - b.index);
+  const serviceArgs: any[] = [];
+  for (const dependency of serviceDependencies) {
+    const service = this._getOrCreateServiceInstance(dependency.id, _trace);
+    if (!service) {
+      this._throwIfStrict(`[createInstance] ${ctor.name} depends on UNKNOWN service ${dependency.id}.`, false);
+    }
+    serviceArgs.push(service);
+  }
 
-		// arguments defined by service decorators
-		const serviceDependencies = _util.getServiceDependencies(ctor).sort((a, b) => a.index - b.index);
-		const serviceArgs: any[] = [];
-		for (const dependency of serviceDependencies) {
-			const service = this._getOrCreateServiceInstance(dependency.id, _trace);
-			if (!service) {
-				this._throwIfStrict(`[createInstance] ${ctor.name} depends on UNKNOWN service ${dependency.id}.`, false);
-			}
-			serviceArgs.push(service);
-		}
+  const firstServiceArgPos = serviceDependencies.length > 0 ? serviceDependencies[0].index : args.length;
 
-		const firstServiceArgPos = serviceDependencies.length > 0 ? serviceDependencies[0].index : args.length;
+  // check for argument mismatches, adjust static args if needed
+  if (args.length !== firstServiceArgPos) {
+    console.trace(`[createInstance] First service dependency of ${ctor.name} at position ${firstServiceArgPos + 1} conflicts with ${args.length} static arguments`);
 
-		// check for argument mismatches, adjust static args if needed
-		if (args.length !== firstServiceArgPos) {
-			console.trace(`[createInstance] First service dependency of ${ctor.name} at position ${firstServiceArgPos + 1} conflicts with ${args.length} static arguments`);
+    const delta = firstServiceArgPos - args.length;
+    if (delta > 0) {
+      args = args.concat(new Array(delta));
+    } else {
+      args = args.slice(0, firstServiceArgPos);
+    }
+  }
 
-			const delta = firstServiceArgPos - args.length;
-			if (delta > 0) {
-				args = args.concat(new Array(delta));
-			} else {
-				args = args.slice(0, firstServiceArgPos);
-			}
-		}
-
-		// now create the instance
-		return Reflect.construct<any, T>(ctor, args.concat(serviceArgs));
-	}
+  // now create the instance
+  return Reflect.construct<any, T>(ctor, args.concat(serviceArgs));
+}
 ```
 
 ## _getOrCreateServiceInstance {#_getOrCreateServiceInstance}
