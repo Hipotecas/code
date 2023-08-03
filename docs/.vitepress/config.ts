@@ -79,6 +79,12 @@ function getEditorSideBar(): DefaultTheme.SidebarItem[] {
 export default defineConfig({
   title: "Code Architecture",
   description: "A easy way to learn code architecture",
+  markdown: {
+    theme: {
+      light: 'vitesse-light',
+      dark: 'vitesse-dark',
+    },
+  },
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
