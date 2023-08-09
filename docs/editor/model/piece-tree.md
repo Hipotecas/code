@@ -40,13 +40,28 @@ The `PieceTreeTextBufferBuilder` class is responsible for building the chunks th
 The `acceptChunk` method accepts a chunk of text and adds it to the chunks. If the chunk ends with a CR or a high currogate, then the last character is kept back and added to the next chunk. The finish method of the `PieceTreeTextBufferBuilder` class finishes building the chunks and returns a PieceTreeTextBufferFactory object
 that can be used tot create a text buffer.
 
+Iterate the string and find all of `CR`, `LF`, `CRLF` and push the target index to the array, such as the array `[0, 15, 23, 47]`
+
+![createLineStarts](../../assets/lineStart.png)
+
+
+```ts
+{
+  _cr: 0, // carriage return
+  _lf: 1, // line feed
+  _crlf: 2, // carriage return line feed
+  lineStartsArr: [0, 15, 23, 47], // LineStarts(arr, cr, lf, crlf)
+}
+```
+
 
 ## PieceTreeTextBufferFactory
 
 
 The `PieceTreeTextBufferFactory` class is responsible for creating a text buffer from a given set of chunks. It takes in a set of parameters such as the chunks, the byte order mark (BOM), the number of carriage returns (CR), the number of line feeds (LF), the number of carriage return line feed (CRLF), whether the text contains right-to-left (RTL) characters, whether the text contains unusual line terminators, whether the text is basic ASCII, and whether to normalize the end of line (EOL) characters.
 
-
+The `create` method of the `PieceTreeTextBufferFactory` is used to generate `PieceTreeBuffer`, it iterate the `chunks` of list of `StringBuffer` and replace the element's `\r\n` , `\r` or `\n` to the default of `EOL` which maybe `\n` or `\r\n`. Then it will replace the current chunk with new `newLineStart` array and
+`StringBuffer`. This is the process of `normalizeEOL`.
 
 ## PieceTreeSearchCache
 
@@ -123,3 +138,31 @@ class PieceTreeSearchCache {
 	}
 }
 ```
+## Code Flow
+
+- `createTextBufferFactory`: build the `PieceTreeTextBufferFactory` instance and accept chunks then return the `PieceTreeTextBufferBuilder`.
+  ```ts
+    export function createTextBuffer(value: string | model.ITextBufferFactory | model.ITextSnapshot, defaultEOL: model.DefaultEndOfLine): { textBuffer: model.ITextBuffer; disposable: IDisposable } {
+  	let factory: model.ITextBufferFactory;
+  	if (typeof value === 'string') {
+  		factory = createTextBufferFactory(value);
+  	} else if (model.isITextSnapshot(value)) {
+  		factory = createTextBufferFactoryFromSnapshot(value);
+  	} else {
+  		factory = value;
+  	}
+  	return factory.create(defaultEOL);
+  }
+    export function createTextBufferFactory(text: string): model.ITextBufferFactory {
+  	const builder = new PieceTreeTextBufferBuilder();
+  	builder.acceptChunk(text);
+  	return builder.finish();
+  }
+  ```
+- `PieceTreeTextBufferBuilder.create`: normal the chunks with `EOL` and create new line starts array for each of chunks. At last create the `PieceTreeTextBuffer` instance.
+
+  ![pieceTreeTextBufferFactory](../../assets/pieceTreeTextBufferFactory.png)
+- `PieceTreeTextBuffer`: build the `PieceTreeBase` instance and build the `rbTree`
+  with the `Piece` data and set to root node.
+
+  ![pieceTree](../../assets/pieceTree.png)
